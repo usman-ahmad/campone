@@ -1,24 +1,28 @@
 <div class="page-header">
-  <%= link_to projects_path, class: 'btn btn-default' do %>
+  <%= link_to project_tasks_path(@project), class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-  <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
+  <%= link_to edit_project_task_path(@project ,@task), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show project</h1>
+  <h1>Show Task</h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Name:</dt>
-  <dd><%= @project.name %></dd>
+  <dt>Title:</dt>
+  <dd><%= @task.title %></dd>
 
   <dt>Description:</dt>
-  <dd><%= @project.description %></dd>
+  <dd><%= @task.description %></dd>
 
-  <dt>Owner:</dt>
-  <dd><%= @project.owner_id %></dd>
+  <dt>Priority:</dt>
+  <dd><%= @task.priority %></dd>
+
+  <dt>Due Date:</dt>
+  <dd><%= @task.due_at %></dd>
+
 
   <br>
   <%= link_to new_project_task_path(@project), class: 'btn btn-primary' do %>

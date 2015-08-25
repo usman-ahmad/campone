@@ -1,0 +1,35 @@
+<div class="page-header">
+  <%= link_to new_project_task_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Task
+  <% end %>
+  <h1>Listing Tasks</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Priority</th>
+      <th>Due Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <%= content_tag_for(:tr, @tasks) do |task| %>
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>
+      <td><%= task.priority %></td>
+      <td><%= task.due_at %></td>
+      <td><%= link_to 'Show', [@project,task] %></td>
+      <td><%= link_to 'Edit', edit_project_task_path(@project, task) %></td>
+      <td><%= link_to 'Destroy', [@project, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+    </tbody>
+  </table>
+</div>
