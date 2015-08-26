@@ -1,0 +1,20 @@
+<%= link_to project_path(@project), class: 'btn btn-primary' do %>
+  <span class="glyphicon glyphicon-arrow-left"></span>
+  Back to Project
+<% end %>
+<h2>Invite Users</h2>
+<%= form_tag({controller: "invitations", action: "create"}, method: "post" ) do %>
+  <%= label_tag(:email, "Email :") %>
+  <%= text_field_tag(:email) %>
+
+  <br>
+  <%= label_tag(:role, "Role :") %>
+  <%= select_tag :role, options_for_select(Invitation.roles.keys)%>
+  <br>
+  <%= submit_tag("Invite") %>
+<% end %>
+
+<h2>Already Invited Users</h2>
+<% @invitations.each do |i| %>
+  <p><%= i.user.email %> <%= "(#{i.role}) " if i.role %></p>
+<% end %>
