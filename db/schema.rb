@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150826145758) do
+ActiveRecord::Schema.define(version: 20150828092346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "discussions", force: :cascade do |t|
+    t.string   "title"
+    t.text     "content"
+    t.boolean  "private"
+    t.integer  "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "discussions", ["project_id"], name: "index_discussions_on_project_id", using: :btree
 
   create_table "invitations", force: :cascade do |t|
     t.integer  "project_id"
@@ -76,6 +87,7 @@ ActiveRecord::Schema.define(version: 20150826145758) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "discussions", "projects"
   add_foreign_key "invitations", "projects"
   add_foreign_key "invitations", "users"
   add_foreign_key "tasks", "projects"
