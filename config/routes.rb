@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :projects do
     resources :tasks
+    resources :discussions
     resources :invitations, only: [:new, :create]
   end
 
