@@ -11,6 +11,10 @@ class DiscussionsController < ApplicationController
 
   def new
     @discussion = @project.discussions.new
+
+    @project.members.each do |m|
+      @discussion.user_discussions.build(user: m, notify: true )
+    end
   end
 
   def create
@@ -50,7 +54,7 @@ class DiscussionsController < ApplicationController
   end
 
   def discussion_params
-    params.require(:discussion).permit(:title, :content, :project_id, :private)
+    params.require(:discussion).permit(:title, :content, :project_id, :private, user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
   end
 
 end
