@@ -7,6 +7,9 @@ class TasksController < ApplicationController
   end
 
   def show
+    @commentable = @task
+    @comments = @commentable.comments
+    @comment = Comment.new
   end
 
   def new

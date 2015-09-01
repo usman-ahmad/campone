@@ -7,6 +7,9 @@ class DiscussionsController < ApplicationController
   end
 
   def show
+    @commentable = @discussion
+    @comments = @commentable.comments
+    @comment = Comment.new
   end
 
   def new

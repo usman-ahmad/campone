@@ -21,6 +21,12 @@
   <dd><%= @discussion.private %></dd>
 
   <br>
+
+  <h2>Comments</h2>
+
+  <%= render "comments/comments" %>
+  <%= render "comments/form" %>
+
   <%= link_to new_project_discussion_path(@project), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     Start New Discussion
