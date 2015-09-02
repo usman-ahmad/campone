@@ -1,7 +1,12 @@
 <div id="comments">
   <% @comments.each do |comment| %>
-    <div class="comment">
-      <%= simple_format comment.content %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong><%= comment.user.email %></strong> <span class="text-muted"><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago </span>
+      </div>
+      <div class="panel-body comment">
+        <%= simple_format comment.content %>
+      </div>
     </div>
   <% end %>
 </div>

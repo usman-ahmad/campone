@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
   private
 
   def comments_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content).merge(user: current_user)
   end
   # def load_commentable
   #   resource, id = request.path.split('/')[1, 2]
@@ -33,6 +33,7 @@ class CommentsController < ApplicationController
     klass = [Task, Discussion].detect { |c| params["#{c.name.underscore}_id"] }
     @commentable = klass.find(params["#{klass.name.underscore}_id"])
   end
+
   def set_project
     @project = current_user.projects.find(params[:project_id])
   end
