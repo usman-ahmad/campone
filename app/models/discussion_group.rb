@@ -1,0 +1,2 @@
+class DiscussionGroup < Group
+end
