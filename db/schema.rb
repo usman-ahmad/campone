@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903080959) do
+ActiveRecord::Schema.define(version: 20150903104640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,11 +76,13 @@ ActiveRecord::Schema.define(version: 20150903080959) do
     t.integer  "project_id"
     t.integer  "priority"
     t.date     "due_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "task_group_id"
   end
 
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
+  add_index "tasks", ["task_group_id"], name: "index_tasks_on_task_group_id", using: :btree
 
   create_table "user_discussions", force: :cascade do |t|
     t.integer  "user_id"
