@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects.all
+    @projects = Project.all
   end
 
   # GET /projects/1
@@ -16,10 +16,13 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @project.build_project_group
   end
 
   # GET /projects/1/edit
   def edit
+    # project group name field is used to create a new group.
+    @project.project_group.name = nil
   end
 
   # POST /projects
@@ -66,10 +69,11 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+      @project.build_project_group unless @project.project_group
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description)
+      params.require(:project).permit(:name, :description, :project_group_id, :project_group_attributes => [:name])
     end
 end

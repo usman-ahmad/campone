@@ -8,4 +8,6 @@ class Project < ActiveRecord::Base
   has_many :members, through: :invitations, :source => :user
 
   validates :name, presence: true
+
+  accepts_nested_attributes_for :project_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 end
