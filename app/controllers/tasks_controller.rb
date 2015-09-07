@@ -14,6 +14,7 @@ class TasksController < ApplicationController
 
   def new
     @task = @project.tasks.new
+    @task.build_task_group
   end
 
   def create
@@ -27,6 +28,8 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task.build_task_group unless @task.task_group
+    @task.task_group.name = nil
   end
 
   def update
@@ -53,6 +56,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :project_id, :priority, :due_at)
+    params.require(:task).permit(:title, :description, :project_id, :priority, :due_at, :task_group_id, :task_group_attributes => [:name])
   end
 end

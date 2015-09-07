@@ -11,6 +11,9 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt>Group:</dt>
+  <dd><%= @task.task_group.name || 'Not Specified' %></dd>
+
   <dt>Title:</dt>
   <dd><%= @task.title %></dd>
 
