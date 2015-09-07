@@ -14,6 +14,7 @@ class DiscussionsController < ApplicationController
 
   def new
     @discussion = @project.discussions.new
+    @discussion.build_discussion_group
 
     @project.members.each do |m|
       @discussion.user_discussions.build(user: m, notify: true )
@@ -31,6 +32,8 @@ class DiscussionsController < ApplicationController
   end
 
   def edit
+    @discussion.build_discussion_group unless @discussion.discussion_group
+    @discussion.discussion_group.name = nil
   end
 
   def update
@@ -57,7 +60,8 @@ class DiscussionsController < ApplicationController
   end
 
   def discussion_params
-    params.require(:discussion).permit(:title, :content, :project_id, :private, user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
+    params.require(:discussion).permit(:title, :content, :project_id, :private, :discussion_group_id, :discussion_group_attributes => [:name],
+                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
   end
 
 end

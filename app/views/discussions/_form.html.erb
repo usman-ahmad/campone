@@ -12,6 +12,8 @@
     </div>
   <% end %>
 
+  <%= render 'groups/select_or_create_group', form_builder: f, resource: @discussion  %>
+
   <div class="form-group">
     <%= f.label :title, class: "col-sm-2 control-label" %>
     <div class="col-sm-10">
