@@ -12,23 +12,7 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :project_group_id, 'Select Group ', class: "col-sm-2 control-label" %>
-    <div class="col-sm-10" style="padding: 0">
-      <div class="col-sm-3">
-        <% puts "projec gsdtrosu id: #{@project.project_group_id}" %>
-        <%= f.select :project_group_id, ProjectGroup.all.map{|pg| [pg.name, pg.id]}, { :include_blank =>  'None Specified', :selected => @project.project_group_id } , class: "form-control" %>
-      </div>
-      <div class="col-sm-8">
-        <%= f.fields_for :project_group do |pg| %>
-          <%= f.label :name, 'OR create New', class: "col-sm-3 control-label" %>
-          <div class="col-sm-5">
-          <%= pg.text_field :name, class: "form-control"%>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  <%= render 'groups/select_or_create_group', form_builder: f, resource: @project  %>
 
   <div class="form-group">
     <%= f.label :name, class: "col-sm-2 control-label" %>

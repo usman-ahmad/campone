@@ -21,8 +21,8 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    # project group name field is used to create a new group.
-    @project.project_group.name = nil
+    @project.build_project_group unless @project.project_group
+    @project.project_group.name = nil # project group name field is used to create a new group.
   end
 
   # POST /projects
@@ -69,7 +69,6 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
-      @project.build_project_group unless @project.project_group
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
