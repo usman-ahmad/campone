@@ -28,6 +28,9 @@ gem 'bootstrap-generators', '~> 3.3.4'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable'
+
+gem "paperclip", "~> 4.3"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
