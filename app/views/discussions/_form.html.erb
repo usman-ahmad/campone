@@ -44,9 +44,7 @@
     <% end %>
   </div>
 
-  <%= f.fields_for :attachments do |af| %>
-    <%= af.file_field :attachment%>
-  <% end %>
+  <%= file_field_tag "attachments_array[]", type: :file, multiple: true %>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

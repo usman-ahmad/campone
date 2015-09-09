@@ -12,4 +12,10 @@ class Discussion < ActiveRecord::Base
 
   accepts_nested_attributes_for :user_discussions ,:allow_destroy => true
   accepts_nested_attributes_for :discussion_group, :reject_if => proc { |attributes| attributes['name'].blank? }
+
+  def attachments_array=(array)
+    array.each do |file|
+      attachments.build(:attachment => file, project: self.project)
+    end
+  end
 end

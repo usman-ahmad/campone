@@ -24,6 +24,7 @@ class DiscussionsController < ApplicationController
 
   def create
     @discussion = @project.discussions.new(discussion_params)
+    @discussion.attachments_array=params[:attachments_array]
 
     if @discussion.save
       redirect_to [@project, @discussion], notice: 'Discussion was successfully created.'
@@ -38,6 +39,8 @@ class DiscussionsController < ApplicationController
   end
 
   def update
+    @discussion.attachments_array=params[:attachments_array]
+
     if @discussion.update(discussion_params)
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
     else
@@ -62,8 +65,7 @@ class DiscussionsController < ApplicationController
 
   def discussion_params
     params.require(:discussion).permit(:title, :content, :project_id, :private, :discussion_group_id, :discussion_group_attributes => [:name],
-                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ],
-                                       :attachments_attributes => [:attachment])
+                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
   end
 
 end

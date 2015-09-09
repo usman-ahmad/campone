@@ -24,7 +24,12 @@
   <dd><%= @discussion.private %></dd>
 
   <br>
-
+  <h2>Attachments</h2>
+  <ul>
+  <% @discussion.attachments.each do |attachment| %>
+    <li><%= attachment.attachment_file_name %></li>
+  <% end %>
+  </ul>
   <h2>Comments</h2>
 
   <%= render "comments/comments" %>
