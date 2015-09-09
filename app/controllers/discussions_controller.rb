@@ -15,6 +15,7 @@ class DiscussionsController < ApplicationController
   def new
     @discussion = @project.discussions.new
     @discussion.build_discussion_group
+    @discussion.attachments.build
 
     @project.members.each do |m|
       @discussion.user_discussions.build(user: m, notify: true )
@@ -61,7 +62,8 @@ class DiscussionsController < ApplicationController
 
   def discussion_params
     params.require(:discussion).permit(:title, :content, :project_id, :private, :discussion_group_id, :discussion_group_attributes => [:name],
-                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
+                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ],
+                                       :attachments_attributes => [:attachment])
   end
 
 end

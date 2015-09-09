@@ -4,7 +4,9 @@ class Discussion < ActiveRecord::Base
 
   has_many :user_discussions
   has_many :users ,through: :user_discussions
-  has_many :comments, as: :commentable
+
+  has_many :comments,    as: :commentable
+  has_many :attachments, as: :attachable
 
   validates :title, presence: true
 
