@@ -12,6 +12,8 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @commentable.comments.new(comments_params)
+    @comment.attachments_array=params[:attachments_array]
+
     if @comment.save
       redirect_to [@project,@commentable], notice: "Comment created."
     else
