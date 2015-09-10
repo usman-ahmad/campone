@@ -44,7 +44,7 @@
     <% end %>
   </div>
 
-  <%= file_field_tag "attachments_array[]", type: :file, multiple: true %>
+  <%= render 'attachments/browse_attachments' %>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
