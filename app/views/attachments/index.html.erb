@@ -1,0 +1,21 @@
+<div class="page-header">
+  <%= link_to project_path(@project), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    Back
+  <% end %>
+  <%= link_to new_project_attachment_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New File
+  <% end %>
+  <h1>Listing Files</h1>
+</div>
+
+<table class="table" >
+  <tbody>
+  <% @attachments.each do |attachment| %>
+    <tr><td><%= attachment.attachment_file_name %></td>
+      <td><%= link_to 'Delete', project_attachment_path(@project, attachment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

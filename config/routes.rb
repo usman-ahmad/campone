@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
 
     resources :invitations, only: [:new, :create]
+    resources :attachments, only: [:index, :new, :create, :destroy]
   end
 
   devise_for :users

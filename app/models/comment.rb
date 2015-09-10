@@ -7,6 +7,8 @@ class Comment < ActiveRecord::Base
   validates :content, presence: true
 
   def attachments_array=(array)
+    return unless array.present?
+
     array.each do |file|
       attachments.build(:attachment => file, project: self.commentable_type.constantize.find(self.commentable_id).project  )
     end
