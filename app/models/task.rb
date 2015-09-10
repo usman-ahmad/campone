@@ -1,8 +1,11 @@
 class Task < ActiveRecord::Base
+  include Attachable
+
   belongs_to :project
   belongs_to :task_group
 
-  has_many :comments, as: :commentable
+  has_many :comments,    as: :commentable
+  has_many :attachments, as: :attachable
 
   enum priority: [:low, :medium, :high ]
 

@@ -19,6 +19,7 @@ class TasksController < ApplicationController
 
   def create
     @task = @project.tasks.new(task_params)
+    @task.attachments_array=params[:attachments_array]
 
     if @task.save
       redirect_to [@project, @task], notice: 'Task was successfully created.'
@@ -33,6 +34,8 @@ class TasksController < ApplicationController
   end
 
   def update
+    @task.attachments_array=params[:attachments_array]
+
     if @task.update(task_params)
       redirect_to [@project, @task], notice: 'Task was successfully updated.'
     else

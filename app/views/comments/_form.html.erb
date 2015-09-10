@@ -13,6 +13,9 @@
   <div class="form-group">
     <%= f.text_area :content, rows: 8, class: 'form-control' %>
   </div>
+
+  <%= render 'attachments/browse_attachments', resource: @comment %>
+
   <div class="form-group">
     <div class="col-sm-offset-10 ">
       <%= f.submit class: "btn btn-primary" %>
