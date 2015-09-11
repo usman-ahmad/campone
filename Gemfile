@@ -30,6 +30,8 @@ gem 'devise-bootstrap-views'
 gem 'devise_invitable'
 
 gem "paperclip", "~> 4.3"
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
