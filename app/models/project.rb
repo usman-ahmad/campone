@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
   has_many :discussions
   has_many :invitations
   has_many :members, through: :invitations, :source => :user
-
+  has_many :events
   has_many :attachments
 
   validates :name, presence: true
