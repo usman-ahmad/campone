@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
     resources :invitations, only: [:new, :create]
     resources :attachments, only: [:index, :new, :create, :destroy]
+    resources :events do
+      get :get_events, on: :collection
+    end
   end
 
   devise_for :users

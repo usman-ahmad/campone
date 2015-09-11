@@ -22,4 +22,26 @@ class Project < ActiveRecord::Base
 
     save
   end
+
+  def json_events_for_calender
+    all_events = []
+
+    tasks.each do |task|
+      all_events << {
+        :id => task.id,
+        :title => "#{task.title}",
+        :start => "#{task.due_at}"
+      }
+    end
+
+    events.each do |event|
+      all_events << {
+          :id => event.id,
+          :title => "#{event.title}",
+          :start => "#{event.due_at}"
+      }
+    end
+
+    return all_events.to_json
+  end
 end

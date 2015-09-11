@@ -1,0 +1,21 @@
+
+<div id='calendar'></div>
+
+<script>
+  $(document).ready(function() {
+
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+      left: "prev,next",
+      header: {
+        left: 'prev',
+        center: 'title',
+        right: 'next'
+      },
+      events: window.location.pathname + "/get_events"
+      // put your options and callbacks here
+    })
+
+  });
+</script>
