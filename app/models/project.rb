@@ -38,6 +38,7 @@ class Project < ActiveRecord::Base
       all_events << {
           :id => event.id,
           :title => "#{event.title}",
+          :description => "#{event.description }",
           :start => "#{event.due_at}"
       }
     end

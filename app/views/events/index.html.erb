@@ -1,21 +1,77 @@
 
 <div id='calendar'></div>
+<div class="col-sm-5 my-custom-popup"  id="addEvent" style="display: none; position: absolute; z-index: 1000; background-color: white
+        ; border: 2px solid #a1a1a1; border-top-right-radius: 16px;">
+  <i class="glyphicon glyphicon-remove-sign pull-right pop-up-close"  style="font-size: 25px;position:absolute; right:-14px; top:-14px; z-index: 2000 ; color: red; " > </i>
+  <div class="PopupContainer">
+    <div class="popup" id="addCalEventPopup" style="padding: 10px">
+      <%= render 'events/form' %>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-5 my-custom-popup"  id="eventInfo" style="display: none; position: absolute; z-index: 1000; background-color: white
+        ; border: 2px solid #a1a1a1; border-top-right-radius: 15px;">
+  <i class="glyphicon glyphicon-remove-sign pull-right pop-up-close" style="font-size: 25px;position:absolute; right:-14px; top:-14px; z-index: 2000 ; color: red; " > </i>
+  <div class="PopupContainer">
+    <div class="popup" id="calEventInfoPopup" style="padding: 10px">
+
+    </div>
+  </div>
+</div>
 
 <script>
   $(document).ready(function() {
 
-    // page is now ready, initialize the calendar...
+    $( document ).on( 'keydown', function ( e ) {
+      if ( e.keyCode === 27 ) { // ESC
+        $('#addEvent').hide();
+      }
+    });
+
+    $('.pop-up-close').on( 'click', function () {
+      $('#addEvent').hide();
+      $('#eventInfo').hide();
+    });
 
     $('#calendar').fullCalendar({
       left: "prev,next",
+      selectable: false,
       header: {
         left: 'prev',
         center: 'title',
         right: 'next'
       },
-      events: window.location.pathname + "/get_events"
-      // put your options and callbacks here
-    })
+      events: window.location.pathname + "/get_events",
+
+
+      dayClick: function(date, jsEvent, view) {
+        $('#event_due_at').val(date);
+        $('#addEvent').css({ left: get_left_position(jsEvent.pageX), top: jsEvent.pageY}).show().fadeIn();
+      },
+
+      eventClick: function(calEvent, jsEvent, view) {
+        var html= "<dl class=dl-horizontal>" +
+                "<dt>Title: </dt><dd>" + calEvent.title + "</dd>" +
+                "<dt>Description: </dt><dd>" + calEvent.description+ "</dd>" +
+                "<dt>Due At: </dt><dd>" + calEvent.start+ "</dd>" +
+                "</dl>";
+
+        $('#calEventInfoPopup').html(html);
+        $('#eventInfo').css({ left: get_left_position(jsEvent.pageX ), top: jsEvent.pageY}).show().fadeIn();
+      }
+    });
+
+
+    function get_left_position(event_x){
+      var window_size = {
+        width: window.innerWidth || document.body.clientWidth,
+        height: window.innerHeight || document.body.clientHeight
+      };
+      var pop_up_width =  $('#addEvent').width()
+
+      return  event_x < window_size['width']/2 ? event_x : event_x - pop_up_width;
+    }
 
   });
 </script>
