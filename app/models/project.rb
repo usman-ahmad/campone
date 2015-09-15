@@ -13,6 +13,9 @@ class Project < ActiveRecord::Base
 
   accepts_nested_attributes_for :project_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
+  delegate :url_helpers, to: "Rails.application.routes"
+  alias :h :url_helpers
+
   def create_attachments(array)
     return unless array.present?
 
@@ -28,18 +31,20 @@ class Project < ActiveRecord::Base
 
     tasks.each do |task|
       all_events << {
-        :id => task.id,
-        :title => "#{task.title}",
-        :start => "#{task.due_at}"
+        :id      => task.id,
+        :title   => "#{ task.title }",
+        :start   => "#{ task.due_at }",
+        :editUrl => "#{ h.edit_project_task_path task.project, task }"
       }
     end
 
     events.each do |event|
       all_events << {
-          :id => event.id,
-          :title => "#{event.title}",
-          :description => "#{event.description }",
-          :start => "#{event.due_at}"
+        :id          => event.id,
+        :title       => "#{ event.title }",
+        :description => "#{ event.description }",
+        :start       => "#{ event.due_at }",
+        :editUrl     => "#{ h.edit_project_event_path event.project, event }"
       }
     end
 

@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_project
+  before_action :set_event, only: [:edit]
 
   def index
     @event = @project.events.build
@@ -22,6 +23,9 @@ class EventsController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.js
+    end
   end
 
   def get_events
@@ -29,6 +33,10 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def set_event
+    @event = @project.events.find(params[:id])
+  end
 
   def event_params
     params.require(:event).permit(:title, :description, :due_at)

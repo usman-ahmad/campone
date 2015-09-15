@@ -31,6 +31,10 @@ class TasksController < ApplicationController
   def edit
     @task.build_task_group unless @task.task_group
     @task.task_group.name = nil
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update

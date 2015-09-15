@@ -55,7 +55,8 @@
                 "<dt>Title: </dt><dd>" + calEvent.title + "</dd>" +
                 "<dt>Description: </dt><dd>" + calEvent.description+ "</dd>" +
                 "<dt>Due At: </dt><dd>" + calEvent.start+ "</dd>" +
-                "</dl>";
+                "</dl>" +
+                "<a href="+ calEvent.editUrl +" data-remote='true'>Edit</a>";
 
         $('#calEventInfoPopup').html(html);
         $('#eventInfo').css({ left: get_left_position(jsEvent.pageX ), top: jsEvent.pageY}).show().fadeIn();
