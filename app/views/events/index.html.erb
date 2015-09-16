@@ -4,8 +4,18 @@
         ; border: 2px solid #a1a1a1; border-top-right-radius: 16px;">
   <i class="glyphicon glyphicon-remove-sign pull-right pop-up-close"  style="font-size: 25px;position:absolute; right:-14px; top:-14px; z-index: 2000 ; color: red; " > </i>
   <div class="PopupContainer">
+    <div class="form-group">
+      <%= label_tag "Type", nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-9" style="margin-bottom: 20px
+      ">
+      <%= select_tag "Type", options_for_select([ "Event", "Task" ], "Event"), { id: 'selectEventType', class: 'form-control' }  %>
+      </div>
+    </div>
     <div class="popup" id="addCalEventPopup" style="padding: 10px">
       <%= render 'events/form' %>
+    </div>
+    <div class="popup" id="addCalTaskPopup" style="padding: 10px">
+      <%= render 'tasks/form' %>
     </div>
   </div>
 </div>
@@ -23,6 +33,8 @@
 <script>
   $(document).ready(function() {
 
+    $('#addCalTaskPopup').hide();
+
     $( document ).on( 'keydown', function ( e ) {
       if ( e.keyCode === 27 ) { // ESC
         $('#addEvent').hide();
@@ -32,6 +44,20 @@
     $('.pop-up-close').on( 'click', function () {
       $('#addEvent').hide();
       $('#eventInfo').hide();
+
+      $('#selectEventType').val("Event");
+      $('#addCalEventPopup').show();
+      $('#addCalTaskPopup').hide();
+    });
+
+    $( "#selectEventType" ).change(function() {
+      if (this.value == "Task"){
+        $('#addCalTaskPopup').show();
+        $('#addCalEventPopup').hide();
+      } else {
+        $('#addCalTaskPopup').hide();
+        $('#addCalEventPopup').show();
+      }
     });
 
     $('#calendar').fullCalendar({
@@ -69,7 +95,7 @@
         width: window.innerWidth || document.body.clientWidth,
         height: window.innerHeight || document.body.clientHeight
       };
-      var pop_up_width =  $('#addEvent').width()
+      var pop_up_width =  $('#addEvent').width();
 
       return  event_x < window_size['width']/2 ? event_x : event_x - pop_up_width;
     }
