@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   has_many :projects, foreign_key: :owner_id
   has_many :invitations
   has_many :shared_projects, through: :invitations, source: :project
