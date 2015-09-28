@@ -8,6 +8,7 @@ class Task < ActiveRecord::Base
   has_many :attachments, as: :attachable
 
   enum priority: [:low, :medium, :high ]
+  enum progress: [:no_progress, :in_progress, :completed ]
 
   validates :title, presence: true
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
