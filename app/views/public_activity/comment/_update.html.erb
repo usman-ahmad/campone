@@ -1,0 +1,8 @@
+Updated Comment:
+
+<% if comment = activity.trackable %>
+  "<%= comment.content %>" on
+  <%= link_to comment.commentable.title, commentable_url(comment) %>
+<% else %>
+  which has since been removed
+<% end %>

@@ -15,6 +15,7 @@ class CommentsController < ApplicationController
     @comment.attachments_array=params[:attachments_array]
 
     if @comment.save
+      @comment.create_activity :create, owner: current_user
       redirect_to [@project,@commentable], notice: "Comment created."
     else
       render :new

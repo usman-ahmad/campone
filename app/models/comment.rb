@@ -1,8 +1,15 @@
 class Comment < ActiveRecord::Base
+  include PublicActivity::Common
+
   belongs_to :user
 
   has_many :comments,    as: :commentable
   has_many :attachments, as: :attachable
+
+
+  def commentable
+    self.commentable_type.constantize.find(commentable_id)
+  end
 
   validates :content, presence: true
 
