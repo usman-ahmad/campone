@@ -22,6 +22,7 @@ class TasksController < ApplicationController
     @task.attachments_array=params[:attachments_array]
 
     if @task.save
+      @task.create_activity :create, owner: current_user
       redirect_to [@project, @task], notice: 'Task was successfully created.'
     else
       render :new
@@ -42,6 +43,7 @@ class TasksController < ApplicationController
     @task.attachments_array=params[:attachments_array]
 
     if @task.update(task_params)
+      @task.create_activity :update, owner: current_user
       redirect_to [@project, @task], notice: 'Task was successfully updated.'
     else
       render :edit

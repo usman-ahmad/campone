@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   include Attachable
+  include PublicActivity::Common
 
   belongs_to :project
   belongs_to :task_group

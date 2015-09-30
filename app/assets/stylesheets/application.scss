@@ -15,3 +15,8 @@
 @import "bootstrap";
 @import "devise_bootstrap_views";
 @import "fullcalendar";
+
+.notification {
+  border-bottom: solid 1px #CCC;
+  padding: 16px 0;
+}
