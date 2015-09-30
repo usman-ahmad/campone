@@ -1,0 +1,7 @@
+updated Discussion
+
+<% if activity.trackable %>
+  <%= link_to activity.trackable.title, project_discussion_path(activity.trackable.project, activity.trackable) %>
+<% else %>
+  which has since been removed
+<% end %>

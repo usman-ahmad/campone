@@ -1,5 +1,6 @@
 class Discussion < ActiveRecord::Base
   include Attachable
+  include PublicActivity::Common
 
   belongs_to :project
   belongs_to :discussion_group

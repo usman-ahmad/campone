@@ -27,6 +27,7 @@ class DiscussionsController < ApplicationController
     @discussion.attachments_array=params[:attachments_array]
 
     if @discussion.save
+      @discussion.create_activity :create, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully created.'
     else
       render :new
@@ -42,6 +43,7 @@ class DiscussionsController < ApplicationController
     @discussion.attachments_array=params[:attachments_array]
 
     if @discussion.update(discussion_params)
+      @discussion.create_activity :update, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
     else
       render :edit
