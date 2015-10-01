@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :user_discussions
   has_many :discussions, through: :user_discussions
   has_many :assigned_tasks, class_name: Task, foreign_key: :assigned_to
+  has_many :notifications
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
