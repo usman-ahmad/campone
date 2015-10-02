@@ -1,11 +1,12 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
   end
 
   # GET /projects/1

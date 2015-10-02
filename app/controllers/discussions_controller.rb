@@ -1,4 +1,7 @@
 class DiscussionsController < ApplicationController
+  load_and_authorize_resource :project
+  load_and_authorize_resource :discussion, :through => :project
+
   before_action :set_project
   before_action :set_discussion,    only: [:show, :edit, :update, :destroy]
 
@@ -62,7 +65,7 @@ class DiscussionsController < ApplicationController
   end
 
   def set_project
-    @project = current_user.projects.find(params[:project_id])
+    @project = Project.find(params[:project_id])
   end
 
   def discussion_params

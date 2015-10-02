@@ -1,4 +1,7 @@
 class TasksController < ApplicationController
+  load_and_authorize_resource :project
+  load_and_authorize_resource :task, :through => :project
+
   before_action :set_project
   before_action :set_task,    only: [:show, :edit, :update, :destroy]
 
@@ -62,7 +65,7 @@ class TasksController < ApplicationController
   end
 
   def set_project
-    @project = current_user.projects.find(params[:project_id])
+    @project = Project.find(params[:project_id])
   end
 
   def task_params
