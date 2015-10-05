@@ -1,0 +1,6 @@
+<% if @saved %>
+$('#eventInfo').hide();
+$('#calendar').fullCalendar( 'refetchEvents' );
+<% else %>
+$('#eventInfo').html("<%= j (render 'form') %>");
+<% end %>

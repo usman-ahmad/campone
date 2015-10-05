@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_project
-  before_action :set_event, only: [:edit]
+  before_action :set_event, only: [:edit, :update]
 
   def index
     @event = @project.events.build
@@ -16,12 +16,19 @@ class EventsController < ApplicationController
 
   def create
     @event = @project.events.new(event_params)
+    @saved = @event.save
 
-    if @event.save
-      flash[:notice] = 'Event was successfully created.'
+    respond_to do |format|
+      format.js
     end
+  end
 
-    redirect_to [@project, :events]
+  def update
+    @saved = @event.update(event_params)
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def edit
