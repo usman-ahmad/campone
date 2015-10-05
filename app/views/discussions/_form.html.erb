@@ -1,17 +1,6 @@
 <%= form_for([@project, @discussion], html: { class: "form-horizontal", role: "form" , multipart: true}) do |f| %>
-  <% if @discussion.errors.any? %>
-    <div class="alert alert-danger alert-dismissable" role="alert">
-      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <h4><%= pluralize(@discussion.errors.count, "error") %> prohibited this task from being saved:</h4>
 
-      <ul>
-        <% @discussion.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render 'shared/error_messages', object: @discussion  %>
   <%= render 'groups/select_or_create_group', form_builder: f, resource: @discussion  %>
 
   <div class="form-group">

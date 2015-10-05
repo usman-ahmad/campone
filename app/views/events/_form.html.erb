@@ -1,4 +1,6 @@
 <%= form_for([@project, @event], html: { class: "form-horizontal", role: "form", multipart: true }) do |f| %>
+
+  <%= render 'shared/error_messages', object: @event  %>
   <div class="form-group">
     <%= f.label :title, class: "col-sm-3 control-label" %>
     <div class="col-sm-9">

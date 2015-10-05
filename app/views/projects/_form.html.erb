@@ -1,17 +1,6 @@
 <%= form_for(@project, html: { class: "form-horizontal", role: "form" }) do |f| %>
-  <% if @project.errors.any? %>
-    <div class="alert alert-danger alert-dismissable" role="alert">
-      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-      <h4><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h4>
 
-      <ul>
-      <% @project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render 'shared/error_messages', object: @project%>
   <%= render 'groups/select_or_create_group', form_builder: f, resource: @project  %>
 
   <div class="form-group">
