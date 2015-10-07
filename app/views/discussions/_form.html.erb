@@ -22,15 +22,18 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.fields_for :user_discussions do |f| %>
-      <%= f.label :user_id, f.object.user.email %>
-      <%= f.hidden_field :user_id%>
-      <%= f.check_box :notify %>
-      <%= f.label :notify, 'Notify? ' %>
-      <%= f.label :_destroy, 'Exclude?'%>
-      <%= f.check_box :_destroy %><br>
-    <% end %>
+  <div class="form-group" id="private-discussions">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.fields_for :user_discussions do |f| %>
+        <div class="private-invitation"> <!--NOTE: below 2 checkboxes must be siblings of same element, JS requirement -->
+          <%= f.check_box :_destroy , class: 'delete-user-from-discussion', checked: f.object.new_record?, hidden: true %>
+          <input type="checkbox" class="include-user-or-not" <%= "checked" if f.object.persisted? %> >
+
+          <%= f.label :user_id, f.object.user.email %>
+          <%= f.hidden_field :user_id %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <%= render 'attachments/browse_attachments' %>

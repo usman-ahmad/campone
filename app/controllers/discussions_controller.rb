@@ -4,6 +4,7 @@ class DiscussionsController < ApplicationController
 
   before_action :set_project
   before_action :set_discussion,    only: [:show, :edit, :update, :destroy]
+  before_action :build_user_discussions, only: [:edit]
 
   def index
     @discussions = @project.discussions
@@ -73,4 +74,12 @@ class DiscussionsController < ApplicationController
                                        user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
   end
 
+  def build_user_discussions
+    user_ids = @discussion.project.members.map(&:id) - @discussion.users.map(&:id)
+    return if user_ids.blank?
+
+    user_ids.each do |user_id|
+      @discussion.user_discussions.build(user_id: user_id, notify: true )
+    end
+  end
 end
