@@ -13,4 +13,12 @@ class Task < ActiveRecord::Base
 
   validates :title, :due_at, presence: true
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
+
+  def self.search(text)
+    if text
+      where("title ilike :q or description ilike :q", q: "%#{text}%")
+    else
+      all
+    end
+  end
 end

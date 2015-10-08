@@ -6,7 +6,8 @@ class TasksController < ApplicationController
   before_action :set_task,    only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = @project.tasks
+    @tasks = @project.tasks.search(params[:search_text])
+    # @tasks = @project.tasks.search('Slice')
   end
 
   def show

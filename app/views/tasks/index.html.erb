@@ -1,3 +1,10 @@
+<%= form_tag project_tasks_path(@project), :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search_text, params[:search_text] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
 <div class="page-header">
   <%= link_to project_path(@project), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-arrow-left"></span>
