@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
 
   def self.search(text)
     if text
-      where("title ilike :q or description ilike :q", q: "%#{text}%")
+      where("title @@ :q or description @@ :q", q: text )
     else
       all
     end
