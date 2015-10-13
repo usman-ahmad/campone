@@ -50,6 +50,7 @@ gem 'private_pub'
 
 group :development do
   gem "letter_opener"
+  gem 'better_errors'
 end
 
 group :development, :test do
