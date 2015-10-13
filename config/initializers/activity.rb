@@ -56,7 +56,8 @@ PublicActivity::Activity.class_eval do
     message += notice.activity.trackable_type.to_s
     message += ' ' + notice.activity.trackable.title.to_s if notice.activity.trackable.title.present?
    else
-     message += ' Commented on ' + notice.activity.trackable.commentable_type
+      message += ' Commented on ' + notice.activity.trackable.commentable.title
+
    end
   end
 end
