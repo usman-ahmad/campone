@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,8 +16,14 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+  <% if current_user.present?%>
+      <%= subscribe_to '/messages/private/'+current_user.email.delete('.com') %>
+      <span id = "user_id" style="display:none"><%=current_user.email%></span>
+  <%end%>
 </head>
 <body>
+
   <%= render 'shared/navigation' %>
 
   <div class="container">

@@ -21,8 +21,13 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'projects#index'
-  get 'notifications' => 'notifications#index'
-
+  resource :notifications do
+    member do
+      get 'index'
+      patch 'update'
+    end
+  end
+  # get 'notifications' => 'notifications#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

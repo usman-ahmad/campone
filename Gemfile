@@ -28,13 +28,17 @@ gem 'bootstrap-generators', '~> 3.3.4'
 gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable'
-
 gem "paperclip", "~> 4.3"
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 gem 'public_activity'
 gem 'cancancan', '~> 1.10'
+gem 'font-awesome-sass'
 
+#gem for notifications
+gem 'faye'
+gem 'thin'
+gem 'private_pub'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

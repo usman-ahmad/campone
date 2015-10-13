@@ -4,5 +4,5 @@ class Notification < ActiveRecord::Base
 
   enum status: [:unread, :read]
 
-  before_save { self.status = :unread }
+  before_create { self.status = :unread }
 end

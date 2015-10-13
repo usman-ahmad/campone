@@ -44,16 +44,12 @@ $(document).ready(function(){
 
 });
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+
 
 $(function() {
     var user_id = $('#user_id').text().replace(/\s+/, "")
         user_id = user_id.replace('.com','');
-
       PrivatePub.subscribe('/messages/private/'+user_id, function(data) {
-
         var message = data.message
         var message_parts = message.split('|')
         var notice_id = message_parts[0]

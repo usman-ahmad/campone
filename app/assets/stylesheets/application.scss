@@ -14,9 +14,22 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "devise_bootstrap_views";
+@import "font-awesome-sprockets";
+@import "font-awesome";
 @import "fullcalendar";
 
 .notification {
   border-bottom: solid 1px #CCC;
   padding: 16px 0;
+}
+.custom_badge{
+  background-color: #FD0A0A;
+  padding: 1px 3px;
+  position: absolute;
+  left: 22px;
+  top: 9px;
+}
+.notification_drop_down{
+  width: 260px;
+
 }

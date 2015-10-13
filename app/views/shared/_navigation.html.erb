@@ -16,7 +16,33 @@
         <li><%= link_to 'Notifications', notifications_path %></li>
       </ul>
 
+
       <ul class="nav navbar-nav" style="float: right">
+        <% if current_user %>
+        <% notice_count =  current_user.notifications.where(:status => 'unread').count %>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i><span id = "badge" class="badge custom_badge" <% if notice_count==0 %> <%= 'style=display:none'%><%end%> ><%= notice_count%></span><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <div class="container notification_drop_down">
+              <div class="table-responsive">
+                <table class="table table-hover" id="notification_table">
+                  <span style="float: left;  border-top: none !important; "> Notifications</span>
+                  <span style="float: right;  border-top: none !important; " > <%= link_to 'See all', notifications_path%></span>
+                  <% current_user.notifications.last(5).reverse.each do |notification| %>
+                      <tr id = "<%= notification.id%>" <% if notification.status =='unread' %> <%= 'class=info' %> <% end %> onclick="read_notice(<%= notification.id %>);">
+                        <td>
+                           <%= notification.activity.owner.name if notification.activity.owner %>
+                           <%= render_activity notification.activity %>
+                        </td>
+                        <td><%= time_ago_in_words(notification.created_at) %> </td>
+                      </tr>
+                  <%end%>
+                </table>
+              </div>
+            </div>
+          </ul>
+        </li>
+        <%end%>
         <li>
           <% if current_user %>
             <%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>

@@ -48,13 +48,6 @@ ActiveRecord::Schema.define(version: 20151001074422) do
 
   add_index "attachments", ["project_id"], name: "index_attachments_on_project_id", using: :btree
 
-  create_table "catagories", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.text     "content"
     t.integer  "commentable_id"
@@ -129,10 +122,8 @@ ActiveRecord::Schema.define(version: 20151001074422) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "project_group_id"
-    t.integer  "catagory_id"
   end
 
-  add_index "projects", ["catagory_id"], name: "index_projects_on_catagory_id", using: :btree
   add_index "projects", ["project_group_id"], name: "index_projects_on_project_group_id", using: :btree
 
   create_table "tasks", force: :cascade do |t|
@@ -150,16 +141,6 @@ ActiveRecord::Schema.define(version: 20151001074422) do
 
   add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
   add_index "tasks", ["task_group_id"], name: "index_tasks_on_task_group_id", using: :btree
-
-  create_table "todos", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "project_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "todos", ["project_id"], name: "index_todos_on_project_id", using: :btree
 
   create_table "user_discussions", force: :cascade do |t|
     t.integer  "user_id"
@@ -214,9 +195,7 @@ ActiveRecord::Schema.define(version: 20151001074422) do
   add_foreign_key "invitations", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
-  add_foreign_key "projects", "catagories"
   add_foreign_key "tasks", "projects"
-  add_foreign_key "todos", "projects"
   add_foreign_key "user_discussions", "discussions"
   add_foreign_key "user_discussions", "users"
 end
