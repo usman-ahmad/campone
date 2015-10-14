@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
   validates :name, presence: true
@@ -16,4 +15,19 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  before_save :ensure_authentication_token
+
+  def ensure_authentication_token
+    self.authentication_token ||= generate_authentication_token
+  end
+
+  private
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
 end
