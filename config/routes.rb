@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount API::Root => '/'
+
   resources :projects do
     resources :tasks do
       resources :comments
@@ -27,6 +29,7 @@ Rails.application.routes.draw do
       patch 'update'
     end
   end
+
   # get 'notifications' => 'notifications#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

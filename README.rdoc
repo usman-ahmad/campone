@@ -8,6 +8,12 @@ Things you may want to cover:
 * Ruby version
 
 * System dependencies
+ we are using "faye" for notifications which depends on node.js
+    Please Install node.js from followng link
+ 1.   https://nodejs.org/en/
+ 2. To start notifications Properly we need to start thin server so run following command to properly start server for faye
+    rackup private_pub.ru -s thin -E production
+    Note: if you see no any error its means every thing is going well
 
 * Configuration
 

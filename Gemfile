@@ -34,6 +34,8 @@ gem 'fullcalendar-rails'
 gem 'public_activity'
 gem 'cancancan', '~> 1.10'
 gem 'font-awesome-sass'
+#gem for API
+gem 'grape'
 
 #gem for notifications
 gem 'faye'
