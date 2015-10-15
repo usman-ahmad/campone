@@ -37,6 +37,7 @@ gem 'font-awesome-sass'
 #gem for API
 gem 'grape'
 
+
 #gem for notifications
 gem 'faye'
 gem 'thin'

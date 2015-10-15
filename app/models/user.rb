@@ -16,6 +16,9 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+
+  ##################################################################
+  #Below enclosed code writen for the purpose of generating authentication token for API
   before_save :ensure_authentication_token
 
   def ensure_authentication_token
@@ -28,6 +31,8 @@ class User < ActiveRecord::Base
     loop do
       token = Devise.friendly_token
       break token unless User.where(authentication_token: token).first
+    endauthenticate_user!
     end
   end
+  #################################################################
 end

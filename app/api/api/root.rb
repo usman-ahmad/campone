@@ -6,10 +6,6 @@ module API
     # rescue_from :all, :backtrace => true
     # error_formatter :json, API::ErrorFormatter
 
-    before do
-      error!("401 Unauthorized", 401) unless authenticated
-    end
-
     helpers do
       def warden
         env['warden']
@@ -21,9 +17,11 @@ module API
       end
 
       def current_user
-        warden.user || @user
+         warden.user || @user
       end
     end
+
+
 
     mount API::V1::Root
     # mount API::V2::Root
