@@ -24,6 +24,28 @@ module API
         end
       end
 
+      resource :get_task do
+        desc "Return of task of a project"
+        params do
+          requires :project_id , type: Integer
+          requires :task_id , type: Integer
+        end
+        get do
+          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+          project    =  projects.select { |project| project.id == params[:project_id] }
+          if project.present?
+            task     =  project[0].tasks.select {|task| task.id == params[:task_id]}
+            if task.present?
+             task
+            else
+              "Task is not Present"
+            end
+          else
+            "Project is not found"
+          end
+        end
+      end
+
     end
   end
 end
