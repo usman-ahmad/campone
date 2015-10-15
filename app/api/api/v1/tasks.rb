@@ -10,8 +10,17 @@ module API
 
       resource :tasks do
         desc "Return list of tasks"
+        params do
+          requires :id , type: Integer
+        end
         get do
-           Task.all
+           projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+           project    =  projects.select { |project| project.id == params[:id] }
+          if project.present?
+            project[0].tasks
+          else
+            "Project is not found"
+          end
         end
       end
 
