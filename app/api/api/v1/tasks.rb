@@ -4,16 +4,22 @@ module API
       version 'v1'
       format :json
 
+      helpers do
+        def project
+          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+          project    = projects.select { |project| project.id == params[:project_id].to_i  }
+          project[0]
+        end
+      end
+
       resource :tasks do
-        desc "Return list of tasks"
+        desc "Return list of tasks related to a project"
         params do
-          requires :id , type: Integer
+          requires :project_id , type: Integer
         end
         get do
-           projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
-           project    =  projects.select { |project| project.id == params[:id] }
           if project.present?
-            project[0].tasks
+             project.tasks
           else
             "Project is not found"
           end
@@ -27,10 +33,8 @@ module API
           requires :task_id , type: Integer
         end
         get do
-          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
-          project    =  projects.select { |project| project.id == params[:project_id] }
           if project.present?
-            task     =  project[0].tasks.select {|task| task.id == params[:task_id]}
+            task     =  project.tasks.where(id:params[:task_id]).first
             if task.present?
              task
             else
@@ -49,12 +53,10 @@ module API
           requires :task_id , type: Integer
         end
         get do
-          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
-          project    =  projects.select { |project| project.id == params[:project_id] }
           if project.present?
-            task     =  project[0].tasks.select {|task| task.id == params[:task_id]}
+            task     =  project.tasks.where(id:params[:task_id]).first
             if task.present?
-              task[0].delete
+              task.delete
               "Task deleted"
             else
               "Task is not Present"

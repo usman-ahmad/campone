@@ -20,7 +20,7 @@ module API
         end
 
       resource:discucssion do
-        desc "return a selected discussion"
+        desc "return a selected discussion of a project"
        params do
         requires :discussion_id, type: Integer
        end
@@ -30,13 +30,12 @@ module API
       end
 
       resource:create_discucssion do
-        desc "return a selected discussion"
+        desc "create a new discussion on project"
         params do
          requires :title, type: String
          requires :content, type: String
          requires :private, type: Boolean
          requires :discussion_group_id, type: Integer
-
         end
         get do
           project.discussions.create(title:params[:title],content:params[:content],private:params[:private],discussion_group_id:params[:discussion_group_id]) unless !project.present?

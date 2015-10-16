@@ -17,7 +17,7 @@ module API
       end
 
       resource :get_comments do
-        desc "Return Comments of a task or discussionthat is related to a specific project"
+        desc "Return Comments of a task or discussion that is related to a specific project"
         params do
           requires :project_id , type: Integer
         end

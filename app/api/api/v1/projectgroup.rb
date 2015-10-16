@@ -15,7 +15,7 @@ module API
         desc "Create a Project Group"
         params do
           requires :name, type: String
-          requires :type, type:String
+          requires :type, type: String
         end
         post do
          project = ProjectGroup.create(name:params[:name], type:params[:type])

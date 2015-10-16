@@ -2,7 +2,6 @@ module API
   module V1
     class Root < Grape::API
 
-
       before do
         error!("401 Unauthorized", 401) unless authenticated
       end
