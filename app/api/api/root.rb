@@ -21,9 +21,8 @@ module API
       end
     end
 
-
-
     mount API::V1::Root
+    mount API::Apisessions
     # mount API::V2::Root
   end
 end

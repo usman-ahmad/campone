@@ -4,10 +4,6 @@ module API
       version 'v1'
       format :json
 
-      before do
-        error!("401 Unauthorized", 401) unless authenticated
-      end
-
       resource :project_groups do
         desc "Return list of Groups"
         get do

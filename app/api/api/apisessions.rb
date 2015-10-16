@@ -1,5 +1,4 @@
 module API
-  module V1
     class Apisessions < Grape::API
       version 'v1'
       format :json
@@ -32,4 +31,3 @@ module API
 
     end
   end
-end

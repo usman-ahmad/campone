@@ -4,10 +4,6 @@ module API
       version 'v1'
       format :json
 
-      before do
-        error!("401 Unauthorized", 401) unless authenticated
-      end
-
       resource :tasks do
         desc "Return list of tasks"
         params do
@@ -25,7 +21,7 @@ module API
       end
 
       resource :get_task do
-        desc "Return of task of a project"
+        desc "Return task of a project"
         params do
           requires :project_id , type: Integer
           requires :task_id , type: Integer
