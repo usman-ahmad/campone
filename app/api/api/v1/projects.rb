@@ -11,6 +11,17 @@ module API
         end
       end
 
+      resource :project do
+        desc "Return a poject"
+        params do
+          requires :project_id , type: Integer
+        end
+        get do
+          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+           project = projects.select { |project| project.id == params[:project_id].to_i } unless !projects.present?
+        end
+      end
+
       resource :create_project do
         desc "create a new project"
         params do
