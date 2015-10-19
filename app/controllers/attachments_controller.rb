@@ -7,10 +7,11 @@ class AttachmentsController < ApplicationController
 
   def new
     @attachment = @project.attachments.build
+    @attachment.build_attachment_group
   end
 
   def create
-    if @project.create_attachments params[:attachments_array]
+    if @project.create_attachments(params[:attachments_array], params[:attachment])
       redirect_to project_attachments_path(@project), notice: 'Attachment was successfully created.'
     else
       @attachment = @project.attachments.build
@@ -29,5 +30,8 @@ class AttachmentsController < ApplicationController
 
   def set_project
     @project = current_user.projects.find(params[:project_id])
+  end
+  def attachment_params
+    params.require(:attachment).permit(:attachment_group_id, :attachment_group_attributes => [:name])
   end
 end
