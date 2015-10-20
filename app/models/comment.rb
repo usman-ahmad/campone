@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :user
   has_many :attachments, as: :attachable
-
+  has_many :replays
 
   def commentable
     self.commentable_type.constantize.find(commentable_id)

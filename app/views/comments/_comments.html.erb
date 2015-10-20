@@ -6,11 +6,17 @@
       <div class="panel-heading">
         <strong><%= comment.user.email %></strong> <span class="text-muted"><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago </span>
       <%= link_to 'Edit', edit_project_task_comment_path(@project, @commentable,comment)%>
+      <%= link_to 'Replay', new_project_task_comment_replay_path(@project, @commentable,comment)%>
       </div>
       <div class="panel-body comment">
         <%= simple_format comment.content %>
+        <% comment.replays.each do |replay| %>
+            <div class="panel-body comment">
+             <%= replay.user.email%>
+             <%= replay.content%>
+            </div>
+        <% end %>
       </div>
-
       <%= render 'attachments/list_attachments', resource: comment %>
     </div>
   <% end %>
