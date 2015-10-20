@@ -14,6 +14,7 @@
   <tbody>
   <% @attachments.each do |attachment| %>
     <tr><td><%= attachment.attachment_file_name %></td>
+      <td><%= link_to 'Edit', edit_project_attachment_path(@project, attachment), method: :get %></td>
       <td><%= link_to 'Delete', project_attachment_path(@project, attachment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>

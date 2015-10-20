@@ -71,7 +71,9 @@ class DiscussionsController < ApplicationController
 
   def discussion_params
     params.require(:discussion).permit(:title, :content, :project_id, :private, :discussion_group_id, :discussion_group_attributes => [:name],
-                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
+                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ],
+
+                                        )
   end
 
   def build_user_discussions

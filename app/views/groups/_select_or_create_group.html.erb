@@ -13,7 +13,7 @@
       <%= form_builder.fields_for resource_group do |pg| %>
         <%= form_builder.label :name, 'OR create New', class: "col-sm-4 control-label" %>
         <div class="col-sm-6">
-          <%= pg.text_field :name, class: "form-control"%>
+          <%= pg.text_field :name, class: "form-control", value: ""%>
         </div>
       <% end %>
     </div>

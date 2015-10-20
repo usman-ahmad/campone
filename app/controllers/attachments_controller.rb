@@ -1,5 +1,6 @@
 class AttachmentsController < ApplicationController
   before_action :set_project
+  before_action :set_attachment,    only: [:edit, :update]
 
   def index
     @attachments = @project.attachments
@@ -26,11 +27,27 @@ class AttachmentsController < ApplicationController
     redirect_to project_attachments_path(@project), notice: 'Attachment was successfully deleted.'
   end
 
+  def edit
+
+  end
+
+  def update
+    if @attachment.update(attachment_params)
+      redirect_to project_attachments_path(@project), notice: 'Attachment was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   private
+  def set_attachment
+     @attachment = @project.attachments.find(params[:id])
+  end
 
   def set_project
     @project = current_user.projects.find(params[:project_id])
   end
+
   def attachment_params
     params.require(:attachment).permit(:attachment_group_id, :attachment_group_attributes => [:name])
   end
