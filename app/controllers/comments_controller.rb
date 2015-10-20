@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_project
   before_action :load_commentable
+  before_action :comment, only: [:edit, :update]
 
   def index
     @comments = @commentable.comments
@@ -22,16 +23,29 @@ class CommentsController < ApplicationController
     end
   end
 
-  private
+  def edit
+    @comment
+  end
 
+  def update
+    @comment.attachments_array=params[:attachments_array]
+    if @comment.update(comments_params)
+      redirect_to [@project,@commentable], notice: "Comment updated."
+    end
+  end
+
+  private
   def comments_params
-    params.require(:comment).permit(:content).merge(user: current_user)
+    params.require(:comment).permit(:content, attachments_array: []).merge(user: current_user)
   end
   # def load_commentable
   #   resource, id = request.path.split('/')[1, 2]
   #   @commentable = resource.singularize.classify.constantize.find(id)
   # end
 
+  def comment
+    @comment = Comment.find_by(id:params[:id])
+  end
   def load_commentable
     klass = [Task, Discussion].detect { |c| params["#{c.name.underscore}_id"] }
     @commentable = klass.find(params["#{klass.name.underscore}_id"])
