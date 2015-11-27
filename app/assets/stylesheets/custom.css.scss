@@ -1,1 +1,170 @@
+/*
+
+1.00 Reset CSS
+2.00 Fonts CSS
+3.00 Banner Section
+4.00 Custom Navbar
+
+*/
+
+
 @import "reset";
+@import "fonts";
+
+/*
+  3.00 Banner CSS
+  ---------------
+*/
+
+#banner {
+  width: 100%;
+  height: auto;
+  color: #fff;
+  background: image-url("banner.jpg") no-repeat bottom center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+  background-attachment: fixed;
+}
+
+.banner-body {
+  padding: 130px 0 80px 0;
+  vertical-align: middle;
+}
+
+.banner-button {
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 600;
+  font-size: 12px;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  padding: 10px 15px;
+  border: 2px solid #39A1E7;
+}
+
+.banner-button:hover, .banner-button:focus {
+  background-color: #39A1E7;
+  color: #fff;
+}
+
+#get-started {
+  color: #fff;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+}
+
+#get-started span {
+  font-weight: 400;
+}
+
+.signup-input {
+  margin-right: 10px;
+}
+
+.signup-input input {
+  border-radius: 2px;
+}
+
+.signup-button {
+  border-radius: 2px;
+}
+
+.terms {
+  color: #A2AFBC;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.terms a {
+  color: #39A1E7;
+  cursor: pointer;
+}
+
+.terms a:hover {
+  color: #0693F1;
+}
+
+.fancy {
+  line-height: 0.5;
+  text-align: center;
+}
+
+.fancy span {
+  display: inline-block;
+  position: relative;
+}
+
+.fancy span:before,
+.fancy span:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 1px solid #29314b;
+  top: 0;
+  width: 100px;
+}
+
+.fancy span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.fancy span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+/*
+  4.00 Custom Navbar CSS
+  ----------------------
+*/
+
+.custom-navbar {
+  padding: 20px 150px 0 100px;
+  border-radius: 0 !important;
+  border: 0;
+  background-image: none;
+  background-color: transparent;
+}
+
+.custom-navbar .navbar-brand {
+  color: #fff;
+  font-family: LogoSpecial;
+  font-size: 80px;
+}
+
+.custom-navbar .navbar-brand:hover, .custom-navbar .navbar-brand:focus {
+  color: #fff;
+}
+
+.custom-navbar .navbar-nav > li > a {
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #fff;
+}
+
+.custom-navbar .navbar-nav > li > a:hover,
+.custom-navbar .navbar-nav > li > a:focus {
+  color: #39A1E7;
+}
+
+.btn-login {
+  border-radius: 0;
+  border-color: #ccc;
+  padding: 7px 20px !important;
+}
+
+.btn-login:hover, .btn-login:focus {
+  border-color: #39A1E7;
+}
+
+.btn-register {
+  border-radius: 0;
+  border-color: #39A1E7;
+  padding: 7px 20px !important;
+}
