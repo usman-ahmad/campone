@@ -4,6 +4,7 @@
 2.00 Fonts CSS
 3.00 Banner Section
 4.00 Custom Navbar
+5.00 Login Modal CSS
 
 */
 
@@ -167,4 +168,59 @@
   border-radius: 0;
   border-color: #39A1E7;
   padding: 7px 20px !important;
+}
+
+/*
+  5.00 Login Modal CSS
+  ----------------------
+*/
+.login-dailog {
+  width: 400px;
+}
+
+.login-header {
+  background-color: #39A1E7;
+  color: #fff;
+  padding: 10px 0 10px 20px;
+}
+
+.login-content {
+  border-radius: 0;
+}
+
+.login-body {
+  padding: 20px;
+}
+
+.or_div {
+  position: relative;
+  margin-top: 16px;
+}
+
+.line {
+  border-bottom: 1px solid #ddd;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.text {
+  text-align: center;
+  font-size: 14px;
+  display: block;
+  z-index: 10;
+  position: relative;
+}
+
+.text span {
+  background-color: #fff;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.modal-label {
+  font-weight: normal;
+  color: #787B70;
 }

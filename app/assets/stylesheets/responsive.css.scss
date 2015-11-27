@@ -12,6 +12,12 @@
   .signup-button {
     width: 68%;
   }
+  .custom-navbar {
+    padding: 20px 15px 0 15px;
+  }
+  .login-dailog {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -20,8 +26,3 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-  .custom-navbar {
-    padding: 20px 15px 0 15px;
-  }
-}
