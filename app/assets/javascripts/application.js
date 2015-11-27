@@ -18,5 +18,6 @@
 //= require turbolinks
 //= require moment
 //= require fullcalendar
+//= require nav
 
 //= require_tree .
