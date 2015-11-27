@@ -26,15 +26,15 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'projects#index'
   resource :notifications do
     member do
       get 'index'
       patch 'update'
     end
   end
+  root 'welcome#index'
+  get 'notifications' => 'notifications#index'
 
-  # get 'notifications' => 'notifications#index'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
