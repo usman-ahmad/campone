@@ -1,0 +1,27 @@
+@media screen and (max-width: 768px) {
+  .fancy span:before,
+  .fancy span:after {
+    width: 100px;
+  }
+  .banner-body {
+    padding-top: 70px;
+  }
+  .signup-input {
+    margin: 0 80px 15px 80px;
+  }
+  .signup-button {
+    width: 68%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .custom-navbar {
+    padding: 20px 50px 0 70px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-navbar {
+    padding: 20px 15px 0 15px;
+  }
+}
