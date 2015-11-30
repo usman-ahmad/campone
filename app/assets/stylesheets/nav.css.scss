@@ -354,61 +354,11 @@ header.is-fixed {
   transform: translateY(-50%) rotate(90deg);
 }
 
-#cd-lateral-nav .socials {
-  padding: 0 32px;
+.social-icons li {
+  display: inline-block;
+  margin-left: 30px;
 }
 
-#cd-lateral-nav .socials:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-#cd-lateral-nav .socials a {
-  height: 32px;
-  width: 32px;
-  float: left;
-  padding: 0;
-  background-image: url("../../images/cd-socials.svg");
-  background-repeat: no-repeat;
-  background-size: 128px 64px;
-  background-color: #FFF;
-  margin-right: .5em;
-  border-radius: 0.25em;
-}
-
-#cd-lateral-nav .socials a.cd-twitter {
-  background-position: 0 0;
-}
-
-#cd-lateral-nav .socials a.cd-github {
-  background-position: -32px 0;
-}
-
-#cd-lateral-nav .socials a.cd-facebook {
-  background-position: -64px 0;
-}
-
-#cd-lateral-nav .socials a.cd-google {
-  background-position: -96px 0;
-}
-
-.no-touch #cd-lateral-nav .socials a:hover {
-  background-color: #4e6361;
-}
-
-.no-touch #cd-lateral-nav .socials a:hover.cd-twitter {
-  background-position: 0 -32px;
-}
-
-.no-touch #cd-lateral-nav .socials a:hover.cd-github {
-  background-position: -32px -32px;
-}
-
-.no-touch #cd-lateral-nav .socials a:hover.cd-facebook {
-  background-position: -64px -32px;
-}
-
-.no-touch #cd-lateral-nav .socials a:hover.cd-google {
-  background-position: -96px -32px;
+.social-icons li a {
+  padding: 0 !important;
 }

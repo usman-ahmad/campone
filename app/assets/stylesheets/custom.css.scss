@@ -5,6 +5,7 @@
 3.00 Banner Section
 4.00 Custom Navbar
 5.00 Login Modal CSS
+6.00 Dashboard Navigation CSS
 
 */
 
@@ -223,4 +224,55 @@
 .modal-label {
   font-weight: normal;
   color: #787B70;
+}
+
+/*
+  6.00 Dashboard Navigation CSS
+  ---------------
+*/
+
+.dasboard-navbar {
+  margin-bottom: 0;
+  color: #fff;
+  border: 0;
+  border-radius: 0;
+  background-color: #39A1E7;
+  height: 60px;
+  padding: 6px 10px 5px;
+}
+
+.left-nav {
+  margin-top: 13px;
+  padding: 0;
+  list-style: none;
+}
+
+.left-nav > li {
+  display: inline-block;
+}
+
+.dashboard-nav {
+  padding: 9px 12px !important;
+  background-color: #5AB5F1;
+  border: 1px solid #278fd6;
+}
+
+.dashboard-nav i {
+  color: #fff;
+}
+
+.left-nav li a {
+  border-right: 0;
+  margin-right: -4px;
+}
+
+.left-nav li:last-child a {
+  border-right: 1px solid #278fd6;
+}
+
+.notification-badge {
+  padding: 3px 4px;
+  position: absolute;
+  background-color: #f00;
+  top: 6px;
 }
