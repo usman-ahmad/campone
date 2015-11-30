@@ -8,8 +8,6 @@
 6.00 Dashboard Navigation CSS
 
 */
-
-
 @import "reset";
 @import "fonts";
 
@@ -275,4 +273,96 @@
   position: absolute;
   background-color: #f00;
   top: 6px;
+}
+
+.project {
+  box-sizing: border-box;
+  margin: 20px 20px 0 0;
+  position: relative;
+  height: 272px;
+  width: 220px;
+  float: left;
+  padding: 3px 20px 20px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  box-shadow: 0 2px 0 rgba(0, 0, 1, 0.05);
+  cursor: pointer;
+}
+
+.project-name {
+  color: #000;
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 400;
+  width: 165px;
+  height: 48px;
+  overflow: hidden;
+}
+
+.project .cog_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 30px;
+}
+
+.cog-setting {
+  color: #8D8C8C;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  display: inline-block;
+}
+
+.project .color_corner {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  border: 1px solid transparent;
+  border-top-right-radius: 3px;
+  width: 20px;
+  height: 20px;
+}
+
+.project .triangle {
+  border-style: solid;
+  border-width: 0 20px 20px 0;
+  border-color: inherit;
+}
+
+.project-icon {
+  display: block;
+  float: left;
+  line-height: 16px;
+  border-radius: 3px;
+  border: 1px solid #dedede;
+  padding: 9px 12px;
+  margin-right: 4px;
+  background-color: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  color: #ccc;
+}
+
+.project-icon:hover, .project-icon:focus {
+  border-color: #bdbdbd;
+  color: #000;
+}
+
+.project-user {
+  position: absolute;
+  bottom: 15px;
+  left: 16px;
+}
+
+.project-user a {
+  color: #fff;
+  padding: 10px;
+  border-radius: 100%;
+}
+
+.project-description {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

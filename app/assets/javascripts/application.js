@@ -19,5 +19,6 @@
 //= require moment
 //= require fullcalendar
 //= require nav
+//= require custom
 
 //= require_tree .
