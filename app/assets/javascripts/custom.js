@@ -1,10 +1,13 @@
 var ready = function () {
-    $(".project").click(function () {
+    $(".anchor-container").click(function () {
         window.location = $(this).data('href');
     });
 
-    $(".project a").click(function (e) {
+    $(".anchor-container a").click(function (e) {
         e.stopPropagation();
+    });
+    $(function() {
+        $( "#sortable" ).sortable();
     });
 };
 $(document).ready(ready);
