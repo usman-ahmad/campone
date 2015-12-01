@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use postgresql as the database for Active Record
@@ -29,20 +28,21 @@ gem 'devise'
 gem 'devise-bootstrap-views'
 gem 'devise_invitable'
 
-gem "paperclip", "~> 4.3"
+gem 'paperclip', '~> 4.3'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 gem 'public_activity'
 gem 'cancancan', '~> 1.10'
 gem 'font-awesome-sass'
+
 #gem for API
 gem 'grape'
-
 
 #gem for notifications
 gem 'faye'
 gem 'thin'
 gem 'private_pub'
+
 # gem for bootstrap social icons
 gem 'bootstrap-social-rails'
 
@@ -56,8 +56,11 @@ gem 'bootstrap-social-rails'
 # gem 'capistrano-rails', group: :development
 
 group :development do
-  gem "letter_opener"
+  gem 'letter_opener'
   gem 'better_errors'
+
+  # rails_best_practices is a code metric tool to check the quality of Rails code.
+  gem 'rails_best_practices'
 end
 
 group :development, :test do
@@ -72,4 +75,3 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
 end
-
