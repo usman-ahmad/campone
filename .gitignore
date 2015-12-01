@@ -4,12 +4,50 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore application configuration
+# /config/secrets.yml needed for solano and may be heroku also
+/config/database.yml
+
 # Ignore bundler config.
 /.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
 /tmp
-/config/database.yml
+
+# Ignore IDE artifacts
+/.idea
+*.sublime-project
+*.sublime-workspace
+
+
+# Ignore coverage results from SimpleCov for https://codeclimate.com/
+coverage
+.solano*
+
+# Emacs files
+\#*#
+.\#*
+
+# Asset pipeline output
+/public/assets/
+
+# What happens in Vegas stays in Vegas
 /public/system
+/public/uploads
+
+# Ignore  local environment variables
+/config/initializers/ignored_vars.rb
+
+delete_me.*
+
+# CarrierWave local storage for development
+/public/media_items/
+
+# Because macs
+.DS_Store
