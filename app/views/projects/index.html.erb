@@ -1,34 +1,83 @@
-<div class="page-header">
-  <%= link_to new_project_path, class: 'btn btn-primary' do %>
-      <span class="glyphicon glyphicon-plus"></span>
-      New Project
-  <% end %>
-  <h1>Listing projects</h1>
-</div>
+<div class="row">
+  <div class="col-md-12 col-sm-12 nopadding-left">
+    <div class="col-md-10 col-sm-8 nopadding-left">
+      <section class="bg-white">
+        <div class="custom-content-container">
+          <%= content_tag_for(:tr, @projects) do |project| %>
+              <div class="project anchor-container" data-href="<%= project_tasks_path(project) %>">
+                <h3 class="project-name"><%= project.name %></h3>
 
-<%= content_tag_for(:tr, @projects) do |project| %>
-    <div class="project anchor-container" data-href="<%= project_tasks_path(project) %>">
-      <h3 class="project-name"><%= project.name %></h3>
+                <div class="color_corner" style="border-right-color: #DC4138;">
+                  <div class="triangle"></div>
+                </div>
+                <div class="cog_container">
+                  <span class="cog-setting"><i class="fa fa-cog"></i></span>
+                </div>
+                <p class="project-description mg-b10"><%= project.description %></p>
 
-      <div class="color_corner" style="border-right-color: #DC4138;">
-        <div class="triangle"></div>
-      </div>
-      <div class="cog_container">
-        <span class="cog-setting"><i class="fa fa-cog"></i></span>
-      </div>
-      <p class="project-description mg-b10"><%= project.description %></p>
+                <div class="project-apps mg-b50">
+                  <a href="<%= project_tasks_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="TO-DO's"><i class="fa fa-check-circle-o"></i></a>
+                  <a href="<%= project_discussions_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Discussions"><i class="fa fa-comments-o"></i></a>
+                  <a href="<%= project_attachments_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Files"><i class="fa fa-folder-open-o"></i></a>
+                  <a href="<%= project_events_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Calendar"><i class="fa fa-calendar"></i></a>
+                </div>
+                <div class="project-user">
+                  <a href="#" style="background-color: #AB5733">JB</a>
+                  <a href="#" style="background-color: #DC4138">GS</a>
+                  <a href="#" style="background-color: #329350">TJ</a>
+                  <a href="#" style="background-color: #E8BB46">UA</a>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </section>
+    </div>
+    <div class="col-md-2 col-sm-4">
+      <a href="widgets.html" class="widget">
+        <img class="img-responsive" src="/assets/widgets_big.png">
 
-      <div class="project-apps mg-b50">
-        <a href="<%= project_tasks_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="TO-DO's"><i class="fa fa-check-circle-o"></i></a>
-        <a href="<%= project_discussions_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Discussions"><i class="fa fa-comments-o"></i></a>
-        <a href="<%= project_attachments_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Files"><i class="fa fa-folder-open-o"></i></a>
-        <a href="<%= project_events_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Calendar"><i class="fa fa-calendar"></i></a>
-      </div>
-      <div class="project-user">
-        <a href="#" style="background-color: #AB5733">JB</a>
-        <a href="#" style="background-color: #DC4138">GS</a>
-        <a href="#" style="background-color: #329350">TJ</a>
-        <a href="#" style="background-color: #E8BB46">UA</a>
+        <div class="widget-title mg-l5 pull-left">My Widget</div>
+        <div><i class="fa fa-arrow-right pull-right"></i></div>
+      </a>
+
+      <div class="newProject-contianer">
+        <div class="img-back"></div>
+        <a href="create_project.html" class="create-project">
+          Create New Project
+          <span class="pull-right mg-r5"><i class="fa fa-plus-circle"></i></span>
+        </a>
+
+        <div class="project-anchors">
+          <a class="anchor-template">
+            <i class="fa fa-plus-circle"></i>
+            Custom Project
+          </a>
+          <a class="anchor-template">
+            <i class="fa fa-shopping-cart"></i>
+            Shopping List
+          </a>
+          <a class="anchor-template">
+            <i class="fa fa-briefcase"></i>
+            Vacation Planning
+          </a>
+          <a class="anchor-template">
+            <i class="fa fa-circle-o-notch"></i>
+            Our Wedding
+          </a>
+          <a class="anchor-template">
+            <i class="fa fa-gift"></i>
+            Surprise Party
+          </a>
+          <a class="anchor-template">
+            <i class="fa fa-tasks"></i>
+            Classroom Project
+          </a>
+          <a class="anchor-template">
+            <i class="fa fa-map-marker"></i>
+            Roadtrip
+          </a>
+        </div>
       </div>
     </div>
-<% end %>
+  </div>
+</div>
