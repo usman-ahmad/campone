@@ -13,23 +13,26 @@
     <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js", "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
   <![endif]-->
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= javascript_include_tag "http://localhost:9292/faye.js" %>
-  <% if current_user.present?%>
+  <% if current_user.present? %>
       <%= subscribe_to '/messages/private/'+current_user.email.delete('.com') %>
-      <span id = "user_id" style="display:none"><%=current_user.email%></span>
-  <%end%>
+      <span id="user_id" style="display:none"><%= current_user.email %></span>
+  <% end %>
 </head>
 <body>
-  <%= render 'shared/top_navigation' %>
-  <div class="container">
-    <div id="content" class='<%="col-md-6 col-md-offset-3" if devise_controller? -%>' >
-      <%= render 'shared/flash' %>
-      <%= yield  %>
-    </div>
+<%= render 'shared/top_navigation' %>
+
+<%= yield :tab_nav if content_for?(:tab_nav) %>
+
+<div class="container">
+  <div id="content" class='<%= "col-md-6 col-md-offset-3" if devise_controller? -%>'>
+    <%= render 'shared/flash' %>
+    <%= yield %>
   </div>
-  <%= render 'shared/side_navigation' %>
+</div>
+<%= render 'shared/side_navigation' %>
 </body>
 </html>

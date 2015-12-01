@@ -1,3 +1,7 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
+<% end %>
+
 <div class="page-header">
   <%= link_to projects_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>

@@ -1,3 +1,7 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
+<% end %>
+
 <%= form_tag project_tasks_path(@project), :method => 'get' do %>
   <p>
     <%= text_field_tag :search_text, params[:search_text] %>

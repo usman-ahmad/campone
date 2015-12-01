@@ -122,6 +122,14 @@
   ----------------------
 */
 
+.custom-container {
+  margin: 50px 30px 20px 30px;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0;
+}
+
 .custom-navbar {
   padding: 20px 150px 0 100px;
   border-radius: 0 !important;

@@ -1,3 +1,6 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: 'calendar' %>
+<% end %>
 
 <div id='calendar'></div>
 <div class="col-sm-5 my-custom-popup"  id="addEvent" style="display: none; position: absolute; z-index: 1000; background-color: white
