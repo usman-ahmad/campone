@@ -46,6 +46,7 @@ gem 'private_pub'
 # gem for bootstrap social icons
 gem 'bootstrap-social-rails'
 gem 'jquery-ui-sass-rails'
+gem 'ckeditor'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

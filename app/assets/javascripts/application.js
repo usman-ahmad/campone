@@ -18,6 +18,7 @@
 //= require bootstrap
 //= require turbolinks
 //= require moment
+//= require ckeditor/init
 //= require fullcalendar
 //= require nav
 //= require custom
