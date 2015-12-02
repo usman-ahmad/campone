@@ -123,7 +123,7 @@
 */
 
 .custom-container {
-  margin: 50px 30px 20px 30px;
+  margin: 20px 0 20px 0;
 }
 
 .nav-tabs > li > a {
@@ -424,12 +424,7 @@
 }
 .custom-content-container {
   overflow: hidden;
-  padding: 50px;
-}
-@media  screen and (max-width: 768px) {
-  .custom-content-container {
-    padding: 10px;
-  }
+  padding-top: 30px;
 }
 .widget {
   overflow: hidden;
@@ -498,4 +493,72 @@
 }
 .anchor-template:hover i {
   color: #AFAAAA;
+}
+.custom-plus {
+  background-color: #37B800;
+  color: #fff;
+  padding: 6px 7px !important;
+}
+.custom-plus:hover , .custom-plus:focus {
+  color: #37B800;
+  background-color: #fff;
+  border: 1px solid #dedede;
+  padding: 6px 6px !important;
+}
+.custom-select-container {
+  width: 30%;
+  float: left;
+}
+.app-logo {
+  text-align: center;
+  font-weight: normal;
+  font-family: LogoSpecial;
+  font-size: 100px;
+  color: #b9babd;
+}
+.invite-logo {
+  text-align: center;
+  color: #232323;
+  font-size: 24px;
+  font-weight: 300;
+}
+.invite-form {
+  overflow: hidden;
+  padding: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #fff;
+}
+.todo-form {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+.todo-fields-contianer {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.todo-label {
+  font-weight: 400;
+  padding-top: 5px;
+  width: 15%;
+  float: left;
+}
+.custom-input-container {
+  width: 20%;
+  float: left;
+}
+.newgroup_icon i, {
+  cursor: pointer;
+  margin-top: 9px;
+  margin-left: 10px;
+  font-size: 15px;
+  color: #33AC00;
+}
+.add-todo-container {
+  overflow: hidden;
+  background-color: #f7fafc;
+  border-radius: 3px;
+  border: 1px solid #d4e0eb;
+  padding: 15px;
+
 }

@@ -1,21 +1,22 @@
-
-<div class="form-group">
-  <% resource_group_id  = "#{resource.class.name.underscore}_group_id".to_sym %>
-  <% resource_group  = "#{resource.class.name.underscore}_group".to_sym %>
-
-  <%= form_builder.label resource_group_id, 'Group ', class: "col-sm-2 control-label" %>
-  <div class="col-sm-10" style="padding: 0">
-    <div class="col-sm-3">
-      <%= form_builder.collection_select(resource_group_id, resource_group.to_s.classify.constantize.all, :id, :name,
-                              { :include_blank =>  'None Specified', :selected => resource.send(resource_group_id) }, class: 'form-control') %>
-    </div>
-    <div class="col-sm-8">
-      <%= form_builder.fields_for resource_group do |pg| %>
-        <%= form_builder.label :name, 'OR create New', class: "col-sm-4 control-label" %>
-        <div class="col-sm-6">
-          <%= pg.text_field :name, class: "form-control", value: ""%>
+<div id="showField-files" class="todo-fields-contianer">
+  <% resource_group_id = "#{resource.class.name.underscore}_group_id".to_sym %>
+  <% resource_group = "#{resource.class.name.underscore}_group".to_sym %>
+  <%= form_builder.label resource_group_id, 'Group ', class: "todo-label" %>
+  <div class="custom-select-container">
+    <%= form_builder.collection_select(resource_group_id, resource_group.to_s.classify.constantize.all, :id, :name,
+                                       {:include_blank => 'None Specified', :selected => resource.send(resource_group_id)}, class: 'form-control') %>
+  </div>
+    <span class="newgroup_icon">
+        <i class="fa fa-plus-circle"></i>
+    </span>
+</div>
+<div id="hideField-files" class="hide">
+  <div class="todo-fields-contianer">
+    <%= form_builder.fields_for resource_group do |pg| %>
+        <%= form_builder.label :name, 'New Group', class: "todo-label" %>
+        <div class="custom-input-container" style="width: 80%;">
+          <%= pg.text_field :name, class: "form-control", value: "" %>
         </div>
-      <% end %>
-    </div>
+    <% end %>
   </div>
 </div>

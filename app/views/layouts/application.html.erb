@@ -25,9 +25,8 @@
 <body>
 <%= render 'shared/top_navigation' %>
 
-<%= yield :tab_nav if content_for?(:tab_nav) %>
-
-<div class="custom-container">
+<div class="custom-container container-fluid">
+  <%= yield :tab_nav if content_for?(:tab_nav) %>
   <div id="content" class='<%= "col-md-6 col-md-offset-3" if devise_controller? -%>'>
     <%= render 'shared/flash' %>
     <%= yield %>

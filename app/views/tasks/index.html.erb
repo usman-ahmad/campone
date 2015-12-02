@@ -27,7 +27,7 @@
   <div class="col-md-9">
     <h3 class="heading-3">To-Do list</h3>
     <ul id="sortable">
-      <%= content_tag_for(:tr, @tasks) do |task| %>
+      <% @tasks.each do |task| %>
           <li class="ui-state-default custom-ui-state anchor-container" data-href="<%= project_task_path(@project, task) %>">
             <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
