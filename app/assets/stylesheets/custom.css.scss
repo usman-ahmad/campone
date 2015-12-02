@@ -6,6 +6,10 @@
 4.00 Custom Navbar
 5.00 Login Modal CSS
 6.00 Dashboard Navigation CSS
+7.00 Task List css
+8.00 Dashboard Home CSS
+9.00 Create Project CSS
+10.00 Task Show CSS
 
 */
 @import "reset";
@@ -374,8 +378,25 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-#sortable { list-style-type: none; margin: 0; padding: 0; }
-#sortable li {margin: 0 3px 3px 3px;  padding: 6px 9px 9px 20px; height: 33px; cursor: pointer}
+
+/*
+  7.00 Task List css
+  ------------------
+*/
+
+#sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#sortable li {
+  margin: 0 3px 3px 3px;
+  padding: 6px 9px 9px 20px;
+  height: 33px;
+  cursor: pointer
+}
+
 @media screen and (max-width: 768px) {
   #sortable li {
     height: 50px;
@@ -419,6 +440,12 @@
 .tag a {
   color: #2178c3;
 }
+
+/*
+  8.00 Dashboard Home CSS
+  -----------------------
+*/
+
 .nopadding-left {
   padding-left: 0 !important;
 }
@@ -494,6 +521,12 @@
 .anchor-template:hover i {
   color: #AFAAAA;
 }
+
+/*
+  9.00 Create Project CSS
+  -----------------------
+*/
+
 .custom-plus {
   background-color: #37B800;
   color: #fff;
@@ -561,4 +594,79 @@
   border: 1px solid #d4e0eb;
   padding: 15px;
 
+}
+
+/*
+  10.00 Task Show CSS
+  -------------------
+*/
+
+.show-page-head {
+  padding: 10px;
+}
+
+.user-img-15 {
+  color: #fff;
+  background-color: #DD4138;
+  padding: 15px;
+  border-radius: 100%;
+}
+
+.todo-head-container {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #dedede;
+}
+
+.todo_name {
+  margin-top: 5px;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.todo-list {
+  color: #99B2D4;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.todo-name {
+  color: #3a4352;
+  margin-top: 3px;
+  font-size: 15px;
+}
+
+.todo-info-list {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.todo-info-list li {
+  padding: 5px 0 5px 0;
+}
+
+.key {
+  font-size: 13px;
+  color: #6f6f6f;
+}
+
+.value {
+  font-size: 13px;
+  font-weight: bold;
+  color: #232323;
+  margin-left: 5px;
+}
+
+.todo-item {
+  overflow: hidden;
+  border-radius: 3px;
+  border: 1px solid #dedede;
+  background-color: #F5F5F5;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.todo-noti-panel {
+  margin-top: 20px;
+  border-radius: 0;
 }
