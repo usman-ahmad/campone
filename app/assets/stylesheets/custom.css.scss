@@ -10,6 +10,7 @@
 8.00 Dashboard Home CSS
 9.00 Create Project CSS
 10.00 Task Show CSS
+11.00 Task Comment Section CSS
 
 */
 @import "reset";
@@ -669,4 +670,48 @@
 .todo-noti-panel {
   margin-top: 20px;
   border-radius: 0;
+}
+
+/*
+  11.00 Task Comment Section CSS
+  ------------------------------
+*/
+
+.comment-heading span {
+  font-weight: 300;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.custom-btn {
+  display: inline-block;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 7px 15px 7px 15px;
+  border: 1px solid #dedede;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  background-color: #fff;
+  color: #3a4352;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: .7;
+}
+
+.custom-btn:hover, .custom-btn:focus {
+  background-color: #39A1E7;
+  color: #fff;
+}
+
+.file {
+  display: inline-block;
+  width: 200px;
+  font-weight: 700;
+  color: #2178c3;
+  text-decoration: none;
+  cursor: pointer;
 }

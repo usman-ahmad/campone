@@ -1,23 +1,33 @@
-<h2>Comments</h2>
-
-<div id="comments">
-  <% @comments.each do |comment| %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <strong><%= comment.user.email %></strong> <span class="text-muted"><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago </span>
-      <%= link_to 'Edit', edit_project_task_comment_path(@project, @commentable,comment)%>
-      <%= link_to 'Replay', new_project_task_comment_replay_path(@project, @commentable,comment)%>
-      </div>
-      <div class="panel-body comment">
-        <%= simple_format comment.content %>
-        <% comment.replays.each do |replay| %>
-            <div class="panel-body comment">
-             <%= replay.user.email%>
-             <%= replay.content%>
-            </div>
-        <% end %>
-      </div>
-      <%= render 'attachments/list_attachments', resource: comment %>
-    </div>
+<div class="col-md-12">
+  <% if @comments.present? %>
+      <h3 class="heading-3 mg-b20">Comments</h3>
   <% end %>
-</div>
+  <ul class="media-list">
+    <% @comments.each do |comment| %>
+        <li class="media">
+          <div class="media-left">
+            <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading comment-heading"><%= comment.user.name %>
+              <span><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago</span></h4>
+
+            <div class="btn-group pull-right" role="group" aria-label="...">
+              <%= link_to 'Reply', new_project_task_comment_replay_path(@project, @commentable, comment), class: "btn btn-default" %>
+              <%= link_to edit_project_task_comment_path(@project, @commentable, comment), class: "btn btn-default" do %>
+                  <i class="fa fa-pencil"></i>
+              <% end %>
+              <%= link_to project_task_comment_path(@project, @commentable, comment), method: :delete, class: "btn btn-default" do %>
+                  <i class="fa fa-trash-o"></i>
+              <% end %>
+            </div>
+            <%= simple_format comment.content %>
+            <% comment.replays.each do |replay| %>
+                <div class="panel-body comment">
+                  <%= replay.content %>
+                </div>
+            <% end %>
+            <%= render 'attachments/list_attachments', resource: comment %>
+          </div>
+        </li>
+    <% end %>

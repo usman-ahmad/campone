@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_project
   before_action :load_commentable
-  before_action :comment, only: [:edit, :update]
+  before_action :comment, only: [:edit, :update, :destroy]
 
   def index
     @comments = @commentable.comments
@@ -32,6 +32,11 @@ class CommentsController < ApplicationController
     if @comment.update(comments_params)
       redirect_to [@project,@commentable], notice: "Comment updated."
     end
+  end
+
+  def destroy
+    @comment.destroy
+    redirect_to :back,  notice: "Comment deleted."
   end
 
   private

@@ -1,15 +1,21 @@
-<%= form_for [@project, @commentable, @comment],  html: { multipart: true } do |f| %>
-
-  <%= render 'shared/error_messages', object: @comment  %>
-  <div class="form-group">
-    <%= f.text_area :content, rows: 8, class: 'form-control' %>
+<div class="clearfix"></div>
+<li class="media" style="border-top: 1px solid #dedede; padding-top: 10px;">
+  <div class="media-left hidden-xs">
+    <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">TJ</span>
   </div>
+  <div class="media-body">
+    <%= form_for [@project, @commentable, @comment], html: {multipart: true} do |f| %>
 
-  <%= render 'attachments/browse_attachments', resource: @comment %>
-
-  <div class="form-group">
-    <div class="col-sm-offset-10 ">
-      <%= f.submit class: "btn btn-primary" %>
-    </div>
+        <%= render 'shared/error_messages', object: @comment %>
+        <div class="form-group">
+          <%= f.cktext_area :content, rows: 8, class: 'form-control' %>
+        </div>
+        <div>
+          <%= f.submit class: "custom-btn" %>
+          <%= render 'attachments/browse_attachments', resource: @comment %>
+        </div>
+    <% end %>
   </div>
-<% end %>
+</li>
+</ul>
+</div>
