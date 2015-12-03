@@ -1,29 +1,32 @@
-<div class="bg-primary task_project_heading">Notifications</div>
-<div class="table-responsive">
-  <% notice_count = current_user.notifications.where(:status => 'unread').count %>
+<% notice_count = current_user.notifications.where(:status => 'unread').count %>
 
-  <% @notifications.each do |notifiable, notifications| %>
-      <%= notifiable.title %>
-      <table class="table table-hover">
-        <% notifications.each do |notification| %>
-            <tr id="<%= notification.id %>notice"
-            <% if notification.status =='unread' %> <%= 'class=info' %>
-                <% end %> onclick="read_notice(<%= notification.id %>);">
-              <td>
-                <%= notification.activity.owner.name if notification.activity.owner %>
-                <%= render_activity notification.activity %>
-              </td>
-              <td>
-                <%= time_ago_in_words(notification.created_at) %>
-              </td>
-            </tr>
-        <% end %>
-        <tr>
-          <td>
-
-          </td>
-        </tr>
-      </table>
-  <% end %>
-
-</div>
+<% @notifications.each_with_index do |(notifiable, notifications), index| %>
+    <div class="col-lg-12 col-md-12">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default notification-panel">
+          <div class="panel-heading unread-message" role="tab" id="headingOne">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= index %>" aria-expanded="true" aria-controls="collapseOne">
+              <h4 class="panel-title">
+                <i class="fa fa-check-circle-o"></i> <%= notifiable.title %>
+              </h4>
+            </a>
+          </div>
+          <div id="<%= index %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <% notifications.each do |notification| %>
+                  <div class="notification-message-container">
+                    <a href="#" class="notification-user" style="background-color: #AB5733">JB</a>
+                    <a id="<%= notification.id %>notice"
+                       <% if notification.status =='unread' %> <%= 'class=info' %>
+                       <% elsif notification.status =='read' %> <%= 'class=success-edit' %>
+                       <% end %> onclick="read_notice(<%= notification.id %>);"><i class="fa fa-check-square"></i></a>
+                      <span class="message-info"><b><%= notification.activity.owner.name if notification.activity.owner %></b>
+                        <%= render_activity notification.activity %> - <%= time_ago_in_words(notification.created_at) %></span>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>

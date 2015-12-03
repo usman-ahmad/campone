@@ -11,6 +11,7 @@
 9.00 Create Project CSS
 10.00 Task Show CSS
 11.00 Task Comment Section CSS
+12.00 Notification Index CSS
 
 */
 @import "reset";
@@ -714,4 +715,94 @@
   color: #2178c3;
   text-decoration: none;
   cursor: pointer;
+}
+
+/*
+  12.00 Notification Index CSS
+  ------------------------------
+*/
+
+.notification-panel {
+  border-radius: 0 !important;
+}
+
+.notification-panel .panel-heading {
+}
+
+.read-message {
+  background-color: #F8F8F8 !important;
+}
+
+.unread-message {
+  background-color: #fff !important;
+}
+
+.unread-message .panel-title {
+  font-weight: 700;
+}
+
+.notification-panel h4 {
+  color: #000;
+  opacity: 0.6;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.notification-panel h4 i {
+  color: #D1D1D1;
+}
+
+.notification-user {
+  color: #fff;
+  padding: 10px;
+  border-radius: 100%;
+}
+
+.icon-edit {
+  margin: 0 10px 0 10px;
+  font-size: 18px;
+  vertical-align: middle;
+  color: #ccc;
+}
+
+.message-info {
+  vertical-align: middle;
+  font-size: 12px;
+}
+
+.notification-message-container {
+  padding: 10px 0;
+}
+
+.btn-viewitem {
+  background-color: #39A1E7;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.btn-viewitem:hover {
+  color: #fff;
+}
+
+.btn-read {
+  border-color: #b1b1b1;
+  background-color: #fff;
+  color: #333;
+  border-radius: 3px;
+}
+
+.notifi-btn-container {
+  text-align: center;
+}
+
+.notification-form {
+  padding: 15px;
+}
+
+.panel * {
+  outline: 0 !important;
+}
+
+.success-edit i {
+  color: #008000;
 }

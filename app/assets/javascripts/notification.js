@@ -7,6 +7,7 @@ $(document).ready(function(){
             update_notice(id)
             $('#'+id).removeClass("info");
             $('#'+id+ 'notice').removeClass("info");
+            $('#'+id+ 'notice' + " > i").css('color', "#008000");
             var notices_count = $('#badge').text().replace(/\s+/, "")
                if(notices_count > 0)
                {

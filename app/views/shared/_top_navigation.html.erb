@@ -3,7 +3,16 @@
     <li><a href="<%= projects_path %>" class="dashboard-nav" title="Dashboard"><i class="fa fa-home"></i></a></li>
     <li><a href="#" class="dashboard-nav" title="My Widgets"><i class="fa fa-tasks"></i></a></li>
     <li>
-      <a class="dashboard-nav" href="#" title="Notification"><i class="fa fa-bell-o"></i><span class="badge notification-badge">42</span></a>
+      <a class="dashboard-nav" href="<%= notifications_path %>" title="Notification">
+        <% if current_user %>
+            <% notice_count = current_user.notifications.where(:status => 'unread').count %>
+            <i class="fa fa-bell-o"></i>
+            <span id="badge" class="badge notification-badge"
+            <% if notice_count==0 %> <%= 'style=display:none' %><% end %> >
+              <%= notice_count %>
+            </span>
+        <% end %>
+      </a>
     </li>
   </ul>
   <a id="cd-menu-trigger"><span class="cd-menu-text"></span><span class="cd-menu-icon"></span></a>
