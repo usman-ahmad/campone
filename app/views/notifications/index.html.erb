@@ -1,26 +1,29 @@
 <div class="bg-primary task_project_heading">Notifications</div>
 <div class="table-responsive">
-  <table class="table table-hover">
-    <tr class="active">
-      <td>Notice</td>
-      <td>Date</td>
-    </tr>
-    <% notice_count =  current_user.notifications.where(:status => 'unread').count %>
-    <% @notifications.each do |notification| %>
-        <tr id = "<%= notification.id%>notice"<% if notification.status =='unread' %> <%= 'class=info' %> <% end %> onclick="read_notice(<%= notification.id %>);">
+  <% notice_count = current_user.notifications.where(:status => 'unread').count %>
+
+  <% @notifications.each do |notifiable, notifications| %>
+      <%= notifiable.title %>
+      <table class="table table-hover">
+        <% notifications.each do |notification| %>
+            <tr id="<%= notification.id %>notice"
+            <% if notification.status =='unread' %> <%= 'class=info' %>
+                <% end %> onclick="read_notice(<%= notification.id %>);">
+              <td>
+                <%= notification.activity.owner.name if notification.activity.owner %>
+                <%= render_activity notification.activity %>
+              </td>
+              <td>
+                <%= time_ago_in_words(notification.created_at) %>
+              </td>
+            </tr>
+        <% end %>
+        <tr>
           <td>
-            <%= notification.activity.owner.name if notification.activity.owner %>
-            <%= render_activity notification.activity %>
-          </td>
-          <td>
-            <%= time_ago_in_words(notification.created_at) %>
+
           </td>
         </tr>
-    <% end %>
-    <tr>
-      <td>
+      </table>
+  <% end %>
 
-      </td>
-    </tr>
-  </table>
 </div>
