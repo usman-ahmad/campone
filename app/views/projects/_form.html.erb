@@ -1,25 +1,24 @@
-<%= form_for(@project, html: {role: "form"}) do |f| %>
+<%= form_for(@project, html: {role: "form", class: "form-horizontal"}) do |f| %>
     <div class="container-fluid">
       <%= render 'shared/error_messages', object: @project %>
-    </div>
-    <div class="mg-l30">
+
       <%= render 'groups/select_or_create_group', form_builder: f, resource: @project %>
 
-      <div class="todo-fields-contianer">
-        <%= f.label :name, class: "todo-label" %>
-        <div class="custom-input-container" style="width: 80%;" placeholder="Software X, Yosemite">
+      <div class="form-group">
+        <%= f.label :name, class: "col-md-2 control-label" %>
+        <div class="col-md-10" placeholder="Software X, Yosemite">
           <%= f.text_field :name, class: "form-control" %>
         </div>
       </div>
 
-      <div class="todo-fields-contianer">
-        <%= f.label :description, class: "todo-label" %>
-        <div class="custom-input-container" style="width: 80%;" placeholder="Project Description">
+      <div class="form-group">
+        <%= f.label :description, class: "col-md-2 control-label" %>
+        <div class="col-md-10" placeholder="Project Description">
           <%= f.text_area :description, class: "form-control" %>
         </div>
       </div>
-    </div>
-    <div class="form-group text-center">
-      <%= f.submit class: "btn btn-info" %>
+      <div class="form-group text-center">
+        <%= f.submit class: "btn btn-info" %>
+      </div>
     </div>
 <% end %>

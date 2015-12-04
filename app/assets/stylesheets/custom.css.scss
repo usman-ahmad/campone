@@ -260,7 +260,7 @@
 }
 
 .left-nav > li {
-  display: inline-block;
+ float: left;
 }
 
 .dashboard-nav {
@@ -275,7 +275,6 @@
 
 .left-nav li a {
   border-right: 0;
-  margin-right: -4px;
 }
 
 .left-nav li:last-child a {
