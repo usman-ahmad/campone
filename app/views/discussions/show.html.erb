@@ -1,40 +1,61 @@
-<div class="page-header">
-  <%= link_to project_discussions_path(@project), class: 'btn btn-default' do %>
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Back
-  <% end %>
-  <%= link_to edit_project_discussion_path(@project ,@discussion), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-pencil"></span>
-    Edit
-  <% end %>
-  <h1>Discussion</h1>
+<div class="row">
+  <div class="col-md-12 show-page-head">
+    <%= link_to project_discussions_path(@project) do %>
+        <span><i class="fa fa-arrow-circle-o-left"></i></span>
+        Back To Discussions
+    <% end %>
+  </div>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-9">
+      <div class="todo-head-container">
+        <div class="user-img-15 pull-left">JB</div>
+        <div class="todo_name">
+          <div class="todo-list"> Discussion list</div>
+          <div class="todo-name"> <%= @discussion.title %> </div>
+        </div>
+      </div>
+      <ul class="col-md-12 todo-info-list">
+        <li class="col-md-4">
+          <span class="key">Group: </span>
+          <span class="value"><%= @discussion.discussion_group.try(:name) || 'Not Specified' %></span>
+        </li>
+        <li class="col-md-4">
+          <span class="key">Title: </span>
+          <span class="value"><%= @discussion.title %></span>
+        </li>
+        <li class="col-md-4">
+          <span class="key">Private: </span>
+          <span class="value"><%= @discussion.private %></span>
+        </li>
+      </ul>
+      <div class="col-md-12 todo-item">
+        <div class="pull-left">
+          <%= link_to new_project_discussion_path(@project), class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-plus"></span>
+              Start New Discussion
+          <% end %>
+
+          <%= link_to project_discussions_path(@project), class: 'btn btn-default' do %>
+              <span class="glyphicon glyphicon-list"></span>
+              List all Discussions
+          <% end %>
+        </div>
+        <div class="pull-right">
+          <%= link_to edit_project_discussion_path(@project, @discussion), class: 'btn btn-default' do %>
+              Edit
+          <% end %>
+          <%= link_to project_discussion_path(@project, @discussion), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
+              Delete
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <span class="key">Description:</span>
+        <span class="value"><%= @discussion.content %></span>
+      </div>
+      <%= render 'attachments/list_attachments', resource: @discussion %>
+      <%= render "comments/comments" %>
+      <%= render "comments/form" %>
+    </div>
+  </div>
 </div>
-
-<dl class="dl-horizontal">
-  <dt>Group:</dt>
-  <dd><%= @discussion.discussion_group.try(:name) || 'Not Specified' %></dd>
-
-  <dt>Title:</dt>
-  <dd><%= @discussion.title %></dd>
-
-  <dt>Description:</dt>
-  <dd><%= @discussion.content %></dd>
-
-  <dt>Private:</dt>
-  <dd><%= @discussion.private %></dd>
-
-  <br>
-  <%= render 'attachments/list_attachments', resource: @discussion %>
-  <%= render "comments/comments" %>
-  <%= render "comments/form" %>
-
-  <%= link_to new_project_discussion_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-plus"></span>
-    Start New Discussion
-  <% end %>
-
-  <%= link_to project_discussions_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-list"></span>
-    List all Discussions
-  <% end %>
-</dl>
