@@ -12,6 +12,7 @@
 10.00 Task Show CSS
 11.00 Task Comment Section CSS
 12.00 Notification Index CSS
+13.00 Discussion Index CSS
 
 */
 @import "reset";
@@ -804,4 +805,51 @@
 
 .success-edit i {
   color: #008000;
+}
+
+/*
+  13.00 Discussion Index CSS
+  --------------------------
+*/
+
+.anchor-container {
+  cursor: pointer;
+}
+
+.heading-3 {
+  font-size: 20px;
+  font-weight: 400;
+  color: #232323;
+}
+
+.discussion-list {
+  border-bottom: 1px solid #ddd;
+}
+
+.discussion-list th {
+  background-color: #F5F5F5;
+  padding-top: 9px;
+  font-weight: 700;
+  border-bottom-width: 2px;
+  color: #888;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.discussion-list td {
+  padding-bottom: 0 !important;
+  color: #666;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10px;
+  line-height: 1.6em;
+  width: 83%;
+}
+
+.discussion-list td,
+.discussion-list th {
+  text-align: left;
+}
+
+.discussion-list td + td,
+.discussion-list th + th {
+  text-align: center;
 }
