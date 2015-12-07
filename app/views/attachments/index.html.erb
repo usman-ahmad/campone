@@ -2,25 +2,51 @@
     <%= render 'shared/tab_nav', project: @project, active: 'files' %>
 <% end %>
 
-<div class="page-header">
-  <%= link_to project_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-arrow-left"></span>
-    Back
-  <% end %>
-  <%= link_to new_project_attachment_path, class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-plus"></span>
-    New File
-  <% end %>
-  <h1>Listing Files</h1>
-</div>
+<div class="table-responsive">
+  <div class="discussion-options">
+    <h3 class="heading-3 pull-left">Files List</h3>
 
-<table class="table" >
-  <tbody>
-  <% @attachments.each do |attachment| %>
-    <tr><td><%= attachment.attachment_file_name %></td>
-      <td><%= link_to 'Edit', edit_project_attachment_path(@project, attachment), method: :get %></td>
-      <td><%= link_to 'Delete', project_attachment_path(@project, attachment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+    <div class="pull-right">
+      <%= link_to project_path(@project), class: 'custom-btn' do %>
+          <span class="glyphicon glyphicon-arrow-left"></span>
+          Back
+      <% end %>
+      <%= link_to new_project_attachment_path, class: 'btn btn-primary' do %>
+          <span class="glyphicon glyphicon-plus"></span>
+          New File
+      <% end %>
+    </div>
+  </div>
+  <% if @attachments.present? %>
+      <table class="table table-hover col-md-12 discussion-list">
+        <tbody>
+        <% @attachments.each do |attachment| %>
+            <tr>
+              <td>
+                <!-- TODO: Add downloding link here-->
+                <a href=""><%= attachment.attachment_file_name %></a>
+
+                <p>Upload By: Jazib B. on Sep 20, 2015</p>
+              </td>
+              <td>
+                <div class="pull-left text-right">
+                  <span>On Sep 21, 2015</span><br>
+                  <a>Versions (1) Comments (0)</a>
+                </div>
+                <!-- TODO: Add downloding link here-->
+                <a class="file-icon"><i class="fa fa-download"></i></a>
+                <%= link_to project_attachment_path(@project, attachment), method: :delete, data: {confirm: 'Are you sure?'}, class: "file-icon" do %>
+                    <i class="fa fa-trash-o"></i>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% else %>
+      <div class="clearfix"></div>
+      <div class="col-md-6 col-md-offset-3">
+        <div class="alert alert-info">No Record Exist</div>
+      </div>
+      </div>
   <% end %>
-  </tbody>
-</table>

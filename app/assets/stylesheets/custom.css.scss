@@ -13,6 +13,7 @@
 11.00 Task Comment Section CSS
 12.00 Notification Index CSS
 13.00 Discussion Index CSS
+14.00 Files CSS
 
 */
 @import "reset";
@@ -852,4 +853,23 @@
 .discussion-list td + td,
 .discussion-list th + th {
   text-align: center;
+}
+
+/*
+  14.00 Files CSS
+  ---------------
+*/
+
+.file-icon {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 30px;
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  padding: 7px 9px 0;
+  font-size: 13px;
+}
+
+.file-icon:hover, .file-icon:focus {
+  color: #000;
 }
