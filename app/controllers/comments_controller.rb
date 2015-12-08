@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
       @comment.create_activity :create, owner: current_user
       redirect_to [@project,@commentable], notice: "Comment created."
     else
-      render :new
+      redirect_to [@project,@commentable], notice: "Please write comment"
     end
   end
 

@@ -336,7 +336,7 @@ header.is-fixed {
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 1em;
-  background: url("../../images/cd-arrow.svg") no-repeat center center;
+  background: image_url("cd-arrow.svg") no-repeat center center;
   background-size: 8px 11px;
   -webkit-transition-property: -webkit-transform;
   -moz-transition-property: -moz-transform;
