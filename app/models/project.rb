@@ -16,14 +16,15 @@ class Project < ActiveRecord::Base
   delegate :url_helpers, to: "Rails.application.routes"
   alias :h :url_helpers
 
-  def create_attachments(array,attachment)
+  def create_attachments(array,attachment,user_id)
     return unless array.present?
     group = AttachmentGroup.where(id:attachment[:attachment_group_id]).first
     if !group.present?
-      group = AttachmentGroup.create(name:attachment[:attachment_group_attributes][:name])
+      group = nil
+      group = AttachmentGroup.create(name:attachment[:attachment_group_attributes][:name]) if attachment[:attachment_group_attributes][:name].present?
     end
     array.each do |file|
-     attachments.build(:attachment => file, attachment_group: group )
+     attachments.build(:attachment => file, attachment_group: group, user_id: user_id )
       # current_attachment.attachments.build(attachment)
     end
 

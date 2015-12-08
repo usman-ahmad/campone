@@ -25,13 +25,10 @@
               <td>
                 <!-- TODO: Add downloding link here-->
                 <a href=""><%= attachment.attachment_file_name %></a>
-
-                <p>Upload By: Jazib B. on Sep 20, 2015</p>
+                <p>Upload By: <%= attachment.uploaded_by.name + ". on " + attachment.created_at.localtime.strftime("%B %d, %Y")%></p>
               </td>
               <td>
                 <div class="pull-left text-right">
-                  <span>On Sep 21, 2015</span><br>
-                  <a>Versions (1) Comments (0)</a>
                 </div>
                 <!-- TODO: Add downloding link here-->
                 <a class="file-icon"><i class="fa fa-download"></i></a>
