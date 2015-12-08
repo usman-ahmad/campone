@@ -1,6 +1,6 @@
 Commented:
 <% if comment = activity.trackable %>
-  "<%= comment.content %>" on
+  <%= strip_tags comment.content %> on
   <%= link_to comment.commentable.title, commentable_url(comment) %>
 <% else %>
   which has since been removed
