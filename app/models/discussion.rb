@@ -4,7 +4,7 @@ class Discussion < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :discussion_group
-
+  belongs_to :posted_by, class_name: User, foreign_key: :user_id
   has_many :user_discussions
   has_many :users ,through: :user_discussions
 

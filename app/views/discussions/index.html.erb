@@ -29,12 +29,11 @@
         <tr class="anchor-container" data-href="<%= project_discussion_path(@project, discussion) %>">
           <td>
             <a href="<%= project_discussion_path(@project, discussion) %>"><%= discussion.title %></a>
-
-            <p>Posted By: Jazib B. on Sep 20, 2015</p>
+            <p>Posted By: <%= discussion.posted_by.name + '. on ' + discussion.created_at.localtime.strftime("%B %d, %Y") if discussion.posted_by.present? %> </p>
           </td>
           <td>
-            <span>Sep 20, 2015 - 4:13 PM</span><br>
-            <span>by Jazib B.</span>
+            <span><%= discussion.activities.last.created_at.localtime.strftime("%B %d, %Y -  %l : %M %p") if discussion.activities.last.present? %></span><br>
+            <span> by <%= discussion.activities.last.owner.name if discussion.activities.last.present? %> </span>
           </td>
           <td><%= discussion.comments.count %></td>
         </tr>
