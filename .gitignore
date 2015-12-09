@@ -43,6 +43,7 @@ coverage
 
 # Ignore  local environment variables
 /config/initializers/ignored_vars.rb
+.env
 
 delete_me.*
 
