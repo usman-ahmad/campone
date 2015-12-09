@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+gem 'dotenv-rails', :groups => [:development, :test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use postgresql as the database for Active Record
@@ -34,7 +34,7 @@ gem 'fullcalendar-rails'
 gem 'public_activity'
 gem 'cancancan', '~> 1.10'
 gem 'font-awesome-sass'
-
+gem 'unicorn'
 #gem for API
 gem 'grape'
 
