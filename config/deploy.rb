@@ -10,7 +10,7 @@ require 'mina/git'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 set :domain, '45.55.158.237'
-set :deploy_to, '/home/teknuk/campone'
+set :deploy_to, '/home/teknuk/camp_one'
 set :repository, 'git@bitbucket.org:teknuk/camp_one.git'
 set :branch, 'deployment'
 set :user, 'teknuk'
@@ -35,7 +35,7 @@ task :environment do
   # Be sure to commit your .ruby-version or .rbenv-version to your repository.
   # invoke :'rbenv:load'
   # For those using RVM, use this to load an RVM version@gemset.
-   invoke :'rvm:use[ruby-2.2.2@tncamp]'
+   invoke :'rvm:use[ruby-2.2.2@camp-one]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
