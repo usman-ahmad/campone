@@ -42,7 +42,6 @@ gem 'grape'
 gem 'faye'
 gem 'thin'
 gem 'private_pub'
-
 # gem for bootstrap social icons
 gem 'bootstrap-social-rails'
 gem 'jquery-ui-sass-rails'
@@ -57,8 +56,9 @@ gem 'ckeditor'
 # gem 'capistrano-rails', group: :development
 
 group :development do
-  gem 'letter_opener'
+  gem "letter_opener"
   gem 'better_errors'
+  gem "rails-erd"
 
   # rails_best_practices is a code metric tool to check the quality of Rails code.
   gem 'rails_best_practices'
@@ -76,4 +76,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'database_cleaner'
 end
+

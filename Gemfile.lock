@@ -62,6 +62,7 @@ GEM
     builder (3.2.2)
     byebug (6.0.2)
     cancancan (1.12.0)
+    choice (0.2.0)
     ckeditor (4.1.5)
       cocaine
       orm_adapter (~> 0.5.0)
@@ -84,6 +85,7 @@ GEM
     colored (1.2)
     cookiejar (0.3.2)
     daemons (1.2.3)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -227,6 +229,11 @@ GEM
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6.0)
       rails-deprecated_sanitizer (>= 1.0.1)
+    rails-erd (1.4.4)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
     rails_best_practices (1.15.7)
@@ -266,6 +273,7 @@ GEM
       rspec-mocks (~> 3.3.0)
       rspec-support (~> 3.3.0)
     rspec-support (3.3.0)
+    ruby-graphviz (1.2.2)
     ruby-progressbar (1.7.5)
     sass (3.4.17)
     sass-rails (5.0.3)
@@ -331,6 +339,7 @@ DEPENDENCIES
   cancancan (~> 1.10)
   ckeditor
   coffee-rails (~> 4.1.0)
+  database_cleaner
   devise
   devise-bootstrap-views
   devise_invitable
@@ -351,6 +360,7 @@ DEPENDENCIES
   private_pub
   public_activity
   rails (= 4.2.3)
+  rails-erd
   rails_best_practices
   rspec-rails
   sass-rails (~> 5.0)
