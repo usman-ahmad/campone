@@ -1,10 +1,28 @@
 FactoryGirl.define do
+  names = ['create class diagram','create domain model','create sequaqnce diagram','create system sequance diagram']
+  description = ['it should be create on time','before every diagram create it','create it after SSD',' create before sequance diagram','']
+
   factory :task do
-    title "MyString"
-description "MyText"
-project nil
-priority 1
-due_at "2015-08-25"
+    sequence(:title) { |n| names[(n % names.size)]}
+    sequence(:description) { |n| description[(n % description.size)]}
+    project
+    due_at "2017-08-25"
+
+    trait :low_priority do
+      priority :low
+    end
+
+    trait :medium_priority do
+      priority :medium
+    end
+
+    trait :high_priority do
+      priority :high
+    end
+
+    factory :low_priority_task,    traits: [:low_priority]
+    factory :medium_priority_task, traits: [:medium_priority]
+    factory :high_priority_task,   traits: [:high_priority]
   end
 
 end
