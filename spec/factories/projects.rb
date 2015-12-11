@@ -15,11 +15,25 @@ FactoryGirl.define do
     end
   end
 
-  factory :project_with__many_tasks, parent: :project do
+  factory :project_with_many_tasks, parent: :project do
     after(:create) do |project|
       create(:low_priority_task,project: project )
       create(:medium_priority_task,project: project )
       create(:high_priority_task,project: project )
+    end
+  end
+
+  factory :project_with_discussions, parent: :project do
+    after(:create) do |project|
+      create(:none_private_discussion,project: project )
+      create(:private_discussion,project: project )
+    end
+  end
+
+  factory :project_with_task_discussions, parent: :project do
+    after(:create) do |project|
+      create(:none_private_discussion,project: project )
+      create(:medium_priority_task,project: project )
     end
   end
 
