@@ -23,6 +23,10 @@ FactoryGirl.define do
     factory :low_priority_task,    traits: [:low_priority]
     factory :medium_priority_task, traits: [:medium_priority]
     factory :high_priority_task,   traits: [:high_priority]
+
+    after(:create) do |task|
+      task.comments << create(:comment)
+    end
   end
 
 end

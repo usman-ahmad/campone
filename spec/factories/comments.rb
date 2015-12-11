@@ -1,8 +1,6 @@
 FactoryGirl.define do
+  comments = ['very nice','i dont link','it can be improve']
   factory :comment do
-    content "MyText"
-commentable_id 1
-commentable_type "MyString"
+    sequence(:content) { |n| comments[(n % comments.size)]}
   end
-
 end

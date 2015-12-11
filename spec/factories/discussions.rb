@@ -17,5 +17,11 @@ FactoryGirl.define do
   factory :private_discussion, traits: [:private]
   factory :none_private_discussion, traits: [:none_private]
 
+  after(:create) do |discussion|
+    discussion.comments << create(:comment)
   end
+  end
+
+
+
 end
