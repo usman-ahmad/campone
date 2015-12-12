@@ -29,7 +29,7 @@ FactoryGirl.define do
     factory :high_priority_task,   traits: [:high_priority]
 
     after(:create) do |task,  evaluator|
-      task.comments << create_list(:comment, 5 ,user: evaluator.commenter)
+      task.comments << create_list(:comment, 5 ,user: evaluator.commenter, commentable_id: task.id, commentable_type: task.class.name , commenter: evaluator.commenter)
     end
   end
 

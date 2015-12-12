@@ -22,7 +22,8 @@ FactoryGirl.define do
   factory :none_private_discussion, traits: [:none_private]
 
   after(:create) do |discussion,  evaluator|
-    discussion.comments << create_list(:comment, 5 ,user: evaluator.commenter)
+    discussion.comments << create_list(:comment, 5 ,user: evaluator.commenter, commentable_id: discussion.id, commentable_type: discussion.class.name , commenter: evaluator.commenter)
+
   end
   end
 
