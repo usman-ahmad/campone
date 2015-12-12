@@ -9,7 +9,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |comment,  evaluator|
-     activity = comment.create_activity :create, owner: evaluator.commenter
+     comment.create_activity :create, owner: evaluator.commenter
 
     end
   end

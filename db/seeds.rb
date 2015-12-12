@@ -47,3 +47,7 @@ FactoryGirl.create(:team_player_invitation, user: user[1], project: projects[1])
 FactoryGirl.create(:contributor_invitation, user: user[2], project: projects[2])
 FactoryGirl.create(:organizer_invitation, user: user[4], project: projects[3])
 FactoryGirl.create(:contributor_invitation, user: user[4], project: projects[4])
+
+PublicActivity::Activity.all.each do |activity|
+  activity.create_notification
+end
