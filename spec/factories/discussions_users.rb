@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user_discussion do
-    user nil
-    discussion nil
+    user
+    discussion
     notify false
   end
 

@@ -6,6 +6,10 @@ FactoryGirl.define do
     association :discussion_group, factory: :discussion_group
     project
 
+    transient do
+      commenter 'user'
+    end
+
   trait :private do
     private true
   end
@@ -17,8 +21,8 @@ FactoryGirl.define do
   factory :private_discussion, traits: [:private]
   factory :none_private_discussion, traits: [:none_private]
 
-  after(:create) do |discussion|
-    discussion.comments << create(:comment)
+  after(:create) do |discussion,  evaluator|
+    discussion.comments << create_list(:comment, 5 ,user: evaluator.commenter)
   end
   end
 
