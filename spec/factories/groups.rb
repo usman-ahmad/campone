@@ -1,6 +1,6 @@
 FactoryGirl.define do
   discussiongroup_names = ['development','analysis','diagrams','info']
-  projectgroup_names = ['2015','2016','2017','2018']
+  projectgroup_names = ['2015','2016','2017','2018','2019','2020']
   attachmentgroup_names = ['user interface','developer helping']
   taskgroup_names = ['front end','back end']
 
