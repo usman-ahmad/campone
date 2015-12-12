@@ -3,5 +3,14 @@ FactoryGirl.define do
   factory :comment do
     sequence(:content) { |n| comments[(n % comments.size)]}
     user
+
+    transient do
+      commenter User.first
+    end
+
+    after(:create) do |comment,  evaluator|
+     activity = comment.create_activity :create, owner: evaluator.commenter
+
+    end
   end
 end
