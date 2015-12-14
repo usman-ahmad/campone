@@ -74,3 +74,7 @@ Nokogiri prereuisities:
 2. Starting Rails Server
 
         rails s
+
+### Genrate ERD diagram
+1. Following command will generate erd diagram in application root path through erd-rails gem
+        bundle exec erd
