@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Starter Template for Bootstrap</title>
+  <%# TODO: Add relevant subtitle %>
+  <title>Camp One</title>
 
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -18,7 +19,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<%= yield %>
+<div class="page-header text-center">
+  <img src="/assets/logo.png">
+</div>
+<div class="container">
+  <div class="row">
+    <%= yield %>
+  </div>
+</div>
 </body>
 </html>
-
