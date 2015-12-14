@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 gem 'dotenv-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.5'
+
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -34,13 +36,11 @@ gem 'fullcalendar-rails'
 gem 'public_activity'
 gem 'cancancan', '~> 1.10'
 gem 'font-awesome-sass'
-gem 'unicorn'
 #gem for API
 gem 'grape'
 
 #gem for notifications
 gem 'faye'
-gem 'thin'
 gem 'private_pub'
 # gem for bootstrap social icons
 gem 'bootstrap-social-rails'
@@ -50,15 +50,17 @@ gem 'ckeditor'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
+# Use Thin for faye server
+gem 'thin'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 group :development do
-  gem "letter_opener"
+  gem 'letter_opener'
   gem 'better_errors'
-  gem "rails-erd"
+  gem 'rails-erd'
 
   # rails_best_practices is a code metric tool to check the quality of Rails code.
   gem 'rails_best_practices'
@@ -78,4 +80,3 @@ group :development, :test do
   gem 'faker'
   gem 'database_cleaner'
 end
-
