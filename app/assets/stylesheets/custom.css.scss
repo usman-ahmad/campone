@@ -2,212 +2,64 @@
 
 1.00 Reset CSS
 2.00 Fonts CSS
-3.00 Banner Section
-4.00 Custom Navbar
-5.00 Login Modal CSS
-6.00 Dashboard Navigation CSS
-7.00 Task List css
-8.00 Dashboard Home CSS
-9.00 Create Project CSS
-10.00 Task Show CSS
-11.00 Task Comment Section CSS
-12.00 Notification Index CSS
-13.00 Discussion Index CSS
-14.00 Files CSS
+3.00 Landing Page Section
+4.00 Dashboard Navigation CSS
+5.00 Task List css
+6.00 Dashboard Home CSS
+7.00 Create Project CSS
+8.00 Task Show CSS
+9.00 Task Comment Section CSS
+10.00 Notification Index CSS
+11.00 Discussion Index CSS
+12.00 Files CSS
 
 */
 @import "reset";
 @import "fonts";
 
 /*
-  3.00 Banner CSS
+  3.00 Landing Page CSS
   ---------------
 */
 
-#banner {
-  width: 100%;
-  height: auto;
-  color: #fff;
-  background: image-url("banner.jpg") no-repeat bottom center scroll;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-  background-attachment: fixed;
-}
-
-.banner-body {
-  padding: 130px 0 80px 0;
-  vertical-align: middle;
-}
-
-.banner-button {
-  text-transform: uppercase;
-  color: #fff;
-  font-weight: 600;
-  font-size: 12px;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  padding: 10px 15px;
-  border: 2px solid #39A1E7;
-}
-
-.banner-button:hover, .banner-button:focus {
-  background-color: #39A1E7;
-  color: #fff;
-}
-
-#get-started {
-  color: #fff;
-  font-size: 26px;
-  letter-spacing: 0.1em;
-  font-weight: 300;
-}
-
-#get-started span {
-  font-weight: 400;
-}
-
-.signup-input {
-  margin-right: 10px;
-}
-
-.signup-input input {
-  border-radius: 2px;
-}
-
-.signup-button {
-  border-radius: 2px;
-}
-
-.terms {
-  color: #A2AFBC;
-  font-size: 13px;
-  font-weight: 400;
-}
-
-.terms a {
-  color: #39A1E7;
-  cursor: pointer;
-}
-
-.terms a:hover {
-  color: #0693F1;
-}
-
-.fancy {
-  line-height: 0.5;
-  text-align: center;
-}
-
-.fancy span {
-  display: inline-block;
+.wrapper {
+  background-color: #fff;
+  height: 450px;
   position: relative;
 }
 
-.fancy span:before,
-.fancy span:after {
-  content: "";
+.line-temp {
   position: absolute;
-  height: 5px;
-  border-bottom: 1px solid #29314b;
+  left: 49%;
   top: 0;
-  width: 100px;
+  bottom: 0;
+  width: 1px;
+  background: #ddd;
+  z-index: 1;
 }
 
-.fancy span:before {
-  right: 100%;
-  margin-right: 15px;
+.wordwrapper {
+  text-align: center;
+  height: 12px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -12px;
+  z-index: 2;
 }
 
-.fancy span:after {
-  left: 100%;
-  margin-left: 15px;
-}
-
-/*
-  4.00 Custom Navbar CSS
-  ----------------------
-*/
-
-.custom-container {
-  margin: 20px 0 20px 0;
-}
-
-.nav-tabs > li > a {
-  border-radius: 0;
-}
-
-.custom-navbar {
-  padding: 20px 150px 0 100px;
-  border-radius: 0 !important;
-  border: 0;
-  background-image: none;
-  background-color: transparent;
-}
-
-.custom-navbar .navbar-brand {
-  color: #fff;
-  font-family: LogoSpecial;
-  font-size: 80px;
-}
-
-.custom-navbar .navbar-brand:hover, .custom-navbar .navbar-brand:focus {
-  color: #fff;
-}
-
-.custom-navbar .navbar-nav > li > a {
+.word {
+  color: #585353;
   text-transform: uppercase;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #fff;
-}
-
-.custom-navbar .navbar-nav > li > a:hover,
-.custom-navbar .navbar-nav > li > a:focus {
-  color: #39A1E7;
-}
-
-.btn-login {
-  border-radius: 0;
-  border-color: #ccc;
-  padding: 7px 20px !important;
-}
-
-.btn-login:hover, .btn-login:focus {
-  border-color: #39A1E7;
-}
-
-.btn-register {
-  border-radius: 0;
-  border-color: #39A1E7;
-  padding: 7px 20px !important;
-}
-
-/*
-  5.00 Login Modal CSS
-  ----------------------
-*/
-.login-dailog {
-  width: 400px;
-}
-
-.login-header {
-  background-color: #39A1E7;
-  color: #fff;
-  padding: 10px 0 10px 20px;
-}
-
-.login-content {
-  border-radius: 0;
-}
-
-.login-body {
-  padding: 20px;
+  letter-spacing: 1px;
+  padding: 3px;
+  font: bold 12px arial, sans-serif;
+  background: #fff;
 }
 
 .or_div {
+  clear: both;
   position: relative;
   margin-top: 16px;
 }
@@ -235,13 +87,8 @@
   padding: 0 10px;
 }
 
-.modal-label {
-  font-weight: normal;
-  color: #787B70;
-}
-
 /*
-  6.00 Dashboard Navigation CSS
+  4.00 Dashboard Navigation CSS
   ---------------
 */
 
@@ -383,7 +230,7 @@
 }
 
 /*
-  7.00 Task List css
+  5.00 Task List css
   ------------------
 */
 
@@ -445,7 +292,7 @@
 }
 
 /*
-  8.00 Dashboard Home CSS
+  6.00 Dashboard Home CSS
   -----------------------
 */
 
@@ -526,7 +373,7 @@
 }
 
 /*
-  9.00 Create Project CSS
+  7.00 Create Project CSS
   -----------------------
 */
 
@@ -600,7 +447,7 @@
 }
 
 /*
-  10.00 Task Show CSS
+  8.00 Task Show CSS
   -------------------
 */
 
@@ -675,7 +522,7 @@
 }
 
 /*
-  11.00 Task Comment Section CSS
+  9.00 Task Comment Section CSS
   ------------------------------
 */
 
@@ -719,7 +566,7 @@
 }
 
 /*
-  12.00 Notification Index CSS
+  10.00 Notification Index CSS
   ------------------------------
 */
 
@@ -809,7 +656,7 @@
 }
 
 /*
-  13.00 Discussion Index CSS
+  11.00 Discussion Index CSS
   --------------------------
 */
 
@@ -856,7 +703,7 @@
 }
 
 /*
-  14.00 Files CSS
+  12.00 Files CSS
   ---------------
 */
 
