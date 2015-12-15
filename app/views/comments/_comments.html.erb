@@ -15,10 +15,17 @@
             <div class="btn-group pull-right" role="group" aria-label="...">
               <%= link_to edit_project_task_comment_path(@project, @commentable, comment), class: "btn btn-default" do %>
                   <i class="fa fa-pencil"></i>
-              <% end %>
+              <% end if @commentable.class == Task  %>
+              <%= link_to edit_project_discussion_comment_path(@project, @commentable, comment), class: "btn btn-default" do %>
+                  <i class="fa fa-pencil"></i>
+              <% end if @commentable.class == Discussion %>
               <%= link_to project_task_comment_path(@project, @commentable, comment), method: :delete, class: "btn btn-default" do %>
                   <i class="fa fa-trash-o"></i>
-              <% end %>
+              <% end if @commentable.class == Task  %>
+
+              <%= link_to project_discussion_comment_path(@project, @commentable, comment), method: :delete, class: "btn btn-default" do %>
+                  <i class="fa fa-trash-o"></i>
+              <% end if @commentable.class == Discussion %>
             </div>
             <%= simple_format comment.content %>
             <%= render 'attachments/list_attachments', resource: comment %>
