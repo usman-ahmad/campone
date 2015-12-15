@@ -13,8 +13,6 @@
               <span><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago</span></h4>
 
             <div class="btn-group pull-right" role="group" aria-label="...">
-              <%= link_to 'Reply', new_project_task_comment_replay_path(@project, @commentable, comment), class: "btn btn-default" if @commentable.class == Task %>
-              <%= link_to 'Reply', new_project_discussion_comment_replays_path(@project, @commentable, comment), class: "btn btn-default" if @commentable.class == Discussion %>
               <%= link_to edit_project_task_comment_path(@project, @commentable, comment), class: "btn btn-default" do %>
                   <i class="fa fa-pencil"></i>
               <% end %>
@@ -23,12 +21,9 @@
               <% end %>
             </div>
             <%= simple_format comment.content %>
-            <% comment.replays.each do |replay| %>
-                <div class="panel-body comment">
-                  <%= replay.content %>
-                </div>
-            <% end %>
             <%= render 'attachments/list_attachments', resource: comment %>
           </div>
         </li>
     <% end %>
+  </ul>
+</div>

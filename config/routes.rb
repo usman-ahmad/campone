@@ -3,15 +3,11 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :tasks do
-      resources :comments do
-        resources :replays
-      end
+      resources :comments
     end
 
     resources :discussions do
-      resources :comments do
-        resource :replays
-      end
+      resources :comments
     end
 
     resources :invitations, only: [:new, :create]
