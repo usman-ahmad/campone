@@ -5,7 +5,7 @@ FactoryGirl.define do
     user
 
     transient do
-      commenter User.first
+      commenter 'user'
     end
 
     after(:create) do |comment,  evaluator|
