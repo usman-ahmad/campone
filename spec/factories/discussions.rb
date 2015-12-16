@@ -8,6 +8,7 @@ FactoryGirl.define do
 
     transient do
       commenter 'user'
+      user nil
     end
 
   trait :private do
@@ -22,6 +23,7 @@ FactoryGirl.define do
   factory :none_private_discussion, traits: [:none_private]
 
   after(:create) do |discussion,  evaluator|
+    discussion.update_attributes(user_id: evaluator.user.id)
     discussion.comments << create_list(:comment, 5 ,user: evaluator.commenter, commentable_id: discussion.id, commentable_type: discussion.class.name , commenter: evaluator.commenter)
 
   end

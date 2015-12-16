@@ -33,7 +33,7 @@ puts 'creating project_with_task_discussions'
 project_with_task_discussions = FactoryGirl.create(:project_with_task_discussions, owner: user.first)
 
 puts 'creating discussion'
-discussion = FactoryGirl.create(:private_discussion, project: project, commenter: project.owner)
+discussion = FactoryGirl.create(:private_discussion, project: project, commenter: project.owner, user: project.owner)
 
 projects =[project,single_task_project, many_tasks_project, project_with_discussions, project_with_task_discussions]
 
