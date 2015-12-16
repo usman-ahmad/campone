@@ -7,7 +7,7 @@
           <div class="panel-heading unread-message" role="tab" id="headingOne">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= index %>" aria-expanded="true" aria-controls="collapseOne">
               <h4 class="panel-title">
-                <i class="fa fa-check-circle-o"></i> <%= notifiable.title %>
+                <i class="fa fa-check-circle-o"></i> <%= notifiable ? notifiable.title : 'Has been removed' %>
               </h4>
             </a>
           </div>
