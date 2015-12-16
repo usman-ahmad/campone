@@ -49,6 +49,6 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(:attachment_group_id,:user_id,:attachment_group_attributes => [:name])
+    params.require(:attachment).permit(:attachment_group_id,:attachment_group_attributes => [:name]).merge(user: current_user)
   end
 end

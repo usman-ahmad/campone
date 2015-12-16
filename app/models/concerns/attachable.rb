@@ -3,7 +3,7 @@ module Attachable
     return unless array.present?
 
     array.each do |file|
-      attachments.build(:attachment => file, project: self.project)
+      attachments.build(:attachment => file, project: self.project, user_id: self.user_id )
     end
   end
 end

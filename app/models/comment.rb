@@ -15,7 +15,7 @@ class Comment < ActiveRecord::Base
     return unless array.present?
 
     array.each do |file|
-      attachments.build(:attachment => file, project: self.commentable_type.constantize.find(self.commentable_id).project  )
+      attachments.build(:attachment => file, project: self.commentable_type.constantize.find(self.commentable_id).project, user_id: self.user_id  )
     end
   end
 end

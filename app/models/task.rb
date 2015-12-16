@@ -4,7 +4,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :task_group
-
+  belongs_to :created_by, class_name: User, foreign_key: :user_id
   has_many :comments,    as: :commentable
   has_many :attachments, as: :attachable
 
