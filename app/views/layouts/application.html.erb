@@ -17,7 +17,7 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+  <%= javascript_include_tag "http://campone.teknuk.com/faye.js" %>
   <% if current_user.present? %>
       <%= subscribe_to '/messages/private/'+current_user.email.delete('.com') %>
       <span id="user_id" style="display:none"><%= current_user.email %></span>
