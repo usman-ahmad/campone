@@ -35,6 +35,10 @@
           <span class="key">Progress: </span>
           <span class="value"><%= @task.progress %></span>
         </li>
+        <li class="col-md-4">
+          <span class="key">Created By: </span>
+          <span class="value"><%= @task.created_by.name %></span>
+        </li>
         <li class="col-md-12">
           <span class="key">Description: </span>
           <span class="value"><%= @task.description %></span>
