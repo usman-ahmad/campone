@@ -46,7 +46,7 @@ class TasksController < ApplicationController
   def update
     @task.attachments_array=params[:attachments_array]
 
-    if @task.update(task_params)
+    if @task.update(task_params.except!(:user_id))
       @task.create_activity :update, owner: current_user
       redirect_to [@project, @task], notice: 'Task was successfully updated.'
     else

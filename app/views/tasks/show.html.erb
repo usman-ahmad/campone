@@ -37,7 +37,7 @@
         </li>
         <li class="col-md-4">
           <span class="key">Created By: </span>
-          <span class="value">Created By (<%= begin task.created_by.name rescue 'Not Present' end %>)</span>
+          <span class="value"> <%= begin @task.created_by.name rescue 'Not Present' end %> </span>
         </li>
         <li class="col-md-12">
           <span class="key">Description: </span>
