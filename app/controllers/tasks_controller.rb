@@ -6,8 +6,8 @@ class TasksController < ApplicationController
   before_action :set_task,    only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = @project.tasks.search(params[:search_text])
-    # @tasks = @project.tasks.search('Slice')
+    cookies[:include_completed] = params[:include_completed] if params[:include_completed].present?
+    @tasks = @project.tasks.search(params[:search_text], cookies[:include_completed] == 'true')
   end
 
   def show

@@ -29,11 +29,13 @@ class Task < ActiveRecord::Base
     else   'Progress status of task cannot change' end
   end
 
-  def self.search(text)
-    if text
+  def self.search(text, include_completed=false)
+    if include_completed
+      all
+    elsif text.present?
       where("title @@ :q or description @@ :q", q: text )
     else
-      all
+      all.where.not(progress: Task.progresses['completed'])
     end
   end
 end
