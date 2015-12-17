@@ -21,7 +21,7 @@
         </li>
         <li class="col-md-4">
           <span class="key">Assigned To: </span>
-          <span class="value"><%= task_assigned_to @task %></span>
+          <span id="assigned_to" class="value"><%= task_assigned_to @task %></span>
         </li>
         <li class="col-md-4">
           <span class="key">Due By: </span>
@@ -33,7 +33,7 @@
         </li>
         <li class="col-md-4">
           <span class="key">Progress: </span>
-          <span class="value"><%= @task.progress %></span>
+          <span id="progress" class="value"><%= @task.progress %></span>
         </li>
         <li class="col-md-4">
           <span class="key">Created By: </span>
@@ -46,8 +46,8 @@
       </ul>
       <div class="col-md-12 todo-item">
         <div class="pull-left">
-          <button class="btn btn-default">Assign to Me</button>
-          <button class="btn btn-default">Start Progress</button>
+          <%= link_to 'Assign to Me', assigned_to_me_project_task_path(@project ,@task),method: :patch, remote: true,  class: 'btn btn-default' %>
+          <%= link_to 'Start Progress', start_progress_project_task_path(@project ,@task),method: :patch, remote: true,  class: 'btn btn-default' %>
         </div>
         <div class="pull-right">
           <%= link_to edit_project_task_path(@project ,@task), class: 'btn btn-default' do %>

@@ -14,6 +14,21 @@ class Task < ActiveRecord::Base
   validates :title, :due_at, presence: true
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
+  def assigned_to_me(current_user)
+    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?("no_progress"))
+      if update_attributes(assigned_to: current_user.id)
+         'Task assigned to You' end
+    else 'Task already assigned'end
+  end
+
+  def start_progress(current_user)
+    if (assigned_to).eql?(current_user.id) && progress.eql?('no_progress')
+      if update_attributes(progress: :in_progress)
+           'Progress status of task has been updated'
+      else 'Progress status of task could not change' end
+    else   'Progress status of task cannot change' end
+  end
+
   def self.search(text)
     if text
       where("title @@ :q or description @@ :q", q: text )

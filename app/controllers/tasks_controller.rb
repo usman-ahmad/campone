@@ -59,6 +59,16 @@ class TasksController < ApplicationController
     redirect_to project_tasks_url, notice: 'Task was successfully destroyed.'
   end
 
+  def assigned_to_me
+    flash[:notice]= @task.assigned_to_me current_user
+    respond_to :js
+  end
+
+  def start_progress
+    flash[:notice]= @task.start_progress current_user
+    respond_to :js
+  end
+
   private
 
   def set_task
