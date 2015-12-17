@@ -19,7 +19,7 @@
   <%= csrf_meta_tags %>
   <%= javascript_include_tag "http://campone.teknuk.com/faye.js" %>
   <% if current_user.present? %>
-      <%= subscribe_to '/messages/private/'+current_user.email.delete('.com') %>
+      <%= subscribe_to '/messages/private/'+current_user.email.gsub!('.', '_') %>
       <span id="user_id" style="display:none"><%= current_user.email %></span>
   <% end %>
 </head>
