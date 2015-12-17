@@ -42,7 +42,7 @@ PublicActivity::Activity.class_eval do
      notice_id = notice.id
       notice_created_at = notice.created_at
       message =  create_message(notice)
-     PrivatePub.publish_to('/messages/private/'+user_email.gsub!('.', '_'), message: "#{message}")
+     PrivatePub.publish_to('/messages/private/user'+ user_id.to_s, message: "#{message}")
   end
 
   def create_message(notice)
