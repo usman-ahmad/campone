@@ -6,7 +6,7 @@ class Comment < ActiveRecord::Base
 
 
   def commentable
-    self.commentable_type.constantize.find(commentable_id)
+    self.commentable_type.constantize.where(id:commentable_id).first
   end
 
   validates :content, presence: true

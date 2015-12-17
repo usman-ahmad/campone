@@ -1,6 +1,6 @@
 updated Discussion
 
-<% if activity.trackable %>
+<% if activity.trackable && activity.trackable.project.present? %>
   <%= link_to activity.trackable.title, project_discussion_path(activity.trackable.project, activity.trackable) %>
 <% else %>
   which has since been removed
