@@ -1,9 +1,13 @@
 FactoryGirl.define do
+  names = ['Conference on ROR','How to Deploy','Sports','Project success party']
+  description = ['Conference will be help at bukhari auditorium','Deployment will be on unicorn and nginx','Only Football allowed','All members of company are invited','']
+
+
   factory :event do
-    title "MyString"
-description "MyText"
-due_at "2015-09-11"
-project nil
+    sequence(:title) { |n| names[(n % names.size)]}
+    sequence(:description) { |n| description[(n % description.size)]}
+    project
+    due_at Date.today
   end
 
 end
