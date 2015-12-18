@@ -3,7 +3,7 @@
   Back to Project
 <% end %>
 <h2>Invite Users</h2>
-<%= form_tag({controller: "invitations", action: "create"}, method: "post" ) do %>
+<%= form_tag({controller: "contributions", action: "create"}, method: "post" ) do %>
   <%= label_tag(:email, "Email :") %>
   <%= text_field_tag(:email) %>
 

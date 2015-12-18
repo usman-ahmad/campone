@@ -48,7 +48,7 @@ module API
             if contribution.present?
               contribution.first.delete
             else
-              "Project invitation not found to delete"
+              "Project contribution not found to delete"
             end
           else
             "Project not found to delete"

@@ -37,7 +37,7 @@ discussion = FactoryGirl.create(:private_discussion, project: project, commenter
 
 projects =[project,single_task_project, many_tasks_project, project_with_discussions, project_with_task_discussions]
 
-puts 'creating user_discussion and invitations'
+puts 'creating user_discussion and contributions'
 user.each do |user|
   FactoryGirl.create(:user_discussion, user: user, discussion: discussion)
 end

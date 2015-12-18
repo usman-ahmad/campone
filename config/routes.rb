@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :comments
     end
 
-    resources :invitations, only: [:new, :create]
+    resources :contributions, only: [:new, :create]
     resources :attachments, only: [:index, :new, :create, :destroy,:edit,:update]
     resources :events do
       get :get_events, on: :collection
