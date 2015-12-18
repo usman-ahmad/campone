@@ -6,7 +6,7 @@ FactoryGirl.define do
     sequence(:title) { |n| names[(n % names.size)]}
     sequence(:description) { |n| description[(n % description.size)]}
     project
-    due_at "2017-08-25"
+    due_at Date.today
 
     transient do
       commenter 'user'

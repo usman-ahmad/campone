@@ -12,7 +12,13 @@ class Task < ActiveRecord::Base
   enum progress: [:no_progress, :in_progress, :completed ]
 
   validates :title, presence: true
+  validate :due_date
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
+
+  def due_date
+    errors.add(:due_at, "can't be in the past") if
+        due_at < Date.today if due_at.present?
+  end
 
   def assigned_to_me(current_user)
     if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?("no_progress"))
