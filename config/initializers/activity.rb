@@ -42,7 +42,12 @@ PublicActivity::Activity.class_eval do
      notice_id = notice.id
       notice_created_at = notice.created_at
       message =  create_message(notice)
-     PrivatePub.publish_to('/messages/private/user'+ user_id.to_s, message: "#{message}")
+     begin
+       PrivatePub.publish_to('/messages/private/user'+ user_id.to_s, message: "#{message}")
+     rescue => ex
+       logger.error ex.message
+     end
+
   end
 
   def create_message(notice)
