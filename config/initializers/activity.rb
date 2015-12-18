@@ -21,11 +21,16 @@ PublicActivity::Activity.class_eval do
   end
 
   def get_notifiable_users_for_task(task)
-    task.project.members.map(&:id) - [owner_id] + [task.created_by.id]
+    # owner_id represents current_user, Do not send notifications to creator
+    task.project.members.map(&:id) - [owner_id]
   end
 
   def get_notifiable_users_for_discussion(discussion)
-    discussion.users.map(&:id) - [owner_id] + [discussion.posted_by.id]
+    if discussion.private?
+      discussion.users.map(&:id) - [owner_id]
+    else
+      discussion.project.members.map(&:id) - [owner_id]
+    end
   end
 
   def get_notifiable_users_for_comment
