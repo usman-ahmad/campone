@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :invitation do
+  factory :contribution do
     project
     user
 
@@ -15,9 +15,9 @@ FactoryGirl.define do
       role :contributor
     end
 
-    factory :organizer_invitation,   traits: [:organizer]
-    factory :team_player_invitation, traits: [:team_player]
-    factory :contributor_invitation, traits: [:contributor]
+    factory :organizer_contribution,   traits: [:organizer]
+    factory :team_player_contribution, traits: [:team_player]
+    factory :contributor_contribution, traits: [:contributor]
   end
 
 end
