@@ -3,7 +3,7 @@
   <% resource_group = "#{resource.class.name.underscore}_group".to_sym %>
   <%= form_builder.label resource_group_id, 'Group ', class: "col-md-2 control-label" %>
   <div class="col-md-9">
-    <%= form_builder.collection_select(resource_group_id, resource_group.to_s.classify.constantize.all, :id, :name,
+    <%= form_builder.collection_select(resource_group_id, resource_group.to_s.classify.constantize.list_for(@project.persisted? ? @project : current_user), :id, :name,
                                        {:include_blank => 'None Specified', :selected => resource.send(resource_group_id)}, class: 'form-control') %>
   </div>
     <span class="newgroup_icon">
