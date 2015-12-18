@@ -83,9 +83,9 @@ group :development, :test do
   gem 'rspec-rails'
   # used to create factories
   gem 'factory_girl_rails'
-  # generate fake data
-  gem 'faker'
   # properly clean database after running rspecs
   gem 'database_cleaner'
+  # use shoulda for should matcher
+  gem 'shoulda', '~> 3.3.0', require: false
 end
 
