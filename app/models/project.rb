@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
   has_many :attachments
 
   validates :name, presence: true
+  validates :owner, presence: true
 
   accepts_nested_attributes_for :project_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
