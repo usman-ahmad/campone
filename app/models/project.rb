@@ -14,6 +14,8 @@ class Project < ActiveRecord::Base
 
   accepts_nested_attributes_for :project_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
+  after_create :add_owner_to_contributors
+
   delegate :url_helpers, to: "Rails.application.routes"
   alias :h :url_helpers
 
@@ -55,5 +57,15 @@ class Project < ActiveRecord::Base
     end
 
     return all_events.to_json
+  end
+
+  private
+
+=begin
+  TODO:
+  Now we can remove owner from project, as we have added owner role in Contribution
+=end
+  def add_owner_to_contributors
+    self.contributions.create(user: self.owner, role: 'owner')
   end
 end

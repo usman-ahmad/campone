@@ -6,7 +6,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
+    # @projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
+    @projects   = current_user.projects
   end
 
   # GET /projects/1
@@ -29,7 +30,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    @project = current_user.projects.new(project_params)
+    @project = Project.new(project_params)
 
     respond_to do |format|
       if @project.save
@@ -74,6 +75,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description, :project_group_id, :project_group_attributes => [:name])
+      params.require(:project).permit(:name, :description, :project_group_id, :project_group_attributes => [:name]).merge(owner: current_user)
     end
 end
