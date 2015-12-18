@@ -2,12 +2,9 @@ class Comment < ActiveRecord::Base
   include PublicActivity::Common
 
   belongs_to :user
+  belongs_to :commentable, polymorphic: true
+
   has_many :attachments, as: :attachable
-
-
-  def commentable
-    self.commentable_type.constantize.where(id:commentable_id).first
-  end
 
   validates :content, presence: true
 
