@@ -12,16 +12,16 @@ RSpec.describe Task, type: :model do
     build(:medium_priority_task, project: project, commenter: project.owner, due_at: (Date.today - 1) ).should_not be_valid
   end
 
-  it 'should present due date' do
-    build(:high_priority_task, project: project, commenter: project.owner, due_at: nil ).should_not be_valid
+  it 'should allow nil due date' do
+    build(:high_priority_task, project: project, commenter: project.owner, due_at: nil ).should be_valid
   end
 
   it 'should allow us to create' do
 
-    create(:low_priority_task,project: project, commenter: project.owner ).priority.should eq("low")
-    create(:low_priority_task,project: project,progress: :completed, commenter: project.owner ).progress.should eq("completed")
-    create(:medium_priority_task,project: project , commenter: project.owner).priority.should eq("medium")
-    create(:high_priority_task,project: project,progress: :no_progress , commenter: project.owner).priority.should eq("high")
+    create(:low_priority_task,project: project, commenter: project.owner , user: project.owner ).priority.should eq("low")
+    create(:low_priority_task,project: project,progress: :completed, commenter: project.owner  , user: project.owner).progress.should eq("completed")
+    create(:medium_priority_task,project: project , commenter: project.owner , user: project.owner).priority.should eq("medium")
+    create(:high_priority_task,project: project,progress: :no_progress , commenter: project.owner , user: project.owner).priority.should eq("high")
 
   end
 

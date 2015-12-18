@@ -6,11 +6,11 @@ RSpec.describe Discussion, type: :model do
 
   describe 'title' do
     it 'should present' do
-      build(:none_private_discussion,project: project, commenter: project.owner, title:nil ).should_not be_valid
+      build(:none_private_discussion,project: project, commenter: project.owner, title:nil , user: project.owner).should_not be_valid
     end
   end
   describe 'invite on discussion' do
-    let(:discussion) {create(:private_discussion,project: project, commenter: project.owner)}
+    let(:discussion) {create(:private_discussion,project: project, commenter: project.owner, user: project.owner)}
 
     it 'should share with users' do
       user.each do |user|
