@@ -21,11 +21,11 @@ PublicActivity::Activity.class_eval do
   end
 
   def get_notifiable_users_for_task(task)
-    task.project.members.map(&:id)
+    task.project.members.map(&:id) - [owner_id] + [task.created_by.id]
   end
 
   def get_notifiable_users_for_discussion(discussion)
-    discussion.users.map(&:id)
+    discussion.users.map(&:id) - [owner_id] + [discussion.posted_by.id]
   end
 
   def get_notifiable_users_for_comment
