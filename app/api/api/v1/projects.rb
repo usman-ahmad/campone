@@ -7,7 +7,7 @@ module API
       resource :projects do
         desc "Return list of pojects"
         get do
-          @projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+          @projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
         end
       end
 
@@ -17,7 +17,7 @@ module API
           requires :project_id , type: Integer
         end
         get do
-          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+          projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
            project = projects.select { |project| project.id == params[:project_id].to_i } unless !projects.present?
         end
       end
@@ -44,9 +44,9 @@ module API
           if project.present?
              project.first.delete
           elsif !project.present?
-            invitation = Invitation.where(user: current_user, project_id:params[:id])
-            if invitation.present?
-               invitation.first.delete
+            contribution = Contribution.where(user: current_user, project_id:params[:id])
+            if contribution.present?
+              contribution.first.delete
             else
               "Project invitation not found to delete"
             end

@@ -1,10 +1,10 @@
 class InvitationsController < ApplicationController
   load_and_authorize_resource :project
-  load_and_authorize_resource :invitation, :through => :project
+  load_and_authorize_resource :contribution, :through => :project
 
   before_action :set_project
   def new
-    @invitations = @project.invitations
+    @contributions = @project.contributions
   end
 
   def create
@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
       user = User.invite!(email: params[:email]) if params[:email].present?
     end
 
-    @project.invitations.create(user: user, role: params[:role] ) if params[:email].present?
+    @project.contributions.create(user: user, role: params[:role] ) if params[:email].present?
     redirect_to :back
   end
 

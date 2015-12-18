@@ -9,12 +9,12 @@
 
   <br>
   <%= label_tag(:role, "Role :") %>
-  <%= select_tag :role, options_for_select(Invitation.roles.keys)%>
+  <%= select_tag :role, options_for_select(Contribution.roles.keys)%>
   <br>
   <%= submit_tag("Invite") %>
 <% end %>
 
 <h2>Already Invited Users</h2>
-<% @invitations.each do |i| %>
+<% @contributions.each do |i| %>
   <p><%= i.user.email %> <%= "(#{i.role}) " if i.role %></p>
 <% end %>

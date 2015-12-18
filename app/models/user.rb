@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   has_many :projects, foreign_key: :owner_id
-  has_many :invitations
-  has_many :shared_projects, through: :invitations, source: :project
+  has_many :contributions
+  has_many :shared_projects, through: :contribution, source: :project
   has_many :user_discussions
   has_many :discussions, through: :user_discussions
   has_many :assigned_tasks, class_name: Task, foreign_key: :assigned_to

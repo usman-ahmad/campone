@@ -16,17 +16,17 @@ class Ability
     # Project Permissions
     can :manage, Project, owner: user
     # All roles can read project
-    can :read,   Project, :invitations => { :role => [ORGANIZER, TEAM_PLAYER, CONTRIBUTOR] , user_id: user.id }
+    can :read,   Project, :contributions => { :role => [ORGANIZER, TEAM_PLAYER, CONTRIBUTOR] , user_id: user.id }
     # organizer can update project
-    can :update, Project, :invitations => { :role => ORGANIZER , user_id: user.id }
+    can :update, Project, :contributions => { :role => ORGANIZER , user_id: user.id }
 
     can :manage, Task
     can :manage, Discussion
 
-    can :create, Invitation do |invitation|
-      invitation.project.invitations.where(role: ORGANIZER, user_id: user.id).present?
+    can :create, Contribution do |contribution|
+      contribution.project.contributions.where(role: ORGANIZER, user_id: user.id).present?
     end
-    can :manage, Invitation, :project => { owner_id: user.id }
+    can :manage, Contribution, :project => { owner_id: user.id }
 
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:

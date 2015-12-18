@@ -6,7 +6,7 @@ module API
 
       helpers do
         def project
-          projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+          projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
           project    = projects.select { |project| project.id == params[:project_id].to_i  }
           project[0]
         end

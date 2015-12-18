@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151216074605) do
+ActiveRecord::Schema.define(version: 20151218143517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,17 @@ ActiveRecord::Schema.define(version: 20151216074605) do
   add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "contributions", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "contributions", ["project_id"], name: "index_contributions_on_project_id", using: :btree
+  add_index "contributions", ["user_id"], name: "index_contributions_on_user_id", using: :btree
+
   create_table "discussions", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
@@ -96,17 +107,6 @@ ActiveRecord::Schema.define(version: 20151216074605) do
 
   add_index "groups", ["type"], name: "index_groups_on_type", using: :btree
 
-  create_table "invitations", force: :cascade do |t|
-    t.integer  "project_id"
-    t.integer  "user_id"
-    t.integer  "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "invitations", ["project_id"], name: "index_invitations_on_project_id", using: :btree
-  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
-
   create_table "notifications", force: :cascade do |t|
     t.integer  "activity_id"
     t.integer  "user_id"
@@ -128,6 +128,14 @@ ActiveRecord::Schema.define(version: 20151216074605) do
   end
 
   add_index "projects", ["project_group_id"], name: "index_projects_on_project_group_id", using: :btree
+
+  create_table "replays", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
@@ -195,10 +203,10 @@ ActiveRecord::Schema.define(version: 20151216074605) do
 
   add_foreign_key "attachments", "projects"
   add_foreign_key "comments", "users"
+  add_foreign_key "contributions", "projects"
+  add_foreign_key "contributions", "users"
   add_foreign_key "discussions", "projects"
   add_foreign_key "events", "projects"
-  add_foreign_key "invitations", "projects"
-  add_foreign_key "invitations", "users"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
   add_foreign_key "tasks", "projects"

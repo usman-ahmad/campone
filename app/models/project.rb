@@ -4,8 +4,8 @@ class Project < ActiveRecord::Base
 
   has_many :tasks
   has_many :discussions
-  has_many :invitations
-  has_many :members, through: :invitations, :source => :user
+  has_many :contributions
+  has_many :members, through: :contributions, :source => :user
   has_many :events
   has_many :attachments
 

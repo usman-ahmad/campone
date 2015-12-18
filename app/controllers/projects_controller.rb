@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects   = Project.where(owner: current_user) + Invitation.where(user: current_user).map(&:project)
+    @projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
   end
 
   # GET /projects/1
