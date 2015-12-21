@@ -87,5 +87,9 @@ group :development, :test do
   gem 'database_cleaner'
   # use shoulda for should matcher
   gem 'shoulda', '~> 3.3.0', require: false
+  # Capybara helps you test web applications by simulating how a real user would interact with your app
+  gem 'capybara'
+  # capybara driver
+  gem 'selenium-webdriver'
 end
 

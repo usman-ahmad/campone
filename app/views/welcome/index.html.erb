@@ -10,11 +10,11 @@
         <%= form_for(:user, :url => session_path(:user)) do |f| %>
             <div class="form-group">
               <label class="text-muted" for="exampleInputEmail1">Email address</label>
-              <%= f.text_field :email, class: "form-control" %>
+              <%= f.text_field :email, class: "form-control", id: "login_user_email" %>
             </div>
             <div class="form-group">
               <label class="text-muted" for="exampleInputPassword1">Password</label>
-              <%= f.password_field :password, class: "form-control" %>
+              <%= f.password_field :password, class: "form-control", id: "login_user_password"%>
             </div>
             <div class="form-group">
               <%= f.submit 'Submit', class: "btn btn-success" %>
@@ -49,11 +49,11 @@
             </div>
             <div class="form-group">
               <label class="text-muted" for="exampleInputEmail1">Email address</label>
-              <%= f.email_field :email, placeholder: "Email Address", class: "form-control" %>
+              <%= f.email_field :email, placeholder: "Email Address", class: "form-control", id: "signup_user_email"  %>
             </div>
             <div class="form-group">
               <label class="text-muted" for="exampleInputPassword1">Password</label>
-              <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+              <%= f.password_field :password, placeholder: "Password", class: "form-control", id: "signup_user_password"  %>
             </div>
             <div class="form-group">
               <label class="text-muted" for="exampleInputEmail1">Password Confirmation</label>
