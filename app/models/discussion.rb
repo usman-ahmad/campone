@@ -16,4 +16,12 @@ class Discussion < ActiveRecord::Base
 
   accepts_nested_attributes_for :user_discussions ,:allow_destroy => true
   accepts_nested_attributes_for :discussion_group, :reject_if => proc { |attributes| attributes['name'].blank? }
+
+   def last_activity
+      last_comment_activity  =  PublicActivity::Activity.where(trackable_id: comments.last.id, trackable_type: "Comment").last if  comments.last.present?
+      last_disc_activity     =  activities.last if activities.last.present?
+     return last_comment_activity   =  last_comment_activity.created_at > last_disc_activity.created_at ? last_comment_activity : last_disc_activity unless !(last_comment_activity.present? && last_disc_activity.present?)
+     return last_disc_activity
+   end
+
 end

@@ -32,8 +32,8 @@
             <p>Posted By: <%= discussion.posted_by.name + '. on ' + discussion.created_at.localtime.strftime("%B %d, %Y") if discussion.posted_by.present? %> </p>
           </td>
           <td>
-            <span><%= discussion.activities.last.created_at.localtime.strftime("%B %d, %Y -  %l : %M %p") if discussion.activities.last.present? %></span><br>
-            <span> by <%= discussion.activities.last.owner.name if discussion.activities.last.present? %> </span>
+            <span><%= discussion.last_activity.created_at.localtime.strftime("%B %d, %Y -  %l : %M %p") if discussion.last_activity.present? %></span><br>
+            <span> by <%= discussion.last_activity.owner.name if discussion.last_activity.present? %> </span>
           </td>
           <td><%= discussion.comments.count %></td>
         </tr>

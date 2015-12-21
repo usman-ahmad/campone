@@ -129,14 +129,6 @@ ActiveRecord::Schema.define(version: 20151218143517) do
 
   add_index "projects", ["project_group_id"], name: "index_projects_on_project_group_id", using: :btree
 
-  create_table "replays", force: :cascade do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.integer  "comment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
