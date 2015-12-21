@@ -13,7 +13,12 @@ Rails.application.routes.draw do
     end
 
     resources :contributions, only: [:new, :create]
-    resources :attachments, only: [:index, :new, :create, :destroy,:edit,:update]
+    resources :attachments, only: [:index, :new, :create, :destroy,:edit,:update] do
+      member do
+        get 'download'
+      end
+    end
+
     resources :events do
       get :get_events, on: :collection
     end

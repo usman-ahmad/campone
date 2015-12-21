@@ -19,7 +19,8 @@ class Project < ActiveRecord::Base
   delegate :url_helpers, to: "Rails.application.routes"
   alias :h :url_helpers
 
-  def create_attachments(array,attachment,user_id)
+  # TODO: Refactor and simplify
+  def create_attachments(array,attachment)
     return unless array.present?
     group = AttachmentGroup.where(id:attachment[:attachment_group_id]).first
     if !group.present?

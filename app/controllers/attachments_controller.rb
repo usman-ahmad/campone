@@ -1,6 +1,7 @@
 class AttachmentsController < ApplicationController
+  # TODO: ADD AUTHORIZATION
   before_action :set_project
-  before_action :set_attachment,    only: [:edit, :update]
+  before_action :set_attachment,    only: [:edit, :update, :download]
 
   def index
     @attachments = @project.attachments
@@ -12,13 +13,30 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    if @project.create_attachments(params[:attachments_array], params[:attachment],params[:attachment][:user_id])
+    if params[:attachments_array].blank?
+      flash[:error] = "No file was attached."
+    elsif @project.create_attachments(params[:attachments_array], params[:attachment])
       redirect_to project_attachments_path(@project), notice: 'Attachment was successfully created.'
-    else
-      @attachment = @project.attachments.build
-      flash[:error] = "#{@project.errors.full_messages.join(',')}"
-      render :new
     end
+
+    flash[:error] ||= "#{@project.errors.full_messages.join(',')}"
+    @attachment = @project.attachments.build
+    render :new
+  end
+
+  def download
+=begin
+    TODO: Configure x_sendfile on Nginx and confirm its working
+    To prevent ruby process to be busy on big files, hand over file download to web server
+    # http://www.therailsway.com/2009/2/22/file-downloads-done-right/
+    TODO: Security hole, Send_file with a parameter set by user is a security hole
+    http://stackoverflow.com/questions/6392003/how-to-download-a-file-from-rails-application
+=end
+    send_file @attachment.attachment.path,
+              :filename => @attachment.attachment_file_name,
+              :type => @attachment.attachment_content_type,
+              :disposition => 'attachment',
+              :x_sendfile => true
   end
 
   def destroy
