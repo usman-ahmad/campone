@@ -39,9 +39,13 @@
               <span><%= task.title %></span>
                     <span class="tag-holder">
                         <span class="tag">Priority: <%= task.priority %></span>
-                        <%=  '<span class="tag"> Due Date:' + task.due_at + '</span>' if task.due_at.present? %>
-                        <span class="tag">Comment (<%= task.comments.count %>)</span>
-                        <%= '<span class="tag"> Created By (' + task.created_by.name + ') </span>' if task.created_by.present? %>
+                        <% if task.due_at.present? %>
+                          <span class="tag"> Due Date: <%= task.due_at %></span>
+                        <%end%>
+                          <span class="tag">Comment (<%= task.comments.count %>)</span>
+                        <% if task.created_by.present? %>
+                          <span class="tag">Created By (<%= task.created_by.name %>)</span>
+                        <%end%>
                     </span>
 
             <div class="pull-right">
