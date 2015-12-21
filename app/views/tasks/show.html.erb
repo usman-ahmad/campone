@@ -23,10 +23,12 @@
           <span class="key">Assigned To: </span>
           <span id="assigned_to" class="value"><%= task_assigned_to @task %></span>
         </li>
-        <li class="col-md-4">
+        <% if @task.due_at.present? %>
+         <li class="col-md-4">
           <span class="key">Due By: </span>
           <span class="value"><%= @task.due_at %></span>
-        </li>
+         </li>
+        <% end %>
         <li class="col-md-4">
           <span class="key">Priority: </span>
           <span class="value"><%= @task.priority %></span>
@@ -35,10 +37,12 @@
           <span class="key">Progress: </span>
           <span id="progress" class="value"><%= @task.progress %></span>
         </li>
-        <li class="col-md-4">
+        <% if @task.created_by.present? %>
+         <li class="col-md-4">
           <span class="key">Created By: </span>
-          <span class="value"> <%= begin @task.created_by.name rescue 'Not Present' end %> </span>
-        </li>
+          <span class="value"> <%= @task.created_by.name %> </span>
+         </li>
+        <% end %>
         <li class="col-md-12">
           <span class="key">Description: </span>
           <span class="value"><%= @task.description %></span>
