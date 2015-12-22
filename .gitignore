@@ -50,5 +50,8 @@ delete_me.*
 # CarrierWave local storage for development
 /public/media_items/
 
+# Ckeditor local storage
+/public/ckeditor_assets/
+
 # Because macs
 .DS_Store
