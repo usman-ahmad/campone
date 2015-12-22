@@ -35,7 +35,7 @@
         </li>
         <li class="col-md-4">
           <span class="key">Progress: </span>
-          <span id="progress" class="value"><%= @task.progress %></span>
+          <span id="progress" class="value"><%= @task.progress.humanize %></span>
         </li>
         <% if @task.created_by.present? %>
          <li class="col-md-4">

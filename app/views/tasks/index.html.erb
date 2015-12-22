@@ -46,6 +46,7 @@
                         <% if task.created_by.present? %>
                           <span class="tag">Created By (<%= task.created_by.name %>)</span>
                         <%end%>
+                        <%= content_tag(:span,"Progress: #{task.progress.humanize}", class:'tag' ) %>
                     </span>
 
             <div class="pull-right">

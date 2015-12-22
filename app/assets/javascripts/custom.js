@@ -1,10 +1,15 @@
 var ready = function () {
+    var click_on_anchor = false;
     $(".anchor-container").click(function () {
-        window.location = $(this).data('href');
+        if (click_on_anchor == true) {
+            click_on_anchor = false
+        } else {
+            window.location = $(this).data('href');
+        }
     });
 
     $(".anchor-container a").click(function (e) {
-        e.stopPropagation();
+        click_on_anchor = true;
     });
     $(function () {
         $("#sortable").sortable();

@@ -1,2 +1,2 @@
-$("#progress").html("<%= j @task.progress %>");
+$("#progress").html("<%= j @task.progress.humanize %>");
 <%= render 'tasks/js_flash'%>
