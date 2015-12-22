@@ -22,10 +22,12 @@ class Ability
 
     can :manage, Task
     can :manage, Discussion
+    can :manage, Attachment
 
     can :create, Contribution do |contribution|
       contribution.project.contributions.where(role: ORGANIZER, user_id: user.id).present?
     end
+    
     can :manage, Contribution, :project => { owner_id: user.id }
 
     # can :read, Project, :category => { :visible => true }

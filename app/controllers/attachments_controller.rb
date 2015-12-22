@@ -1,5 +1,7 @@
 class AttachmentsController < ApplicationController
-  # TODO: ADD AUTHORIZATION
+  load_and_authorize_resource :project
+  load_and_authorize_resource :attachment, :through => :project
+
   before_action :set_project
   before_action :set_attachment,    only: [:edit, :update, :download]
 
