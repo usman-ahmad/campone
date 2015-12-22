@@ -1,6 +1,6 @@
 class AttachmentGroup < Group
   has_many :attachments
-  has_many :projects, through: :attachments
+  belongs_to :project
 
-  scope :list_for, ->(project) { joins(:projects).where('projects.id = ?', project.id) }
+  scope :list_for, ->(project) { where(project_id: project.id) }
 end

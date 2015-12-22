@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151221145931) do
+ActiveRecord::Schema.define(version: 20151222152906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,8 +119,11 @@ ActiveRecord::Schema.define(version: 20151221145931) do
     t.string   "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "project_id"
+    t.integer  "creator_id"
   end
 
+  add_index "groups", ["project_id"], name: "index_groups_on_project_id", using: :btree
   add_index "groups", ["type"], name: "index_groups_on_type", using: :btree
 
   create_table "notifications", force: :cascade do |t|
@@ -144,6 +147,14 @@ ActiveRecord::Schema.define(version: 20151221145931) do
   end
 
   add_index "projects", ["project_group_id"], name: "index_projects_on_project_group_id", using: :btree
+
+  create_table "replays", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
@@ -215,6 +226,7 @@ ActiveRecord::Schema.define(version: 20151221145931) do
   add_foreign_key "contributions", "users"
   add_foreign_key "discussions", "projects"
   add_foreign_key "events", "projects"
+  add_foreign_key "groups", "projects"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
   add_foreign_key "tasks", "projects"

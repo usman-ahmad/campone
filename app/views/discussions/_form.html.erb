@@ -15,7 +15,8 @@
       <%= f.text_area :content, class: "form-control" %>
     </div>
   </div>
-      <%= f.hidden_field :user_id, :value => current_user.id %>
+      <!-- This is a security hole, user_id can get changed from view, should be in controller -->
+      <%# f.hidden_field :user_id, :value => current_user.id %>
   <div class="form-group">
     <%= f.label :private, class: "col-sm-2 control-label" %>
     <div>

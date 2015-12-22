@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
+  belongs_to :creator, class_name: 'User'
 
-  # TODO: Should be unique only for a project 
-  validates :name, presence: true, uniqueness: { scope: :type }
+  # TODO: Do not create new group if already existing
+  validates :name, presence: true
 end
