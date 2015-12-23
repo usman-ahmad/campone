@@ -32,13 +32,13 @@
   <div class="form-group">
     <%= f.label :assigned_to, class: "col-sm-2 control-label" %>
     <div class="col-sm-2">
-      <%= f.select :assigned_to, assigned_to_options(@project), { include_blank: "No body" }, { class: 'form-control'} %>
+      <%= f.select :assigned_to, assigned_to_options(@project), { include_blank: "Nobody" }, { class: 'form-control'} %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label :due_at, class: "col-sm-2 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :due_at, class: "form-control", id: 'due_date_picker'%>
+      <%= f.text_field :due_at, class: 'form-control date_picker' %>
     </div>
   </div>
 

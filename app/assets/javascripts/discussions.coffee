@@ -23,7 +23,7 @@ ready = ->
     else
       $(this).siblings('.delete-user-from-discussion').prop('checked', true)
 
-  $("#due_date_picker").datepicker({
+  $(".date_picker").datepicker({
     dateFormat: "yy-mm-dd"
   });
 
