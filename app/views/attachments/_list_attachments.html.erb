@@ -1,8 +1,8 @@
 <% if resource.attachments.present? %>
-  <h2>Attachments</h2>
+  <h4>Attachments</h4>
   <ul>
     <% resource.attachments.each do |attachment| %>
-      <li><%= attachment.attachment_file_name %></li>
+      <li><%= link_to attachment.attachment_file_name, download_project_attachment_path(@project, attachment) %></li>
     <% end %>
   </ul>
 <% end %>
