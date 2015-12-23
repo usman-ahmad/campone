@@ -12,7 +12,8 @@ class Task < ActiveRecord::Base
   enum progress: [:no_progress, :in_progress, :completed ]
 
   validates :title, presence: true
-  validate :due_date
+  # Do not validate due date on edit
+  validate :due_date, :if => Proc.new{ |task| task.new_record? }
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
   def due_date
