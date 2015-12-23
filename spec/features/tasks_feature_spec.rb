@@ -46,6 +46,16 @@ describe 'tasks management', type: :feature, :js => true do
 
 
   context 'show/hide completed tasks' do
+=begin
+  TODO: Refactor
+  GS 2015-12-23
+  A spec should only test a specific functionality.
+  it should create task with completed functionality like below (should't use 'Mark as Completed' button)
+
+  let(:completed_task) { FactoryGirl.create(:task, progress: 'completed')}
+
+  I am also noticing that our specs are too much dependent on views :(
+=end
     before do
       # change progress to completed
       visit project_tasks_path(@project)

@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe ContributionController, type: :controller do
+RSpec.describe ContributionsController, type: :controller do
 
 end

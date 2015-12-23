@@ -8,16 +8,5 @@ RSpec.describe Group, type: :model do
     it 'name should be present' do
       build(:discussion_group, name:nil).should_not be_valid
     end
-
-    context 'within type scope' do
-      it 'should not allow us to create Groups of same name within same type' do
-      build(:discussion_group, name:discussion_group.name).should_not be_valid
-      end
-    end
-    context 'outside the type scope' do
-      it 'should allow us to create Group with same name' do
-        create(:project_group, name:discussion_group.name).should be_valid
-      end
-    end
   end
 end

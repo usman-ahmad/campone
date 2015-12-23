@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "projects/edit", type: :view do
+RSpec.describe "projects/edit", type: :view, pending: 'We will not test views' do
   before(:each) do
     @project = assign(:project, Project.create!(
       :name => "MyString",
