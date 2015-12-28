@@ -11,18 +11,18 @@ FactoryGirl.define do
 
   factory :project_with_single_task, parent: :project do
     after(:create) do |project|
-    create(:low_priority_task, project: project, commenter: project.owner , user: project.owner)
+    create(:low_priority_task, project: project, commenter: project.owner , creator: project.owner)
     end
   end
 
   factory :project_with_many_tasks, parent: :project do
     after(:create) do |project|
-      create(:low_priority_task,project: project, commenter: project.owner , user: project.owner)
-      create(:low_priority_task,project: project,progress: :completed, commenter: project.owner , user: project.owner)
-      create(:medium_priority_task,project: project , commenter: project.owner, user: project.owner)
-      create(:medium_priority_task,project: project , commenter: project.owner, user: project.owner)
-      create(:high_priority_task,project: project,progress: :no_progress , commenter: project.owner, user: project.owner)
-      create(:high_priority_task,project: project,progress: :in_progress , commenter: project.owner, user: project.owner)
+      create(:low_priority_task,project: project, commenter: project.owner , creator: project.owner)
+      create(:low_priority_task,project: project,progress: :completed, commenter: project.owner , creator: project.owner)
+      create(:medium_priority_task,project: project , commenter: project.owner, creator: project.owner)
+      create(:medium_priority_task,project: project , commenter: project.owner, creator: project.owner)
+      create(:high_priority_task,project: project,progress: :no_progress , commenter: project.owner, creator: project.owner)
+      create(:high_priority_task,project: project,progress: :in_progress , commenter: project.owner, creator: project.owner)
     end
   end
 
@@ -36,7 +36,7 @@ FactoryGirl.define do
   factory :project_with_task_discussions, parent: :project do
     after(:create) do |project|
       create(:none_private_discussion,project: project, commenter: project.owner, user: project.owner )
-      create(:medium_priority_task,project: project , commenter: project.owner, user: project.owner)
+      create(:medium_priority_task,project: project , commenter: project.owner, creator: project.owner)
     end
   end
 
