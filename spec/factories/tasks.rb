@@ -9,8 +9,8 @@ FactoryGirl.define do
     due_at Date.today
 
     transient do
-      commenter 'user'
-      user nil
+      commenter { project.owner }
+      creator nil
     end
 
     trait :low_priority do
@@ -30,9 +30,9 @@ FactoryGirl.define do
     factory :high_priority_task,   traits: [:high_priority]
 
     after(:create) do |task,  evaluator|
-      task.update_attributes(user_id: evaluator.user.id)
+      task.update_attributes(created_by: evaluator.creator)
       task.comments << create_list(:comment, 5 ,user: evaluator.commenter, commentable_id: task.id, commentable_type: task.class.name , commenter: evaluator.commenter)
-      task.create_activity :create, owner: evaluator.user
+      task.create_activity :create, owner: evaluator.creator
     end
   end
 

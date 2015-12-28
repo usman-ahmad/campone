@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 describe 'tasks management', type: :feature, :js => true do
+  let!(:owner) { create(:user) }
+  let!(:project) { create(:project, owner: owner) }
+
   before do
-    user = create_admin_user_and_login
-    @project = create(:project, owner: user)
-    visit project_tasks_path(@project)
+    login(owner.email, 'secretpassword')
+    visit project_tasks_path(project)
   end
+
   context 'ToDo List' do
     before do
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
       find('a', text: 'New Task').click
       page.find(:css, ".newgroup_icon").click
       fill_in 'task_task_group_attributes_name', with: 'ruby'
@@ -24,20 +27,20 @@ describe 'tasks management', type: :feature, :js => true do
     end
 
     it 'should show in ToDo list' do
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
       page.should have_css(".ui-sortable li", :count => 1)
       find(".ui-sortable li").should have_content('create erd diagram')
     end
     it 'allow to edit from todo list' do
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
       find('ul#sortable li div.pull-right a:nth-child(1)').click
       fill_in 'task_title', with: 'create erd diagram and implement'
       find('input[name="commit"]').click
       find(:css, 'div.todo-name').should have_content('create erd diagram and implement')
-      expect(page.current_path).to eq project_task_path(@project, id: 1)
+      expect(page.current_path).to eq project_task_path(project, id: 1)
     end
     it 'allow to delete from todo list' do
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
       find('ul#sortable li div.pull-right a:nth-child(2)').click
       page.driver.browser.switch_to.alert.accept
       page.should have_css(".ui-sortable li", :count => 0)
@@ -46,32 +49,13 @@ describe 'tasks management', type: :feature, :js => true do
 
 
   context 'show/hide completed tasks' do
-=begin
-  TODO: Refactor
-  GS 2015-12-23
-  A spec should only test a specific functionality.
-  it should create task with completed functionality like below (should't use 'Mark as Completed' button)
+    let!(:task) { create(:task, project: project, creator: owner ) }
+    let!(:completed_task) { create(:task, progress: 'completed', project: project, creator: owner ) }
 
-  let(:completed_task) { FactoryGirl.create(:task, progress: 'completed')}
-
-  I am also noticing that our specs are too much dependent on views :(
-=end
     before do
-      # change progress to completed
-      visit project_tasks_path(@project)
-      create_task
-      visit project_tasks_path(@project)
-      find('ul#sortable li div.pull-right a:nth-child(1)').click
-      within '#task_progress' do
-        find('option[value="completed"]').click
-      end
-      find('input[name="commit"]').click
-
-      # create second task with no_progress
-      visit project_tasks_path(@project)
-      create_task
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
     end
+
     it 'should show' do
       find('a', text: 'Show Completed Tasks').click
       page.should have_css(".ui-sortable li", :count => 2)
@@ -86,7 +70,7 @@ describe 'tasks management', type: :feature, :js => true do
 
   context 'when associated with group' do
     before do
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
       create_task
     end
     it 'should be assign with group' do
@@ -97,7 +81,7 @@ describe 'tasks management', type: :feature, :js => true do
 
   context 'update' do
     before do
-      visit project_tasks_path(@project)
+      visit project_tasks_path(project)
       create_task
     end
     it 'should assign to me' do
