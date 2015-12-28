@@ -3,27 +3,16 @@ require 'rails_helper'
 describe 'tasks management', type: :feature, :js => true do
   let!(:owner) { create(:user) }
   let!(:project) { create(:project, owner: owner) }
+  let!(:group) {create(:task_group, name: 'ruby')}
+  let!(:task) {create(:medium_priority_task,title: 'create erd diagram',project: project , commenter: owner, creator: owner,task_group: group)}
 
   before do
     login(owner.email, 'secretpassword')
     visit project_tasks_path(project)
   end
-
   context 'ToDo List' do
     before do
-      visit project_tasks_path(project)
-      find('a', text: 'New Task').click
-      page.find(:css, ".newgroup_icon").click
-      fill_in 'task_task_group_attributes_name', with: 'ruby'
-      fill_in 'task_title', with: 'create erd diagram'
-      fill_in 'task_description', with: 'it should be complete on time'
-      within '#task_priority' do
-        find('option[value="medium"]').click
-      end
-      within '#task_assigned_to' do
-        find('option[value="0"]').click
-      end
-      find('input[name="commit"]').click
+      visit project_task_path(project, task)
     end
 
     it 'should show in ToDo list' do
@@ -49,18 +38,16 @@ describe 'tasks management', type: :feature, :js => true do
 
 
   context 'show/hide completed tasks' do
-    let!(:task) { create(:task, project: project, creator: owner ) }
-    let!(:completed_task) { create(:task, progress: 'completed', project: project, creator: owner ) }
-
     before do
+      task
+      create(:task, progress: 'completed', project: project, creator: owner )
       visit project_tasks_path(project)
     end
-
     it 'should show' do
       find('a', text: 'Show Completed Tasks').click
       page.should have_css(".ui-sortable li", :count => 2)
-      page.find(".ui-sortable li:nth-child(1)").should have_content('No progress')
-      page.find(".ui-sortable li:nth-child(2)").should have_content('Completed')
+      page.find(".ui-sortable li:nth-child(1)").should have_content('Completed')
+      page.find(".ui-sortable li:nth-child(2)").should have_content('No progress')
     end
     it 'should hide' do
       page.should have_css(".ui-sortable li", :count => 1)
@@ -70,8 +57,7 @@ describe 'tasks management', type: :feature, :js => true do
 
   context 'when associated with group' do
     before do
-      visit project_tasks_path(project)
-      create_task
+      visit project_task_path(project, task)
     end
     it 'should be assign with group' do
       find('ul.todo-info-list li:nth-child(1)').should have_content('ruby')
@@ -81,18 +67,16 @@ describe 'tasks management', type: :feature, :js => true do
 
   context 'update' do
     before do
-      visit project_tasks_path(project)
-      create_task
+      visit project_task_path(project, task)
     end
     it 'should assign to me' do
       find('a', text:'Assign to Me').click
-      find('ul.todo-info-list li:nth-child(2)').should have_content('sunny')
+      find('ul.todo-info-list li:nth-child(2)').should have_content(owner.name)
     end
     it 'should change progress' do
       find('a', text:'Assign to Me').click
       find('a', text:'Start Progress').click
-      sleep(20)
-      find('ul.todo-info-list li:nth-child(4)').should have_content('In progress')
+      find('ul.todo-info-list li:nth-child(5)').should have_content('In progress')
     end
   end
   # TO DO, ckeditor is dont provide find any element with the help of capybara.
@@ -108,11 +92,4 @@ describe 'tasks management', type: :feature, :js => true do
   #
   #   end
   # end
-  def create_task
-    find('a', text: 'New Task').click
-    page.find(:css, ".newgroup_icon").click
-    fill_in 'task_task_group_attributes_name', with: 'ruby'
-    fill_in 'task_title', with: 'create erd diagram'
-    find('input[name="commit"]').click
-  end
 end

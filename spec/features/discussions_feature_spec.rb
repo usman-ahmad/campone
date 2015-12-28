@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 describe 'discussions management', type: :feature, :js => true do
+  let!(:owner) { create(:user) }
+  let!(:project) { create(:project, owner: owner) }
+  let!(:group) {create(:discussion_group, name: 'diagrams')}
+  let!(:discussion) {create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: group )}
+
   before do
-    user = create_admin_user_and_login
-    @project = create(:project, owner: user)
-    visit project_discussions_path(@project)
+    login(owner.email, 'secretpassword')
+    visit project_discussions_path(project)
   end
 
   context 'Discussion List' do
     before do
-      create_new_discussion
-      visit project_discussions_path(@project)
+      visit project_discussions_path(project)
     end
     it 'should show in Discussion List' do
       find('table.discussion-list > tbody tr', :count => 1)
@@ -23,7 +26,7 @@ describe 'discussions management', type: :feature, :js => true do
 
     it 'should open discussion on click' do
       find('table.discussion-list > tbody tr:nth-child(1)').click
-      expect(page.current_path).to eq project_discussion_path(@project, id: 1)
+      expect(page.current_path).to eq project_discussion_path(project, id: 1)
     end
   end
 
@@ -47,7 +50,7 @@ describe 'discussions management', type: :feature, :js => true do
 
   context 'update' do
     before do
-      create_new_discussion
+     visit project_discussion_path(project, discussion)
     end
     it 'should update title' do
       find('ul.todo-info-list li:nth-child(2)').should have_content('how to deliver')
@@ -58,7 +61,7 @@ describe 'discussions management', type: :feature, :js => true do
     end
 
     it 'should update group' do
-      find('ul.todo-info-list li:nth-child(1)').should have_content('notifications')
+      find('ul.todo-info-list li:nth-child(1)').should have_content('diagrams')
       find('a', text: 'Edit').click
       page.find(:css, ".newgroup_icon").click
       fill_in 'discussion_discussion_group_attributes_name', with: 'notify'
@@ -70,32 +73,32 @@ describe 'discussions management', type: :feature, :js => true do
 
   context 'when edit delete and navigate from discussion' do
     before do
-      create_new_discussion
+      visit project_discussion_path(project,discussion)
     end
     it 'should edit' do
       find('a', text: 'Edit').click
       sleep(2)
-      expect(page.current_path).to eq edit_project_discussion_path(@project, id: 1)
+      expect(page.current_path).to eq edit_project_discussion_path(project, id: 1)
     end
 
     it 'should navigate to Discussion List' do
       find('a', text: 'List all Discussions').click
       sleep(2)
-      expect(page.current_path).to eq project_discussions_path(@project)
+      expect(page.current_path).to eq project_discussions_path(project)
 
     end
 
     it 'should navigate to new discussion' do
       find('a', text: 'Start New Discussion').click
       sleep(2)
-      expect(page.current_path).to eq new_project_discussion_path(@project)
+      expect(page.current_path).to eq new_project_discussion_path(project)
     end
 
     it 'should delete' do
       find('a', text: 'Delete').click
       page.driver.browser.switch_to.alert.accept
       sleep(2)
-      expect(page.current_path).to eq project_discussions_path(@project)
+      expect(page.current_path).to eq project_discussions_path(project)
     end
   end
 
@@ -120,12 +123,4 @@ describe 'discussions management', type: :feature, :js => true do
   #
   #   end
   # end
-  def create_new_discussion
-    find('a', text: 'New Discussion').click
-    page.find(:css, ".newgroup_icon").click
-    fill_in 'discussion_discussion_group_attributes_name', with: 'notifications'
-    fill_in 'discussion_title', with: 'how to deliver'
-    fill_in 'discussion_content', with: 'there is a need of discussion about how to deliver notifications'
-    find('input[name="commit"]').click
-  end
 end

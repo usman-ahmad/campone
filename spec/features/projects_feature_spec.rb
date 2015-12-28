@@ -1,8 +1,11 @@
 require 'rails_helper'
 
 describe 'projects management', type: :feature, :js => true do
+  let!(:owner) { create(:user) }
+  let!(:project) { create(:project, owner: owner) }
+
   before do
-    create_admin_user_and_login
+    login(owner.email, 'secretpassword')
   end
 
   describe 'creating a new project' do
@@ -20,7 +23,7 @@ describe 'projects management', type: :feature, :js => true do
         #this element contain group name
         find(:css, 'dl > dd:nth-child(2)').should have_content('ruby')
         #this element contain project owner name
-        find(:css, 'dl > dd:nth-child(8)').should have_content('sunny')
+        find(:css, 'dl > dd:nth-child(8)').should have_content(owner.name)
         #other fields of project show page
         check_fields
       end
@@ -34,7 +37,7 @@ describe 'projects management', type: :feature, :js => true do
         #this element contain group name
         find(:css, 'dl > dd:nth-child(2)').should have_content('Not Specified')
         #this element contain project owner name
-        find(:css, 'dl > dd:nth-child(8)').should have_content('asad')
+        find(:css, 'dl > dd:nth-child(8)').should have_content(owner.name)
         #other fields of project show page
         check_fields
       end
@@ -43,12 +46,7 @@ describe 'projects management', type: :feature, :js => true do
 
   describe 'editing an existing project' do
     before do
-      page.find(:css, ".create-project").click
-      fill_in 'project_name', with: 'camp one'
-      fill_in 'project_description', with: 'it should be create within 3 months'
-      page.find(:css, ".newgroup_icon").click
-      fill_in 'project_project_group_attributes_name', with: 'ruby'
-      page.find('input[name="commit"]').click
+      visit project_path(project)
     end
 
     it 'should edit project' do
@@ -64,7 +62,7 @@ describe 'projects management', type: :feature, :js => true do
     it 'should display in dashboard' do
       visit projects_path
       expect(page.current_path).to eq projects_path
-      find(:css, 'div.project').should have_content('camp one')
+      find(:css, 'div.project').should have_content(project.name)
     end
   end
 
