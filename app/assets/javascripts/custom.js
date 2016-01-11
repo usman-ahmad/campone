@@ -12,7 +12,12 @@ var ready = function () {
         click_on_anchor = true;
     });
     $(function () {
-        $(".sortable").sortable();
+        $(".sortable").sortable({
+            update: function (event, ui) {
+                $.post($(this).data('update-url'), $(this).sortable('serialize'));
+            }
+        });
+
     });
     function showGroupFieldsfiles() {
         var hideField_discussion = $('#hideField-files');

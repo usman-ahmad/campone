@@ -30,11 +30,12 @@
 <div class="col-md-12">
   <div class="col-md-9">
     <h3 class="heading-3">To-Do list</h3>
+    <ul class="sortable" id="tasks" data-update-url="<%= sort_project_tasks_url %>">
+
       <% @grouped_tasks.each do |group_id,tasks| %>
       <h3 class="heading-3"><%= Group.find_by_id(group_id).try(:name) %></h3>
-      <ul class="sortable">
         <% tasks.each do |task| %>
-          <li class="ui-state-default custom-ui-state anchor-container" data-href="<%= project_task_path(@project, task) %>">
+          <li id="task_<%= task.id %>" class="ui-state-default custom-ui-state anchor-container" data-href="<%= project_task_path(@project, task) %>">
             <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
             <p class="todo-content">
@@ -60,7 +61,7 @@
             </p>
           </li>
         <% end %>
-      </ul>
       <% end %>
+    </ul>
   </div>
 </div>

@@ -70,6 +70,15 @@ class TasksController < ApplicationController
     respond_to :js
   end
 
+  def sort
+    params[:task].each_with_index do |id, index|
+      Task.find(id).update_attributes(position: index+1)
+    end
+
+    # TODO: Sort in different groups
+    render :nothing => true
+  end
+
   private
 
   def set_task

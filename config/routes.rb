@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :tasks do
+      collection { post :sort }
       patch :assigned_to_me,:start_progress, on: :member
       resources :comments
     end

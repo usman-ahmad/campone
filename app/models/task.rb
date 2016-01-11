@@ -8,6 +8,8 @@ class Task < ActiveRecord::Base
   has_many :comments,    as: :commentable
   has_many :attachments, as: :attachable
 
+  before_create :set_position
+
   enum priority: [:low, :medium, :high ]
   enum progress: [:no_progress, :in_progress, :completed ]
 
@@ -46,6 +48,12 @@ class Task < ActiveRecord::Base
         all.where.not(progress: Task.progresses['completed'])
       end
 
-    tasks.group_by{ |t| t.task_group_id }
+    tasks.order!('position').group_by{ |t| t.task_group_id }
+  end
+
+  private
+
+  def set_position
+    self.position= Task.count + 1
   end
 end
