@@ -7,7 +7,7 @@ class TasksController < ApplicationController
 
   def index
     cookies[:include_completed] = params[:include_completed] if params[:include_completed].present?
-    @tasks = @project.tasks.search(params[:search_text], cookies[:include_completed] == 'true')
+    @grouped_tasks = @project.tasks.search(params[:search_text], cookies[:include_completed] == 'true')
   end
 
   def show

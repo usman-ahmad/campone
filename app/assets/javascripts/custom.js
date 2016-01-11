@@ -12,7 +12,7 @@ var ready = function () {
         click_on_anchor = true;
     });
     $(function () {
-        $("#sortable").sortable();
+        $(".sortable").sortable();
     });
     function showGroupFieldsfiles() {
         var hideField_discussion = $('#hideField-files');

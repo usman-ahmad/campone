@@ -37,12 +37,15 @@ class Task < ActiveRecord::Base
   end
 
   def self.search(text, include_completed=false)
-    if include_completed
-      all
-    elsif text.present?
-      where("title @@ :q or description @@ :q", q: text )
-    else
-      all.where.not(progress: Task.progresses['completed'])
-    end
+    tasks =
+      if include_completed
+        all
+      elsif text.present?
+        where("title @@ :q or description @@ :q", q: text )
+      else
+        all.where.not(progress: Task.progresses['completed'])
+      end
+
+    tasks.group_by{ |t| t.task_group_id }
   end
 end
