@@ -20,6 +20,10 @@
       <span class="glyphicon glyphicon-plus"></span>
       New Task
   <% end %>
+  <%= link_to project_tasks_path(@project, format: "csv"), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-export"></span>
+      Export CSV
+  <% end %>
   <% include_completed = cookies[:include_completed] == 'true' %>
   <%= link_to project_tasks_path(@project, include_completed: !include_completed ), class: "btn btn-#{include_completed ? 'success' :'info'}" do %>
     <%= include_completed  ? 'Hide' : 'Show' %> Completed Tasks

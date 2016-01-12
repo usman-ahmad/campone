@@ -39,16 +39,22 @@ class Task < ActiveRecord::Base
   end
 
   def self.search(text, include_completed=false)
-    tasks =
-      if include_completed
-        all
-      elsif text.present?
-        where("title @@ :q or description @@ :q", q: text )
-      else
-        all.where.not(progress: Task.progresses['completed'])
-      end
+    if include_completed
+      all
+    elsif text.present?
+      where("title @@ :q or description @@ :q", q: text )
+    else
+      all.where.not(progress: Task.progresses['completed'])
+    end
+  end
 
-    tasks.order!('position').group_by{ |t| t.task_group_id }
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |task|
+        csv << task.attributes.values_at(*column_names)
+      end
+    end
   end
 
   private
