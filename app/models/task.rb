@@ -51,10 +51,14 @@ class Task < ActiveRecord::Base
   end
 
   def self.to_csv(options = {})
+    csv_headers = ['title', 'description', 'priority','progress', 'due_at', 'group']
+
     CSV.generate(options) do |csv|
-      csv << column_names
+      csv << csv_headers
       all.each do |task|
-        csv << task.attributes.values_at(*column_names)
+        attributes = task.attributes
+        attributes['group'] = task.task_group
+        csv << attributes.values_at(*csv_headers)
       end
     end
   end
