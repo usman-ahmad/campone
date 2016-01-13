@@ -18,14 +18,14 @@
   <div class="form-group">
     <%= f.label :priority, class: "col-sm-2 control-label" %>
     <div class="col-sm-2">
-      <%= f.select :priority, Task.priorities.keys, { include_blank: "None" }, { class: 'form-control'} %>
+      <%= f.select :priority, Task::PRIORITIES, {}, { class: 'form-control'} %>
     </div>
   </div>
   <% if @task.persisted?  %>
     <div class="form-group">
       <%= f.label :progress, class: "col-sm-2 control-label" %>
       <div class="col-sm-2">
-        <%= f.select :progress, Task.progresses.keys, {}, { class: 'form-control'} %>
+        <%= f.select :progress,Task::PROGRESSES, {}, { class: 'form-control'} %>
       </div>
     </div>
   <% end %>

@@ -10,13 +10,15 @@ class Task < ActiveRecord::Base
 
   before_create :set_position
 
-  enum priority: [:low, :medium, :high ]
-  enum progress: [:no_progress, :in_progress, :completed ]
+  PRIORITIES = %w[None Low Medium High]
+  PROGRESSES = ['No progress', 'In progress', 'Completed']
 
   validates :title, presence: true
   # Do not validate due date on edit
   validate :due_date, :if => Proc.new{ |task| task.new_record? }
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
+
+  scope :not_completed, -> { where.not(progress: 'Completed') }
 
   def due_date
     errors.add(:due_at, "can't be in the past") if
@@ -44,7 +46,7 @@ class Task < ActiveRecord::Base
     elsif text.present?
       where("title @@ :q or description @@ :q", q: text )
     else
-      all.where.not(progress: Task.progresses['completed'])
+      all.not_completed
     end
   end
 

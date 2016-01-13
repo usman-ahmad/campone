@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111145729) do
+ActiveRecord::Schema.define(version: 20160113134450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,12 +160,12 @@ ActiveRecord::Schema.define(version: 20160111145729) do
     t.string   "title"
     t.text     "description"
     t.integer  "project_id"
-    t.integer  "priority"
+    t.string   "priority",      default: "None"
     t.date     "due_at"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "task_group_id"
-    t.integer  "progress",      default: 0
+    t.string   "progress",      default: "No progress"
     t.integer  "assigned_to"
     t.integer  "user_id"
     t.integer  "position"
