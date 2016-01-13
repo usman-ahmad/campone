@@ -63,6 +63,20 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def self.import(file, project, current_user)
+    # TODO: Make it atomic
+    CSV.foreach(file.path, headers: true) do |row|
+      attributes  = row.to_hash
+      attributes['user_id'] = current_user
+
+      group = attributes.delete('group')
+      attributes['task_group_id'] = TaskGroup.list_for(project).case_insensitive('name', group).
+          first_or_create(name: group, project: project, creator: current_user).id if group
+
+      project.tasks.create!(attributes)
+    end
+  end
+
   private
 
   def set_position

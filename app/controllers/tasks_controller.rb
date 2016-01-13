@@ -87,6 +87,14 @@ class TasksController < ApplicationController
     render :nothing => true
   end
 
+  def new_import
+  end
+
+  def import
+    Task.import(params[:file],@project, current_user)
+    redirect_to project_tasks_path, notice: "Tasks imported."
+  end
+
   private
 
   def set_task

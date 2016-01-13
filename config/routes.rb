@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   resources :projects do
     resources :tasks do
-      collection { post :sort }
+      collection do
+        post :sort
+        get  :new_import
+        post :import
+      end
+
       patch :assigned_to_me,:start_progress, on: :member
       resources :comments
     end
