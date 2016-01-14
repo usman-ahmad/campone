@@ -43,6 +43,10 @@ gem 'cancancan', '~> 1.10'
 gem 'font-awesome-sass'
 #gem for API
 gem 'grape'
+
+# To create slugs
+gem 'friendly_id', '~> 5.1.0'
+
 #gems for notifications
 # Faye is a subscription/publishing server which makes it easy to do push notifications within a Rails app.
 gem 'faye'

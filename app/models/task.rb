@@ -2,6 +2,9 @@ class Task < ActiveRecord::Base
   include Attachable
   include PublicActivity::Common
 
+  extend FriendlyId
+  friendly_id :current_ticket_id, use: [:slugged,:finders], slug_column: :ticket_id
+
   belongs_to :project
   belongs_to :task_group
   belongs_to :created_by, class_name: User, foreign_key: :user_id
@@ -9,6 +12,7 @@ class Task < ActiveRecord::Base
   has_many :attachments, as: :attachable
 
   before_create :set_position
+  after_create  :increment_ticket_counter
 
   PRIORITIES = %w[None Low Medium High]
   PROGRESSES = ['No progress', 'In progress', 'Completed']
@@ -81,5 +85,13 @@ class Task < ActiveRecord::Base
 
   def set_position
     self.position= Task.count + 1
+  end
+
+  def current_ticket_id
+    [[project.friendly_id, project.reload.current_ticket_id]]
+  end
+
+  def increment_ticket_counter
+    Project.increment_counter(:current_ticket_id, project)
   end
 end

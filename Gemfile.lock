@@ -147,6 +147,8 @@ GEM
     ffi (1.9.10)
     font-awesome-sass (4.4.0)
       sass (>= 3.2)
+    friendly_id (5.1.0)
+      activerecord (>= 4.0.0)
     fullcalendar-rails (2.3.1.0)
       jquery-rails (>= 3.1.1, < 5.0.0)
       momentjs-rails (~> 2.8, >= 2.8.4)
@@ -378,6 +380,7 @@ DEPENDENCIES
   factory_girl_rails
   faye
   font-awesome-sass
+  friendly_id (~> 5.1.0)
   fullcalendar-rails
   grape
   jbuilder (~> 2.0)
@@ -405,4 +408,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.11.0
+   1.11.2

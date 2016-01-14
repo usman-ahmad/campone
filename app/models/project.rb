@@ -1,4 +1,7 @@
 class Project < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_candidates, use: [:slugged,:finders]
+
   belongs_to :owner, class_name: 'User'
   belongs_to :project_group
 
@@ -68,5 +71,19 @@ class Project < ActiveRecord::Base
 =end
   def add_owner_to_contributors
     self.contributions.create(user: self.owner, role: 'owner')
+  end
+
+  # Try to create a slug with initials of project name, if its already taken try next combination of initials and random characters
+  def slug_candidates
+    name_initials = self.name.split.map(&:first).join
+
+    # TODO: Try SecureRandom
+    # generate a random string of length 3
+    random_chars  = (0...3).map { ('a'..'z').to_a[rand(26)] }.join
+
+    [
+        name_initials,
+        [name_initials, random_chars]
+    ]
   end
 end
