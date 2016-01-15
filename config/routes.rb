@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'notifications' => 'notifications#index'
 
+  #resource to receive github messages as a post request.
+  resource :github_webhooks, only: :create, defaults: { formats: :json }
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
