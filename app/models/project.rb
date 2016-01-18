@@ -11,6 +11,7 @@ class Project < ActiveRecord::Base
   has_many :members, through: :contributions, :source => :user
   has_many :events
   has_many :attachments
+  has_many :integrations
 
   validates :name, presence: true
   validates :owner, presence: true

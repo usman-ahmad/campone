@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114120113) do
+ActiveRecord::Schema.define(version: 20160118102904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,15 @@ ActiveRecord::Schema.define(version: 20160114120113) do
   add_index "groups", ["project_id"], name: "index_groups_on_project_id", using: :btree
   add_index "groups", ["type"], name: "index_groups_on_type", using: :btree
 
+  create_table "integrations", force: :cascade do |t|
+    t.integer  "project_id"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "integrations", ["project_id"], name: "index_integrations_on_project_id", using: :btree
+
   create_table "notifications", force: :cascade do |t|
     t.integer  "activity_id"
     t.integer  "user_id"
@@ -136,6 +145,15 @@ ActiveRecord::Schema.define(version: 20160114120113) do
 
   add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
   add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
+
+  create_table "payloads", force: :cascade do |t|
+    t.text     "info"
+    t.integer  "integration_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "payloads", ["integration_id"], name: "index_payloads_on_integration_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -225,8 +243,10 @@ ActiveRecord::Schema.define(version: 20160114120113) do
   add_foreign_key "discussions", "projects"
   add_foreign_key "events", "projects"
   add_foreign_key "groups", "projects"
+  add_foreign_key "integrations", "projects"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payloads", "integrations"
   add_foreign_key "tasks", "projects"
   add_foreign_key "user_discussions", "discussions"
   add_foreign_key "user_discussions", "users"
