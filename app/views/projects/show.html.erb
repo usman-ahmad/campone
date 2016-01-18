@@ -45,8 +45,11 @@
     <span class="glyphicon glyphicon-user"></span>
     Manage Invitations
   <% end %>
+  <%= link_to project_integrations_path(@project), class: 'btn btn-primary' do %>
+    Manage Integrations
+  <% end %>
   <%= link_to project_events_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-user"></span>
+    <span class="glyphicon glyphicon-calendar"></span>
     Calender
   <% end %>
 </dl>

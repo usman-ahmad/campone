@@ -1,0 +1,14 @@
+<%= form_for([@project, @integration], html: {role: "form", class: "form-horizontal"}) do |f| %>
+  <div class="form-group">
+    <%= f.label :url, 'URL', class: "col-md-2 control-label" %>
+    <div class="col-md-8" placeholder="http://github.com/user/repo_name">
+      <%= f.url_field :url, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

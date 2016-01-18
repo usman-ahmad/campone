@@ -22,6 +22,10 @@ class WebhooksController < ActionController::Base
     head(:ok)
    end
 
+=begin
+  GS: Don't use integration_id, if some third person adds a hook with some random wrong id,
+  spam will begin generating for original project
+=end
   def getIntegration
     @integration = Integration.find(params["integration_id"].to_i)
   end

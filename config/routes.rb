@@ -28,6 +28,8 @@ Rails.application.routes.draw do
     resources :events do
       get :get_events, on: :collection
     end
+
+    resources :integrations
   end
 
   devise_for :users
