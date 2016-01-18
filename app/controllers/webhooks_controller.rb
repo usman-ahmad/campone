@@ -1,4 +1,4 @@
-class GithubWebhooksController < ActionController::Base
+class WebhooksController < ActionController::Base
   include GithubWebhook::Processor
 
   # add github events according to your requirements
