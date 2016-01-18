@@ -15,8 +15,14 @@ class WebhooksController < ActionController::Base
   #   ENV['GITHUB_WEBHOOK_SECRET']
   # end
 
-  def create
+  before_action :getIntegration
 
+  def create
+    @integration.create_payload params
     head(:ok)
+   end
+
+  def getIntegration
+    @integration = Integration.find(params["integration_id"].to_i)
   end
 end

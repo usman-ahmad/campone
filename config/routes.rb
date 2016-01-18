@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   get 'notifications' => 'notifications#index'
 
   #resource to receive VCS messages as a post request.
-  post 'webhooks/:vcs_name' => 'webhooks#create', defaults: {formats: :json}
+  post 'webhooks/:integration_id' => 'webhooks#create', defaults: {formats: :json}
 
 
   # Example of regular route:

@@ -26,5 +26,6 @@ module CampOne
     # uncomment below two lines if your api folder in root directoy of Project
       config.paths.add "app/api", glob: "**/*.rb"
       config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+      config.autoload_paths += %W(#{config.root}/services/*)
   end
 end
