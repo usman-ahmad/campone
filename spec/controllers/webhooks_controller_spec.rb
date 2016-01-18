@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe GithubwebhooksController, type: :controller do
+RSpec.describe WebhooksController, type: :controller do
 
 end
