@@ -3,7 +3,7 @@ class Payload < ActiveRecord::Base
   serialize :info
   after_create :send_notification
   validates :event, presence: true
-  
+
   def send_notification
   #This will send notifications to Users of this project, On which payload is created
   end

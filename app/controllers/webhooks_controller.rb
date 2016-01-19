@@ -18,9 +18,9 @@ class WebhooksController < ActionController::Base
   before_action :getIntegration
 
   def create
-    @integration.create_payload params
+    @integration.payloads.create(info: params, event: event_name)
     head(:ok)
-   end
+  end
 
 =begin
   GS: Don't use integration_id, if some third person adds a hook with some random wrong id,
@@ -28,5 +28,10 @@ class WebhooksController < ActionController::Base
 =end
   def getIntegration
     @integration = Integration.find(params["integration_id"].to_i)
+  end
+
+  def event_name
+    request.headers['X-GitHub-Event'] if @integration.vcs_name == "github"
+    #In the same way we will extract event name from bitbuckit or other vcs payloads or requests
   end
 end

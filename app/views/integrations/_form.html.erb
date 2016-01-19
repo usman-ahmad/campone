@@ -4,6 +4,10 @@
     <div class="col-md-8" placeholder="http://github.com/user/repo_name">
       <%= f.url_field :url, class: "form-control" %>
     </div>
+      <div class="col-md-8">
+        <%= f.label :vcs_name, 'Vcs Name', class: "col-md-2 control-label" %>
+        <%= f.select :vcs_name, ["github","bitbucket"], class: "form-control"%>
+        </div>
   </div>
 
   <div class="form-group">
