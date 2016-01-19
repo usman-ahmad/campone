@@ -1,18 +1,7 @@
-class VcsMessages
-  attr_accessor :payload
-  attr_accessor :event
+class Github < Vcsmessage
 
   def initialize(payload, event_name)
-    @payload = payload
-    @event = event_name
-  end
-
-  def message
-    if self.respond_to? @event
-      self.send event, @payload
-    else
-      raise NoMethodError.new("#{event} not implemented")
-    end
+    super(payload,event_name,"github")
   end
 
   #Format of push event message
