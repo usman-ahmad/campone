@@ -20,9 +20,9 @@ class Github < Vcsmessage
   #   ]
   # }
   def push(payload)
-    commits = payload.info["commits"]
+    commits = payload["commits"]
     total_commits = commits.count
-    pusher = payload.info["pusher"]["name"]
+    pusher = payload["pusher"]["name"]
     message_header = "#{total_commits} new commits pushed by #{pusher}"
 
     message = {"head": "#{message_header}", "head_url": "HEAD_URL", "commits": []}
