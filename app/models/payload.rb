@@ -11,7 +11,7 @@ class Payload < ActiveRecord::Base
 
   def send_notification
     #This will send notifications to Users of this project, On which payload is created
-    Notification_sender.new.send_notification(message,project_user)
+    Notification_sender.new.send_notification(message[:head],project_user)
   end
 
   def message

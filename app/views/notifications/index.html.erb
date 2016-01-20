@@ -1,3 +1,28 @@
+
+<% current_user.projects.each do |project|%>
+    <div class="col-lg-12 col-md-12">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default notification-panel">
+          <div class="panel-heading unread-message" role="tab" id="headingOne">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#<%= project.id%>" aria-expanded="true" aria-controls="collapseOne">
+              <h4 class="panel-title">
+                <i class="fa fa-check-circle-o"></i> Project: <%= project.name%>
+              </h4>
+            </a>
+          </div>
+          <div id="<%= project.id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <%project.payloads.each do |payload|%>
+                  <% short_message = Vcsmessage.new(payload.info,payload.event,payload.integration.vcs_name).message %>
+                    <%= render('push_notice',short_message: short_message) if payload.event == "push" %>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<%end%>
+
 <% notice_count = current_user.notifications.where(:status => 'unread').count %>
 
 <% @notifications.each_with_index do |(notifiable, notifications), index| %>

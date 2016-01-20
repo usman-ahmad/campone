@@ -12,6 +12,7 @@ class Project < ActiveRecord::Base
   has_many :events
   has_many :attachments
   has_many :integrations
+  has_many :payloads, through: :integrations
 
   validates :name, presence: true
   validates :owner, presence: true

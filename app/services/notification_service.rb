@@ -1,6 +1,7 @@
 class Notification_sender
 
   def send_notification(notice, users_to_notify)
+    (notice = ('| |' + notice)) if notice.split('|').count == 1
     users_to_notify.each do |user|
       begin
         PrivatePub.publish_to('/messages/private/user'+ user.id.to_s, message: "#{notice}")

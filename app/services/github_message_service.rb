@@ -7,6 +7,7 @@ class Github < Vcsmessage
   #Format of push event message
   # {:head=>"2 new commits pushed by muhammad-ateek",
   #  :head_url=>"HEAD_URL",
+  #  :vcs_name =>"github",
   #  :commits=>[
   #      {
   #          :id=>"1c8...",
@@ -25,7 +26,7 @@ class Github < Vcsmessage
     pusher = payload["pusher"]["name"]
     message_header = "#{total_commits} new commits pushed by #{pusher}"
 
-    message = {"head": "#{message_header}", "head_url": "HEAD_URL", "commits": []}
+    message = {"head": "#{message_header}", "head_url": "HEAD_URL", "vcs_name":"github","commits": []}
 
     commits.each do |commit|
       id = commit["id"]

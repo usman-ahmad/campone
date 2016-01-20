@@ -1,0 +1,14 @@
+<% short_message[:commits].each do |commit|%>
+    <div class="notification-message-container">
+      <a href="#" class="notification-user" style="background-color: #AB5733"><%= short_message[:vcs_name] %></a>
+      <a id="notice" class="success-edit"
+         onclick=""><i class="fa fa-check-square"></i></a>
+                      <span class="message-info"><b></b>
+                        <%= short_message[:head]%>
+                      </span>
+      <div>
+        <a href="<%= commit[:url]%>"> <%= commit[:id].last(7) %></a>
+        <%= commit[:message]%>
+      </div>
+    </div>
+<%end%>
