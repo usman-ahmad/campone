@@ -22,7 +22,7 @@ class Github < Vcsmessage
   # }
   def push(payload)
     commits = payload["commits"]
-    total_commits = commits.count
+    total_commits = commits.count # No need to store this in new variable, we can use commits.count
     pusher = payload["pusher"]["name"]
     message_header = "#{total_commits} new commits pushed by #{pusher}"
 
@@ -37,6 +37,10 @@ class Github < Vcsmessage
     end
 
     return message
+  end
+
+  def commit_messages
+  # TODO: Implement this according to structure defined in parent class
   end
 
 end

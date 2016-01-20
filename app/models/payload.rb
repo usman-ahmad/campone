@@ -4,6 +4,7 @@ require 'github_message_service'
 
 class Payload < ActiveRecord::Base
   after_create :send_notification
+  after_create :perform_actions
 
   belongs_to :integration
   serialize :info
@@ -16,10 +17,18 @@ class Payload < ActiveRecord::Base
 
   def message
     # This will generate short message to send
-    Vcsmessage.new(info, event, integration.vcs_name).message
+    vcs_parser.message
+  end
+
+  def vcs_parser
+    Vcsmessage.new(info, event, integration.vcs_name)
   end
 
   def project_user
     integration.project.members
+  end
+
+  def perform_actions
+    vcs_parser.perform_actions
   end
 end
