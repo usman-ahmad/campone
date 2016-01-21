@@ -1,4 +1,4 @@
-class Notification_sender
+class NotificationService
 
   def send_notification(notice, users_to_notify)
     (notice = ('| |' + notice)) if notice.split('|').count == 1

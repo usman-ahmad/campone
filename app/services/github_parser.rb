@@ -1,4 +1,4 @@
-class Github < Vcsmessage
+class GithubParser < VCSParser
 
   def initialize(payload, event_name)
     super(payload,event_name,"github")

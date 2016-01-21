@@ -1,5 +1,4 @@
-class Vcsmessage
-  # GS: class name should have same name as file, What about name of class to be VCSParser OR PayloadParser?
+class VCSParser
   attr_accessor :payload
   attr_accessor :event
   attr_accessor :vcs_name

@@ -1,10 +1,6 @@
-require 'notification_service'
-require 'message_services'
-require 'github_message_service'
-
 class Payload < ActiveRecord::Base
   after_create :send_notification
-  after_create :perform_actions
+  after_create :perform_transitions
 
   belongs_to :integration
   serialize :info
@@ -12,7 +8,7 @@ class Payload < ActiveRecord::Base
 
   def send_notification
     #This will send notifications to Users of this project, On which payload is created
-    Notification_sender.new.send_notification(message[:head],project_user)
+    NotificationService.new.send_notification(message[:head],project_user)
   end
 
   def message
@@ -28,7 +24,7 @@ class Payload < ActiveRecord::Base
     integration.project.members
   end
 
-  def perform_actions
+  def perform_transitions
     vcs_parser.push_actions
   end
 end
