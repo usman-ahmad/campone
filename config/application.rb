@@ -27,5 +27,6 @@ module CampOne
       config.paths.add "app/api", glob: "**/*.rb"
       config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
       config.autoload_paths += %W(#{config.root}/services/*)
+      config.autoload_paths += Dir["#{config.root}/lib", "#{config.root}/lib/**/"]
   end
 end

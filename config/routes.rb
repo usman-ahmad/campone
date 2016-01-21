@@ -10,7 +10,7 @@ Rails.application.routes.draw do
         post :import
       end
 
-      patch :assigned_to_me,:start_progress, on: :member
+      patch :assigned_to_me,:set_progress, on: :member
       resources :comments
     end
 

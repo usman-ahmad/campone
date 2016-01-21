@@ -15,7 +15,9 @@ class Task < ActiveRecord::Base
   after_create  :increment_ticket_counter
 
   PRIORITIES = %w[None Low Medium High]
-  PROGRESSES = ['No progress', 'In progress', 'Completed']
+  # if you changed the order of any value of PROGRESSES array than it will reflect in lib/state.rb file.
+  # So dont change order
+  PROGRESSES = ['Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
 
   validates :title, presence: true
   # Do not validate due date on edit
@@ -29,6 +31,10 @@ class Task < ActiveRecord::Base
         due_at < Date.today if due_at.present?
   end
 
+  def next_states
+    State::STATE_MACHINE[progress.tr(' ', '_').downcase.to_sym]
+  end
+
   def assigned_to_me(current_user)
     if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?(PROGRESSES.first))
       if update_attributes(assigned_to: current_user.id)
@@ -36,12 +42,11 @@ class Task < ActiveRecord::Base
     else 'Task already assigned'end
   end
 
-  def start_progress(current_user)
-    if (assigned_to).eql?(current_user.id) && progress.eql?(PROGRESSES.first)
-      if update_attributes(progress: :in_progress)
-           'Progress status of task has been updated'
-      else 'Progress status of task could not change' end
-    else   'Progress status of task cannot change' end
+  def set_progress(current_user, progress)
+    if (assigned_to).eql?(current_user.id)
+      if update_attributes(progress: progress)
+      else 'status of task could not change' end
+    else   'Task is not assigned to you' end
   end
 
   def self.search(text, include_completed=false)

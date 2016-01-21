@@ -14,4 +14,9 @@ module TasksHelper
         User.find(task.assigned_to).name
     end
   end
+
+  def state_label(state)
+    ((state == 'Completed') || (state =='Closed'))? state_label  = state.remove('d') : state_label  = state.remove('ed')
+  end
 end
+

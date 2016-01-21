@@ -51,7 +51,9 @@
       <div class="col-md-12 todo-item">
         <div class="pull-left">
           <%= link_to 'Assign to Me', assigned_to_me_project_task_path(@project ,@task),method: :patch, remote: true,  class: 'btn btn-default' %>
-          <%= link_to 'Start Progress', start_progress_project_task_path(@project ,@task),method: :patch, remote: true,  class: 'btn btn-default' %>
+          <span id = "progress_buttons">
+            <%= render 'tasks/progress_buttons'%>
+          </span>
         </div>
         <div class="pull-right">
           <%= link_to edit_project_task_path(@project ,@task), class: 'btn btn-default' do %>

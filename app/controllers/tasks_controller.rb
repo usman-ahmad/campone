@@ -73,8 +73,8 @@ class TasksController < ApplicationController
     respond_to :js
   end
 
-  def start_progress
-    flash[:notice]= @task.start_progress current_user
+  def set_progress
+    flash[:notice]= @task.set_progress current_user, params[:progress]
     respond_to :js
   end
 

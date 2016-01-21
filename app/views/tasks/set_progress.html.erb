@@ -1,0 +1,3 @@
+$("#progress").html("<%= j @task.progress.humanize %>");
+$("#progress_buttons").html("<%= j render 'tasks/progress_buttons'%>")
+<%= render 'tasks/js_flash' if flash[:notice].present?%>
