@@ -1,7 +1,7 @@
 class GithubParser < VCSParser
 
-  def initialize(payload, event_name)
-    super(payload,event_name,"github")
+  def initialize(payload)
+    super(payload)
   end
 
   #Format of push event message
@@ -20,10 +20,10 @@ class GithubParser < VCSParser
   #       }
   #   ]
   # }
-  def push(payload)
-    commits = payload["commits"]
+  def push
+    commits = @payload["commits"]
     total_commits = commits.count # No need to store this in new variable, we can use commits.count
-    pusher = payload["pusher"]["name"]
+    pusher = @payload["pusher"]["name"]
     message_header = "#{total_commits} new commits pushed by #{pusher}"
 
     message = {"head": "#{message_header}", "head_url": "HEAD_URL", "vcs_name":"github","commits": []}
@@ -47,8 +47,8 @@ class GithubParser < VCSParser
     }
 =end
 
-  def commit_messages(payload)
-    commits = payload["commits"]
+  def get_commit_messages
+    commits = @payload["commits"]
     messages = []
     commits.each do |commit|
     commit_info = {

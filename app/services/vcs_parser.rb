@@ -7,18 +7,15 @@ class VCSParser
   #Example
   # Vcsmessage.new(Payload, "push","github" ).message
 
-  # GS: A payload contains information about event_name and vcs_name, So why should we need to pas as arguments separately?
-  def initialize(payload, event_name, vcs_name)
-    @payload = payload
-    @event = event_name
-    @vcs_name = vcs_name + 'Parser'
+  def initialize(payload)
+    @payload  = payload.info
+    @event    = payload.event
+    @vcs_name = payload.integration.vcs_name + 'Parser'
   end
 
   def message
-    # GS:  I think we should create and return instance of subclass in constructor
-    vcs_obj = @vcs_name.classify.constantize.new(@payload, @event)
-    if vcs_obj.respond_to? @event
-      vcs_obj.send event, @payload # No need to pas @payload class level variable as argument, it should be available in child class
+    if respond_to? @event
+       send event
     else
       raise NoMethodError.new("#{event} not implemented")
     end
@@ -78,10 +75,5 @@ class VCSParser
       when nil
         # create comment on referenced ticket?
     end
-  end
-
-  def get_commit_messages
-    vcs_obj = @vcs_name.classify.constantize.new(@payload, @event)
-    vcs_obj.commit_messages(@payload)
   end
 end
