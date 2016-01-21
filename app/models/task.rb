@@ -17,7 +17,7 @@ class Task < ActiveRecord::Base
   PRIORITIES = %w[None Low Medium High]
   # if you changed the order of any value of PROGRESSES array than it will reflect in lib/state.rb file.
   # So dont change order
-  PROGRESSES = ['Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
+  PROGRESSES = ['No progress', 'Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
 
   validates :title, presence: true
   # Do not validate due date on edit
