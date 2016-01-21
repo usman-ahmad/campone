@@ -24,6 +24,14 @@ class Vcsmessage
       raise NoMethodError.new("#{event} not implemented")
     end
   end
+
+    def push_actions
+    commits = get_commit_messages
+    commits.each do |commit|
+      commit_actions(commit)
+    end
+  end
+
 =begin
   This method will update task status (Performs any actions based on commit message)
 
@@ -43,41 +51,43 @@ class Vcsmessage
 
   I know this function is scary but it works; will improve it later and more actions will be added
 =end
-  def perform_actions
-    commits = get_commit_messages
+  def commit_actions(commit)
     seperators = [',',':', ';', ' ']
-    commits.each do |commit|
 
-      matches = commit[:message].scan(/((start|finish|complete|resolve|close|fix)?e?s?d?\w?[\s,:;]#([-a-z0-9]+))/i)
+    commit = { message: 'fixed #ticket_01 #ticket_02 and started #ticket_03' }
+    matches = commit[:message].scan(/((start|finish|complete|resolve|close|fix)?e?s?d?\w?[\s,:;]+#([-a-z0-9]+))/i)
 
-      matches.each_with_index do |match,index|
-        ticket_id = match[2]
-        action    = match[1] || matches[index-1][2] if index > 0 and seperators.contains(match[0][0])
+    matches.each_with_index do |match,index|
+      ticket_id = match[2]
+      action    = match[1] || matches[index-1][2] if index > 0 and seperators.contains(match[0][0])
 
-        task = Task.find(ticket_id.downcase)
-        # Determine the action to take
-        determine_and_take_actions!(action, task) if task
-      end
+      task = Task.find(ticket_id.downcase)
+      # Determine and perform action to take
+      task_action(action, task) if task
     end
   end
 
-  def determine_and_take_actions!(action, task)
+  def task_action(action, task)
     case action.downcase
       when 'start'
         # start the ticket
-
+        # TODO: Using string in Progress are pron to typo errors. should be named constants
+        task.update_attributes(progress: 'In progress')
       when 'close', 'fix', 'reslove'
         # change status to finish
+        task.update_attributes(progress: 'Completed')
       when nil
-        # create comment on referenced ticket
+        # create comment on referenced ticket?
     end
   end
 
 =begin
-    Child classes should define this function and it should return array of commits (Array of hashes like given below)
+    This is like abstract function, This class dont know implementation, Child classes must define this function
+
+    It should return array of commits (Array of hashes like given below)
     [
-      { message: 'messge of commit 1', author: { email: 'author1@example.com', name: 'Foo Bar' } },
-      { message: 'messge of commit 2', author: { email: 'author1@example.com', name: 'Don Joe' } }
+      { message: 'message of commit 1', author: { email: 'author1@example.com', name: 'Foo Bar' } },
+      { message: 'message of commit 2', author: { email: 'author1@example.com', name: 'Don Joe' } }
     ]
 =end
   def get_commit_messages

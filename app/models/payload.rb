@@ -29,6 +29,6 @@ class Payload < ActiveRecord::Base
   end
 
   def perform_actions
-    vcs_parser.perform_actions
+    vcs_parser.push_actions
   end
 end
