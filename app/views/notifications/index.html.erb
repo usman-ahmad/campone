@@ -13,7 +13,7 @@
           <div id="<%= project.id%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
               <%project.payloads.each do |payload|%>
-                  <% short_message = VCSParser.new(payload.info,payload.event,payload.integration.vcs_name).message %>
+                  <% short_message = VCSFactory.new(payload).get_vcs.message %>
                     <%= render('push_notice',short_message: short_message) if payload.event == "push" %>
               <%end%>
             </div>
