@@ -30,14 +30,14 @@ class Task < ActiveRecord::Base
   end
 
   def assigned_to_me(current_user)
-    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?("no_progress"))
+    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?(PROGRESSES.first))
       if update_attributes(assigned_to: current_user.id)
          'Task assigned to You' end
     else 'Task already assigned'end
   end
 
   def start_progress(current_user)
-    if (assigned_to).eql?(current_user.id) && progress.eql?('no_progress')
+    if (assigned_to).eql?(current_user.id) && progress.eql?(PROGRESSES.first)
       if update_attributes(progress: :in_progress)
            'Progress status of task has been updated'
       else 'Progress status of task could not change' end
