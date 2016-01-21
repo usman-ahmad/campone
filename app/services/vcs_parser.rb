@@ -11,7 +11,7 @@ class VCSParser
   def initialize(payload, event_name, vcs_name)
     @payload = payload
     @event = event_name
-    @vcs_name = vcs_name
+    @vcs_name = vcs_name + 'Parser'
   end
 
   def message
@@ -80,16 +80,8 @@ class VCSParser
     end
   end
 
-=begin
-    This is like abstract function, This class dont know implementation, Child classes must define this function
-
-    It should return array of commits (Array of hashes like given below)
-    [
-      { message: 'message of commit 1', author: { email: 'author1@example.com', name: 'Foo Bar' } },
-      { message: 'message of commit 2', author: { email: 'author1@example.com', name: 'Don Joe' } }
-    ]
-=end
   def get_commit_messages
-    raise 'Method Missing.'
+    vcs_obj = @vcs_name.classify.constantize.new(@payload, @event)
+    vcs_obj.commit_messages(@payload)
   end
 end

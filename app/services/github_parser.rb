@@ -39,8 +39,24 @@ class GithubParser < VCSParser
     return message
   end
 
-  def commit_messages
-  # TODO: Implement this according to structure defined in parent class
+=begin
+  This method will return Commit message in this form
+    {
+        {message: 'messge of commit 1', author: {email: 'author1@example.com', name: 'Foo Bar'}},
+        {message: 'messge of commit 2', author: {email: 'author1@example.com', name: 'Don Joe'}}
+    }
+=end
+
+  def commit_messages(payload)
+    commits = payload["commits"]
+    messages = []
+    commits.each do |commit|
+    commit_info = {
+          message: "#{commit["message"]}",
+          author: { email: "#{commit["committer"]["email"]}", name: "#{commit["committer"]["name"]}"}}
+      messages << commit_info
+    end
+    return messages
   end
 
 end
