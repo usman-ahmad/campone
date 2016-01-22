@@ -4,6 +4,7 @@
     Back To Integrations
   <% end %>
 </div>
-
-<h4> Please add following url to your VCS Repositry </h4>
-<%= webhook_url(@integration) %>
+<% if @integration.name != "slack" %>
+    <h4> Please add following url to your VCS Repositry </h4>
+    <%= webhook_url(@integration) %>
+<% end %>
