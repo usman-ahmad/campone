@@ -1,7 +1,7 @@
 class VCSParser
   attr_accessor :payload
   attr_accessor :event
-  attr_accessor :vcs_name
+  attr_accessor :name
 
   # Use this class to generate message of any event of any VCS
   #Example
@@ -10,7 +10,7 @@ class VCSParser
   def initialize(payload)
     @payload = payload.info
     @event = payload.event
-    @vcs_name = payload.integration.vcs_name + 'Parser'
+    name = payload.integration.name + 'Parser'
   end
 
   def message

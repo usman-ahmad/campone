@@ -4,5 +4,5 @@ class Integration < ActiveRecord::Base
 
   validates :url, presence: true
   validates :project_id, presence: true
-  validates :vcs_name, presence: true
+  validates :name, presence: true
 end

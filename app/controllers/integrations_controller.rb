@@ -49,6 +49,6 @@ class IntegrationsController < ApplicationController
   end
 
   def integration_params
-    params.require(:integration).permit(:url,:vcs_name).merge(project: @project)
+    params.require(:integration).permit(:url,:name).merge(project: @project)
   end
 end

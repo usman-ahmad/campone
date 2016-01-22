@@ -31,9 +31,9 @@ class WebhooksController < ActionController::Base
   end
 
   def event_name
-    vcs_name = @integration.vcs_name
-    request.headers['X-GitHub-Event'] if vcs_name == "github"
-    request.headers['HTTP_X_EVENT_KEY'].split(':')[1] if vcs_name == "bitbucket"
+    name = @integration.name
+    request.headers['X-GitHub-Event'] if name == "github"
+    request.headers['HTTP_X_EVENT_KEY'].split(':')[1] if name == "bitbucket"
     #In the same way we will extract event name from bitbuckit or other vcs payloads or requests
   end
 end
