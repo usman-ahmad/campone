@@ -24,7 +24,7 @@ class VCSParser
   def push_actions
     commits = get_commit_messages
     commits.each do |commit|
-      CommitParser.perform_actions!(commit)
+      CommitParser.perform_actions!(commit[:message])
     end
   end
 

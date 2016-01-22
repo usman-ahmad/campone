@@ -1,5 +1,4 @@
-class GithubParser < VCSParser
-
+class BitbucketParser < VCSParser
   def initialize(payload)
     super(payload)
   end
@@ -21,26 +20,28 @@ class GithubParser < VCSParser
   #       }
   #   ]
   # }
-  def push
-    commits = @payload["commits"]
-    total_commits = commits.count # No need to store this in new variable, we can use commits.count
-    pusher = @payload["pusher"]["name"]
-    message_header = "#{total_commits} new commits pushed by #{pusher}"
-    head_name = "HEAD_NAME" # required to fil
-    head_url = "HEAD_URL"   # required to fil
 
-    message = {"head": "#{message_header}","head_name":"#{head_name}", "head_url": "#{head_url}", "vcs_name":"github","commits": []}
+  def push
+    commits = @payload["push"]["changes"][0]["commits"]
+    total_commits = commits.count
+    pusher = @payload["actor"]["display_name"]
+    message_header = "#{total_commits} new commits pushed by #{pusher}"
+    head_name = @payload["repository"]["full_name"]
+    head_url = @payload["repository"]["links"]["html"]["href"] + "/commits"
+
+    message = {"head": "#{message_header}", "head_name": "#{head_name}", "head_url": "#{head_url}", "vcs_name": "bitbucket", "commits": []}
 
     commits.each do |commit|
-      id = commit["id"]
-      url = commit["url"]
-      commit_message = "#{commit["message"]} - #{commit["committer"]["name"]}"
+      id = commit["hash"]
+      url = commit["links"]["html"]["href"]
+      commit_message = "#{commit["message"]} - #{commit["author"]["raw"]}"
       commit_info = {"id": "#{id}", "url": "#{url}", "message": "#{commit_message}"}
       message[:commits] << commit_info
     end
 
     return message
   end
+
 
 =begin
   This method will return Commit message in this form
@@ -51,12 +52,12 @@ class GithubParser < VCSParser
 =end
 
   def get_commit_messages
-    commits = @payload["commits"]
+    commits = @payload["push"]["changes"][0]["commits"]
     messages = []
     commits.each do |commit|
-    commit_info = {
+      commit_info = {
           message: "#{commit["message"]}",
-          author: { email: "#{commit["committer"]["email"]}", name: "#{commit["committer"]["name"]}"}}
+          author: {email: "#{commit["author"]["raw"].split('<')[0]}", name: "#{commit["author"]["raw"].split('<')[1].remove('>')}"}}
       messages << commit_info
     end
     return messages
