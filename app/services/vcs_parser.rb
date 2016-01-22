@@ -8,14 +8,14 @@ class VCSParser
   # Vcsmessage.new(Payload, "push","github" ).message
 
   def initialize(payload)
-    @payload  = payload.info
-    @event    = payload.event
+    @payload = payload.info
+    @event = payload.event
     @vcs_name = payload.integration.vcs_name + 'Parser'
   end
 
   def message
     if respond_to? @event
-       send event
+      send event
     else
       raise NoMethodError.new("#{event} not implemented")
     end
@@ -29,8 +29,31 @@ class VCSParser
   end
 
 =begin
-    This is like abstract function, This class dont know implementation, Child classes must define this function
+    These functions are like abstract functions, This class dont know implementation, Child classes must define this function                                         ]
 
+    Format of push event message
+      {:head=>"2 new commits pushed by muhammad-ateek",
+       :head_name => "username/repo_name"
+       :head_url=>"HEAD_URL",
+       :vcs_name =>"github",
+       :commits=>[
+           {
+               :id=>"1c8...",
+               :url=>"URL",
+               :message=>"commit name - commiter name"},
+           {
+                :id=>"1803...",
+                :url=>"URL",
+                :message=>"second_commit_name - commiter name"
+             }
+         ]
+       }
+=end
+  def push
+    raise 'Method Missing'
+  end
+
+=begin
     It should return array of commits (Array of hashes like given below)
     [
       { message: 'message of commit 1', author: { email: 'author1@example.com', name: 'Foo Bar' } },
@@ -64,18 +87,18 @@ class VCSParser
     I know this function is scary but it works; will improve it later and more actions will be added
 =end
     def self.perform_actions!(commit)
-      seperators = [',',':', ';', ' ']
+      seperators = [',', ':', ';', ' ']
       # NoMethodError  (undefined method `scan' for #<Hash:0x0000000a2cc608>):
       # This method is raising an error. Priority : HIGH
       matches = commit.scan(/((start|finish|complete|resolve|close|fix)?e?s?d?\w?[\s,:;]+#([-a-z0-9]+))/i)
 
-      matches.each_with_index do |match,index|
+      matches.each_with_index do |match, index|
         ticket_id = match[2]
-        action    = match[1] || ( matches[index-1][1] if index > 0 and seperators.include?(match[0][0]) )
+        action = match[1] || (matches[index-1][1] if index > 0 and seperators.include?(match[0][0]))
 
         task = Task.find(ticket_id.downcase)
         # Determine and perform action to take
-        update_task!(task,action) if task
+        update_task!(task, action) if task
       end
     end
 

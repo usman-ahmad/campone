@@ -3,24 +3,7 @@ class BitbucketParser < VCSParser
     super(payload)
   end
 
-  #Format of push event message
-  # {:head=>"2 new commits pushed by muhammad-ateek",
-  #  :head_name => "username/repo_name"
-  #  :head_url=>"HEAD_URL",
-  #  :vcs_name =>"github",
-  #  :commits=>[
-  #      {
-  #          :id=>"1c8...",
-  #          :url=>"URL",
-  #          :message=>"commit name - commiter name"},
-  #      {
-  #           :id=>"1803...",
-  #           :url=>"URL",
-  #           :message=>"second_commit_name - commiter name"
-  #       }
-  #   ]
-  # }
-
+  #Formate defined in Parent Class
   def push
     commits = @payload["push"]["changes"][0]["commits"]
     total_commits = commits.count
@@ -43,14 +26,7 @@ class BitbucketParser < VCSParser
   end
 
 
-=begin
-  This method will return Commit message in this form
-    {
-        {message: 'messge of commit 1', author: {email: 'author1@example.com', name: 'Foo Bar'}},
-        {message: 'messge of commit 2', author: {email: 'author1@example.com', name: 'Don Joe'}}
-    }
-=end
-
+  #Formate defined in Parent Class
   def get_commit_messages
     commits = @payload["push"]["changes"][0]["commits"]
     messages = []
