@@ -65,7 +65,8 @@ class VCSParser
 =end
     def self.perform_actions!(commit)
       seperators = [',',':', ';', ' ']
-
+      # NoMethodError  (undefined method `scan' for #<Hash:0x0000000a2cc608>):
+      # This method is raising an error. Priority : HIGH
       matches = commit.scan(/((start|finish|complete|resolve|close|fix)?e?s?d?\w?[\s,:;]+#([-a-z0-9]+))/i)
 
       matches.each_with_index do |match,index|

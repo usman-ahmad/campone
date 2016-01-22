@@ -17,7 +17,7 @@ class Payload < ActiveRecord::Base
   end
 
   def vcs_parser
-    Vcsmessage.new(info, event, integration.vcs_name)
+    VCSFactory.new(self).get_vcs
   end
 
   def project_user
