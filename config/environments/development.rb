@@ -41,9 +41,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :letter_opener
-
-  # setting GIHUB_WEBHOOK secret key to use for development
-  # set this env variable on server during deployment. it should not be hard coded
-  ENV['GITHUB_WEBHOOK_SECRET'] = 'key'
+  
   ENV['APP_URL'] = 'https://localhost:3000'
 end

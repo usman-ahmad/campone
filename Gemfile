@@ -65,8 +65,6 @@ gem 'ckeditor'
 gem 'unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-#gem to receive messages from github
-# gem 'github_webhook'
 
 group :development do
   # Preview email in the default browser instead of sending it.
