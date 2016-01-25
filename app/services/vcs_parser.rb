@@ -90,7 +90,7 @@ class VCSParser
       seperators = [',', ':', ';', ' ']
       # NoMethodError  (undefined method `scan' for #<Hash:0x0000000a2cc608>):
       # This method is raising an error. Priority : HIGH
-      matches = commit.scan(/((start|finish|complete|resolve|close|fix)?e?s?d?\w?[\s,:;]+#([-a-z0-9]+))/i)
+      matches = commit.scan(/((start|finish|complete|resolve|close|fix)?e?s?d?\w?[\s,:;&]+#([-a-z0-9]+))/i)
 
       matches.each_with_index do |match, index|
         ticket_id = match[2]
@@ -108,7 +108,7 @@ class VCSParser
           # start the ticket
           # TODO: Using string to match Progress are pron to typo errors. should use named constants
           task.update_attributes(progress: 'In progress') if task.progress == 'No progress'
-        when 'close', 'fix', 'reslove'
+        when 'close', 'fix', 'resolve', 'complete'
           # change status to finish
           task.update_attributes(progress: 'Completed')
         when nil

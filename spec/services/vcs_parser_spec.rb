@@ -1,35 +1,70 @@
 require 'rails_helper'
 
 RSpec.describe VCSParser, type: :model do
-  let(:user)   { create(:user) }
-  let(:project){ create(:project, name: 'T i c k e t', owner: user) }
-  let(:task_1) { create(:task, project: project, creator: user) }
-  let(:task_2) { create(:task, project: project, creator: user) }
+  let(:user)    { create(:user) }
+  let(:project) { create(:project, name: 'T i c k e t', owner: user) }
+  let!(:task_1) { create(:task, project: project, creator: user) }
+  let!(:task_2) { create(:task, project: project, creator: user) }
 
-  it 'marks a ticket as completed' do
+  it 'verifies default values' do
     expect(task_1.ticket_id).to eq 'ticket-1'
     expect(task_1.progress).to eq 'No progress'
 
-    expect { VCSParser::CommitParser.perform_actions!("This fixed #ticket-1") }.
-        to change{ task_1.reload.progress }.from('No progress').to('Completed')
+    expect(task_2.ticket_id).to eq 'ticket-2'
+    expect(task_2.progress).to eq 'No progress'
   end
 
-  commits = [
-      { message: 'fix #ticket-1,#ticket-2',     dis: 'separated by comma without andy space between' },
-      { message: 'fix #ticket-1 ,#ticket-2',    dis: 'separated by comma and space on left' },
-      { message: 'fix #ticket-1 , #ticket-2',   dis: 'separated by comma and space on both side' },
-      { message: 'fix #ticket-1 : #ticket-2',   dis: 'separated by colon' },
-      { message: 'fix #ticket-1; #ticket-2',    dis: 'separated by semicolon' },
-      { message: 'fix #ticket-1 & #ticket-2',   dis: 'separated by & sign' },
-      { message: 'fix #ticket-1 && #ticket-2',  dis: 'separated by && sign' }
-  ]
-  
-  context "two ticket_ids referenced in single commit message, marks both as completed." do
+  describe 'Available actions to complete a task' do
+    actions = %w[fix fixes fixed complete completes completed close closes closed resolve resolves resolved]
+    actions.each do |action|
+      it "#{action.ljust(10)} ex: #{(action + ' ticket-1').ljust(20)} (marks ticket_1 as completed)" do
+        expect { VCSParser::CommitParser.perform_actions!("#{action} #ticket-1") }.
+            to change{ task_1.reload.progress }.from('No progress').to('Completed')
+      end
+    end
+  end
+
+  describe 'Available actions to start progress' do
+    actions = %w[start starts started]
+    actions.each do |action|
+      it "#{action.ljust(10)} ex: #{(action + ' ticket-1').ljust(20)} (marks ticket_1 as started)" do
+        expect { VCSParser::CommitParser.perform_actions!("#{action} #ticket-1") }.
+            to change{ task_1.reload.progress }.from('No progress').to('In progress')
+      end
+    end
+    
+    it 'will not change start status if status is other than No progress' do
+      task_1.update_attributes(progress: 'Completed')
+      expect { VCSParser::CommitParser.perform_actions!("start #ticket-1") }.
+          to_not change{ task_1.reload.progress }
+    end
+  end
+
+  context "Two ticket_ids are referenced in single commit:" do
+
+    commits = [
+        { message: 'fix #ticket-1,#ticket-2',     des: 'separated by comma without any space between' },
+        { message: 'fix #ticket-1 ,#ticket-2',    des: 'separated by comma and space on left' },
+        { message: 'fix #ticket-1 , #ticket-2',   des: 'separated by comma and space on both side' },
+        { message: 'fix #ticket-1 : #ticket-2',   des: 'separated by colon' },
+        { message: 'fix #ticket-1; #ticket-2',    des: 'separated by semicolon' },
+        { message: 'fix #ticket-1 & #ticket-2',   des: 'separated by & sign' },
+        { message: 'fix #ticket-1 && #ticket-2',  des: 'separated by && sign' }
+    ]
+
     commits.each do |commit|
-      it "commit message is: '#{commit[:message]}' (#{commit[:dis]})" do
+      it "marks both tasks as completed ex: #{commit[:message].ljust(30)} (#{commit[:des]})" do
         expect { VCSParser::CommitParser.perform_actions!(commit[:message]) }.to change{ [task_1.reload.progress, task_2.reload.progress ] }.
                    from(['No progress', 'No progress']).to(['Completed', 'Completed'])
       end
+    end
+  end
+
+  describe 'multiple actions a in single commit' do
+    it "will mark ticket_1 as completed and ticket_2 as In progress. ex: fixed #ticket-1 and started #ticket-2" do
+      expect { VCSParser::CommitParser.perform_actions!('fixed #ticket-1 and started #ticket-2') }.
+          to change{ [task_1.reload.progress, task_2.reload.progress ] }.
+                 from(['No progress', 'No progress']).to(['Completed', 'In progress'])
     end
   end
 
