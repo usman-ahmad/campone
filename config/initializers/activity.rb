@@ -2,7 +2,7 @@ PublicActivity::Activity.class_eval do
   has_many :notifications
   has_many :users, through: :notifications
 
-  after_create :create_notification
+  after_create :create_notification, :send_slack_notification
 
   def create_notification
     users_to_notify = case self.trackable_type
@@ -17,6 +17,13 @@ PublicActivity::Activity.class_eval do
     users_to_notify.each do |user|
       notice = Notification.create!(activity_id: self.id, user_id: user)
       send_notifications_to_user( notice,user)
+    end
+  end
+
+  # We require to run this function with delayjobs
+  def send_slack_notification
+    get_slack_urls.each do |url|
+      SlackService.new(url, SlackService.message(self)).deliver
     end
   end
 
@@ -42,16 +49,62 @@ PublicActivity::Activity.class_eval do
     end
   end
 
-  def send_notifications_to_user(notice,user_id)
-     user_email = User.find(user_id).email
-     notice_id = notice.id
-      notice_created_at = notice.created_at
-      message =  create_message(notice)
-     begin
-       PrivatePub.publish_to('/messages/private/user'+ user_id.to_s, message: "#{message}")
-     rescue => ex
-       logger.error ex.message
-     end
+  def project
+    case self.trackable_type
+      when "Task" || "Discussion"
+        trackable.project
+      when "Comment"
+        trackable.commentable.project
+    end
+  end
+
+  def activty_type
+    key.split('.')[1] + 'd ' + key.split('.')[0]
+  end
+
+  def title
+    # Get title of trackable according to trackable_type
+    case self.trackable_type
+      when "Task" || "Discussion"
+        'Discussion: ' + trackable.title
+      when "Comment"
+        'Comment on : ' + trackable.commentable.title
+    end
+  end
+
+  def get_slack_urls
+    project.integrations.where(name: 'slack').map(&:url)
+  end
+
+  def discription
+    text = case self.trackable_type
+             when "Task"  || "Discussion"
+               "#{owner.email}: " + activty_type
+             when "Comment"
+               "#{owner.email}: " + activty_type + ': '+ trackable.content
+           end
+    ActionController::Base.helpers.strip_tags text
+  end
+
+  def get_trackable_url
+    case self.trackable_type
+      when "Task" || "Discussion"
+        "#{ENV['APP_URL']}/projects/#{project.id.to_s}/#{trackable_type.downcase}s/#{trackable.id.to_s}"
+      when "Comment"
+        "#{ENV['APP_URL']}/projects/#{project.id.to_s}/#{trackable.commentable_type.downcase}s/#{trackable.commentable.id.to_s}"
+    end
+  end
+
+  def send_notifications_to_user(notice, user_id)
+    user_email = User.find(user_id).email
+    notice_id = notice.id
+    notice_created_at = notice.created_at
+    message = create_message(notice)
+    begin
+      PrivatePub.publish_to('/messages/private/user'+ user_id.to_s, message: "#{message}")
+    rescue => ex
+      logger.error ex.message
+    end
 
   end
 

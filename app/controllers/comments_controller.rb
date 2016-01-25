@@ -57,6 +57,6 @@ class CommentsController < ApplicationController
   end
 
   def set_project
-    @project = current_user.projects.where(id:params[:project_id]).first
+    @project = Project.find(params[:project_id])
   end
 end

@@ -18,4 +18,20 @@ class SlackService
       Rails.logger.error("SlakcService: Error when sending: #{e.message}")
     end
   end
+
+  def self.message(activity)
+     {
+        "username": "Camp One",
+        "attachments": [
+            {
+                "pretext": "Project: #{activity.project.name}",
+                "title": activity.title,
+                "title_link": activity.get_trackable_url,
+                "text": activity.discription,
+                "color": "#7CD197"
+            }
+        ]
+    }
+  end
+
 end
