@@ -2,7 +2,7 @@ PublicActivity::Activity.class_eval do
   has_many :notifications
   has_many :users, through: :notifications
 
-  after_create :create_notification, :send_slack_notification
+  after_create :create_notification, :send_slack_notification, :send_hipchat_notification
 
   def create_notification
     users_to_notify = case self.trackable_type
@@ -24,6 +24,12 @@ PublicActivity::Activity.class_eval do
   def send_slack_notification
     get_slack_urls.each do |url|
       SlackService.new(url, SlackService.message(self)).deliver
+    end
+  end
+
+  def send_hipchat_notification
+    get_hipchat_urls.each do |url|
+      HipchatService.new(url, HipchatService.message(self)).deliver
     end
   end
 
@@ -74,6 +80,10 @@ PublicActivity::Activity.class_eval do
 
   def get_slack_urls
     project.integrations.where(name: 'slack').map(&:url)
+  end
+
+  def get_hipchat_urls
+    project.integrations.where(name: 'hipchat').map(&:url)
   end
 
   def discription

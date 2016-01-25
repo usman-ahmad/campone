@@ -4,7 +4,7 @@
     Back To Integrations
   <% end %>
 </div>
-<% if @integration.name != "slack" %>
+<% if ((@integration.name == "bitbucket") || (@integration.name == "github")) %>
     <h4> Please add following url to your VCS Repositry </h4>
     <%= webhook_url(@integration) %>
 <% end %>

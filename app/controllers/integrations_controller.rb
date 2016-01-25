@@ -3,7 +3,7 @@ class IntegrationsController < ApplicationController
   before_action :set_integration,    only: [:show, :edit, :update, :destroy]
 
   def index
-    @integrations = Integration.all
+    @integrations = @project.integrations.all
   end
 
   def new
