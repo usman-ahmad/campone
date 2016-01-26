@@ -8,7 +8,7 @@ class HipchatService < SenderService
     {
         "from": "Camp One",
         "message": "Project: #{activity.project.name} -
-                    #{activity.title} -
+                    #{activity.get_trackable.title} -
                     #{activity.get_trackable_url} -
                     #{activity.discription}"
     }

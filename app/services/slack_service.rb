@@ -10,7 +10,7 @@ class SlackService < SenderService
         "attachments": [
             {
                 "pretext": "Project: #{activity.project.name}",
-                "title": activity.title,
+                "title": activity.get_trackable.title,
                 "title_link": activity.get_trackable_url,
                 "text": activity.discription,
                 "color": "#7CD197"

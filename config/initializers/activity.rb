@@ -2,7 +2,7 @@ PublicActivity::Activity.class_eval do
   has_many :notifications
   has_many :users, through: :notifications
 
-  after_create :create_notification, :send_slack_notification, :send_hipchat_notification
+  after_create :create_notification, :send_slack_notification, :send_hipchat_notification, :send_flowdock_notification
 
   def create_notification
     users_to_notify = case self.trackable_type
@@ -30,6 +30,12 @@ PublicActivity::Activity.class_eval do
   def send_hipchat_notification
     get_hipchat_urls.each do |url|
       HipchatService.new(url, HipchatService.message(self)).deliver
+    end
+  end
+
+  def send_flowdock_notification
+    get_flowdock_urls.each do |url|
+      FlowdockService.new(url, FlowdockService.message(self)).deliver
     end
   end
 
@@ -68,13 +74,12 @@ PublicActivity::Activity.class_eval do
     key.split('.')[1] + 'd ' + key.split('.')[0]
   end
 
-  def title
-    # Get title of trackable according to trackable_type
+  def get_trackable
     case self.trackable_type
       when "Task" || "Discussion"
-        'Discussion: ' + trackable.title
+        trackable
       when "Comment"
-        'Comment on : ' + trackable.commentable.title
+        trackable.commentable
     end
   end
 
@@ -84,6 +89,10 @@ PublicActivity::Activity.class_eval do
 
   def get_hipchat_urls
     project.integrations.where(name: 'hipchat').map(&:url)
+  end
+
+  def get_flowdock_urls
+    project.integrations.where(name: 'flowdock').map(&:url)
   end
 
   def discription
