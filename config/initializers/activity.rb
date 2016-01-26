@@ -22,19 +22,19 @@ PublicActivity::Activity.class_eval do
 
   # We require to run this function with delayjobs
   def send_slack_notification
-    get_slack_urls.each do |url|
+    project.integrations.slack_urls.each do |url|
       SlackService.new(url, SlackService.message(self)).deliver
     end
   end
 
   def send_hipchat_notification
-    get_hipchat_urls.each do |url|
+    project.integrations.hipchat_urls.each do |url|
       HipchatService.new(url, HipchatService.message(self)).deliver
     end
   end
 
   def send_flowdock_notification
-    get_flowdock_urls.each do |url|
+    project.integrations.flowdock_urls.each do |url|
       FlowdockService.new(url, FlowdockService.message(self)).deliver
     end
   end
@@ -83,17 +83,6 @@ PublicActivity::Activity.class_eval do
     end
   end
 
-  def get_slack_urls
-    project.integrations.where(name: 'slack').map(&:url)
-  end
-
-  def get_hipchat_urls
-    project.integrations.where(name: 'hipchat').map(&:url)
-  end
-
-  def get_flowdock_urls
-    project.integrations.where(name: 'flowdock').map(&:url)
-  end
 
   def discription
     text = case self.trackable_type
