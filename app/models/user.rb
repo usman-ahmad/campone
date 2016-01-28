@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_many :identities, dependent: :destroy
 
+
+  attr_accessor :existing_email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,

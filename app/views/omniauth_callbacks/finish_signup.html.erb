@@ -1,11 +1,5 @@
 <%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
-  <% if @show_errors && current_user.errors.any? %>
-    <div id="error_explanation">
-      <% current_user.errors.full_messages.each do |msg| %>
-        <%= msg %><br>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render 'shared/error_messages', object: current_user  %>
 
 <div id="add-email">
   <h2>Set your password</h2>
@@ -44,7 +38,7 @@
     </div>
     <div class="controls">
       <%= f.label :password %>
-      <%= f.password_field :existing_password, class: 'form-control input-lg' %>
+      <%= f.password_field :password, class: 'form-control input-lg' %>
     </div>
     <div class="actions">
       <%= f.submit 'Associate', :class => 'btn btn-primary' %>
