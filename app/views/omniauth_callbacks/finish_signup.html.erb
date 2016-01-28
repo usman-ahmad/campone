@@ -1,0 +1,53 @@
+<%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
+  <% if @show_errors && current_user.errors.any? %>
+    <div id="error_explanation">
+      <% current_user.errors.full_messages.each do |msg| %>
+        <%= msg %><br>
+      <% end %>
+    </div>
+  <% end %>
+
+<div id="add-email">
+  <h2>Set your password</h2>
+    <div class="form-group">
+      <%= f.label :name %>
+      <div class="controls">
+        <%= f.text_field :name, class: 'form-control input-lg' %>
+      </div>
+
+      <%= f.label :email %>
+      <div class="controls">
+        <%= f.text_field :email, class: 'form-control input-lg' %>
+      </div>
+      <div class="controls">
+        <%= f.label :password %>
+        <%= f.password_field :password, :autofocus => true, class: 'form-control input-lg' %>
+      </div>
+      <div class="controls">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control input-lg' %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Continue', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+
+<div>
+  <h1>Associate this with existing Account:</h1>
+  <%= form_for(current_user, :as => 'user', :url => associate_account_path(current_user), :html => { role: 'form'}) do |f| %>
+    <div class="controls">
+      <%= f.label :email %>
+      <%= f.text_field :existing_email, class: 'form-control input-lg' %>
+    </div>
+    <div class="controls">
+      <%= f.label :password %>
+      <%= f.password_field :existing_password, class: 'form-control input-lg' %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Associate', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

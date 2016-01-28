@@ -32,7 +32,14 @@ Rails.application.routes.draw do
     resources :integrations
   end
 
-  devise_for :users
+
+  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+
+  devise_scope :user do
+    match '/users/:id/finish_signup', :to => 'omniauth_callbacks#finish_signup', via: [:get, :patch], :as => :finish_signup
+    match '/users/:id/associate_account', :to => 'omniauth_callbacks#associate_account', via: :patch, :as => :associate_account
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

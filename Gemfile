@@ -97,3 +97,4 @@ group :development, :test do
   gem 'selenium-webdriver'
 end
 
+gem 'omniauth-google-oauth2'

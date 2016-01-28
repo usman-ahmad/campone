@@ -12,12 +12,53 @@ class User < ActiveRecord::Base
 
   has_many :assigned_tasks, class_name: Task, foreign_key: :assigned_to
   has_many :notifications
+  has_many :identities, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  def self.find_for_oauth(auth, signed_in_resource = nil)
+
+    identity = Identity.find_for_oauth(auth)
+
+    # if signed_in_resource(current_user) is provided, this identity will get associated to it.
+    user = signed_in_resource ? signed_in_resource : identity.user
+
+    # Create the user if needed
+    if user.nil?
+      email = auth.info.email
+      user = User.where(:email => email).first if email
+
+      # Create the user if it's a new registration
+      if user.nil?
+        user = User.new(
+            name: auth.extra.raw_info.name,
+            email: email
+        )
+        user.save!(validate: false)
+      end
+    end
+
+    # Associate the identity with the user if needed
+    if identity.user != user
+      identity.user = user
+      identity.save!
+    end
+    user
+  end
+
+  def associate_account(existing_email, existing_password)
+    user = User.where(email: existing_email).first
+
+    if user && user.valid_password?(existing_password)
+      identities.update_all user_id: user
+      return user
+    end
+
+    self
+  end
 
   ##################################################################
   #Below enclosed code writen for the purpose of generating authentication token for API
