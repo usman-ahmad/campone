@@ -8,6 +8,7 @@
 <%= link_to 'Add New', new_project_integration_path(@project) %>
 
 <h2>Project Integrations: </h2>
+<%= link_to "Configure Twitter account to receive notification tweets", user_omniauth_authorize_path(:twitter,params:{project_id:@project.id}) %>
 
 <table style="width:100%">
   <tr>

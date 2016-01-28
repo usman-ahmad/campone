@@ -1,5 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user, only: [:finish_signup, :associate_account]
+  before_action :set_project, only: :twitter
 
   def google_oauth2
     @user = User.find_for_oauth(env['omniauth.auth'], current_user)
@@ -42,6 +43,13 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def twitter
+    @project.integrations.find_or_create_integration(request.env['omniauth.auth'])?
+        flash['notice'] = 'successfully integrated twitter account.' :
+        flash['notice'] ='integration failed with twitter account.'
+    redirect_to project_integrations_path(@project)
+  end
+
   private
 
   def set_user
@@ -52,6 +60,9 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     params.require(:user).permit([:name, :email, :password, :password_confirmation])
   end
 
+  def set_project
+   @project=current_user.projects.find(params[:project_id])
+  end
 end
 
 

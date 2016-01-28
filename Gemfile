@@ -98,3 +98,7 @@ group :development, :test do
 end
 
 gem 'omniauth-google-oauth2'
+# User for authentication
+gem 'omniauth-twitter'
+# Used to interact with twitter account through twitter API
+gem 'twitter'

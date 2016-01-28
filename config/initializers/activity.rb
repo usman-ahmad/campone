@@ -2,7 +2,7 @@ PublicActivity::Activity.class_eval do
   has_many :notifications
   has_many :users, through: :notifications
 
-  after_create :create_notification, :send_slack_notification, :send_hipchat_notification, :send_flowdock_notification
+  after_create :create_notification, :send_slack_notification, :send_hipchat_notification, :send_flowdock_notification, :send_twitter_notification
 
   def create_notification
     users_to_notify = case self.trackable_type
@@ -36,6 +36,12 @@ PublicActivity::Activity.class_eval do
   def send_flowdock_notification
     project.integrations.flowdock_urls.each do |url|
       FlowdockService.new(url, FlowdockService.message(self)).deliver
+    end
+  end
+
+  def send_twitter_notification
+    TwitterService.new.get_twitter_clients(project).each do |twitter_client|
+      twitter_client.update(TwitterService.message(self))
     end
   end
 
