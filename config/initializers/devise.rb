@@ -309,7 +309,8 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
   config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
-  config.omniauth :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
+  config.omniauth :twitter,       ENV['TWITTER_KEY'],      ENV['TWITTER_SECRET']
+  config.omniauth :asana,         ENV['ASANA_CLIENT_ID'],  ENV['ASANA_CLIENT_SECRET']
 end
 
 Rails.application.config.to_prepare do

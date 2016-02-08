@@ -1,6 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user, only: [:finish_signup, :associate_account]
-  before_action :set_project, only: :twitter
+  before_action :set_project, only: [:twitter, :asana]
 
   def google_oauth2
     @user = User.find_for_oauth(env['omniauth.auth'], current_user)
@@ -50,6 +50,23 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to project_integrations_path(@project)
   end
 
+  # TODO: It is shown in sign-up form, Move it out of devise omniauth_callback_controller
+  def asana
+    # TODO: Consider refactoring or renaming url column
+    # We are using url as unique identifier for a integration, in this case email can be treated is key
+    integration = Integration.find_or_create_by(name: 'asana', url: request.env['omniauth.auth'].info.email) do |integration|
+      integration.project = @project
+      integration.token = request.env['omniauth.auth']['credentials'].refresh_token
+    end
+
+    flash['notice'] = integration.persisted? ? 'Successfully integrated asana account.' : 'Integration Failed'
+
+    # Import tasks
+    AsanaImport.new(integration).run!
+
+    redirect_to project_integrations_path(@project)
+  end
+
   private
 
   def set_user
@@ -61,7 +78,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def set_project
-   @project=current_user.projects.find(params[:project_id])
+    @project = Project.find(request.env['omniauth.params']['project_id'])
   end
 end
 

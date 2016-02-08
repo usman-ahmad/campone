@@ -1,4 +1,9 @@
 class Integration < ActiveRecord::Base
+=begin
+  we should consider Inheritance for different type of Integrations
+  i-e Inbound/Outbound Notification, Import Integration etc
+=end
+
   belongs_to :project
   has_many :payloads
 

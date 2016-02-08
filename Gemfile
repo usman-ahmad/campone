@@ -97,8 +97,18 @@ group :development, :test do
   gem 'selenium-webdriver'
 end
 
+# got a redirect_uri_mismatch problem, It was caused by new version 1.4.0 of omniauth-oauth2 gem in below commit
+# https://github.com/intridea/omniauth-oauth2/commit/26152673224aca5c3e918bcc83075dbb0659717f
+# Use omniauth-oauth2 version 1.3.2 until issue is resolved
+gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-google-oauth2'
+
 # User for authentication
 gem 'omniauth-twitter'
+gem 'omniauth-asana'
+
 # Used to interact with twitter account through twitter API
 gem 'twitter'
+
+# Used to interact with asana API
+gem 'asana'
