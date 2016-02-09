@@ -311,6 +311,9 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
   config.omniauth :twitter,       ENV['TWITTER_KEY'],      ENV['TWITTER_SECRET']
   config.omniauth :asana,         ENV['ASANA_CLIENT_ID'],  ENV['ASANA_CLIENT_SECRET']
+  config.omniauth :jira,          ENV['JIRA_CONSUMER_KEY'],
+                  OpenSSL::PKey::RSA.new(IO.read(ENV['JIRA_PRIVATE_KEY_FILE'])),
+                  :client_options => { :site => ENV['JIRA_SITE_URL'] }
 end
 
 Rails.application.config.to_prepare do

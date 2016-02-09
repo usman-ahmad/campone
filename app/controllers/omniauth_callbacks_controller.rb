@@ -1,6 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user, only: [:finish_signup, :associate_account]
-  before_action :set_project, only: [:twitter, :asana]
+  before_action :set_project, only: [:twitter, :asana, :jira]
 
   def google_oauth2
     @user = User.find_for_oauth(env['omniauth.auth'], current_user)
@@ -67,6 +67,21 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to project_integrations_path(@project)
   end
 
+  def jira
+    integration = Integration.find_or_create_by(name: 'jira', url: request.env['omniauth.auth'].info.urls.self) do |integration|
+      integration.project = @project
+      integration.token   = request.env['omniauth.auth'].credentials.token
+      integration.secret  = request.env['omniauth.auth'].credentials.secret
+    end
+
+    flash['notice'] = integration.persisted? ? 'Successfully integrated JIRA account.' : 'Integration Failed'
+
+    # Import tasks
+    JiraImport.new(integration).run!
+
+    redirect_to project_integrations_path(@project)
+  end
+
   private
 
   def set_user
@@ -81,5 +96,3 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @project = Project.find(request.env['omniauth.params']['project_id'])
   end
 end
-
-
