@@ -68,13 +68,12 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def jira
-    integration = Integration.find_or_create_by(name: 'jira', url: request.env['omniauth.auth'].info.urls.self) do |integration|
-      integration.project = @project
-      integration.token   = request.env['omniauth.auth'].credentials.token
-      integration.secret  = request.env['omniauth.auth'].credentials.secret
-    end
+    integration = Integration.find_by(name: 'jira', url: request.env['omniauth.auth'].extra.access_token.consumer.site)
 
-    flash['notice'] = integration.persisted? ? 'Successfully integrated JIRA account.' : 'Integration Failed'
+    updated = integration.update_attributes(token: request.env['omniauth.auth'].credentials.token,
+                                  secret: request.env['omniauth.auth'].credentials.secret)
+
+    flash['notice'] = updated ? 'Successfully integrated JIRA account.' : 'Integration Failed, Try to authenticate later. '
 
     # Import tasks
     JiraImport.new(integration).run!

@@ -313,7 +313,16 @@ Devise.setup do |config|
   config.omniauth :asana,         ENV['ASANA_CLIENT_ID'],  ENV['ASANA_CLIENT_SECRET']
   config.omniauth :jira,          ENV['JIRA_CONSUMER_KEY'],
                   OpenSSL::PKey::RSA.new(IO.read(ENV['JIRA_PRIVATE_KEY_FILE'])),
-                  :client_options => { :site => ENV['JIRA_SITE_URL'] }
+                  :setup => lambda { |env|
+                    integration = Integration.find_by_id(env['rack.session']['jira_integration_id'])
+                    class JiraSiteUrlError < StandardError; end
+
+                    # This will be called within middleware. To handle exception on Rails ApplicationController
+                    # we can set request.env[:jira_site_url_error] = true and handle it later
+                    raise JiraSiteUrlError, 'You have Not provided Your JIRA site url.' if integration.nil?
+
+                    env['omniauth.strategy'].options[:client_options][:site] = integration.url
+                  }
 end
 
 Rails.application.config.to_prepare do
@@ -323,3 +332,4 @@ Rails.application.config.to_prepare do
   Devise::UnlocksController.layout 'welcome'
   Devise::PasswordsController.layout 'welcome'
 end
+

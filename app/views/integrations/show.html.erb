@@ -4,7 +4,23 @@
     Back To Integrations
   <% end %>
 </div>
-<% if ((@integration.name == "bitbucket") || (@integration.name == "github")) %>
+<% if @integration.name == 'bitbucket' || @integration.name == 'github' %>
     <h4> Please add following url to your VCS Repositry </h4>
     <%= webhook_url(@integration) %>
+<% end %>
+
+<% if  @integration.name == 'jira' %>
+  <h3>Fellow below given Steps to Configure application link with your Jira (You must be an admin)</h3>
+  <ol>
+    <li>Open <%= link_to 'your jira site', "#{ @integration.url}/plugins/servlet/applinks/listApplicationLinks" %></li>
+    <li>Write <code>http://www.teknuk.com/ </code>in text field and press Create new link, check use this url when prompted and press continue</li>
+    <li>Write application name:  'Camp One' and press Continue.</li>
+    <li>Now edit this app link, select Incomming Authentication from left side.</li>
+    <li>Write Consumer Key: <%= ENV['JIRA_CONSUMER_KEY'] %></li>
+    <li>Write Consumer name: Camp One</li>
+    <li>Write Private Key: <div><code><%= IO.read('jira_public_key.key') %></code></div></li>
+    <li>Write Consumer callback url: <code>http://www.teknuk.com/users/auth/jira/callback/ </code></li>
+    <li> <%= link_to "Authenticate with JIRA Now",  user_omniauth_authorize_path(:jira, params:  { project_id: @project.friendly_id }) %></li>
+  </ol>
+
 <% end %>
