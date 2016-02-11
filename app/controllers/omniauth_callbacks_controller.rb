@@ -1,6 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user, only: [:finish_signup, :associate_account]
-  before_action :set_project, only: [:twitter, :asana, :jira]
+  before_action :set_project, only: [:twitter, :asana, :jira, :trello]
 
   def google_oauth2
     @user = User.find_for_oauth(env['omniauth.auth'], current_user)
@@ -80,6 +80,41 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     redirect_to project_integrations_path(@project)
   end
+
+  def trello
+    auth = request.env['omniauth.auth']
+    integration = Integration.find_or_create_by(name: 'trello', url: auth.info.urls.profile) do |integration|
+      integration.project = @project
+      integration.token  = auth.credentials.token
+      integration.secret = auth.credentials.secret
+    end
+
+    redirect_to project_integrations_path(@project)
+  end
+
+
+  require 'trello'
+
+  def config(i)
+    Trello.configure do |config|
+      config.consumer_key = ENV['TRELLO_KEY']
+      config.consumer_secret = ENV['TRELLO_SECRET']
+      config.oauth_token = i.token
+      config.oauth_token_secret = i.secret
+    end
+  end
+
+  def trello_client(key, secret)
+
+    @client = Trello::Client.new(
+        :consumer_key => ENV['TRELLO_KEY'],
+        :consumer_secret => ENV['TRELLO_SECRET'],
+        :oauth_token => i.token,
+        :oauth_token_secret => i.secret
+    )
+
+  end
+
 
   private
 

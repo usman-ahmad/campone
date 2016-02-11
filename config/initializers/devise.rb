@@ -323,6 +323,8 @@ Devise.setup do |config|
 
                     env['omniauth.strategy'].options[:client_options][:site] = integration.url
                   }
+  config.omniauth :trello, ENV['TRELLO_KEY'], ENV['TRELLO_SECRET'],
+                  app_name: "Camp One", scope: 'read,write,account', expiration: 'never'
 end
 
 Rails.application.config.to_prepare do

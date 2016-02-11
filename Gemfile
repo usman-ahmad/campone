@@ -103,6 +103,7 @@ end
 gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-jira'
+gem 'omniauth-trello'
 
 # User for authentication
 gem 'omniauth-twitter'
@@ -114,3 +115,4 @@ gem 'twitter'
 # Used to interact with asana API
 gem 'asana'
 gem 'jira-ruby'
+gem 'ruby-trello'
