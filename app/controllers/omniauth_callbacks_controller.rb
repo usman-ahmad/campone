@@ -2,6 +2,20 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_user, only: [:finish_signup, :associate_account]
   before_action :set_project, only: [:twitter, :asana, :jira, :trello]
 
+  def create_integration
+    auth = request.env['omniauth.auth']
+
+    integration = @project.integrations.create_with_omniauth(auth)
+    flash['notice'] = integration ? "Successfully integrated #{auth.provider} account." : "#{auth.provider} ntegration Failed"
+
+    redirect_to project_integrations_path(@project) # Ask to select a project for import
+  end
+
+  alias_method :twitter, :create_integration
+  alias_method :asana,   :create_integration
+  alias_method :jira,    :create_integration
+  alias_method :trello,  :create_integration
+
   def google_oauth2
     @user = User.find_for_oauth(env['omniauth.auth'], current_user)
 
@@ -41,57 +55,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       current_user.errors.add(:base, 'No such existing account.')
       render action: :finish_signup
     end
-  end
-
-  def twitter
-    @project.integrations.find_or_create_integration(request.env['omniauth.auth'])?
-        flash['notice'] = 'successfully integrated twitter account.' :
-        flash['notice'] ='integration failed with twitter account.'
-    redirect_to project_integrations_path(@project)
-  end
-
-  # TODO: It is shown in sign-up form, Move it out of devise omniauth_callback_controller
-  def asana
-    # TODO: Consider refactoring or renaming url column
-    # We are using url as unique identifier for a integration, in this case email can be treated is key
-    integration = Integration.find_or_create_by(name: 'asana', url: request.env['omniauth.auth'].info.email) do |integration|
-      integration.project = @project
-      integration.token = request.env['omniauth.auth']['credentials'].refresh_token
-    end
-
-    flash['notice'] = integration.persisted? ? 'Successfully integrated asana account.' : 'Integration Failed'
-
-    # Import tasks
-    AsanaImport.new(integration).run!
-
-    redirect_to project_integrations_path(@project)
-  end
-
-  def jira
-    integration = Integration.find_by(name: 'jira', url: request.env['omniauth.auth'].extra.access_token.consumer.site)
-
-    updated = integration.update_attributes(token: request.env['omniauth.auth'].credentials.token,
-                                  secret: request.env['omniauth.auth'].credentials.secret)
-
-    flash['notice'] = updated ? 'Successfully integrated JIRA account.' : 'Integration Failed, Try to authenticate later. '
-
-    # Import tasks
-    JiraImport.new(integration).run!
-
-    redirect_to project_integrations_path(@project)
-  end
-
-  def trello
-    auth = request.env['omniauth.auth']
-    integration = Integration.find_or_create_by(name: 'trello', url: auth.info.urls.profile) do |integration|
-      integration.project = @project
-      integration.token  = auth.credentials.token
-      integration.secret = auth.credentials.secret
-    end
-
-    TrelloImport.new(integration).run!
-
-    redirect_to project_integrations_path(@project)
   end
 
   private

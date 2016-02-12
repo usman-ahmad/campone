@@ -20,8 +20,7 @@
   <% @integrations.each do |integration| %>
     <tr>
       <td><%= integration.url %></td>
-      <td><%= link_to 'Configure', project_integration_path(@project, integration) %></td>
-      <td><%= link_to 'Edit', edit_project_integration_path(@project, integration) %></td>
+      <td><%= link_to 'Configure', project_integration_path(@project, integration) if integration.name == 'jira' %></td>
       <td><%= link_to 'Delete', project_integration_path(@project, integration), method: :delete, data: {confirm: 'Are you sure?'}  %></td>
     </tr>
   <% end %>

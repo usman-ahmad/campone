@@ -31,7 +31,7 @@ class IntegrationsController < ApplicationController
   end
 
   def show
-    session['jira_integration_id'] != @integration.id if @integration.name == 'jira'
+    session['jira_integration_id'] = @integration.id if @integration.name == 'jira'
   end
 
   def destroy
