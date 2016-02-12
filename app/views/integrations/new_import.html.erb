@@ -1,0 +1,11 @@
+<h2>Select <%= @integration.name %> project </h2>
+
+<%= form_tag start_import_project_integration_path do %>
+  <% @projects.each do |project| %>
+    <div>
+      <%= radio_button_tag(:external_project_id, project[:id]) %>
+      <%= label_tag(:external_project, project[:name]) %>
+    </div>
+  <% end %>
+  <div><%= submit_tag 'Import' %></div>
+<% end %>

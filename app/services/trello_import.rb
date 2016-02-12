@@ -1,48 +1,21 @@
 require 'trello'
 
-class TrelloImport
-  # TODO: There should be one import against one project, Do't make redundant tasks
-  attr_reader :client
+class TrelloImport < ImportService
 
-  def initialize(integration)
-    @project = integration.project
-
-    # TODO: Consider thread safety
-    Trello.configure do |config|
-      config.consumer_key = ENV['TRELLO_KEY']
-      config.consumer_secret = ENV['TRELLO_SECRET']
-      config.oauth_token = integration.token
-      config.oauth_token_secret = integration.secret
-    end
-
-    @client = Trello.client
-=begin
-
-    # For thread safety:
-
+  def set_client
     @client = @client = Trello::Client.new(
         :consumer_key => ENV['TRELLO_KEY'],
         :consumer_secret => ENV['TRELLO_SECRET'],
-        :oauth_token => integration.token,
-        :oauth_token_secret => integration.secret
+        :oauth_token => @integration.token,
+        :oauth_token_secret => @integration.secret
     )
-
-    Thread.new do
-      @client.find(:members, "member_id")
-      @client.find(:boards, "board_id")
-    end
-=end
-
   end
 
-  def run!
-    # For now i am selecting first board
-    boards  = Trello::Board.all
 
-    lists = boards.first.lists
-
-    # Use Background Job here
-    lists.each do |list|
+  def import!(external_project_id)
+    # external_project_id us actually Board id
+    board = @client.find(:board, external_project_id)
+    board.lists.each do |list|
       import_list(list)
     end
   end
@@ -75,5 +48,44 @@ class TrelloImport
 
     task.save!
   end
+
+  def project_list
+    configure
+
+    boards = Trello::Board.all
+    projects = []
+
+    boards.each do |b|
+      projects  << { name: b.name, id: b.id }
+    end
+
+    projects
+  end
+
+  def configure
+    # TODO: Consider thread safety
+    Trello.configure do |config|
+      config.consumer_key = ENV['TRELLO_KEY']
+      config.consumer_secret = ENV['TRELLO_SECRET']
+      config.oauth_token = @integration.token
+      config.oauth_token_secret = @integration.secret
+    end
+  end
+
+=begin
+    @client = @client = Trello::Client.new(
+        :consumer_key => ENV['TRELLO_KEY'],
+        :consumer_secret => ENV['TRELLO_SECRET'],
+        :oauth_token => integration.token,
+        :oauth_token_secret => integration.secret
+    )
+
+    Thread.new do
+      @client.find(:members, "member_id")
+      @client.find(:boards, "board_id")
+    end
+=end
+
+
 
 end

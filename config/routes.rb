@@ -29,7 +29,12 @@ Rails.application.routes.draw do
       get :get_events, on: :collection
     end
 
-    resources :integrations
+    resources :integrations do
+      member do
+        get  :new_import
+        post :start_import
+      end
+    end
   end
 
 

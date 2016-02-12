@@ -8,7 +8,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     integration = @project.integrations.create_with_omniauth(auth)
     flash['notice'] = integration ? "Successfully integrated #{auth.provider} account." : "#{auth.provider} ntegration Failed"
 
-    redirect_to project_integrations_path(@project) # Ask to select a project for import
+    redirect_to new_import_project_integration_path(@project, integration) # Ask to select a project for import
   end
 
   alias_method :twitter, :create_integration

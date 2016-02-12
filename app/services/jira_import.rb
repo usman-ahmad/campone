@@ -1,11 +1,8 @@
 require 'jira'
 
-class JiraImport
-  attr_reader :client
+class JiraImport < ImportService
 
-  def initialize(integration)
-    @project = integration.project
-
+  def set_client
     options = {
         private_key_file: ENV['JIRA_PRIVATE_KEY_FILE'],
         consumer_key:     ENV['JIRA_CONSUMER_KEY'],
@@ -14,11 +11,11 @@ class JiraImport
     }
 
     @client = JIRA::Client.new(options)
-    @client.set_access_token(integration.token, integration.secret)
+    @client.set_access_token(@integration.token, @integration.secret)
   end
 
-  def run!
-    project = client.Project.all.first
+  def import!(external_project_id)
+    project = client.Project.find(external_project_id)
 
     issues = project.issues
 
@@ -43,6 +40,18 @@ class JiraImport
 
     @project.tasks.create(attributes)
   end
+
+  def project_list
+    projects = []
+
+    jira_projects = client.Project.all
+    jira_projects.each do |p|
+      projects << {name: p.name , id: p.id }
+    end
+
+    projects
+  end
+
 
   private
 

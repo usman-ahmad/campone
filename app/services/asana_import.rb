@@ -1,23 +1,17 @@
-class AsanaImport
-  # TODO: There should be one import against one project, Do't make redundant tasks
-  attr_reader :client
+class AsanaImport < ImportService
 
-  def initialize(integration)
-    @project = integration.project
+  def set_client
     @client = Asana::Client.new do |c|
       c.authentication :oauth2,
-                       refresh_token: integration.token,
+                       refresh_token: @integration.token,
                        client_id:     ENV['ASANA_CLIENT_ID'],
                        client_secret: ENV['ASANA_CLIENT_SECRET'],
                        redirect_uri:  ENV['ASANA_REDIRECT_URI']
     end
   end
 
-  def run!
-    # For now i am selecting first project of first workspace, we should ask user to select a project.
-    project_id = client.projects.find_all(workspace: client.workspaces.find_all.first.id).first.id
-
-    tasks = client.tasks.find_by_project projectId: project_id, per_page: 2
+  def import!(external_project_id)
+    tasks = client.tasks.find_by_project projectId: external_project_id
 
     # TODO: Change it, for now importing just 2 tasks for testing
     tasks.first(2).each do |task|
@@ -39,6 +33,21 @@ class AsanaImport
     }
 
     @project.tasks.create(attributes)
+  end
+
+  def project_list
+    projects = []
+
+    workspaces =  client.workspaces.find_all
+    workspaces.each do |ws|
+      ws_projects = client.projects.find_all(workspace: ws.id)
+
+      ws_projects.each do |p|
+        projects << { name: p.name, id: p.id }
+      end
+    end
+
+    projects
   end
 
 end

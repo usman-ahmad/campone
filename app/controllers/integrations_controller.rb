@@ -1,6 +1,7 @@
 class IntegrationsController < ApplicationController
   before_action :set_project
-  before_action :set_integration,    only: [:show, :edit, :update, :destroy]
+  before_action :set_integration,    only: [:show, :edit, :update, :destroy, :new_import, :start_import]
+  before_action :set_import_service,  only: [:new_import, :start_import]
 
   def index
     @integrations = @project.integrations.all
@@ -39,6 +40,16 @@ class IntegrationsController < ApplicationController
     redirect_to project_integrations_path(@project), notice: 'Integration deleted.'
   end
 
+  # For now keeping these import related methods here, we'll consider making a new controller
+  def new_import
+    @projects = @import_service.project_list
+  end
+
+  def start_import
+    @import_service.import!(params[:external_project_id])
+    redirect_to project_tasks_path(@project), notice: 'Success'
+  end
+
   private
 
   def set_project
@@ -51,5 +62,9 @@ class IntegrationsController < ApplicationController
 
   def integration_params
     params.require(:integration).permit(:url,:name).merge(project: @project)
+  end
+
+  def set_import_service
+    @import_service = ImportService.build(@integration)
   end
 end

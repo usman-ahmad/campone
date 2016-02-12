@@ -43,11 +43,12 @@ class Integration < ActiveRecord::Base
     # in case of JIRA an integration is created already
     integration = find_by(name: auth.provider, url: auth.extra.access_token.consumer.site)
     integration.update_attributes(token:  auth.credentials.token, secret: auth.credentials.secret )
+    integration
   end
   
   def self.trello(auth)
     find_or_create_by(name: auth.provider, url: auth.info.urls.profile) do |integration|
-      integ ration.token  = auth.credentials.token
+      integration.token  = auth.credentials.token
       integration.secret = auth.credentials.secret
     end
   end
