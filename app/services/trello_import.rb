@@ -43,28 +43,37 @@ class TrelloImport
 
     # Use Background Job here
     lists.each do |list|
-      import_tasks(list)
+      import_list(list)
     end
   end
 
 
-  def import_tasks(list)
+  def import_list(list)
     # TODO: Should we create a TaskGroup with list name OR it should map to Task Progress?
     group = TaskGroup.find_or_create_by(name: list.name, project_id: @project.id)
 
     list.cards.each do |card|
-
-      # TODO: Manage Progress, Attachments and grouping
-      attributes = {
-          title: card.name,
-          description: card.desc,
-          due_at: card.due,
-          updated_at: card.last_activity_date,
-          task_group_id: group.id
-      }
-
-      @project.tasks.create(attributes)
+      import_task(card, group.id)
     end
+  end
+
+  def import_task(card, group_id)
+    # TODO: Manage Progress and Task Creator
+    attributes = {
+        title: card.name,
+        description: card.desc,
+        due_at: card.due,
+        updated_at: card.last_activity_date,
+        task_group_id: group_id
+    }
+
+    task = @project.tasks.build(attributes)
+
+    card.attachments.each do |attachment|
+      task.attachments.build(project: @project).attach_from_url(attachment.url)
+    end
+
+    task.save!
   end
 
 end

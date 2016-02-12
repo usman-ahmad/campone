@@ -89,32 +89,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       integration.secret = auth.credentials.secret
     end
 
+    TrelloImport.new(integration).run!
+
     redirect_to project_integrations_path(@project)
   end
-
-
-  require 'trello'
-
-  def config(i)
-    Trello.configure do |config|
-      config.consumer_key = ENV['TRELLO_KEY']
-      config.consumer_secret = ENV['TRELLO_SECRET']
-      config.oauth_token = i.token
-      config.oauth_token_secret = i.secret
-    end
-  end
-
-  def trello_client(key, secret)
-
-    @client = Trello::Client.new(
-        :consumer_key => ENV['TRELLO_KEY'],
-        :consumer_secret => ENV['TRELLO_SECRET'],
-        :oauth_token => i.token,
-        :oauth_token_secret => i.secret
-    )
-
-  end
-
 
   private
 

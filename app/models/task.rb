@@ -20,8 +20,7 @@ class Task < ActiveRecord::Base
   PROGRESSES = ['No progress', 'Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
 
   validates :title, presence: true
-  # Do not validate due date on edit
-  validate :due_date, :if => Proc.new{ |task| task.new_record? }
+
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
   scope :not_completed, -> { where.not(progress: 'Completed') }
