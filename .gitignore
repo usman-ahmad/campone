@@ -34,8 +34,6 @@ coverage
 \#*#
 .\#*
 
-# Asset pipeline output
-/public/assets/
 
 # What happens in Vegas stays in Vegas
 /public/system
