@@ -2,7 +2,7 @@ class TwitterService
 
 
   def get_twitter_clients(project)
-    integrations = project.integrations.twitter
+    integrations = project.integrations.twitter_accounts
     clients = []
     integrations.each do |integration|
       begin
@@ -14,6 +14,7 @@ class TwitterService
         end
         clients << client
       end
+      Trello::Webhook
     end
     clients
   end
