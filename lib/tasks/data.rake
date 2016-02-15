@@ -6,13 +6,10 @@ namespace :data do
     priority = { nil=> 'None', '0' => 'Low', '1' => 'Medium', '2' => 'High' }
     progress = { '0' => 'No progress', '1' => 'In progress', '2' => 'Completed' }
 
-    # Making sure it changes only enum to prevent running second time for performance
-    if Task.columns_hash['priority'].type ==  :integer
-      Task.find_each do |task|
-        task.priority = priority[task.priority]
-        task.progress = progress[task.progress]
-        task.save!
-      end
+    Task.find_each do |task|
+      task.priority = priority[task.priority]
+      task.progress = progress[task.progress]
+      task.save!
     end
   end
 
