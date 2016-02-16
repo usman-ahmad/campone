@@ -1,6 +1,7 @@
 class Payload < ActiveRecord::Base
-  after_create :send_notification
-  after_create :perform_transitions
+  after_create :send_notification,    :if => :vcs?
+  after_create :perform_transitions,  :if => :vcs?  # Perform actions on commit for VCS system like github and Bitbucket etc
+  after_create :create_task,          :if => :pms?  # synchronize tasks for project management system like Jira, Asana, Trello etc
 
   belongs_to :integration
   serialize :info
@@ -26,5 +27,19 @@ class Payload < ActiveRecord::Base
 
   def perform_transitions
     vcs_parser.push_actions
+  end
+
+  def create_task
+    ImportService.build(integration).create_task_from_payload(self)
+  end
+
+  private
+
+  def vcs?
+    %w[github bitbucket].include? integration.name
+  end
+
+  def pms?
+    %w[trello].include? integration.name
   end
 end

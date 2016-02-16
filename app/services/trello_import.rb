@@ -18,6 +18,9 @@ class TrelloImport < ImportService
     board.lists.each do |list|
       import_list(list)
     end
+
+    # To automatically sync
+    create_webhook(external_project_id)
   end
 
 
@@ -49,6 +52,16 @@ class TrelloImport < ImportService
     task.save!
   end
 
+  def create_task_from_payload(payload)
+    card_id   = payload.info['webhook']['action']['data']['card']['id']
+    list_name = payload.info['webhook']['action']['data']['list']['name']
+
+    card = @client.find(:card, card_id)
+    group = TaskGroup.find_or_create_by(name: list_name, project_id: @project.id)
+
+    import_task(card, group.id)
+  end
+
   def project_list
     configure
 
@@ -72,6 +85,15 @@ class TrelloImport < ImportService
     end
   end
 
+  # TODO: Delete webhook, Gem does't provide a way to fetch all webhooks, Either store webhook id on local DB or patch gem
+  def create_webhook(model_id)
+    @client.create(:webhook,
+                   'description' => 'Task sync for Camp One',
+                   'idModel'     => model_id,
+                   'callbackURL' => "#{ENV['HOST']}/webhooks/#{@integration.id}")
+  end
+
+
 =begin
     @client = @client = Trello::Client.new(
         :consumer_key => ENV['TRELLO_KEY'],
@@ -86,6 +108,6 @@ class TrelloImport < ImportService
     end
 =end
 
-
-
 end
+
+

@@ -2,8 +2,13 @@ class WebhooksController < ActionController::Base
   before_action :getIntegration
 
   def create
-    @integration.payloads.create(info: params, event: event_name)
-    head(:ok)
+    # HEAD request is used trello for handshaking in confirmation of webhook
+    if request.head?
+      head(:ok)
+    else # save this payload
+      @integration.payloads.create(info: params, event: event_name)
+      head(:ok)
+    end
   end
 
 =begin
@@ -15,9 +20,15 @@ class WebhooksController < ActionController::Base
   end
 
   def event_name
-    name = @integration.name
-    request.headers['X-GitHub-Event'] if name == "github"
-    request.headers['HTTP_X_EVENT_KEY'].split(':')[1] if name == "bitbucket"
-    #In the same way we will extract event name from bitbuckit or other vcs payloads or requests
+    case @integration.name
+      when 'github'
+        request.headers['X-GitHub-Event']
+      when 'bitbucket'
+        request.headers['HTTP_X_EVENT_KEY'].split(':')[1]
+      when 'trello'
+        params['webhook']['action']['type']
+      else
+        nil # Will not save this webhook
+    end
   end
 end

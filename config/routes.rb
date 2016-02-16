@@ -59,7 +59,8 @@ Rails.application.routes.draw do
   get 'notifications' => 'notifications#index'
 
   #resource to receive VCS messages as a post request.
-  post 'webhooks/:integration_id' => 'webhooks#create', defaults: {formats: :json}
+  # trello sending HEAD request
+  match 'webhooks/:integration_id' => 'webhooks#create', defaults: {formats: :json}, via: [:post, :head]
 
 
   # Example of regular route:
