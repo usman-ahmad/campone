@@ -5,6 +5,11 @@ class WebhooksController < ActionController::Base
     # HEAD request is used trello for handshaking in confirmation of webhook
     if request.head?
       head(:ok)
+    elsif request.headers['X-Hook-Secret'].present? # Asana hanshake
+      options = {}
+      # asana wants OK (200) response along with secret in head
+      options['X-Hook-Secret'] = request.headers['X-Hook-Secret'] if @integration.name == 'asana'
+      head(:ok, options)
     else # save this payload
       @integration.payloads.create(info: params, event: event_name)
       head(:ok)

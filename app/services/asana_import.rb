@@ -18,6 +18,8 @@ class AsanaImport < ImportService
       # Use Background Job here
       import_task(task.id)
     end
+
+    create_webhook(external_project_id)
   end
 
   def import_task(task_id)
@@ -49,5 +51,26 @@ class AsanaImport < ImportService
 
     projects
   end
+
+  def create_webhook(id)
+    # Make sure you have SSL in order to work wiht asana webhooks
+    client.webhooks.create(resource: id, target: "#{ENV['HOST']}/webhooks/#{@integration.id}")
+  end
+
+  def create_task_from_payload(payload)
+=begin
+    Todo: Use Background job, And delay this job for some time i-e 5-10 minutes
+    # when we receive task created hook, It is empty at this point as
+    # Asana creates empty task on pressing enter than updates it gradually as user enters description.
+=end
+    if payload.info['events']
+      events = payload.info['events'].select{|e| e['type'] == 'task' && e['action'] == 'added'}
+
+      events.each do |event|
+        import_task(event['resource'])
+      end
+    end
+  end
+
 
 end

@@ -40,6 +40,6 @@ class Payload < ActiveRecord::Base
   end
 
   def pms?
-    %w[trello].include? integration.name
+    %w[trello asana].include? integration.name
   end
 end
