@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/sumoheavy/jira-ruby.git
+  revision: 9204d9dfac9de96735bcca39727f479ee72662d5
+  branch: master
+  specs:
+    jira-ruby (0.1.17)
+      activesupport
+      oauth (~> 0.4.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -190,9 +199,6 @@ GEM
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
-    jira-ruby (0.1.17)
-      activesupport
-      oauth (~> 0.4.7)
     jquery-rails (4.0.4)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -476,7 +482,7 @@ DEPENDENCIES
   fullcalendar-rails
   grape
   jbuilder (~> 2.0)
-  jira-ruby
+  jira-ruby!
   jquery-rails
   jquery-ui-sass-rails
   letter_opener

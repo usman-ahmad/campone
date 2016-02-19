@@ -53,6 +53,23 @@ class JiraImport < ImportService
   end
 
 
+  def create_webhook(project_id)
+    hook = @client.Webhook.build
+    hook.save("name": "Camp One",
+              "url": "#{ENV['HOST']}/webhooks/#{@integration.id}",
+              "events": [
+                  "jira:issue_created",
+              ],
+              "jqlFilter": "Project = #{project_id}",
+              "excludeIssueDetails": false,
+    )
+  end
+
+  def create_task_from_payload(payload)
+    issue = client.Issue.find(payload.info['issue']['id'])
+    import_task(issue)
+  end
+
   private
 
   def map_progress(progress)

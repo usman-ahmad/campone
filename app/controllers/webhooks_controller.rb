@@ -32,6 +32,8 @@ class WebhooksController < ActionController::Base
         request.headers['HTTP_X_EVENT_KEY'].split(':')[1]
       when 'trello'
         params['webhook']['action']['type']
+      when 'jira'
+        params['webhookEvent']
       else
         nil # Will not save this webhook
     end

@@ -114,5 +114,5 @@ gem 'twitter'
 
 # Used to interact with asana API
 gem 'asana'
-gem 'jira-ruby'
+gem 'jira-ruby', github: 'sumoheavy/jira-ruby', :branch => 'master'
 gem 'ruby-trello'
