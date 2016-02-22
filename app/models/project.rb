@@ -77,7 +77,7 @@ class Project < ActiveRecord::Base
 
   # Try to create a slug with initials of project name, if its already taken try next combination of initials and random characters
   def slug_candidates
-    name_initials = self.name.split.map(&:first).join
+    name_initials = self.name.split.map(&:first).join if self.name
 
     # TODO: Try SecureRandom
     # generate a random string of length 3

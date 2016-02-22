@@ -12,6 +12,15 @@ describe 'attachments feature', type: :feature, :js => true do
     login(owner.email, 'secretpassword')
   end
 
+  def test
+    owner = FactoryGirl.create(:user)
+    project = FactoryGirl.create(:project, owner: owner)
+    discussion_group = FactoryGirl.create(:discussion_group, name: 'diagrams')
+    discussion =FactoryGirl.create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: discussion_group)
+  end
+
+
+
   context 'when discussion' do
     before do
       project

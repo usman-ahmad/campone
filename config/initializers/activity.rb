@@ -69,10 +69,12 @@ PublicActivity::Activity.class_eval do
 
   def project
     case self.trackable_type
-      when "Task" || "Discussion"
+      when 'Task', 'Discussion'
         trackable.project
-      when "Comment"
+      when 'Comment'
         trackable.commentable.project
+      else
+        raise "Project NOT found for: #{self.trackable_type}"
     end
   end
 

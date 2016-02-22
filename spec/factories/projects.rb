@@ -18,11 +18,11 @@ FactoryGirl.define do
   factory :project_with_many_tasks, parent: :project do
     after(:create) do |project|
       create(:low_priority_task,project: project, commenter: project.owner , creator: project.owner)
-      create(:low_priority_task,project: project,progress: :completed, commenter: project.owner , creator: project.owner)
+      create(:low_priority_task,project: project,progress: 'Completed', commenter: project.owner , creator: project.owner)
       create(:medium_priority_task,project: project , commenter: project.owner, creator: project.owner)
       create(:medium_priority_task,project: project , commenter: project.owner, creator: project.owner)
-      create(:high_priority_task,project: project,progress: :no_progress , commenter: project.owner, creator: project.owner)
-      create(:high_priority_task,project: project,progress: :in_progress , commenter: project.owner, creator: project.owner)
+      create(:high_priority_task,project: project,progress: 'No progress' , commenter: project.owner, creator: project.owner)
+      create(:high_priority_task,project: project,progress: 'In progress' , commenter: project.owner, creator: project.owner)
     end
   end
 

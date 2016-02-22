@@ -20,6 +20,8 @@ class Task < ActiveRecord::Base
   PROGRESSES = ['No progress', 'Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
 
   validates :title, presence: true
+  validates :progress, inclusion: { in: PROGRESSES }
+  validates :priority, inclusion: { in: PRIORITIES }
 
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 

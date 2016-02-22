@@ -11,22 +11,22 @@ FactoryGirl.define do
       user nil
     end
 
-  trait :private do
-    private true
-  end
+    trait :private do
+      private true
+    end
 
-  trait :none_private do
-    private false
-  end
+    trait :none_private do
+      private false
+    end
 
-  factory :private_discussion, traits: [:private]
-  factory :none_private_discussion, traits: [:none_private]
+    factory :private_discussion, traits: [:private]
+    factory :none_private_discussion, traits: [:none_private]
 
-  after(:create) do |discussion,  evaluator|
-    discussion.update_attributes(user_id: evaluator.user.id)
-    discussion.comments << create_list(:comment, 5 ,user: evaluator.commenter, commentable_id: discussion.id, commentable_type: discussion.class.name , commenter: evaluator.commenter)
-    discussion.create_activity :create, owner: evaluator.user
-  end
+    after(:create) do |discussion,  evaluator|
+      discussion.update_attributes(user_id: evaluator.user.id)
+      discussion.comments << create_list(:comment, 5 ,user: evaluator.commenter, commentable_id: discussion.id, commentable_type: discussion.class.name , commenter: evaluator.commenter)
+      discussion.create_activity :create, owner: evaluator.user
+    end
   end
 
 

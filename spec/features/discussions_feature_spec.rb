@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'discussions management', type: :feature, :js => true do
-  let!(:owner) { create(:user) }
+  let!(:owner) { create(:user, name: 'sunny') }
   let!(:project) { create(:project, owner: owner) }
   let!(:group) {create(:discussion_group, name: 'diagrams')}
   let!(:discussion) {create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: group )}

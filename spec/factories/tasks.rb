@@ -14,15 +14,15 @@ FactoryGirl.define do
     end
 
     trait :low_priority do
-      priority :low
+      priority 'Low'
     end
 
     trait :medium_priority do
-      priority :medium
+      priority 'Medium'
     end
 
     trait :high_priority do
-      priority :high
+      priority 'High'
     end
 
     factory :low_priority_task,    traits: [:low_priority]
