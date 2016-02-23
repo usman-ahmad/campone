@@ -77,6 +77,10 @@ group :development do
   gem 'rails_best_practices'
 end
 
+group :test do
+  gem 'shoulda-matchers', '~> 3.1'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -89,8 +93,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   # properly clean database after running rspecs
   gem 'database_cleaner'
-  # use shoulda for should matcher
-  gem 'shoulda', '~> 3.3.0', require: false
   # Capybara helps you test web applications by simulating how a real user would interact with your app
   gem 'capybara'
   # capybara driver

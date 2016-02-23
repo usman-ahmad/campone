@@ -4,6 +4,26 @@ RSpec.describe Project, type: :model do
    let(:user){ create(:user) }
    let(:project){ create(:project, owner: user) }
 
+   describe 'validations' do
+     it { should validate_presence_of(:name) }
+     it { should validate_presence_of(:owner) }
+   end
+
+   describe 'associations' do
+     it { should have_many(:tasks) }
+     it { should have_many(:discussions) }
+     it { should have_many(:contributions) }
+     it { should have_many(:attachments) }
+
+     it 'adds owner to contributors' do
+       expect{ create(:project) }.to change{ Contribution.count }.by(1)
+     end
+
+     it 'assigns owner role to contribution' do
+       expect(project.contributions.owner.count).to eq 1
+     end
+   end
+
    it 'should have owner' do
       project.owner.should eq(user)
    end

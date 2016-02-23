@@ -4,6 +4,25 @@ RSpec.describe Task, type: :model do
   let(:user){ create(:user) }
   let(:project){ create(:project, owner: user) }
 
+  describe 'validations' do
+    it { should validate_presence_of(:title) }
+    it { should validate_presence_of(:project) }
+
+    it { should     allow_value("Completed").for(:progress) }
+    it { should_not allow_value("blah")     .for(:progress) }
+
+    it { should     allow_value("High").for(:priority) }
+    it { should_not allow_value("blah").for(:priority) }
+  end
+
+  describe 'associations' do
+    it { should belong_to(:project) }
+    it { should belong_to(:task_group) }
+
+    it { should have_many(:comments) }
+    it { should have_many(:attachments) }
+  end
+
   it 'should have title' do
     build(:low_priority_task, project: project, commenter: project.owner, title:nil ).should_not be_valid
   end

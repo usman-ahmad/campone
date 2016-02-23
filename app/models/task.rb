@@ -19,7 +19,9 @@ class Task < ActiveRecord::Base
   # So dont change order
   PROGRESSES = ['No progress', 'Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
 
-  validates :title, presence: true
+  validates :title,   presence: true
+  validates :project, presence: true
+
   validates :progress, inclusion: { in: PROGRESSES }
   validates :priority, inclusion: { in: PRIORITIES }
 
@@ -27,6 +29,7 @@ class Task < ActiveRecord::Base
 
   scope :not_completed, -> { where.not(progress: 'Completed') }
 
+  # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
     errors.add(:due_at, "can't be in the past") if
         due_at < Date.today if due_at.present?
@@ -94,7 +97,7 @@ class Task < ActiveRecord::Base
   end
 
   def current_ticket_id
-    [[project.friendly_id, project.reload.current_ticket_id]]
+    [[project.friendly_id, project.reload.current_ticket_id]] if project
   end
 
   def increment_ticket_counter

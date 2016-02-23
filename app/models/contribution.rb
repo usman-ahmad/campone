@@ -3,5 +3,6 @@ class Contribution < ActiveRecord::Base
   belongs_to :user
 
   validates :user, uniqueness: { scope: :project, message: "Already invited on this project." }
+  # TODO: Replace enum with string
   enum role: [ :organizer, :team_player, :contributor, :owner ]
 end
