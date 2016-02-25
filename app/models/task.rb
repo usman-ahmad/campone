@@ -27,7 +27,7 @@ class Task < ActiveRecord::Base
 
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
-  scope :not_completed, -> { where.not(progress: 'Completed') }
+  scope :not_completed, -> { where(progress: ['No progress', 'Started', 'In progress','Rejected']) }
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
@@ -46,6 +46,7 @@ class Task < ActiveRecord::Base
     else 'Task already assigned'end
   end
 
+  # If a user starts progress should't we assign task to him.
   def set_progress(current_user, progress)
     if (assigned_to).eql?(current_user.id)
       if update_attributes(progress: progress)
@@ -53,14 +54,16 @@ class Task < ActiveRecord::Base
     else   'Task is not assigned to you' end
   end
 
-  def self.search(text, include_completed=false)
+  def self.filter_tasks(search_text: nil, include_completed: false)
     if include_completed
-      all
-    elsif text.present?
-      where("title @@ :q or description @@ :q", q: text )
+      search_text.nil? ? all : all.search(search_text)
     else
-      all.not_completed
+      search_text.nil? ? not_completed : not_completed.search(search_text)
     end
+  end
+
+  def self.search(text)
+    where("title @@ :q or description @@ :q", q: text)
   end
 
   def self.to_csv(options = {})
@@ -89,7 +92,6 @@ class Task < ActiveRecord::Base
       project.tasks.create!(attributes)
     end
   end
-
   private
 
   def set_position

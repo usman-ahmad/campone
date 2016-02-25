@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   def index
     cookies[:include_completed] = params[:include_completed] if params[:include_completed].present?
 
-    tasks = @project.tasks.search(params[:search_text], cookies[:include_completed] == 'true')
+    tasks = @project.tasks.filter_tasks(search_text: params[:search_text], include_completed: cookies[:include_completed] == 'true')
     @grouped_tasks = tasks.order!('position').group_by{ |t| t.task_group_id }
 
     respond_to do |format|
