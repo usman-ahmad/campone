@@ -1,5 +1,21 @@
 require 'rails_helper'
 
+# Custom matcher for matching Exported CSV data with expected results
+RSpec::Matchers.define :have_value do |attribute, expected|
+  match do |obj|
+    if obj.is_a? Hash
+      obj[attribute.to_s] == expected
+    else
+      obj.send(attribute)
+    end
+  end
+
+  description do
+    "have value '#{expected}' for '#{attribute}"
+  end
+end
+
+
 RSpec.describe Task, type: :model do
   let(:user){ create(:user) }
   let(:project){ create(:project, owner: user) }
@@ -24,33 +40,35 @@ RSpec.describe Task, type: :model do
   end
 
 
-  describe 'filter_tasks' do
-    # This is sample data used for testing Search and filter tasks,
+  describe 'class level methods' do
+    # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
     let!(:task)          { create(:task, title: 'task one', description: 'task 1 create ERD',   progress: 'Started',   creator: user, project: project) }
     let!(:completed_task){ create(:task, title: 'task two', description: 'task 2 create DB',    progress: 'Completed', creator: user, project: project) }
     let!(:another_task)  { create(:task, title: 'another ', description: 'another description', progress: 'Accepted',  creator: user, project: project) }
 
-    it 'returns non-completed tasks meeting the search criteria' do
-      tasks = Task.filter_tasks(search_text: 'task')
+    describe '#filter_tasks' do
+      it 'returns non-completed tasks meeting the search criteria' do
+        tasks = Task.filter_tasks(search_text: 'task')
 
-      expect(tasks.count).to eq 1
-      expect(tasks.first.title).to eq 'task one'
-    end
+        expect(tasks.count).to eq 1
+        expect(tasks.first.title).to eq 'task one'
+      end
 
-    it 'returns all non-completed tasks when no search text is given' do
-      tasks = Task.filter_tasks(search_text: nil)
-      expect(tasks.count).to eq 1
-    end
+      it 'returns all non-completed tasks when no search text is given' do
+        tasks = Task.filter_tasks(search_text: nil)
+        expect(tasks.count).to eq 1
+      end
 
-    it 'returns ALL tasks (completed + non-completed)' do
-      tasks = Task.filter_tasks(include_completed: true)
-      expect(tasks.count).to eq 3
-    end
+      it 'returns ALL tasks (completed + non-completed)' do
+        tasks = Task.filter_tasks(include_completed: true)
+        expect(tasks.count).to eq 3
+      end
 
-    it 'includes completed tasks meeting search criteria' do
-      tasks = Task.filter_tasks(search_text: 'task', include_completed: true)
-      expect(tasks.count).to eq 2
+      it 'includes completed tasks meeting search criteria' do
+        tasks = Task.filter_tasks(search_text: 'task', include_completed: true)
+        expect(tasks.count).to eq 2
+      end
     end
 
     describe '#search' do
@@ -68,6 +86,65 @@ RSpec.describe Task, type: :model do
 
       it 'returns unique records' do
         expect(Task.search('task').count).to eq 2
+      end
+    end
+
+    describe 'CSV import/export' do
+      let!(:group)          { TaskGroup.create(name: 'Front End', project: project) }
+      let!(:task1_in_group) { create(:task, title: 'create psd', description: 'task one in group',
+                                     progress: 'Started',   creator: user, project: project, task_group: group) }
+
+      let!(:task2_in_group) { create(:task, title: 'create html templates', description: 'task two in group',
+                                     progress: 'Rejected', priority: 'Medium', creator: user, project: project, task_group: group) }
+
+
+      describe '#to_csv (export to CSV file)' do
+        let!(:exported_string) { Task.all.to_csv }
+        let!(:exported_array)  { CSV.parse(exported_string, headers: true) }
+        let!(:exported_data)   { exported_array.map { |row| row.to_hash }  }
+
+
+        it 'exports correct number of rows' do
+          expect(exported_array.length).to eq 5
+        end
+
+        describe 'Exported Values' do
+          subject! { exported_data.last }
+
+          expected_values = {
+              title: 'create html templates', description: 'task two in group',
+              progress: 'Rejected', priority: 'Medium', group: 'Front End'
+          }
+
+          # TODO: Find out why is this behaving unexpected, sometimes fails
+          expected_values.each do |k,v|
+            it { is_expected.to have_value k, v}
+          end
+        end
+      end
+
+      describe '#import (from CSV)' do
+        let(:csv_file) { File.open Rails.root.join('spec', 'files', 'tasks.csv') }
+
+        before { Task.import csv_file, project, user }
+
+        it 'imports all records' do
+          expect(Task.count).     to eq 8 # 5 existing and 3 newly created from CSV
+          expect(TaskGroup.count).to eq 2 # 1 existing and 1 newly created from
+        end
+
+        describe 'imported task' do
+          subject { Task.last }
+
+          expected_values = {
+              title: 'add authentication', description: 'use devise',
+              progress: 'Started', priority: 'None'
+          }
+
+          expected_values.each do |k,v|
+            it { is_expected.to have_value k, v}
+          end
+        end
       end
     end
   end

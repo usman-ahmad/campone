@@ -1,0 +1,4 @@
+title,description,priority,progress,due_at,group
+add bootstrap,download and add latest bootstrap,None,Started,2016-02-26,Front End
+add jquery,it shuould not create new group,Medium,Rejected,2016-02-26,front end
+add authentication,use devise,None,Started,2016-02-26,Back End
