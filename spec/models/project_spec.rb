@@ -24,6 +24,39 @@ RSpec.describe Project, type: :model do
      end
    end
 
+   describe 'slug' do
+     let!(:project){ create(:project, owner: user, name: 'T E S Ting') }
+
+     it 'should create a slugged ID containing initials of project name' do
+       expect(project.slug).to match /test/
+     end
+
+     # TODO: Confirm this is expected behavior
+     # If we wanna change slug we can enable History option of friendly_id gem
+     # Old links may be pointing to url with old slug, we may have to change ticket_ids as well
+     it 'should NOT update slug on changing project name' do
+       project.update_attributes name:'New Name'
+       expect(project.slug).to match /test/
+     end
+
+     context 'for already existing slug' do
+       before do
+         rand = double(bool: false)
+         # returns the specified values in order, then keeps returning the last value
+         allow(rand).to receive(:generate).and_return(1, 2)
+         allow_any_instance_of(Project).to receive(:slug_candidates).and_return(-> {['test', ['test', rand.generate]]})
+       end
+
+       let!(:project_2){ create(:project, owner: user, name: 'T E S Ting') }
+       let!(:project_3){ create(:project, owner: user, name: 'T E S Ting') }
+
+       it 'tries new slug' do
+         expect(project_2.slug).to match /test-1/
+         expect(project_3.slug).to match /test-2/
+       end
+     end
+   end
+
    it 'should have owner' do
       project.owner.should eq(user)
    end

@@ -39,6 +39,7 @@ class Task < ActiveRecord::Base
     State::STATE_MACHINE[progress.tr(' ', '_').downcase.to_sym]
   end
 
+  # TODO: Refactor this method. Right now it wont assign task if it is already assigned to another user.
   def assigned_to_me(current_user)
     if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?(PROGRESSES.first))
       if update_attributes(assigned_to: current_user.id)
@@ -46,7 +47,7 @@ class Task < ActiveRecord::Base
     else 'Task already assigned'end
   end
 
-  # If a user starts progress should't we assign task to him.
+  # To improve user experience if a user starts progress should't we assign task to him automatically, like pivotal
   def set_progress(current_user, progress)
     if (assigned_to).eql?(current_user.id)
       if update_attributes(progress: progress)

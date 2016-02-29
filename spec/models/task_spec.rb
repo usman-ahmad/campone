@@ -40,6 +40,15 @@ RSpec.describe Task, type: :model do
   end
 
 
+  describe 'default values' do
+    expected_values = { progress: 'No progress', priority: 'None' }
+
+    expected_values.each do |key,val|
+      it { is_expected.to have_value(key, val) }
+    end
+  end
+
+
   describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
@@ -145,6 +154,82 @@ RSpec.describe Task, type: :model do
             it { is_expected.to have_value k, v}
           end
         end
+      end
+    end
+  end
+
+  describe 'ticket ID' do
+    let!(:task) { create(:task, project: project, creator: user) }
+    it 'assigns correct ticket_id to task' do
+      expect(task.ticket_id).to eq "#{project.friendly_id}-1"
+    end
+
+    it 'increases current_ticket_id' do
+      expect{ create(:task, project: project, creator: user) }.to change{ project.current_ticket_id }.by(1)
+    end
+  end
+
+  describe '#set_position' do
+    let!(:task) { create(:task, project: project, creator: user) }
+    let(:task2) { create(:task, project: project, creator: user) }
+
+    it 'assigns position to task' do
+      expect(task.position).to eq 1
+    end
+
+    it 'assigns next position to task' do
+      expect(task2.position).to eq 2
+    end
+  end
+
+  describe '#assigned_to_me' do
+    let(:another_user){ create(:user) }
+
+    context 'assigned to nobody' do
+      let!(:task) { create(:task, project: project, creator: user) }
+
+      before { task.assigned_to_me(another_user) }
+      it 'assigns task to a user' do
+        expect(task.assigned_to).to eq another_user.id
+      end
+    end
+
+    context 'already assigned' do
+      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
+
+      before { task.assigned_to_me(another_user) }
+      it 'will not assign task' do
+        expect(task.assigned_to).to eq user.id
+      end
+    end
+
+    context 'already in progress' do
+      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, progress: 'In progress') }
+
+      before { task.assigned_to_me(another_user) }
+      it 'will not assign task' do
+        expect(task.assigned_to).to eq user.id
+      end
+    end
+  end
+
+  describe '#set_progress' do
+    before { task.set_progress(user, 'In progress') }
+
+    context 'Task is assigned to that user' do
+      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
+
+      it 'will change progress' do
+        expect(task.progress).to eq 'In progress'
+      end
+    end
+
+    context 'Task is NOT assigned to that user' do
+      let(:another_user){ create(:user) }
+      let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
+
+      it 'would NOT changes progress' do
+        expect(task.progress).to eq 'No progress' # Default value
       end
     end
   end
