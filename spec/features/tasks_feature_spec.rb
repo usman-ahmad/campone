@@ -8,8 +8,8 @@ describe 'tasks management', type: :feature, :js => true do
 
   before do
     login(owner.email, 'secretpassword')
-    visit project_tasks_path(project)
   end
+
   context 'ToDo List' do
     before do
       visit project_task_path(project, task)
@@ -63,8 +63,47 @@ describe 'tasks management', type: :feature, :js => true do
     end
   end
 
+  describe 'Create' do
+    before { visit new_project_task_path(project) }
 
-  context 'update' do
+    it 'creates new task when only title is provided' do
+      fill_in 'Title', with: 'create erd diagram and implement'
+      click_button 'Create Task'
+      expect(page).to have_content("successfully created")
+      expect(page).to have_content("create erd diagram and implement")
+    end
+
+    it 'would not create task without a title' do
+      click_button 'Create Task'
+      expect(page).to have_content("error")
+    end
+
+    it 'would not create task without a title' do
+      click_button 'Create Task'
+      expect(page).to have_content("error")
+    end
+
+    # Its better to test single field in one example but for performance we can test many things in one
+    it 'assigns correct values' do
+      fill_in 'Title', with: 'create erd diagram and implement'
+      fill_in 'Description', with: 'Use Microsoft Visio to create ERD'
+      fill_in 'Due at', with: '2016-03-30' # Datepicker
+
+      select 'High', :from => 'Priority'
+      select 'Everybody', :from => 'Assigned to'
+
+      click_button 'Create Task'
+
+      expect(page).to have_content('create erd diagram and implement')
+      expect(page).to have_content('Use Microsoft Visio to create ERD')
+      expect(page).to have_content('2016-03-30')
+
+      expect(page).to have_content('High')
+      expect(page).to have_content('Everybody')
+    end
+  end
+
+  describe 'Update' do
     before do
       visit project_task_path(project, task)
     end
