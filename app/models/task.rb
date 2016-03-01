@@ -14,20 +14,35 @@ class Task < ActiveRecord::Base
   before_create :set_position
   after_create  :increment_ticket_counter
 
-  PRIORITIES = %w[None Low Medium High]
+  PRIORITIES = {
+      NONE:   'None',
+      LOW:    'Low',
+      MEDIUM: 'Medium',
+      HIGH:   'High'
+  }
   # if you changed the order of any value of PROGRESSES array than it will reflect in lib/state.rb file.
   # So dont change order
-  PROGRESSES = ['No progress', 'Started', 'In progress', 'Completed', 'Rejected', 'Accepted', 'Deployed','Closed']
 
-  validates :title,   presence: true
+  PROGRESSES = {
+      NO_PROGRESS: 'No progress',
+      STARTED:  	 'Started',
+      IN_PROGRESS: 'In progress',
+      COMPLETED:   'Completed',
+      REJECTED:    'Rejected',
+      ACCEPTED:    'Accepted',
+      DEPLOYED:    'Deployed',
+      CLOSED:      'Closed'
+  }
+
+  validates :title, presence: true
   validates :project, presence: true
 
-  validates :progress, inclusion: { in: PROGRESSES }
-  validates :priority, inclusion: { in: PRIORITIES }
+  validates :progress, inclusion: { in: PROGRESSES.values }
+  validates :priority, inclusion: { in: PRIORITIES.values }
 
   accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
-  scope :not_completed, -> { where(progress: ['No progress', 'Started', 'In progress','Rejected']) }
+  scope :not_completed, -> { where(progress: [ PROGRESSES[:NO_PROGRESS], PROGRESSES[:STARTED], PROGRESSES[:IN_PROGRESS], PROGRESSES[:REJECTED]]) }
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
@@ -36,12 +51,12 @@ class Task < ActiveRecord::Base
   end
 
   def next_states
-    State::STATE_MACHINE[progress.tr(' ', '_').downcase.to_sym]
+    State::GET_NEXT[progress.tr(' ', '_').downcase.to_sym]
   end
 
   # TODO: Refactor this method. Right now it wont assign task if it is already assigned to another user.
   def assigned_to_me(current_user)
-    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?(PROGRESSES.first))
+    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?(PROGRESSES[:NO_PROGRESS]))
       if update_attributes(assigned_to: current_user.id)
          'Task assigned to You' end
     else 'Task already assigned'end

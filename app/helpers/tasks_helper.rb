@@ -16,7 +16,11 @@ module TasksHelper
   end
 
   def state_label(state)
-    ((state == 'Completed') || (state =='Closed'))? state_label  = state.remove('d') : state_label  = state.remove('ed')
+     if state == Task::PROGRESSES[:COMPLETED] || state == Task::PROGRESSES[:CLOSED]
+       state.remove('d')
+     else
+       state.remove('ed')
+     end
   end
 end
 

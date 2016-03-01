@@ -29,7 +29,7 @@ class AsanaImport < ImportService
     attributes = {
         title: task.name,
         description: task.notes,
-        progress: task.completed ? 'Completed' : 'No progress',
+        progress: task.completed ? Task::PROGRESSES[:COMPLETED] : Task::PROGRESSES[:NO_PROGRESS],
         created_at: task.created_at,
         updated_at: task.modified_at
     }

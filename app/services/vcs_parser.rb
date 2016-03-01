@@ -107,10 +107,10 @@ class VCSParser
         when 'start'
           # start the ticket
           # TODO: Using string to match Progress are pron to typo errors. should use named constants
-          task.update_attributes(progress: 'In progress') if task.progress == 'No progress'
+          task.update_attributes(progress: Task::PROGRESSES[:IN_PROGRESS]) if task.progress == Task::PROGRESSES[:NO_PROGRESS]
         when 'close', 'fix', 'resolve', 'complete'
           # change status to finish
-          task.update_attributes(progress: 'Completed')
+          task.update_attributes(progress: Task::PROGRESSES[:COMPLETED])
         when nil
           # create comment on referenced ticket?
       end
