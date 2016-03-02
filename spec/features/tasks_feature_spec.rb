@@ -10,47 +10,51 @@ describe 'tasks management', type: :feature, :js => true do
     login(owner.email, 'secretpassword')
   end
 
-  context 'ToDo List' do
+  describe 'ToDo List' do
     before do
-      visit project_task_path(project, task)
+      visit project_tasks_path(project)
     end
 
     it 'should show in ToDo list' do
-      visit project_tasks_path(project)
-      page.should have_css(".ui-sortable li", :count => 1)
-      find(".ui-sortable li").should have_content('create erd diagram')
+      expect(page).to have_css('ul#tasks li', count: 1)
+      expect(page).to have_content('create erd diagram')
     end
+
     it 'allow to edit from todo list' do
-      visit project_tasks_path(project)
       find('li', text: 'create erd diagram').click
-      find_link('Edit').click
+      click_on 'Edit'
       fill_in 'task_title', with: 'create erd diagram and implement'
-      find('input[name="commit"]').click
-      find(:css, 'div.todo-name').should have_content('create erd diagram and implement')
+
+      click_button 'Update Task'
+
+      expect(page).to have_content('create erd diagram')
       expect(page.current_path).to eq project_task_path(project, task)
     end
+
     it 'allow to delete from todo list' do
-      visit project_tasks_path(project)
       find('li', text: 'create erd diagram').find('.fa-trash-o').click
       page.driver.browser.switch_to.alert.accept
-      page.should have_css(".ui-sortable li", :count => 0)
+      expect(page).to have_css(".ui-sortable li", :count => 0)
     end
   end
 
-  context 'show/hide completed tasks' do
-    let!(:completed_task) { create(:task, progress: 'Completed', project: project, creator: owner ) }
+  describe 'show/hide completed tasks' do
+    let!(:completed_task) { create(:task, title: 'A completed task', progress: 'Completed', project: project, creator: owner ) }
 
     before do
       visit project_tasks_path(project)
     end
-    it 'should show' do
-      find('a', text: 'Show Completed Tasks').click
-      page.should have_css(".ui-sortable li", :count => 2)
+
+    it 'hides completed tasks' do
+      expect(page).to     have_css("ul#tasks li", :count => 1)
+      expect(page).to_not have_content('A completed task')
+    end
+
+    it 'shows completed tasks' do
+      click_on 'Show Completed Tasks'
+      expect(page).to have_css("ul#tasks li", :count => 2)
       find('li', text: completed_task.title).should have_content('Completed')
       find('li', text: task.title).should have_content('No progress')
-    end
-    it 'should hide' do
-      page.should have_css(".ui-sortable li", :count => 1)
     end
   end
 
@@ -58,8 +62,9 @@ describe 'tasks management', type: :feature, :js => true do
     before do
       visit project_task_path(project, task)
     end
+
     it 'should be assign with group' do
-      find('ul.todo-info-list li:nth-child(1)').should have_content('ruby')
+      expect(page).to have_content('ruby')
     end
   end
 
@@ -71,11 +76,6 @@ describe 'tasks management', type: :feature, :js => true do
       click_button 'Create Task'
       expect(page).to have_content("successfully created")
       expect(page).to have_content("create erd diagram and implement")
-    end
-
-    it 'would not create task without a title' do
-      click_button 'Create Task'
-      expect(page).to have_content("error")
     end
 
     it 'would not create task without a title' do
@@ -107,14 +107,16 @@ describe 'tasks management', type: :feature, :js => true do
     before do
       visit project_task_path(project, task)
     end
+
     it 'should assign to me' do
-      find('a', text:'Assign to Me').click
-      find('ul.todo-info-list li:nth-child(2)').should have_content(owner.name)
+      click_on 'Assign to Me'
+      expect(page).to have_content(owner.name)
     end
+
     it 'should change progress' do
-      find('a', text:'Assign to Me').click
-      find('a', text:'Start').click
-      find('ul.todo-info-list li:nth-child(5)').should have_content('Started')
+      click_on 'Assign to Me'
+      click_on 'Start'
+      expect(page).to have_content('Started')
     end
   end
   # TO DO, ckeditor is dont provide find any element with the help of capybara.
