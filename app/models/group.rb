@@ -1,4 +1,4 @@
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   belongs_to :creator, class_name: 'User'
 
   # TODO: Do not create new group if already existing

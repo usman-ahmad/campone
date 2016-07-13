@@ -1,4 +1,4 @@
-class Payload < ActiveRecord::Base
+class Payload < ApplicationRecord
   after_create :send_notification,    :if => :vcs?
   after_create :perform_transitions,  :if => :vcs?  # Perform actions on commit for VCS system like github and Bitbucket etc
   after_create :create_task,          :if => :pms?  # synchronize tasks for project management system like Jira, Asana, Trello etc

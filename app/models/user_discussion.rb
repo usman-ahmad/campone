@@ -1,4 +1,4 @@
-class UserDiscussion < ActiveRecord::Base
+class UserDiscussion < ApplicationRecord
   belongs_to :user
   belongs_to :discussion
 

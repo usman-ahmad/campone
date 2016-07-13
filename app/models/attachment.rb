@@ -1,4 +1,4 @@
-class Attachment < ActiveRecord::Base
+class Attachment < ApplicationRecord
   has_attached_file :attachment
 
   belongs_to :project

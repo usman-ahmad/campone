@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   belongs_to :project
 
   validates :title, :due_at, presence: true

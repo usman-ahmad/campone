@@ -1,4 +1,4 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged,:finders]
 

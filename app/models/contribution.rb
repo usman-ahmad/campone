@@ -1,4 +1,4 @@
-class Contribution < ActiveRecord::Base
+class Contribution < ApplicationRecord
   belongs_to :project
   belongs_to :user
 

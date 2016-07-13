@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   belongs_to :activity, :class_name => "PublicActivity::Activity"
   belongs_to :user
 
