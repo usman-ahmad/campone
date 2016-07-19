@@ -6,11 +6,11 @@ Rails.application.routes.draw do
     resources :tasks do
       collection do
         post :sort
-        get  :new_import
+        get :new_import
         post :import
       end
 
-      patch :assigned_to_me,:set_progress, on: :member
+      patch :assigned_to_me, :set_progress, on: :member
       resources :comments
     end
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
 
     resources :contributions, only: [:new, :create]
-    resources :attachments, only: [:index, :new, :create, :destroy,:edit,:update] do
+    resources :attachments, only: [:index, :new, :create, :destroy, :edit, :update] do
       member do
         get 'download'
       end
@@ -31,14 +31,14 @@ Rails.application.routes.draw do
 
     resources :integrations do
       member do
-        get  :new_import
+        get :new_import
         post :start_import
       end
     end
   end
 
 
-  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_for :users, :controllers => {omniauth_callbacks: 'omniauth_callbacks'}
 
   devise_scope :user do
     match '/users/:id/finish_signup', :to => 'omniauth_callbacks#finish_signup', via: [:get, :patch], :as => :finish_signup

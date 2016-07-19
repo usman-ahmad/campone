@@ -1,7 +1,7 @@
 <div class="col-md-12 show-page-head">
   <%= link_to project_integrations_path(@project) do %>
-    <span><i class="fa fa-arrow-circle-o-left"></i></span>
-    Back To Integrations
+      <span><i class="fa fa-arrow-circle-o-left"></i></span>
+      Back To Integrations
   <% end %>
 </div>
 <% if @integration.name == 'bitbucket' || @integration.name == 'github' %>
@@ -9,19 +9,28 @@
     <%= webhook_url(@integration) %>
 <% end %>
 
-<% if  @integration.name == 'jira' %>
-  <h1>Jira<%= session[:jira_integration_id] %></h1>
-  <h3>Fellow below given Steps to Configure application link with your Jira (You must be an admin)</h3>
-  <ol>
-    <li>Open <%= link_to 'your jira site', "#{ @integration.url}/plugins/servlet/applinks/listApplicationLinks" %></li>
-    <li>Write <code>http://www.teknuk.com/ </code>in text field and press Create new link, check use this url when prompted and press continue</li>
-    <li>Write application name:  'Camp One' and press Continue.</li>
-    <li>Now edit this app link, select Incomming Authentication from left side.</li>
-    <li>Write Consumer Key: <%= ENV['JIRA_CONSUMER_KEY'] %></li>
-    <li>Write Consumer name: Camp One</li>
-    <li>Write Private Key: <div><code><%= IO.read('jira_public_key.key') %></code></div></li>
-    <li>Write Consumer callback url: <code>http://www.teknuk.com/users/auth/jira/callback/ </code></li>
-    <li><h2><%= link_to "Now Click here to Authenticate with JIRA",  user_omniauth_authorize_path(:jira, params:  { project_id: @project.friendly_id }) %></h2></li>
-  </ol>
+<% if @integration.name == 'jira' %>
+    <h1>Jira<%= session[:jira_integration_id] %></h1>
+    <h3>Fellow below given Steps to Configure application link with your Jira (You must be an admin)</h3>
+    <ol>
+      <li>Open <%= link_to 'your jira site', "#{ @integration.url}/plugins/servlet/applinks/listApplicationLinks" %></li>
+      <li>Write <code>http://www.teknuk.com/ </code>in text field and press Create new link, check use this url when
+        prompted and press continue
+      </li>
+      <li>Write application name: 'Camp One' and press Continue.</li>
+      <li>Now edit this app link, select Incomming Authentication from left side.</li>
+      <li>Write Consumer Key: <%= ENV['JIRA_CONSUMER_KEY'] %></li>
+      <li>Write Consumer name: Camp One</li>
+      <li>Write Private Key:
+        <div><code><%= IO.read('jira_public_key.key') %></code></div>
+      </li>
+      <li>Write Consumer callback url: <code>http://www.teknuk.com/users/auth/jira/callback/ </code></li>
+      <li>
+        <h2>
+          <%#= link_to "Now Click here to Authenticate with JIRA", user_omniauth_authorize_path(:jira, params: {project_id: @project.friendly_id}) %>
+          <%= link_to "Now Click here to Authenticate with JIRA", user_jira_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
+        </h2>
+      </li>
+    </ol>
 
 <% end %>
