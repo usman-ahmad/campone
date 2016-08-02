@@ -12,15 +12,6 @@ describe 'attachments feature', type: :feature, :js => true do
     login(owner.email, 'secretpassword')
   end
 
-  def test
-    owner = FactoryGirl.create(:user)
-    project = FactoryGirl.create(:project, owner: owner)
-    discussion_group = FactoryGirl.create(:discussion_group, name: 'diagrams')
-    discussion =FactoryGirl.create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: discussion_group)
-  end
-
-
-
   context 'when discussion' do
     before do
       project
@@ -35,7 +26,7 @@ describe 'attachments feature', type: :feature, :js => true do
       fill_in 'discussion_content', with: 'there is a need of discussion about how to deliver notifications'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg').click
+      page.find('a', text: 'test_attachment.jpg')
     end
 
     it 'should attach file when update to discussion' do
@@ -43,7 +34,7 @@ describe 'attachments feature', type: :feature, :js => true do
       find('a', text: 'Edit').click
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg').click
+      page.find('a', text: 'test_attachment.jpg')
     end
   end
 
@@ -60,7 +51,7 @@ describe 'attachments feature', type: :feature, :js => true do
       fill_in 'task_title', with: 'create erd diagram'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg').click
+      page.find('a', text: 'test_attachment.jpg')
     end
     it 'should attach file when update to task' do
       visit project_task_path(project, task)
@@ -68,7 +59,7 @@ describe 'attachments feature', type: :feature, :js => true do
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       sleep(2)
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg').click
+      page.find('a', text: 'test_attachment.jpg')
     end
   end
 
