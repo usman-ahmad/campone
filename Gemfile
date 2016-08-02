@@ -31,7 +31,7 @@ gem 'devise-bootstrap-views'
 # invite users
 gem 'devise_invitable'
 # Use Paperclip, it is intended as an easy file attachment library for ActiveRecord.
-gem 'paperclip', '~> 4.3'
+gem 'paperclip'
 # Moment.js is "a lightweight javascript date library for parsing, manipulating, and formatting dates
 gem 'momentjs-rails'
 # Use fullcalendar to genrate calendar

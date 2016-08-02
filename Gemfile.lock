@@ -245,7 +245,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
     mime-types (2.99.2)
-    mimemagic (0.3.0)
+    mimemagic (0.3.1)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     momentjs-rails (2.11.1)
@@ -299,12 +299,12 @@ GEM
       json (~> 1.3)
       omniauth-oauth (~> 1.1)
     orm_adapter (0.5.0)
-    paperclip (4.3.7)
-      activemodel (>= 3.2.0)
-      activesupport (>= 3.2.0)
+    paperclip (5.0.0)
+      activemodel (>= 4.2.0)
+      activesupport (>= 4.2.0)
       cocaine (~> 0.5.5)
       mime-types
-      mimemagic (= 0.3.0)
+      mimemagic (~> 0.3.0)
     pg (0.18.4)
     pkg-config (1.1.7)
     private_pub (1.0.3)
@@ -499,7 +499,7 @@ DEPENDENCIES
   omniauth-oauth2 (~> 1.3.1)
   omniauth-trello
   omniauth-twitter
-  paperclip (~> 4.3)
+  paperclip
   pg
   private_pub
   public_activity
