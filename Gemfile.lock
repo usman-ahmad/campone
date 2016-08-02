@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/norman/friendly_id.git
+  revision: aff0564584e84ffa505e6e278b65ca3c4ee5d698
+  specs:
+    friendly_id (5.2.0.beta.1)
+      activerecord (>= 4.0.0)
+
+GIT
   remote: git://github.com/spodlecki/ruby-trello.git
   revision: b0cd76290d21f8a01ad535d1a110dacbf8f77237
   branch: features/oauth-gem-loosen-restriction
@@ -60,7 +67,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    arel (7.0.0)
+    arel (7.1.1)
     asana (0.5.0)
       faraday (~> 0.9)
       faraday_middleware (~> 0.9)
@@ -182,8 +189,6 @@ GEM
     ffi (1.9.14)
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
-    friendly_id (5.1.0)
-      activerecord (>= 4.0.0)
     fullcalendar-rails (2.4.0.1)
       jquery-rails (>= 4.0.5, < 5.0.0)
       momentjs-rails (>= 2.9.0)
@@ -479,7 +484,7 @@ DEPENDENCIES
   factory_girl_rails
   faye
   font-awesome-sass
-  friendly_id (~> 5.1.0)
+  friendly_id!
   fullcalendar-rails
   grape
   jbuilder (~> 2.0)

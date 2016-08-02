@@ -45,7 +45,8 @@ gem 'font-awesome-sass'
 gem 'grape'
 
 # To create slugs
-gem 'friendly_id', '~> 5.1.0'
+# facing an issue with custom slug_column see https://github.com/norman/friendly_id/issues/765
+gem 'friendly_id', github: 'norman/friendly_id'
 
 #gems for notifications
 # Faye is a subscription/publishing server which makes it easy to do push notifications within a Rails app.
