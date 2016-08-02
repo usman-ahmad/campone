@@ -70,7 +70,7 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(:attachment_group_id,:attachment_group_attributes => [:name])
-        .deep_merge(user: current_user, attachment_group_attributes: { project: @project, creator: current_user} )
+    ap = params.require(:attachment).permit(:attachment_group_id,:attachment_group_attributes => [:name])
+    ap.merge(user: current_user, attachment_group_attributes: ap[:attachment_group_attributes].merge({ project: @project, creator: current_user}))
   end
 end

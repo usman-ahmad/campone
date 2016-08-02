@@ -106,7 +106,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :progress, :project_id, :priority, :due_at, :task_group_id, :assigned_to, :task_group_attributes => [:name])
-        .deep_merge(user_id: current_user.id, task_group_attributes: { project: @project, creator: current_user} )
+    tp = params.require(:task).permit(:title, :description, :progress, :project_id, :priority, :due_at, :task_group_id, :assigned_to, :task_group_attributes => [:name])
+    tp.merge(user_id: current_user.id, task_group_attributes: tp[:task_group_attributes].merge({ project: @project, creator: current_user}))
   end
 end

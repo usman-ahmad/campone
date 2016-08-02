@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description, :project_group_id, :project_group_attributes => [:name])
-          .deep_merge(owner: current_user, project_group_attributes: { creator: current_user} )
+      pp = params.require(:project).permit(:name, :description, :project_group_id, :project_group_attributes => [:name])
+      pp.merge(owner: current_user, project_group_attributes: pp[:project_group_attributes].merge({ creator: current_user}))
     end
 end
