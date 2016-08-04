@@ -53,7 +53,7 @@ describe 'projects management', type: :feature, :js => true do
 
       click_button 'Update Project'
 
-      page.should have_content('Project was successfully updated.')
+      expect(page).to have_content('Project was successfully updated.')
       expect(page).to have_content('camp one teknuk')
       expect(page).to have_content('This project will create teknuk team')
     end
@@ -61,7 +61,7 @@ describe 'projects management', type: :feature, :js => true do
     it 'should display in dashboard' do
       visit projects_path
       expect(page.current_path).to eq projects_path
-      find(:css, 'div.project').should have_content(project.name)
+      expect(find(:css, 'div.project')).to have_content(project.name)
     end
   end
 

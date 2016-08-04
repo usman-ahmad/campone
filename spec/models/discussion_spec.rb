@@ -6,7 +6,7 @@ RSpec.describe Discussion, type: :model do
 
   describe 'title' do
     it 'should present' do
-      build(:none_private_discussion,project: project, commenter: project.owner, title:nil , user: project.owner).should_not be_valid
+      expect(build(:none_private_discussion,project: project, commenter: project.owner, title:nil , user: project.owner)).to_not be_valid
     end
   end
   describe 'invite on discussion' do
@@ -16,7 +16,7 @@ RSpec.describe Discussion, type: :model do
       user.each do |user|
         FactoryGirl.create(:user_discussion, user: user, discussion: discussion)
       end
-         discussion.users.count.should eq(3)
+      expect(discussion.users.count).to eq(3)
     end
 
   end

@@ -235,23 +235,23 @@ RSpec.describe Task, type: :model do
   end
 
   it 'should have title' do
-    build(:low_priority_task, project: project, commenter: project.owner, title:nil ).should_not be_valid
+    expect(build(:low_priority_task, project: project, commenter: project.owner, title:nil )).to_not be_valid
   end
 
   it 'should not allow due date in past', pending: 'Add validation in model if required.' do
-    build(:medium_priority_task, project: project, commenter: project.owner, due_at: (Date.today - 1) ).should_not be_valid
+    expect(build(:medium_priority_task, project: project, commenter: project.owner, due_at: (Date.today - 1) )).to_not be_valid
   end
 
   it 'should allow nil due date' do
-    build(:high_priority_task, project: project, commenter: project.owner, due_at: nil ).should be_valid
+    expect(build(:high_priority_task, project: project, commenter: project.owner, due_at: nil )).to be_valid
   end
 
   it 'should allow us to create' do
 
-    create(:low_priority_task,project: project, commenter: project.owner , creator: project.owner ).priority.should eq("Low")
-    create(:low_priority_task,project: project,progress: 'Completed', commenter: project.owner  , creator: project.owner).progress.should eq("Completed")
-    create(:medium_priority_task,project: project , commenter: project.owner , creator: project.owner).priority.should eq("Medium")
-    create(:high_priority_task,project: project,progress: 'No progress' , commenter: project.owner , creator: project.owner).priority.should eq("High")
+    expect(create(:low_priority_task,project: project, commenter: project.owner , creator: project.owner ).priority).to eq("Low")
+    expect(create(:low_priority_task,project: project,progress: 'Completed', commenter: project.owner  , creator: project.owner).progress).to eq("Completed")
+    expect(create(:medium_priority_task,project: project , commenter: project.owner , creator: project.owner).priority).to eq("Medium")
+    expect(create(:high_priority_task,project: project,progress: 'No progress' , commenter: project.owner , creator: project.owner).priority).to eq("High")
 
   end
 

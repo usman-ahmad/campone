@@ -17,11 +17,11 @@ describe 'discussions management', type: :feature, :js => true do
     end
     it 'should show in Discussion List' do
       find('table.discussion-list > tbody tr', :count => 1)
-      find('table.discussion-list > tbody tr').should have_content('how to deliver')
+      expect(find('table.discussion-list > tbody tr')).to have_content('how to deliver')
     end
 
     it 'should show posted by' do
-      find('table.discussion-list > tbody tr').should have_content('sunny')
+      expect(find('table.discussion-list > tbody tr')).to have_content('sunny')
     end
 
     it 'should open discussion on click' do
@@ -40,11 +40,11 @@ describe 'discussions management', type: :feature, :js => true do
       page.find(:css, ".newgroup_icon").click
       fill_in 'discussion_discussion_group_attributes_name', with: 'notifications'
       find('input[name="commit"]').click
-      find('ul.todo-info-list li:nth-child(1)').should have_content('notifications')
+      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('notifications')
     end
     it 'should allow to create withouth group' do
       find('input[name="commit"]').click
-      find('ul.todo-info-list li:nth-child(1)').should have_content('Not Specified')
+      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('Not Specified')
     end
   end
 
@@ -53,20 +53,20 @@ describe 'discussions management', type: :feature, :js => true do
      visit project_discussion_path(project, discussion)
     end
     it 'should update title' do
-      find('ul.todo-info-list li:nth-child(2)').should have_content('how to deliver')
+      expect(find('ul.todo-info-list li:nth-child(2)')).to have_content('how to deliver')
       find('a', text: 'Edit').click
       fill_in 'discussion_title', with: 'how to implement'
       find('input[name="commit"]').click
-      find('ul.todo-info-list li:nth-child(2)').should have_content('how to implement')
+      expect(find('ul.todo-info-list li:nth-child(2)')).to have_content('how to implement')
     end
 
     it 'should update group' do
-      find('ul.todo-info-list li:nth-child(1)').should have_content('diagrams')
+      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('diagrams')
       find('a', text: 'Edit').click
       page.find(:css, ".newgroup_icon").click
       fill_in 'discussion_discussion_group_attributes_name', with: 'notify'
       find('input[name="commit"]').click
-      find('ul.todo-info-list li:nth-child(1)').should have_content('notify')
+      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('notify')
     end
 
   end

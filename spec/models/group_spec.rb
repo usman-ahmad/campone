@@ -6,7 +6,7 @@ RSpec.describe Group, type: :model do
     let(:project_group) {create(:project_group)}
 
     it 'name should be present' do
-      build(:discussion_group, name:nil).should_not be_valid
+      expect(build(:discussion_group, name:nil)).to_not be_valid
     end
   end
 end

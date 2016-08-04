@@ -6,21 +6,21 @@ RSpec.describe Event, type: :model do
 
   describe "due_at date" do
     it 'should not allow due date in past' do
-      build(:event, project: project, due_at: (Date.today - 1) ).should_not be_valid
+      expect(build(:event, project: project, due_at: (Date.today - 1) )).to_not be_valid
     end
 
     it 'should present due date' do
-      build(:event, project: project, due_at: nil ).should_not be_valid
+      expect(build(:event, project: project, due_at: nil )).to_not be_valid
     end
   end
   
   it 'should have title' do
-    build(:event, project: project, title:nil ).should_not be_valid
+    expect(build(:event, project: project, title:nil )).to_not be_valid
   end
 
   it 'should create event' do
     event = create(:event, project: project, title:'Project testing')
-    event.title.should eq ('Project testing')
-    event.due_at.should_not be < Date.today
+    expect(event.title).to eq ('Project testing')
+    expect(event.due_at).to_not be < Date.today
   end
 end

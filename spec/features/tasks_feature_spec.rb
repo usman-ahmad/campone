@@ -53,8 +53,8 @@ describe 'tasks management', type: :feature, :js => true do
     it 'shows completed tasks' do
       click_on 'Show Completed Tasks'
       expect(page).to have_css("ul#tasks li", :count => 2)
-      find('li', text: completed_task.title).should have_content('Completed')
-      find('li', text: task.title).should have_content('No progress')
+      expect(find('li', text: completed_task.title)).to have_content('Completed')
+      expect(find('li', text: task.title)).to have_content('No progress')
     end
   end
 

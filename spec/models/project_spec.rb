@@ -58,20 +58,20 @@ RSpec.describe Project, type: :model do
    end
 
    it 'should have owner' do
-      project.owner.should eq(user)
+      expect(project.owner).to eq(user)
    end
 
    it 'should not allow without owner' do
-     build(:project, owner: nil, name:nil).should_not be_valid
+     expect(build(:project, owner: nil, name:nil)).to_not be_valid
    end
 
    it 'validated project name is present' do
-     build(:project, owner: user, name:nil).should_not be_valid
+     expect(build(:project, owner: user, name:nil)).to_not be_valid
    end
 
    it 'validated project name is not duplicate' do
       project_name = project.name
-      build(:project, owner: user, name:project_name).should be_valid
+      expect(build(:project, owner: user, name:project_name)).to be_valid
    end
 
    describe 'associations' do
@@ -80,11 +80,11 @@ RSpec.describe Project, type: :model do
       let(:project_with_many_tasks){  create(:project_with_many_tasks,owner: user) }
 
       it 'sould have single task' do
-        project_with_single_task.tasks.count.should eq(1)
+        expect(project_with_single_task.tasks.count).to eq(1)
       end
 
       it 'sould have many task' do
-        project_with_many_tasks.tasks.count.should eq(6)
+        expect(project_with_many_tasks.tasks.count).to eq(6)
       end
     end
 
@@ -93,12 +93,12 @@ RSpec.describe Project, type: :model do
       let(:project_with_task_discussions) {create(:project_with_task_discussions, owner: user)}
 
       it 'should have discussions' do
-        project_with_discussions.discussions.count.should eq(2)
+        expect(project_with_discussions.discussions.count).to eq(2)
       end
 
       it 'should have task and discussion at a time' do
-        project_with_task_discussions.tasks.count.should eq(1)
-        project_with_task_discussions.discussions.count.should eq(1)
+        expect(project_with_task_discussions.tasks.count).to eq(1)
+        expect(project_with_task_discussions.discussions.count).to eq(1)
 
       end
     end
