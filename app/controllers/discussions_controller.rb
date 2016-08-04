@@ -46,7 +46,7 @@ class DiscussionsController < ApplicationController
   def update
     @discussion.attachments_array=params[:attachments_array]
 
-    if @discussion.update(discussion_params.except!(:user_id))
+    if @discussion.update(discussion_params.except(:user_id))
       @discussion.create_activity :update, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
     else
