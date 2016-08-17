@@ -4,6 +4,7 @@ class Task < ApplicationRecord
 
   extend FriendlyId
   friendly_id :current_ticket_id, use: [:slugged,:finders], slug_column: :ticket_id
+  alias_attribute :slug, :ticket_id
 
   belongs_to :project
   belongs_to :task_group
