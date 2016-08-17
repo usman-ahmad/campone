@@ -54,7 +54,8 @@ Nokogiri prereuisities:
 ### Step 6: (Configuration):
 
     cp config/database.yml.sample config/database.yml
-    Now fill newely created database.yml with you credentials.
+    cp .env.sample .env
+    Now fill newely created database.yml and .env with you credentials.
 
 ### Step 7: (Database creation):
 
@@ -75,6 +76,20 @@ Nokogiri prereuisities:
 
         rails s
 
+###  How to run the test suite
+- Prepare test database:
+
+        rake db:test:prepare
+- Run specs:
+
+        bundle exec rspec spec
+
 ### Genrate ERD diagram
 1. Following command will generate erd diagram in application root path through erd-rails gem
         bundle exec erd
+
+###  Deployment instructions
+We are using mina as deployment tool
+
+        gem install mina
+        mina deploy
