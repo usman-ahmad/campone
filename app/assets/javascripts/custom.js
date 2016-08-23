@@ -1,4 +1,4 @@
-var ready = function () {
+$(document).on('turbolinks:load', function() {
     var click_on_anchor = false;
     $(".anchor-container").click(function () {
         if (click_on_anchor == true) {
@@ -29,7 +29,4 @@ var ready = function () {
     }
 
     showGroupFieldsfiles();
-};
-$(document).ready(ready);
-$(document).on('page:load', ready);
-
+});

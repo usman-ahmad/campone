@@ -1,4 +1,4 @@
-var ready = function () {
+$(document).on('turbolinks:load', function() {
     var $lateral_menu_trigger = $('#cd-menu-trigger'),
         $content_wrapper = $('.cd-main-content'),
         $navigation = $('header');
@@ -55,8 +55,4 @@ var ready = function () {
 
     var height = window.innerHeight;
     $(".cd-main-content").css("height", height);
-};
-// use $(document).ready() with turbo-links
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
+});
