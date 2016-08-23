@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'projects management', type: :feature, :js => true do
+describe 'projects management', type: :feature do
   let!(:owner) { create(:user) }
   let!(:project) { create(:project, owner: owner) }
 

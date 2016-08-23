@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'discussions management', type: :feature, :js => true do
+describe 'discussions management', type: :feature do
   let!(:owner) { create(:user, name: 'sunny') }
   let!(:project) { create(:project, owner: owner) }
   let!(:group) {create(:discussion_group, name: 'diagrams')}
@@ -24,9 +24,9 @@ describe 'discussions management', type: :feature, :js => true do
       expect(find('table.discussion-list > tbody tr')).to have_content('sunny')
     end
 
-    it 'should open discussion on click' do
+    it 'should open discussion on click', js: true do
       find('table.discussion-list > tbody tr:nth-child(1)').click
-      expect(page.current_path).to eq project_discussion_path(project, id: 1)
+      expect(page.current_path).to eq project_discussion_path(project, discussion)
     end
   end
 
@@ -78,7 +78,7 @@ describe 'discussions management', type: :feature, :js => true do
     it 'should edit' do
       find('a', text: 'Edit').click
       sleep(2)
-      expect(page.current_path).to eq edit_project_discussion_path(project, id: 1)
+      expect(page.current_path).to eq edit_project_discussion_path(project, discussion)
     end
 
     it 'should navigate to Discussion List' do
@@ -94,7 +94,7 @@ describe 'discussions management', type: :feature, :js => true do
       expect(page.current_path).to eq new_project_discussion_path(project)
     end
 
-    it 'should delete' do
+    it 'should delete', :js => true, driver: :selenium do
       find('a', text: 'Delete').click
       page.driver.browser.switch_to.alert.accept
       sleep(2)

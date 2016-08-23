@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'login', type: :feature, :js => true do
+describe 'login', type: :feature do
   let(:user){create(:user)}
   it 'should login to dashboard' do
     visit   root_path

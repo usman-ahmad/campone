@@ -5,10 +5,15 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails' # Keep this above to work with zeus as https://github.com/burke/zeus/issues/474
 require 'spec_helper'
+
+# Add additional requires below this line. Rails is not loaded until this point!
+
 require 'factory_girl_rails'
 require 'capybara/rspec'
-# Add additional requires below this line. Rails is not loaded until this point!
-Capybara.current_driver = :selenium
+require 'capybara/poltergeist'
+
+Capybara.javascript_driver = :poltergeist
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

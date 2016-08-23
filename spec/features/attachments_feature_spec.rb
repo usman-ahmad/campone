@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'attachments feature', type: :feature, :js => true do
+describe 'attachments feature', type: :feature do
   let!(:owner) { create(:user) }
   let!(:project) { create(:project, owner: owner) }
   let!(:discussion_group) { create(:discussion_group, name: 'diagrams') }

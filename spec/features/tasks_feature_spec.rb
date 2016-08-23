@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'tasks management', type: :feature, :js => true do
+describe 'tasks management', type: :feature do
   let!(:owner)   { create(:user) }
   let!(:project) { create(:project, owner: owner) }
   let!(:group)   { create(:task_group, name: 'ruby')}
@@ -31,7 +31,7 @@ describe 'tasks management', type: :feature, :js => true do
       expect(page.current_path).to eq project_task_path(project, task)
     end
 
-    it 'allow to delete from todo list' do
+    it 'allow to delete from todo list', js: true, driver: :selenium do
       find('li', text: 'create erd diagram').find('.fa-trash-o').click
       page.driver.browser.switch_to.alert.accept
       expect(page).to have_css(".ui-sortable li", :count => 0)
@@ -103,7 +103,7 @@ describe 'tasks management', type: :feature, :js => true do
     end
   end
 
-  describe 'Update' do
+  describe 'Update', js: true do
     before do
       visit project_task_path(project, task)
     end

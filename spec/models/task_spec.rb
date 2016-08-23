@@ -118,14 +118,13 @@ RSpec.describe Task, type: :model do
         end
 
         describe 'Exported Values' do
-          subject! { exported_data.last }
+          subject! { exported_data.find{|d| d['title'] == 'create html templates'} }
 
           expected_values = {
               title: 'create html templates', description: 'task two in group',
               progress: 'Rejected', priority: 'Medium', group: 'Front End'
           }
 
-          # TODO: Find out why is this behaving unexpected, sometimes fails
           expected_values.each do |k,v|
             it { is_expected.to have_value k, v}
           end

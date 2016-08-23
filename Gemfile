@@ -98,6 +98,7 @@ group :development, :test do
   gem 'capybara'
   # capybara driver
   gem 'selenium-webdriver'
+  gem 'poltergeist'
 end
 
 # got a redirect_uri_mismatch problem, It was caused by new version 1.4.0 of omniauth-oauth2 gem in below commit
