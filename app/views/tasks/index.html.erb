@@ -55,8 +55,8 @@
                       <span class="tag"> Due Date: <%= task.due_at %></span>
                     <%end%>
                       <span class="tag">Comment (<%= task.comments.count %>)</span>
-                    <% if task.created_by.present? %>
-                      <span class="tag">Created By (<%= task.created_by.name %>)</span>
+                    <% if task.creator.present? %>
+                      <span class="tag">Created By (<%= task.creator.name %>)</span>
                     <%end%>
                     <%= content_tag(:span,"Progress: #{task.progress.humanize}", class:'tag' ) %>
                 </span>
