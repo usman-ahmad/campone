@@ -112,7 +112,7 @@ class Task < ApplicationRecord
   private
 
   def set_position
-    self.position= Task.count + 1
+    self.position = self.project.tasks.count + 1
   end
 
   def current_ticket_id

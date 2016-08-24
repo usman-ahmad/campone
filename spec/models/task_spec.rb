@@ -17,23 +17,44 @@ end
 
 
 RSpec.describe Task, type: :model do
-  let(:user){ create(:user) }
-  let(:project){ create(:project, owner: user) }
+  let(:user)   { create(:user) }
+  let(:project){ create(:project, owner: user, name: 'T E S Ting') }
 
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:project) }
 
-    it { should     allow_value("Completed").for(:progress) }
+    it { should     allow_value('No progress','Started','In progress','Completed',
+                                'Rejected','Accepted','Deployed','Closed').for(:progress) }
     it { should_not allow_value("blah")     .for(:progress) }
 
-    it { should     allow_value("High").for(:priority) }
+    it { should     allow_value('None','Low','Medium','High').for(:priority) }
     it { should_not allow_value("blah").for(:priority) }
+
+    describe 'Task Group' do
+      it { should accept_nested_attributes_for(:task_group) }
+
+      let(:task_attributes) {
+        attributes_for(:task).merge({
+                                        task_group_attributes: { name: 'Task Management' }
+                                    })
+      }
+
+      it "creates task_group when valid task_group_attributes are given" do
+        expect(Task.create(task_attributes).task_group.name).to eq 'Task Management'
+      end
+
+      it "does not create task_group if group name is blank" do
+        task_attributes[:task_group_attributes][:name] = nil
+        expect(Task.create(task_attributes).task_group).to be_nil
+      end
+    end
   end
 
   describe 'associations' do
     it { should belong_to(:project) }
     it { should belong_to(:task_group) }
+    it { should belong_to(:creator) }
 
     it { should have_many(:comments) }
     it { should have_many(:attachments) }
@@ -48,8 +69,38 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  describe 'callbacks' do
+    let!(:task) { create(:task, title: 'task one', creator: user, project: project) }
 
-  describe 'class level methods' do
+    describe 'set_position' do
+      it 'assigns first position' do
+        expect(task.position).to eq 1
+      end
+
+      it 'assigns second position' do
+        task = create(:task, title: 'task two', creator: user, project: project)
+        expect(task.position).to eq 2
+      end
+      
+      it 'assigns first position for first task of an other project' do
+        another_project = create(:project, owner: user)
+        task = create(:task, title: 'task three', creator: user, project: another_project)
+        expect(task.position).to eq 1
+      end
+    end
+
+    describe 'current_ticket_id' do
+      it 'assigns correct ticket_id to task' do
+        expect(task.ticket_id).to eq "test-1"
+      end
+
+      it 'increases current_ticket_id' do
+        expect{ create(:task, project: project, creator: user) }.to change{ project.current_ticket_id }.by(1)
+      end
+    end
+  end
+
+    describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
     let!(:task)          { create(:task, title: 'task one', description: 'task 1 create ERD',   progress: 'Started',   creator: user, project: project) }
@@ -154,30 +205,6 @@ RSpec.describe Task, type: :model do
           end
         end
       end
-    end
-  end
-
-  describe 'ticket ID' do
-    let!(:task) { create(:task, project: project, creator: user) }
-    it 'assigns correct ticket_id to task' do
-      expect(task.ticket_id).to eq "#{project.friendly_id}-1"
-    end
-
-    it 'increases current_ticket_id' do
-      expect{ create(:task, project: project, creator: user) }.to change{ project.current_ticket_id }.by(1)
-    end
-  end
-
-  describe '#set_position' do
-    let!(:task) { create(:task, project: project, creator: user) }
-    let(:task2) { create(:task, project: project, creator: user) }
-
-    it 'assigns position to task' do
-      expect(task.position).to eq 1
-    end
-
-    it 'assigns next position to task' do
-      expect(task2.position).to eq 2
     end
   end
 

@@ -7,13 +7,38 @@ RSpec.describe Project, type: :model do
    describe 'validations' do
      it { should validate_presence_of(:name) }
      it { should validate_presence_of(:owner) }
+
+     describe 'Project Group' do
+       it { should accept_nested_attributes_for(:project_group) }
+
+       let(:project_attributes) {
+         attributes_for(:project).merge({
+                                            owner: user,
+                                            project_group_attributes: { name: 'Project Management' }
+                                        })
+       }
+
+       it "creates project_group when valid project_group_attributes are given" do
+         expect(Project.create(project_attributes).project_group.name).to eq 'Project Management'
+       end
+
+       it "does not create project_group if group name is blank" do
+         project_attributes[:project_group_attributes][:name] = nil
+         expect(Project.create(project_attributes).project_group).to be_nil
+       end
+     end
    end
 
    describe 'associations' do
+     it { should belong_to(:owner) }
+     it { should belong_to(:project_group) }
      it { should have_many(:tasks) }
      it { should have_many(:discussions) }
      it { should have_many(:contributions) }
+     it { should have_many(:members) }
      it { should have_many(:attachments) }
+     it { should have_many(:events) }
+     it { should have_many(:integrations) }
 
      it 'adds owner to contributors' do
        expect{ create(:project) }.to change{ Contribution.count }.by(1)
@@ -61,19 +86,7 @@ RSpec.describe Project, type: :model do
       expect(project.owner).to eq(user)
    end
 
-   it 'should not allow without owner' do
-     expect(build(:project, owner: nil, name:nil)).to_not be_valid
-   end
-
-   it 'validated project name is present' do
-     expect(build(:project, owner: user, name:nil)).to_not be_valid
-   end
-
-   it 'validated project name is not duplicate' do
-      project_name = project.name
-      expect(build(:project, owner: user, name:project_name)).to be_valid
-   end
-
+   # This seems to be more like validations of factories
    describe 'associations' do
     context 'when associated with tasks' do
       let(:project_with_single_task){ create(:project_with_single_task,owner: user) }
