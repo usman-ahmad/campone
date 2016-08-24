@@ -29,11 +29,10 @@ class Project < ApplicationRecord
     return unless array.present?
     group = AttachmentGroup.where(id:attachment[:attachment_group_id]).first
     if !group.present?
-      group = nil
       group = AttachmentGroup.create(name:attachment[:attachment_group_attributes][:name]) if attachment[:attachment_group_attributes][:name].present?
     end
     array.each do |file|
-     attachments.build(:attachment => file, attachment_group: group, user_id: user_id )
+     attachments.build(:attachment => file, attachment_group: group, uploaded_by: attachment[:uploaded_by] )
       # current_attachment.attachments.build(attachment)
     end
 
