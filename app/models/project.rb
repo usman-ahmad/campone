@@ -3,7 +3,6 @@ class Project < ApplicationRecord
   friendly_id :slug_candidates, use: [:slugged,:finders]
 
   belongs_to :owner, class_name: 'User'
-  belongs_to :project_group
 
   has_many :tasks
   has_many :discussions
@@ -16,8 +15,6 @@ class Project < ApplicationRecord
 
   validates :name, presence: true
   validates :owner, presence: true
-
-  accepts_nested_attributes_for :project_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
   after_create :add_owner_to_contributors
 

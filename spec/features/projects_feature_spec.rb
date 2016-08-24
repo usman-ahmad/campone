@@ -15,30 +15,14 @@ describe 'projects management', type: :feature do
       fill_in 'Description', with: 'it should be create within 3 months'
     end
 
-    context 'when group is specified' do
-      it 'should create project' do
-        find('.newgroup_icon').click
-        fill_in 'project_project_group_attributes_name', with: 'ruby'
 
-        click_button 'Create Project'
+    it 'should create project' do
+      fill_in 'project_name',        with: 'camp one'
+      fill_in 'project_description', with: 'it should be create within 3 months'
 
-        expect(page).to have_content 'ruby'
-        expect(page).to have_content owner.name
+      click_button 'Create Project'
 
-        check_fields
-      end
-    end
-
-    context 'when group is not specified' do
-      it 'should create project' do
-        fill_in 'project_name',        with: 'camp one'
-        fill_in 'project_description', with: 'it should be create within 3 months'
-
-        click_button 'Create Project'
-
-        expect(page).to have_content 'Not Specified'
-        expect(page).to have_content owner.name
-      end
+      expect(page).to have_content owner.name
     end
   end
 

@@ -18,13 +18,10 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
-    @project.build_project_group
   end
 
   # GET /projects/1/edit
   def edit
-    @project.build_project_group unless @project.project_group
-    @project.project_group.name = nil # project group name field is used to create a new group.
   end
 
   # POST /projects
@@ -75,7 +72,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      pp = params.require(:project).permit(:name, :description, :project_group_id, :project_group_attributes => [:name])
-      pp.merge(owner: current_user, project_group_attributes: pp[:project_group_attributes].merge({ creator: current_user}))
+      pp = params.require(:project).permit(:name, :description)
+      pp.merge(owner: current_user)
     end
 end

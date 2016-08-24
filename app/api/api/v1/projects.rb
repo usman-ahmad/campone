@@ -27,10 +27,9 @@ module API
         params do
           requires :name, type: String
           requires :description, type:String
-          requires :project_group_id, type:Integer
         end
         post do
-         current_user.projects.create(name:params[:name],description:params[:description],project_group_id:params[:project_group_id])
+         current_user.projects.create(name:params[:name],description:params[:description])
         end
       end
 

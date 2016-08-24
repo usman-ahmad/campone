@@ -7,31 +7,10 @@ RSpec.describe Project, type: :model do
    describe 'validations' do
      it { should validate_presence_of(:name) }
      it { should validate_presence_of(:owner) }
-
-     describe 'Project Group' do
-       it { should accept_nested_attributes_for(:project_group) }
-
-       let(:project_attributes) {
-         attributes_for(:project).merge({
-                                            owner: user,
-                                            project_group_attributes: { name: 'Project Management' }
-                                        })
-       }
-
-       it "creates project_group when valid project_group_attributes are given" do
-         expect(Project.create(project_attributes).project_group.name).to eq 'Project Management'
-       end
-
-       it "does not create project_group if group name is blank" do
-         project_attributes[:project_group_attributes][:name] = nil
-         expect(Project.create(project_attributes).project_group).to be_nil
-       end
-     end
    end
 
    describe 'associations' do
      it { should belong_to(:owner) }
-     it { should belong_to(:project_group) }
      it { should have_many(:tasks) }
      it { should have_many(:discussions) }
      it { should have_many(:contributions) }

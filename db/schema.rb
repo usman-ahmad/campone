@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128135401) do
+ActiveRecord::Schema.define(version: 20160824133804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,11 +26,10 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   end
-
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "attachments", force: :cascade do |t|
     t.string   "attachment_file_name"
@@ -46,9 +44,8 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.datetime "updated_at",              null: false
     t.integer  "attachment_group_id"
     t.integer  "user_id"
+    t.index ["project_id"], name: "index_attachments_on_project_id", using: :btree
   end
-
-  add_index "attachments", ["project_id"], name: "index_attachments_on_project_id", using: :btree
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",               null: false
@@ -61,10 +58,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "height"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.index ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+    t.index ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
   end
-
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
@@ -73,10 +69,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
+    t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
+    t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
-
-  add_index "comments", ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "contributions", force: :cascade do |t|
     t.integer  "project_id"
@@ -84,10 +79,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_contributions_on_project_id", using: :btree
+    t.index ["user_id"], name: "index_contributions_on_user_id", using: :btree
   end
-
-  add_index "contributions", ["project_id"], name: "index_contributions_on_project_id", using: :btree
-  add_index "contributions", ["user_id"], name: "index_contributions_on_user_id", using: :btree
 
   create_table "discussions", force: :cascade do |t|
     t.string   "title"
@@ -98,10 +92,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.datetime "updated_at",          null: false
     t.integer  "discussion_group_id"
     t.integer  "user_id"
+    t.index ["discussion_group_id"], name: "index_discussions_on_discussion_group_id", using: :btree
+    t.index ["project_id"], name: "index_discussions_on_project_id", using: :btree
   end
-
-  add_index "discussions", ["discussion_group_id"], name: "index_discussions_on_discussion_group_id", using: :btree
-  add_index "discussions", ["project_id"], name: "index_discussions_on_project_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.string   "title"
@@ -110,9 +103,8 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "project_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["project_id"], name: "index_events_on_project_id", using: :btree
   end
-
-  add_index "events", ["project_id"], name: "index_events_on_project_id", using: :btree
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
@@ -121,10 +113,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.datetime "updated_at", null: false
     t.integer  "project_id"
     t.integer  "creator_id"
+    t.index ["project_id"], name: "index_groups_on_project_id", using: :btree
+    t.index ["type"], name: "index_groups_on_type", using: :btree
   end
-
-  add_index "groups", ["project_id"], name: "index_groups_on_project_id", using: :btree
-  add_index "groups", ["type"], name: "index_groups_on_type", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -132,9 +123,8 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.string   "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
   end
-
-  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "integrations", force: :cascade do |t|
     t.integer  "project_id"
@@ -144,9 +134,8 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.string   "name"
     t.string   "token"
     t.string   "secret"
+    t.index ["project_id"], name: "index_integrations_on_project_id", using: :btree
   end
-
-  add_index "integrations", ["project_id"], name: "index_integrations_on_project_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "activity_id"
@@ -154,10 +143,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
+    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
-
-  add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "payloads", force: :cascade do |t|
     t.text     "info"
@@ -165,9 +153,8 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "event"
+    t.index ["integration_id"], name: "index_payloads_on_integration_id", using: :btree
   end
-
-  add_index "payloads", ["integration_id"], name: "index_payloads_on_integration_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "name"
@@ -175,13 +162,10 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "owner_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.integer  "project_group_id"
     t.string   "slug"
     t.integer  "current_ticket_id", default: 1
+    t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
   end
-
-  add_index "projects", ["project_group_id"], name: "index_projects_on_project_group_id", using: :btree
-  add_index "projects", ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.string   "title"
@@ -197,11 +181,10 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "user_id"
     t.integer  "position"
     t.string   "ticket_id"
+    t.index ["project_id"], name: "index_tasks_on_project_id", using: :btree
+    t.index ["task_group_id"], name: "index_tasks_on_task_group_id", using: :btree
+    t.index ["ticket_id"], name: "index_tasks_on_ticket_id", unique: true, using: :btree
   end
-
-  add_index "tasks", ["project_id"], name: "index_tasks_on_project_id", using: :btree
-  add_index "tasks", ["task_group_id"], name: "index_tasks_on_task_group_id", using: :btree
-  add_index "tasks", ["ticket_id"], name: "index_tasks_on_ticket_id", unique: true, using: :btree
 
   create_table "user_discussions", force: :cascade do |t|
     t.integer  "user_id"
@@ -209,10 +192,9 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.boolean  "notify"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["discussion_id"], name: "index_user_discussions_on_discussion_id", using: :btree
+    t.index ["user_id"], name: "index_user_discussions_on_user_id", using: :btree
   end
-
-  add_index "user_discussions", ["discussion_id"], name: "index_user_discussions_on_discussion_id", using: :btree
-  add_index "user_discussions", ["user_id"], name: "index_user_discussions_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -241,14 +223,13 @@ ActiveRecord::Schema.define(version: 20160128135401) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "authentication_token"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
+    t.index ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
-  add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
-  add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "attachments", "projects"
   add_foreign_key "comments", "users"

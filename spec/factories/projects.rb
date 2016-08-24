@@ -5,7 +5,6 @@ FactoryGirl.define do
   factory :project do
     sequence(:name) { |n| names[(n % names.size)]}
     sequence(:description) { |n| description[(n % description.size)]}
-    association :project_group, factory: :project_group
     association :owner, factory: :user
   end
 
