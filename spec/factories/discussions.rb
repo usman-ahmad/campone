@@ -3,7 +3,6 @@ FactoryGirl.define do
   factory :discussion do
     sequence(:title) { |n| titles[(n % titles.size)]}
     content "client should be setisfy and project should be created on timeline"
-    association :discussion_group, factory: :discussion_group
     project
 
     transient do

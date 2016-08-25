@@ -3,8 +3,7 @@ require 'rails_helper'
 describe 'attachments feature', type: :feature do
   let!(:owner) { create(:user) }
   let!(:project) { create(:project, owner: owner) }
-  let!(:discussion_group) { create(:discussion_group, name: 'diagrams') }
-  let!(:discussion) { create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: discussion_group) }
+  let!(:discussion) { create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner) }
   let!(:task) {create(:medium_priority_task,title: 'create erd diagram',project: project , commenter: owner, creator: owner)}
 
   before do
@@ -19,8 +18,6 @@ describe 'attachments feature', type: :feature do
     it 'should create discussion with attachment' do
       visit project_discussions_path(project)
       find('a', text: 'New Discussion').click
-      page.find(:css, ".newgroup_icon").click
-      fill_in 'discussion_discussion_group_attributes_name', with: 'notifications'
       fill_in 'discussion_title', with: 'how to deliver'
       fill_in 'discussion_content', with: 'there is a need of discussion about how to deliver notifications'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))

@@ -35,10 +35,9 @@ module API
          requires :title, type: String
          requires :content, type: String
          requires :private, type: Boolean
-         requires :discussion_group_id, type: Integer
         end
         get do
-          project.discussions.create(title:params[:title],content:params[:content],private:params[:private],discussion_group_id:params[:discussion_group_id]) unless !project.present?
+          project.discussions.create(title:params[:title],content:params[:content],private:params[:private]) unless !project.present?
         end
       end
 

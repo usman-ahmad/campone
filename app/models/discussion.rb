@@ -3,7 +3,6 @@ class Discussion < ApplicationRecord
   include PublicActivity::Common
 
   belongs_to :project
-  belongs_to :discussion_group
   belongs_to :posted_by, class_name: User, foreign_key: :user_id
 
   has_many :user_discussions
@@ -15,7 +14,6 @@ class Discussion < ApplicationRecord
   validates :title, presence: true
 
   accepts_nested_attributes_for :user_discussions ,:allow_destroy => true
-  accepts_nested_attributes_for :discussion_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
    def last_activity
       last_comment_activity  =  PublicActivity::Activity.where(trackable_id: comments.last.id, trackable_type: "Comment").last if  comments.last.present?

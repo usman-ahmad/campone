@@ -3,12 +3,10 @@ require 'rails_helper'
 describe 'discussions management', type: :feature do
   let!(:owner) { create(:user, name: 'sunny') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:group) {create(:discussion_group, name: 'diagrams')}
-  let!(:discussion) {create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: group )}
+  let!(:discussion) {create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner)}
 
   before do
     login(owner.email, 'secretpassword')
-    visit project_discussions_path(project)
   end
 
   context 'Discussion List' do
@@ -30,21 +28,17 @@ describe 'discussions management', type: :feature do
     end
   end
 
-  context 'association' do
+  context 'Create Discussion' do
     before do
+      visit project_discussions_path(project)
+    end
+
+    it 'creates a discussion' do
       find('a', text: 'New Discussion').click
-      fill_in 'discussion_title', with: 'how to deliver'
-      fill_in 'discussion_content', with: 'there is a need of discussion about how to deliver notifications'
-    end
-    it 'should allow to create group' do
-      page.find(:css, ".newgroup_icon").click
-      fill_in 'discussion_discussion_group_attributes_name', with: 'notifications'
-      find('input[name="commit"]').click
-      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('notifications')
-    end
-    it 'should allow to create withouth group' do
-      find('input[name="commit"]').click
-      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('Not Specified')
+      fill_in 'discussion_title', with: 'how to deliver notifications'
+      fill_in 'discussion_content', with: 'discussion about how to deliver notifications'
+      click_on 'Create Discussion'
+      expect(page).to have_content('how to deliver notifications')
     end
   end
 
@@ -53,22 +47,13 @@ describe 'discussions management', type: :feature do
      visit project_discussion_path(project, discussion)
     end
     it 'should update title' do
-      expect(find('ul.todo-info-list li:nth-child(2)')).to have_content('how to deliver')
+      expect(page).to have_content('how to deliver')
       find('a', text: 'Edit').click
       fill_in 'discussion_title', with: 'how to implement'
-      find('input[name="commit"]').click
-      expect(find('ul.todo-info-list li:nth-child(2)')).to have_content('how to implement')
+      # find('input[name="commit"]').click
+      click_on 'Update Discussion'
+      expect(page).to have_content('how to implement')
     end
-
-    it 'should update group' do
-      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('diagrams')
-      find('a', text: 'Edit').click
-      page.find(:css, ".newgroup_icon").click
-      fill_in 'discussion_discussion_group_attributes_name', with: 'notify'
-      find('input[name="commit"]').click
-      expect(find('ul.todo-info-list li:nth-child(1)')).to have_content('notify')
-    end
-
   end
 
   context 'when edit delete and navigate from discussion' do

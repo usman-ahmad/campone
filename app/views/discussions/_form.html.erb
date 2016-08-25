@@ -1,7 +1,6 @@
 <%= form_for([@project, @discussion], html: { class: "form-horizontal", role: "form" , multipart: true}) do |f| %>
 
   <%= render 'shared/error_messages', object: @discussion  %>
-  <%= render 'groups/select_or_create_group', form_builder: f, resource: @discussion  %>
 
   <div class="form-group">
     <%= f.label :title, class: "col-sm-2 control-label" %>

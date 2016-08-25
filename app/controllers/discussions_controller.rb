@@ -18,7 +18,6 @@ class DiscussionsController < ApplicationController
 
   def new
     @discussion = @project.discussions.new
-    @discussion.build_discussion_group
     @discussion.attachments.build
 
     @project.members.each do |m|
@@ -39,8 +38,6 @@ class DiscussionsController < ApplicationController
   end
 
   def edit
-    @discussion.build_discussion_group unless @discussion.discussion_group
-    @discussion.discussion_group.name = nil
   end
 
   def update
@@ -70,10 +67,9 @@ class DiscussionsController < ApplicationController
   end
 
   def discussion_params
-    dp = params.require(:discussion).permit(:title, :content, :project_id, :private, :discussion_group_id,
-                                       discussion_group_attributes: [:name],
+    dp = params.require(:discussion).permit(:title, :content, :project_id, :private,
                                        user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
-    dp.merge(user_id: current_user.id, discussion_group_attributes: dp[:discussion_group_attributes].merge({ project: @project, creator: current_user}))
+    dp.merge(user_id: current_user.id)
 
   end
 

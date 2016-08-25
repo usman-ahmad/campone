@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825082032) do
+ActiveRecord::Schema.define(version: 20160825092726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,11 +88,9 @@ ActiveRecord::Schema.define(version: 20160825082032) do
     t.text     "content"
     t.boolean  "private"
     t.integer  "project_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.integer  "discussion_group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
-    t.index ["discussion_group_id"], name: "index_discussions_on_discussion_group_id", using: :btree
     t.index ["project_id"], name: "index_discussions_on_project_id", using: :btree
   end
 
