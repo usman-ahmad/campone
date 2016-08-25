@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825095132) do
+git git ActiveRecord::Schema.define(version: 20160825100650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,17 +101,6 @@ ActiveRecord::Schema.define(version: 20160825095132) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["project_id"], name: "index_events_on_project_id", using: :btree
-  end
-
-  create_table "groups", force: :cascade do |t|
-    t.string   "name"
-    t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "project_id"
-    t.integer  "creator_id"
-    t.index ["project_id"], name: "index_groups_on_project_id", using: :btree
-    t.index ["type"], name: "index_groups_on_type", using: :btree
   end
 
   create_table "identities", force: :cascade do |t|
@@ -232,7 +221,6 @@ ActiveRecord::Schema.define(version: 20160825095132) do
   add_foreign_key "contributions", "users"
   add_foreign_key "discussions", "projects"
   add_foreign_key "events", "projects"
-  add_foreign_key "groups", "projects"
   add_foreign_key "identities", "users"
   add_foreign_key "integrations", "projects"
   add_foreign_key "notifications", "activities"
