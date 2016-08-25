@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160825092726) do
+ActiveRecord::Schema.define(version: 20160825095132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20160825092726) do
     t.integer  "project_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "attachment_group_id"
     t.integer  "user_id"
     t.index ["project_id"], name: "index_attachments_on_project_id", using: :btree
   end

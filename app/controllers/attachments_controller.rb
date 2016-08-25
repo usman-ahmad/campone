@@ -11,14 +11,13 @@ class AttachmentsController < ApplicationController
 
   def new
     @attachment = @project.attachments.build
-    @attachment.build_attachment_group
   end
 
   def create
     if params[:attachments_array].blank?
       flash[:error] = "No file was attached."
-    # TODO: Use params and add project_id and creator_id with attachment_group
-    elsif @project.create_attachments(params[:attachments_array], attachment_params)
+    # TODO: Use params
+    elsif @project.create_attachments(params[:attachments_array], current_user)
       redirect_to project_attachments_path(@project), notice: 'Attachment was successfully created.' and return
     end
 
@@ -70,7 +69,5 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    ap = params.require(:attachment).permit(:attachment_group_id,:attachment_group_attributes => [:name])
-    ap.merge(uploaded_by: current_user, attachment_group_attributes: ap[:attachment_group_attributes].merge({ project: @project, creator: current_user}))
   end
 end

@@ -22,15 +22,11 @@ class Project < ApplicationRecord
   alias :h :url_helpers
 
   # TODO: Refactor and simplify
-  def create_attachments(array,attachment)
+  def create_attachments(attachments, uploaded_by)
     return unless array.present?
-    group = AttachmentGroup.where(id:attachment[:attachment_group_id]).first
-    if !group.present?
-      group = AttachmentGroup.create(name:attachment[:attachment_group_attributes][:name]) if attachment[:attachment_group_attributes][:name].present?
-    end
-    array.each do |file|
-     attachments.build(:attachment => file, attachment_group: group, uploaded_by: attachment[:uploaded_by] )
-      # current_attachment.attachments.build(attachment)
+
+    attachments.each do |attachment|
+      self.attachments.build(:attachment => attachment, uploaded_by: uploaded_by)
     end
 
     save
