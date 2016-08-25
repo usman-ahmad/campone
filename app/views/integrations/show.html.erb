@@ -1,9 +1,3 @@
-<div class="col-md-12 show-page-head">
-  <%= link_to project_integrations_path(@project) do %>
-      <span><i class="fa fa-arrow-circle-o-left"></i></span>
-      Back To Integrations
-  <% end %>
-</div>
 <% if @integration.name == 'bitbucket' || @integration.name == 'github' %>
     <h4> Please add following url to your VCS Repositry </h4>
     <%= webhook_url(@integration) %>

@@ -1,7 +1,3 @@
-<%= link_to project_path(@project), class: 'btn btn-primary' do %>
-  <span class="glyphicon glyphicon-arrow-left"></span>
-  Back to Project
-<% end %>
 <h2>Invite Users</h2>
 <%= form_tag({controller: "contributions", action: "create"}, method: "post" ) do %>
   <%= label_tag(:email, "Email :") %>
