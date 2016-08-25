@@ -1,6 +1,10 @@
 <div class="custom-content-container">
 <div class="row">
   <div class="col-md-12 col-sm-12 nopadding-left">
+    <%= link_to new_project_path, class: 'create-project' do %>
+      Create New Project
+      <span><i class="fa fa-plus-circle"></i></span>
+    <% end %>
     <div class="col-md-10 col-sm-8 nopadding-left">
       <section class="bg-white">
           <% @projects.each do |project| %>
@@ -30,51 +34,6 @@
               </div>
           <% end %>
       </section>
-    </div>
-    <div class="col-md-2 col-sm-4">
-      <a href="#" class="widget">
-        <%= image_tag('widgets_big.png', :class => "img-responsive")%>
-        <div class="widget-title mg-l5 pull-left">My Widget</div>
-        <div><i class="fa fa-arrow-right pull-right"></i></div>
-      </a>
-
-      <div class="newProject-contianer">
-        <div class="img-back"></div>
-        <%= link_to new_project_path, class: 'create-project' do %>
-            Create New Project
-            <span class="pull-right mg-r5"><i class="fa fa-plus-circle"></i></span>
-        <% end %>
-        <div class="project-anchors">
-          <a class="anchor-template">
-            <i class="fa fa-plus-circle"></i>
-            Custom Project
-          </a>
-          <a class="anchor-template">
-            <i class="fa fa-shopping-cart"></i>
-            Shopping List
-          </a>
-          <a class="anchor-template">
-            <i class="fa fa-briefcase"></i>
-            Vacation Planning
-          </a>
-          <a class="anchor-template">
-            <i class="fa fa-circle-o-notch"></i>
-            Our Wedding
-          </a>
-          <a class="anchor-template">
-            <i class="fa fa-gift"></i>
-            Surprise Party
-          </a>
-          <a class="anchor-template">
-            <i class="fa fa-tasks"></i>
-            Classroom Project
-          </a>
-          <a class="anchor-template">
-            <i class="fa fa-map-marker"></i>
-            Roadtrip
-          </a>
-        </div>
-      </div>
     </div>
   </div>
 </div>
