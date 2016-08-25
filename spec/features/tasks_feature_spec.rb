@@ -3,8 +3,7 @@ require 'rails_helper'
 describe 'tasks management', type: :feature do
   let!(:owner)   { create(:user) }
   let!(:project) { create(:project, owner: owner) }
-  let!(:group)   { create(:task_group, name: 'ruby')}
-  let!(:task)    { create(:medium_priority_task, title: 'create erd diagram',project: project , commenter: owner, creator: owner,task_group: group)}
+  let!(:task)    { create(:medium_priority_task, title: 'create erd diagram',project: project , commenter: owner, creator: owner)}
 
   before do
     login(owner.email, 'secretpassword')
@@ -55,16 +54,6 @@ describe 'tasks management', type: :feature do
       expect(page).to have_css("ul#tasks li", :count => 2)
       expect(find('li', text: completed_task.title)).to have_content('Completed')
       expect(find('li', text: task.title)).to have_content('No progress')
-    end
-  end
-
-  context 'when associated with group' do
-    before do
-      visit project_task_path(project, task)
-    end
-
-    it 'should be assign with group' do
-      expect(page).to have_content('ruby')
     end
   end
 

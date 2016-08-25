@@ -16,10 +16,6 @@
       </div>
       <ul class="col-md-12 todo-info-list">
         <li class="col-md-4">
-          <span class="key">Group: </span>
-          <span class="value"><%= @task.task_group.try(:name) || 'Not Specified' %></span>
-        </li>
-        <li class="col-md-4">
           <span class="key">Assigned To: </span>
           <span id="assigned_to" class="value"><%= task_assigned_to @task %></span>
         </li>

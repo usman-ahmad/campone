@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824133804) do
+ActiveRecord::Schema.define(version: 20160825082032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,18 +171,16 @@ ActiveRecord::Schema.define(version: 20160824133804) do
     t.string   "title"
     t.text     "description"
     t.integer  "project_id"
-    t.string   "priority",      default: "None"
+    t.string   "priority",    default: "None"
     t.date     "due_at"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.integer  "task_group_id"
-    t.string   "progress",      default: "No progress"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.string   "progress",    default: "No progress"
     t.integer  "assigned_to"
     t.integer  "user_id"
     t.integer  "position"
     t.string   "ticket_id"
     t.index ["project_id"], name: "index_tasks_on_project_id", using: :btree
-    t.index ["task_group_id"], name: "index_tasks_on_task_group_id", using: :btree
     t.index ["ticket_id"], name: "index_tasks_on_ticket_id", unique: true, using: :btree
   end
 

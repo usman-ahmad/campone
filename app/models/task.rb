@@ -7,7 +7,6 @@ class Task < ApplicationRecord
   alias_attribute :slug, :ticket_id
 
   belongs_to :project
-  belongs_to :task_group
   belongs_to :creator, class_name: User, foreign_key: :user_id
   has_many :comments,    as: :commentable
   has_many :attachments, as: :attachable
@@ -40,8 +39,6 @@ class Task < ApplicationRecord
 
   validates :progress, inclusion: { in: PROGRESSES.values }
   validates :priority, inclusion: { in: PRIORITIES.values }
-
-  accepts_nested_attributes_for :task_group, :reject_if => proc { |attributes| attributes['name'].blank? }
 
   scope :not_completed, -> { where(progress: [ PROGRESSES[:NO_PROGRESS], PROGRESSES[:STARTED], PROGRESSES[:IN_PROGRESS], PROGRESSES[:REJECTED]]) }
 
@@ -84,13 +81,12 @@ class Task < ApplicationRecord
   end
 
   def self.to_csv(options = {})
-    csv_headers = ['title', 'description', 'priority','progress', 'due_at', 'group']
+    csv_headers = ['title', 'description', 'priority','progress', 'due_at']
 
     CSV.generate(options) do |csv|
       csv << csv_headers
       all.each do |task|
         attributes = task.attributes
-        attributes['group'] = task.task_group
         csv << attributes.values_at(*csv_headers)
       end
     end
@@ -101,10 +97,6 @@ class Task < ApplicationRecord
     CSV.foreach(file.path, headers: true) do |row|
       attributes  = row.to_hash
       attributes['user_id'] = current_user
-
-      group = attributes.delete('group')
-      attributes['task_group_id'] = TaskGroup.list_for(project).case_insensitive('name', group).
-          first_or_create(name: group, project: project, creator: current_user).id if group
 
       project.tasks.create!(attributes)
     end

@@ -30,30 +30,10 @@ RSpec.describe Task, type: :model do
 
     it { should     allow_value('None','Low','Medium','High').for(:priority) }
     it { should_not allow_value("blah").for(:priority) }
-
-    describe 'Task Group' do
-      it { should accept_nested_attributes_for(:task_group) }
-
-      let(:task_attributes) {
-        attributes_for(:task).merge({
-                                        task_group_attributes: { name: 'Task Management' }
-                                    })
-      }
-
-      it "creates task_group when valid task_group_attributes are given" do
-        expect(Task.create(task_attributes).task_group.name).to eq 'Task Management'
-      end
-
-      it "does not create task_group if group name is blank" do
-        task_attributes[:task_group_attributes][:name] = nil
-        expect(Task.create(task_attributes).task_group).to be_nil
-      end
-    end
   end
 
   describe 'associations' do
     it { should belong_to(:project) }
-    it { should belong_to(:task_group) }
     it { should belong_to(:creator) }
 
     it { should have_many(:comments) }
@@ -150,12 +130,11 @@ RSpec.describe Task, type: :model do
     end
 
     describe 'CSV import/export' do
-      let!(:group)          { TaskGroup.create(name: 'Front End', project: project) }
-      let!(:task1_in_group) { create(:task, title: 'create psd', description: 'task one in group',
-                                     progress: 'Started',   creator: user, project: project, task_group: group) }
+      let!(:task1) { create(:task, title: 'create psd', description: 'task one in group',
+                                     progress: 'Started',   creator: user, project: project) }
 
-      let!(:task2_in_group) { create(:task, title: 'create html templates', description: 'task two in group',
-                                     progress: 'Rejected', priority: 'Medium', creator: user, project: project, task_group: group) }
+      let!(:task2) { create(:task, title: 'create html templates', description: 'task two in group',
+                                     progress: 'Rejected', priority: 'Medium', creator: user, project: project) }
 
 
       describe '#to_csv (export to CSV file)' do
@@ -173,7 +152,7 @@ RSpec.describe Task, type: :model do
 
           expected_values = {
               title: 'create html templates', description: 'task two in group',
-              progress: 'Rejected', priority: 'Medium', group: 'Front End'
+              progress: 'Rejected', priority: 'Medium'
           }
 
           expected_values.each do |k,v|
@@ -189,7 +168,6 @@ RSpec.describe Task, type: :model do
 
         it 'imports all records' do
           expect(Task.count).     to eq 8 # 5 existing and 3 newly created from CSV
-          expect(TaskGroup.count).to eq 2 # 1 existing and 1 newly created from
         end
 
         describe 'imported task' do

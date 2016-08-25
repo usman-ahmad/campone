@@ -8,8 +8,8 @@ class TasksController < ApplicationController
   def index
     cookies[:include_completed] = params[:include_completed] if params[:include_completed].present?
 
-    tasks = @project.tasks.filter_tasks(search_text: params[:search_text], include_completed: cookies[:include_completed] == 'true')
-    @grouped_tasks = tasks.order!('position').group_by{ |t| t.task_group_id }
+    @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
+                                         include_completed: cookies[:include_completed] == 'true').order!('position')
 
     respond_to do |format|
       format.html
@@ -26,7 +26,6 @@ class TasksController < ApplicationController
 
   def new
     @task = @project.tasks.new
-    @task.build_task_group
   end
 
   def create
@@ -42,9 +41,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task.build_task_group unless @task.task_group
-    @task.task_group.name = nil
-
     respond_to do |format|
       format.js
       format.html
@@ -106,7 +102,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    tp = params.require(:task).permit(:title, :description, :progress, :project_id, :priority, :due_at, :task_group_id, :assigned_to, :task_group_attributes => [:name])
-    tp.merge(user_id: current_user.id, task_group_attributes: tp[:task_group_attributes].merge({ project: @project, creator: current_user}))
+    tp = params.require(:task).permit(:title, :description, :progress, :project_id, :priority, :due_at, :assigned_to)
+    tp.merge(user_id: current_user.id)
   end
 end

@@ -13,9 +13,4 @@ FactoryGirl.define do
     sequence(:name) { |n| attachmentgroup_names[(n % attachmentgroup_names.size)]}
   end
 
-  factory :task_group do
-    type 'TaskGroup'
-    sequence(:name) { |n| taskgroup_names[(n % taskgroup_names.size)]}
-  end
-
 end

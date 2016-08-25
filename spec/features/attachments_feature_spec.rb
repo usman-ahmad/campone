@@ -5,8 +5,7 @@ describe 'attachments feature', type: :feature do
   let!(:project) { create(:project, owner: owner) }
   let!(:discussion_group) { create(:discussion_group, name: 'diagrams') }
   let!(:discussion) { create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner, discussion_group: discussion_group) }
-  let!(:task_group) {create(:task_group, name: 'ruby')}
-  let!(:task) {create(:medium_priority_task,title: 'create erd diagram',project: project , commenter: owner, creator: owner,task_group: task_group)}
+  let!(:task) {create(:medium_priority_task,title: 'create erd diagram',project: project , commenter: owner, creator: owner)}
 
   before do
     login(owner.email, 'secretpassword')
@@ -46,8 +45,6 @@ describe 'attachments feature', type: :feature do
     it 'should create task with attachment' do
       visit project_tasks_path(project)
       find('a', text: 'New Task').click
-      page.find(:css, ".newgroup_icon").click
-      fill_in 'task_task_group_attributes_name', with: 'ruby'
       fill_in 'task_title', with: 'create erd diagram'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click

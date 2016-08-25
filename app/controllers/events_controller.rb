@@ -5,7 +5,6 @@ class EventsController < ApplicationController
   def index
     @event = @project.events.build
     @task  = @project.tasks.build
-    @task.build_task_group
   end
 
   def show

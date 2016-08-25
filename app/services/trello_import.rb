@@ -25,22 +25,18 @@ class TrelloImport < ImportService
 
 
   def import_list(list)
-    # TODO: Should we create a TaskGroup with list name OR it should map to Task Progress?
-    group = TaskGroup.find_or_create_by(name: list.name, project_id: @project.id)
-
     list.cards.each do |card|
-      import_task(card, group.id)
+      import_task(card)
     end
   end
 
-  def import_task(card, group_id)
+  def import_task(card)
     # TODO: Manage Progress and Task Creator
     attributes = {
         title: card.name,
         description: card.desc,
         due_at: card.due,
         updated_at: card.last_activity_date,
-        task_group_id: group_id
     }
 
     task = @project.tasks.build(attributes)
