@@ -3,7 +3,7 @@ class Attachment < ApplicationRecord
 
   belongs_to :project
   belongs_to :attachable, polymorphic: true
-  belongs_to :uploaded_by, class_name: User, foreign_key: :user_id
+  belongs_to :uploader, class_name: User, foreign_key: :user_id
 
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe

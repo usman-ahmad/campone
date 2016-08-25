@@ -26,7 +26,7 @@ class Project < ApplicationRecord
     return unless array.present?
 
     attachments.each do |attachment|
-      self.attachments.build(:attachment => attachment, uploaded_by: uploaded_by)
+      self.attachments.build(:attachment => attachment, uploader: uploaded_by)
     end
 
     save

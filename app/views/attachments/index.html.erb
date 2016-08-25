@@ -25,7 +25,7 @@
               <td>
                 <!-- TODO: Add downloding link here-->
                 <a href=""><%= attachment.attachment_file_name %></a>
-                <p>Upload By: <%= begin attachment.uploaded_by.name + ". on " + attachment.created_at.localtime.strftime("%B %d, %Y") rescue 'Not Present' end %> </p>
+                <p>Upload By: <%= begin attachment.uploader.name + ". on " + attachment.created_at.localtime.strftime("%B %d, %Y") rescue 'Not Present' end %> </p>
               </td>
               <td>
                 <div class="pull-left text-right">
