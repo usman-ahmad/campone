@@ -8,5 +8,8 @@
       <a href="<%= project_attachments_path(@project) %>"><i class="fa fa-folder-open-o mg-r10"></i>Files</a></li>
     <li role="presentation" class=<%= "active" if active =='calendar' %>>
       <a href="<%= project_events_path(@project) %>"><i class="fa fa-calendar mg-r10"></i>Calendar</a></li>
+    <li role="presentation" class="pull-right">
+      <a href="<%= project_path(@project) %>"><i class="fa fa-cog mg-r10"></i>Project Settings</a>
+    </li>
   </ul>
 </div>
