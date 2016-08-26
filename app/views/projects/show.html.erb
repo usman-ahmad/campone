@@ -1,9 +1,23 @@
+<% content_for(:tab_nav) do %>
+  <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
+<% end %>
+
 <div class="page-header">
   <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1>Show project</h1>
+
+  <div class="pull-right">
+    <%= link_to project_tasks_path(@project, format: "csv"), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-export"></span>
+      Export CSV
+    <% end %>
+    <%= link_to new_import_project_tasks_path(@project), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-import"></span>
+      Import CSV
+    <% end %>
+  </div>
 </div>
 
 <dl class="dl-horizontal">
@@ -17,32 +31,50 @@
   <dd><%= @project.owner.name %></dd>
 
   <br>
-  <%= link_to new_project_task_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-plus"></span>
-    Add Todo
+
+  <h2>Invite Users</h2>
+  <%= form_tag(project_contributions_path(@project), method: "post" ) do %>
+    <%= label_tag(:email, "Email :") %>
+    <%= text_field_tag(:email) %>
+
+    <br>
+    <%= label_tag(:role, "Role :") %>
+    <%= select_tag :role, options_for_select(Contribution::ROLES.values)%>
+    <br>
+    <%= submit_tag("Invite") %>
   <% end %>
 
-  <%= link_to project_tasks_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-list"></span>
-    Tasks
+  <h4>Already Invited Users</h4>
+  <% @contributions.each do |i| %>
+    <p><%= i.user.email %> <%= "(#{i.role}) " if i.role %></p>
   <% end %>
-  <%= link_to project_discussions_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-list"></span>
-    Discussions
+
+  <h2>Integrations:</h2>
+
+  <%= link_to "Configure Twitter account to receive notification tweets", user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>
+  <br/>
+  <%= link_to "Integrate Asana account and import your tasks", user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
+  <br/>
+  <%= link_to "Integrate Trello account and import your tasks", user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
+  <br/>
+
+  <% if @integrations.present? %>
+    <table style="width:100%">
+      <tr>
+        <th>URL</th>
+        <th></th>
+      </tr>
+      <% @integrations.each do |integration| %>
+        <tr>
+          <td><%= integration.url %></td>
+          <td><%= link_to 'Configure', project_integration_path(@project, integration) if integration.name == 'jira' %></td>
+          <td><%= link_to 'Delete', project_integration_path(@project, integration), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        </tr>
+      <% end %>
+    </table>
   <% end %>
-  <%= link_to project_attachments_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-list"></span>
-    Files
-  <% end %>
-  <%= link_to new_project_contribution_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-user"></span>
-    Manage Invitations
-  <% end %>
-  <%= link_to project_integrations_path(@project), class: 'btn btn-primary' do %>
-    Manage Integrations
-  <% end %>
-  <%= link_to project_events_path(@project), class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-calendar"></span>
-    Calender
-  <% end %>
+
+
+  <h4>Add New Integration</h4>
+  <%= render 'integrations/form' %>
 </dl>

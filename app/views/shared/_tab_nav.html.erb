@@ -6,9 +6,7 @@
       <a href="<%= project_discussions_path(@project) %>"><i class="fa fa-comments-o mg-r10"></i>Discussions</a></li>
     <li role="presentation" class=<%= "active" if active =='files' %>>
       <a href="<%= project_attachments_path(@project) %>"><i class="fa fa-folder-open-o mg-r10"></i>Files</a></li>
-    <li role="presentation" class=<%= "active" if active =='calendar' %>>
-      <a href="<%= project_events_path(@project) %>"><i class="fa fa-calendar mg-r10"></i>Calendar</a></li>
-    <li role="presentation" class="pull-right">
+    <li role="presentation" class="pull-right <%= "active" if active =='settings' %>">
       <a href="<%= project_path(@project) %>"><i class="fa fa-cog mg-r10"></i>Project Settings</a>
     </li>
   </ul>
