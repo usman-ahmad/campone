@@ -4,15 +4,15 @@ FactoryGirl.define do
     user
 
     trait :organizer do
-      role :organizer
+      role 'Organizer'
       end
 
     trait :team_player do
-      role :team_player
+      role 'Team player'
     end
 
     trait :contributor do
-      role :contributor
+      role 'Contributor'
     end
 
     factory :organizer_contribution,   traits: [:organizer]

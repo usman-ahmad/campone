@@ -1,9 +1,9 @@
 class Ability
   include CanCan::Ability
 
-  ORGANIZER   = 'organizer'
-  TEAM_PLAYER = 'team_player'
-  CONTRIBUTOR = 'contributor'
+  ORGANIZER   = Contribution::ROLES[:organizer  ]
+  TEAM_PLAYER = Contribution::ROLES[:team_player]
+  CONTRIBUTOR = Contribution::ROLES[:contributor]
 
   def initialize(user)
 

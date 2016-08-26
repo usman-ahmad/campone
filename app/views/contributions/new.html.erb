@@ -5,7 +5,7 @@
 
   <br>
   <%= label_tag(:role, "Role :") %>
-  <%= select_tag :role, options_for_select(Contribution.roles.keys)%>
+  <%= select_tag :role, options_for_select(Contribution::ROLES.values)%>
   <br>
   <%= submit_tag("Invite") %>
 <% end %>

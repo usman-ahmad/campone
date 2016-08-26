@@ -24,7 +24,7 @@ RSpec.describe Project, type: :model do
      end
 
      it 'assigns owner role to contribution' do
-       expect(project.contributions.owner.count).to eq 1
+       expect(project.contributions.where(role: 'Owner').count).to eq 1
      end
    end
 
