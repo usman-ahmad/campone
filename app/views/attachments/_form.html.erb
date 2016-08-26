@@ -1,0 +1,11 @@
+<%= form_for([@project, @attachment], html: { class: "form-horizontal", role: "form", multipart: true }) do |f| %>
+
+  <%= render 'shared/error_messages', object: @attachment  %>
+
+  <div class="form-group">
+    <div class="col-md-4 col-md-offset-2 ">
+      <%= render 'attachments/browse_attachments' %>
+    </div>
+      <%= f.submit 'Upload', class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -7,6 +7,7 @@ class AttachmentsController < ApplicationController
 
   def index
     @attachments = @project.attachments
+    @attachment = Attachment.new(project: @project)
   end
 
   def new

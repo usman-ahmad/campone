@@ -23,7 +23,7 @@ class Project < ApplicationRecord
 
   # TODO: Refactor and simplify
   def create_attachments(attachments, uploaded_by)
-    return unless array.present?
+    return unless attachments.present?
 
     attachments.each do |attachment|
       self.attachments.build(:attachment => attachment, uploader: uploaded_by)
