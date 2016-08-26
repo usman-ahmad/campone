@@ -17,7 +17,6 @@
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <%= javascript_include_tag "http://localhost:9292/faye.js" %>
   <% if current_user.present? %>
       <%= subscribe_to '/messages/private/user'+ current_user.id.to_s %>
       <span id="user_id" style="display:none"><%= 'user' + current_user.id.to_s %></span>

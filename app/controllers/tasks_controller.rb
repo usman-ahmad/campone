@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html
       # Export all Tasks shown on index page in sequence. If You want to include completed tasks you have to show them on index.
-      format.csv { send_data tasks.to_csv }
+      format.csv { send_data @tasks.to_csv }
     end
   end
 

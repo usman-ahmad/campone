@@ -9,20 +9,14 @@ describe 'projects management', type: :feature do
   end
 
   describe 'creating a new project' do
-    before do
-      click_on('Create New Project')
-      fill_in 'Name',        with: 'camp one'
-      fill_in 'Description', with: 'it should be create within 3 months'
-    end
-
-
     it 'should create project' do
+      click_on('Create New Project')
+
       fill_in 'project_name',        with: 'camp one'
-      fill_in 'project_description', with: 'it should be create within 3 months'
+      fill_in 'project_description', with: 'it should be completed within 3 months'
 
       click_button 'Create Project'
-
-      expect(page).to have_content owner.name
+      expect(page).to have_content('it should be completed within 3 months')
     end
   end
 
