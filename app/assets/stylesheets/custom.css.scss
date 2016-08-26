@@ -100,6 +100,37 @@
   background-color: #39A1E7;
   height: 60px;
   padding: 6px 10px 5px;
+  .navbar-nav > li > a {
+    color: #fff;
+  }
+  .navbar-brand {
+    font-weight: bold;
+    color: #fff;
+  }
+  .navbar-nav > {
+    .open > a {
+      color: #fff;
+      background-color: #63ACEC;
+      &:hover, &:focus {
+        color: #fff;
+        background-color: #63ACEC;
+      }
+    }
+    li > a {
+      &:hover, &:focus {
+        color: #FBFBFB;
+      }
+    }
+  }
+  .navbar-brand {
+    &:hover, &:focus {
+      color: #FBFBFB;
+    }
+  }
+  .navbar-nav > li.badge-list {
+    margin-right: 10px;
+    margin-top: 4px;
+  }
 }
 
 .left-nav {
