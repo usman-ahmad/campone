@@ -8,6 +8,13 @@ class DiscussionsController < ApplicationController
 
   def index
     @discussions = @project.discussions
+
+    @discussion = Discussion.new(project: @project)
+    @discussion.attachments.build
+
+    @project.members.each do |m|
+      @discussion.user_discussions.build(user: m, notify: true )
+    end
   end
 
   def show
@@ -31,7 +38,7 @@ class DiscussionsController < ApplicationController
 
     if @discussion.save
       @discussion.create_activity :create, owner: current_user
-      redirect_to [@project, @discussion], notice: 'Discussion was successfully created.'
+      redirect_to [@project, :discussions], notice: 'Discussion was successfully created.'
     else
       render :new
     end

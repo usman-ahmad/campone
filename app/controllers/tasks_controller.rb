@@ -8,6 +8,7 @@ class TasksController < ApplicationController
   def index
     cookies[:include_completed] = params[:include_completed] if params[:include_completed].present?
 
+    @task = @project.tasks.new
     @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
                                          include_completed: cookies[:include_completed] == 'true').order!('position')
 
@@ -34,7 +35,7 @@ class TasksController < ApplicationController
 
     if @task.save
       @task.create_activity :create, owner: current_user
-      redirect_to [@project, @task], notice: 'Task was successfully created.'
+      redirect_to [@project, :tasks], notice: 'Task was successfully created.'
     else
       render :new
     end

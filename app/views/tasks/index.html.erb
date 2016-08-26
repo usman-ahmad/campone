@@ -12,10 +12,6 @@
 <% end %>
 
 <div class="page-header">
-  <%= link_to new_project_task_path, class: 'btn btn-primary' do %>
-      <span class="glyphicon glyphicon-plus"></span>
-      New Task
-  <% end %>
   <%= link_to project_tasks_path(@project, format: "csv"), class: 'btn btn-primary' do %>
       <span class="glyphicon glyphicon-export"></span>
       Export CSV
@@ -63,5 +59,11 @@
         </li>
       <% end %>
     </ul>
+
+    <div class="page-header">
+      <h3>Create New Task</h3>
+    </div>
+    <%= render 'form' %>
+
   </div>
 </div>
