@@ -319,6 +319,7 @@ GEM
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
+    puma (3.6.0)
     rack (2.0.1)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -509,6 +510,7 @@ DEPENDENCIES
   poltergeist
   private_pub
   public_activity
+  puma
   rails
   rails-erd
   rails_best_practices
