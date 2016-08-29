@@ -34,6 +34,18 @@ class Task < ApplicationRecord
       CLOSED:      'Closed'
   }
 
+  GET_NEXT_STATE = {
+      :started     => [Task::PROGRESSES[:IN_PROGRESS], Task::PROGRESSES[:CLOSED]],
+      :in_progress => [Task::PROGRESSES[:COMPLETED],   Task::PROGRESSES[:CLOSED]],
+      :completed   => [Task::PROGRESSES[:REJECTED],    Task::PROGRESSES[:ACCEPTED],
+                       Task::PROGRESSES[:DEPLOYED],    Task::PROGRESSES[:CLOSED]],
+      :rejected    => [Task::PROGRESSES[:STARTED],     Task::PROGRESSES[:CLOSED]],
+      :deployed    => [Task::PROGRESSES[:ACCEPTED],    Task::PROGRESSES[:REJECTED]],
+      :accepted    => [Task::PROGRESSES[:DEPLOYED]],
+      :closed      => [Task::PROGRESSES[:STARTED]],
+      :no_progress => [Task::PROGRESSES[:STARTED]],
+  }
+
   validates :title, presence: true
   validates :project, presence: true
 
@@ -49,7 +61,7 @@ class Task < ApplicationRecord
   end
 
   def next_states
-    State::GET_NEXT[progress.tr(' ', '_').downcase.to_sym]
+    GET_NEXT_STATE[progress.tr(' ', '_').downcase.to_sym]
   end
 
   # TODO: Refactor this method. Right now it wont assign task if it is already assigned to another user.
