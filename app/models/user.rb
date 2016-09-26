@@ -21,6 +21,8 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  after_create :create_demo_project
+
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
     identity = Identity.find_for_oauth(auth)
@@ -80,4 +82,11 @@ class User < ApplicationRecord
     end
   end
   #################################################################
+
+  def create_demo_project
+    demo_data = YAML.load_file('db/demo_project.yml')
+    project   = Project.create(demo_data['project'].merge(owner: self))
+    project.tasks.create(demo_data['tasks'])
+  end
+
 end
