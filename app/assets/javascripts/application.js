@@ -15,7 +15,6 @@
 //= require private_pub
 //= require jquery.ui.all
 //= require bootstrap-sprockets
-//= require bootstrap
 //= require turbolinks
 //= require moment
 //= require ckeditor/init
