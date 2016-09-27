@@ -36,12 +36,13 @@ $(document).ready(function(){
         });
     };
 
-        $('.dropdown-menu').on('click', function(event){
-            //The event won't be propagated to the document NODE and
-            // therefore events delegated to document won't be fired
-            event.stopPropagation();
-        });
-
+/*
+      $('.dropdown-menu').on('click', function(event){
+          //The event won't be propagated to the document NODE and
+          // therefore events delegated to document won't be fired
+          event.stopPropagation();
+      });
+*/
 
 });
 

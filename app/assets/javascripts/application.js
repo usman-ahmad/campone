@@ -21,5 +21,6 @@
 //= require ckeditor/init
 //= require fullcalendar
 //= require custom
-
-//= require_tree .
+//= require discussions
+//= require notification
+//= require notify.min
