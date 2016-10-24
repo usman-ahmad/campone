@@ -16,12 +16,10 @@
   <%= link_to project_tasks_path(@project, include_completed: !include_completed ), class: "btn btn-#{include_completed ? 'success' :'info'}" do %>
     <%= include_completed  ? 'Hide' : 'Show' %> Completed Tasks
   <% end %>
-  <h1>Listing Tasks</h1>
 </div>
 
 <div class="col-md-12">
   <div class="col-md-9">
-    <h3 class="heading-3">To-Do list</h3>
     <ul class="sortable" id="tasks" data-update-url="<%= sort_project_tasks_url %>">
       <% @tasks.each do |task| %>
         <li id="task_<%= task.id %>" class="ui-state-default custom-ui-state anchor-container" data-href="<%= project_task_path(@project, task) %>">
@@ -30,11 +28,11 @@
           <p class="todo-content">
             <span><%= task.title %></span>
               <span class="tag-holder">
-                  <span class="tag">Priority: <%= task.priority %></span>
+                  <span class="tag <%=  'hidden' if task.priority == 'None' %>">Priority: <%= task.priority %></span>
                   <% if task.due_at.present? %>
                     <span class="tag"> Due Date: <%= task.due_at %></span>
                   <%end%>
-                    <span class="tag">Comment (<%= task.comments.count %>)</span>
+                    <span class="tag <%=  'hidden' if task.comments.count == 0 %>">Comment (<%= task.comments.count %>)</span>
                   <% if task.creator.present? %>
                     <span class="tag">Created By (<%= task.creator.name %>)</span>
                   <%end%>
