@@ -2,15 +2,6 @@
     <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
 <% end %>
 
-<%= form_tag project_tasks_path(@project), :method => 'get' do %>
-    <div class="form-group col-md-4 pull-right">
-      <div class="input-group">
-        <%= text_field_tag :search_text, params[:search_text], placeholder: "Search Tasks", class: "form-control" %>
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-      </div>
-    </div>
-<% end %>
-
 <div class="page-header">
   <% include_completed = cookies[:include_completed] == 'true' %>
   <%= link_to project_tasks_path(@project, include_completed: !include_completed ), class: "btn btn-#{include_completed ? 'success' :'info'}" do %>
