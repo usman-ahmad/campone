@@ -760,3 +760,8 @@
 .newTaskForm .customHideEvent {
   display: none !important;
 }
+
+.custom-tooltip .tooltip-inner {
+  max-width: 150px;
+  width: 150px;
+}

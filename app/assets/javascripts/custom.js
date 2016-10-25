@@ -39,6 +39,7 @@ $(document).on('turbolinks:load', function() {
         $('#hide-todo').addClass('customHideEvent');
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
 
     showGroupFieldsfiles();
 });

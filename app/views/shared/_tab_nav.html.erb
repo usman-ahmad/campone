@@ -19,5 +19,9 @@
           <% end %>
       </div>
     </li>
+
+    <li class="pull-right custom-tooltip <%= active == 'todos' ? "show" : "hidden" %> ">
+      <%= yield :show_hide_completed if content_for?(:show_hide_completed) %>
+    </li>
   </ul>
 </div>

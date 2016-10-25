@@ -1,13 +1,14 @@
+<% content_for(:show_hide_completed) do %>
+    <% include_completed = cookies[:include_completed] == 'true' %>
+    <%= link_to project_tasks_path(@project, include_completed: !include_completed), :data => {:toggle => 'tooltip', :placement => 'bottom'}, title: "#{include_completed ? 'Show Completed Task' : 'Hide Completed Task'}" do %>
+        <i class="fa  <%= include_completed ? "fa-eye" : "fa-eye-slash" %>" aria-hidden="true"></i>
+    <% end %>
+<% end %>
+
 <% content_for(:tab_nav) do %>
     <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
 <% end %>
 
-<div class="page-header">
-  <% include_completed = cookies[:include_completed] == 'true' %>
-  <%= link_to project_tasks_path(@project, include_completed: !include_completed ), class: "btn btn-#{include_completed ? 'success' :'info'}" do %>
-    <%= include_completed  ? 'Hide' : 'Show' %> Completed Tasks
-  <% end %>
-</div>
 
 <div class="col-md-12">
   <div class="col-md-9">
