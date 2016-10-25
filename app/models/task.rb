@@ -52,12 +52,20 @@ class Task < ApplicationRecord
   validates :progress, inclusion: { in: PROGRESSES.values }
   validates :priority, inclusion: { in: PRIORITIES.values }
 
-  scope :not_completed, -> { where(progress: [ PROGRESSES[:NO_PROGRESS], PROGRESSES[:STARTED], PROGRESSES[:IN_PROGRESS], PROGRESSES[:REJECTED]]) }
+  scope :not_completed, -> { where(progress: not_completed_progresses) }
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
     errors.add(:due_at, "can't be in the past") if
         due_at < Date.today if due_at.present?
+  end
+
+  def not_completed?
+    Task.not_completed_progresses.include?(self.progress)
+  end
+
+  def completed?
+    !not_completed?
   end
 
   def next_states
@@ -114,6 +122,10 @@ class Task < ApplicationRecord
     end
   end
   private
+
+  def self.not_completed_progresses
+    [ PROGRESSES[:NO_PROGRESS], PROGRESSES[:STARTED], PROGRESSES[:IN_PROGRESS], PROGRESSES[:REJECTED]]
+  end
 
   def set_position
     self.position = self.project.tasks.count + 1

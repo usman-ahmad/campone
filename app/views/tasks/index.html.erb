@@ -1,6 +1,7 @@
 <% content_for(:show_hide_completed) do %>
     <% include_completed = cookies[:include_completed] == 'true' %>
-    <%= link_to project_tasks_path(@project, include_completed: !include_completed), :data => {:toggle => 'tooltip', :placement => 'bottom'}, title: "#{include_completed ? 'Show Completed Task' : 'Hide Completed Task'}" do %>
+    <%= link_to project_tasks_path(@project, include_completed: !include_completed), :data => {:toggle => 'tooltip', :placement => 'bottom'},
+                title: "#{include_completed ? 'Hide Completed Task' : 'Show Completed Task'}" do %>
         <i class="fa  <%= include_completed ? "fa-eye" : "fa-eye-slash" %>" aria-hidden="true"></i>
     <% end %>
 <% end %>
@@ -18,7 +19,7 @@
           <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
           <p class="todo-content">
-            <span><%= task.title %></span>
+            <span class="<%= task.completed? ? 'line-through' : '' %>"><%= task.title %></span>
               <span class="tag-holder">
                   <span class="tag <%=  'hidden' if task.priority == 'None' %>">Priority: <%= task.priority %></span>
                   <% if task.due_at.present? %>

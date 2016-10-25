@@ -14,7 +14,6 @@ class TwitterService
         end
         clients << client
       end
-      Trello::Webhook
     end
     clients
   end
