@@ -334,6 +334,11 @@
   overflow: hidden;
   padding-top: 30px;
 }
+
+.custom-label {
+  font-weight: 400;
+}
+
 .widget {
   overflow: hidden;
   opacity: 0.6;
@@ -750,4 +755,8 @@
 
 .file-icon:hover, .file-icon:focus {
   color: #000;
+}
+
+.newTaskForm .customHideEvent {
+  display: none !important;
 }
