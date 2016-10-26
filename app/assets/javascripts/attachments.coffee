@@ -12,6 +12,7 @@ $(document).on 'turbolinks:load', ->
 
     modal = $(this)
     modal.find('#attachmentTitle').text title
+    modal.find('#downloadAttachmentBtn').attr('href', url)
 
     if(type.match('video.*'))
       modal.find('#videoPreview').attr('src', url).removeClass('hidden')

@@ -1,5 +1,20 @@
 class Attachment < ApplicationRecord
-  has_attached_file :attachment
+  has_attached_file :attachment,
+                    styles:
+                        lambda { |a|
+                          puts "aaaaaaaaa#{a.inspect}"
+                          if a.instance.is_image?
+                            { thumb: "100x100#" }
+                          elsif a.instance.is_video?
+                            { thumb: { geometry: "100x100#", format: 'jpg', time: 10 }}
+                          else
+                            {}
+                          end
+                        },
+                    default_url: '/images/:style/missing_file_type.png',
+                    processors: lambda { |a| a.is_video? ? [ :transcoder ] : [ :thumbnail ] }
+
+
 
   belongs_to :project
   belongs_to :attachable, polymorphic: true
@@ -14,5 +29,13 @@ class Attachment < ApplicationRecord
 
   def attach_from_url(url)
     self.attachment = URI.parse(url)
+  end
+
+  def is_image?
+    attachment_content_type.match('image.*')
+  end
+
+  def is_video?
+    attachment_content_type.match('video.*')
   end
 end
