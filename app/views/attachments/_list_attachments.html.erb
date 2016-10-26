@@ -2,7 +2,39 @@
   <h4>Attachments</h4>
   <ul>
     <% resource.attachments.each do |attachment| %>
-      <li><%= link_to attachment.attachment_file_name, download_project_attachment_path(@project, attachment) %></li>
+      <li>
+        <%= link_to attachment.attachment_file_name,"#", data: {toggle: "modal", target: "#attachmentPreviewModel",
+                                                                type: attachment.attachment_content_type,
+                                                                url: attachment.attachment.url,
+                                                                title: attachment.attachment_file_name } %>
+        <%= link_to 'Download', download_project_attachment_path(@project, attachment) %>
+      </li>
     <% end %>
   </ul>
+
+  <div class="modal fade" id="attachmentPreviewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="attachmentTitle"></h4>
+        </div>
+        <div class="modal-body">
+
+          <div id="attachmentVideo">
+            <%= video_tag "", id: 'videoPreview', class: 'hidden', :width => "100%", height: '100%', :controls => true %>
+          </div>
+
+          <div id="attachmentImage">
+            <%= image_tag "", id: 'imagePreview', class: 'hidden', :width => "100%", height: '100%' %>
+          </div>
+
+          <div id="attachmentNoPreview" class="hidden">
+            <h3>Sorry.No Preview Available for this type of file</h3>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

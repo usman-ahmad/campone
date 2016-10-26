@@ -21,5 +21,6 @@
 //= require fullcalendar
 //= require custom
 //= require discussions
+//= require attachments
 //= require notification
 //= require notify.min
