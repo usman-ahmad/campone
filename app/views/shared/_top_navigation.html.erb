@@ -8,12 +8,19 @@
         <span class="icon-bar"></span>
       </button>
       <ul class="nav navbar-nav">
-        <li><a class="navbar-brand" href="<%= projects_path %>">Camp One</a></li>
-        <% if @project %>
-            <li class="dropdown mg-l20 mg-t0">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="min-width: 250px;"><%= @project.try(:name).present? ? @project.try(:name) : 'Choose Project' %><b class="caret mg-l5"></b></a>
-              <ul class="dropdown-menu" style="min-width: 251px;">
-                <% current_user.projects.select{|p| p.id != @project.id}.each do |project| %>
+        <li><a class="navbar-brand" href="<%= projects_path %>" style="font-size: 14px;">Camp One</a></li>
+        <% if @project && @project.persisted? %>
+            <li>
+              <a href="<%= project_tasks_path(@project) %>" class=" navbar-brand caret-before">
+                <%= @project.name %>
+              </a>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle caret-after" data-toggle="dropdown" style="padding-top: 12px; padding-bottom: 12px;">
+                <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <% current_user.projects.select { |p| p.id != @project.id }.each do |project| %>
                     <li><a href="<%= project_tasks_path(project) %>"><%= project.name %></a></li>
                 <% end %>
               </ul>
