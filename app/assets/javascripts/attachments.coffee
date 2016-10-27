@@ -14,12 +14,16 @@ $(document).on 'turbolinks:load', ->
     modal.find('#attachmentTitle').text title
     modal.find('#downloadAttachmentBtn').attr('href', url)
 
+    modal.find('.modal-body').children().hide();
+
     if(type.match('video.*'))
-      modal.find('#videoPreview').attr('src', url).removeClass('hidden')
+      modal.find('#attachmentVideo').attr('src', url)
+      modal.find('#videoPreview').show()
     else if(type.match('image.*'))
-      modal.find('#imagePreview').attr('src', url).removeClass('hidden')
+      modal.find('#attachmentImage').attr('src', url)
+      modal.find('#imagePreview').show()
     else
-      modal.find('#attachmentNoPreview').removeClass('hidden')
+      modal.find('#attachmentNoPreview').show()
 
     return
 

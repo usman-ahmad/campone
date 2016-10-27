@@ -3,7 +3,7 @@
 
   <% resource.attachments.each do |attachment| %>
       <%= image_tag attachment.attachment.exists?(:thumb) ? attachment.attachment.url(:thumb) : 'missing_file_type.png',
-                    title: 'Preview',
+                    title: attachment.attachment_file_name,
                     data: { toggle: "modal", target: "#attachmentPreviewModel",
                             type: attachment.attachment_content_type,
                             url: attachment.attachment.url,
