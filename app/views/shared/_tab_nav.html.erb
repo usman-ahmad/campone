@@ -10,14 +10,7 @@
       <a href="<%= project_path(@project) %>"><i class="fa fa-cog mg-r10"></i>Project Settings</a>
     </li>
     <li class= "pull-right <%= active == 'todos' ? "show" : "hidden" %> ">
-      <div class="col-md-12">
-      <%= form_tag project_tasks_path(@project), :method => 'get', :class => 'navbar-form mg-t0' do %>
-          <div class="input-group">
-          <%= text_field_tag :search_text, params[:search_text], placeholder: "Search Tasks", class: "form-control" %>
-          <div class="input-group-addon"><i class="fa fa-search"></i></div>
-          </div>
-          <% end %>
-      </div>
+      <%= yield :search_tasks if content_for?(:search_tasks) %>
     </li>
 
     <li class="pull-right custom-tooltip <%= active == 'todos' ? "show" : "hidden" %> ">

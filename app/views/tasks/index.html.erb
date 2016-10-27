@@ -6,6 +6,17 @@
     <% end %>
 <% end %>
 
+<% content_for(:search_tasks) do %>
+    <div class="col-md-12">
+      <%= form_tag project_tasks_path(@project), :method => 'get', :class => 'navbar-form mg-t0' do %>
+          <div class="input-group">
+            <%= text_field_tag :search_text, params[:search_text], placeholder: "Search Tasks", class: "form-control" %>
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          </div>
+      <% end %>
+    </div>
+<% end %>
+
 <% content_for(:tab_nav) do %>
     <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
 <% end %>

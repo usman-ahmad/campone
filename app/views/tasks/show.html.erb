@@ -1,3 +1,7 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
+<% end %>
+
 <div class="row">
   <div class="col-md-12 show-page-head">
   </div>
