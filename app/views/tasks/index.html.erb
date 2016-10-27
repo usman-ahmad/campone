@@ -37,10 +37,10 @@
                     <span class="tag"> Due Date: <%= task.due_at %></span>
                   <%end%>
                     <span class="tag <%=  'hidden' if task.comments.count == 0 %>">Comment (<%= task.comments.count %>)</span>
-                  <% if task.creator.present? %>
-                    <span class="tag">Created By (<%= task.creator.name %>)</span>
+                  <% if task.assigned_to.present? %>
+                    <span class="tag">Assigned To (<%= task_assigned_to task %>)</span>
                   <%end%>
-                  <%= content_tag(:span,"Progress: #{task.progress.humanize}", class:'tag' ) %>
+                  <%= content_tag(:span,"Progress: #{task.progress.humanize}", class:"tag #{ 'hidden' if task.progress == Task::PROGRESSES[:NO_PROGRESS]}" ) %>
               </span>
 
           <div class="pull-right">
