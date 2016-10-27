@@ -30,7 +30,7 @@ $(document).on('turbolinks:load', function() {
 
     $('#myTextbox').on('input', function () {
         var hide_todo = $('#hide-todo');
-        if ($(this).val().length == 1) {
+        if ($(this).val().length >= 1) {
             hide_todo.removeClass('customHideEvent');
         }
     });
