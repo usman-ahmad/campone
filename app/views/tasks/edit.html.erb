@@ -1,3 +1,6 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: '' %>
+<% end %>
 <div class="col-md-8">
   <h3>Edit Task</h3>
   <%= render 'form' %>
