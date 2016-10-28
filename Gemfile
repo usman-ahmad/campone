@@ -45,6 +45,8 @@ gem 'cancancan', '~> 1.10'
 gem 'font-awesome-sass'
 #gem for API
 gem 'grape'
+#gem for WYSIWYG
+gem 'trumbowyg_rails'
 
 # To create slugs
 # facing an issue with custom slug_column see https://github.com/norman/friendly_id/issues/765
