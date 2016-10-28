@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).on('turbolinks:load', function(){
     var is_set = false;
     read_notice = function(id)
     {
