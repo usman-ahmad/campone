@@ -34,7 +34,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <li class="badge-list">
-          <a class="dashboard-nav" href="<%= notifications_path %>" title="Notification">
+          <a class="dashboard-nav" id="cd-cart-trigger" title="Notification">
                 <% notice_count = current_user.notifications.where(:status => 'unread').count %>
                 <i class="fa fa-bell-o"></i>
             <span id="badge" class="badge notification-badge"
