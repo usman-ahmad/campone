@@ -1,0 +1,315 @@
+//colors
+$white_80: rgba(255, 255, 255, 0.8);
+$color_east_bay_approx: #435779;
+$white: #fff;
+$black_20: rgba(0, 0, 0, 0.2);
+$color_mystic_approx: #e0e6ef;
+$color_aluminium_approx: #a5aebc;
+$color_de_york_approx: #7dcf85;
+$color_moss_green_approx: #a2dda8;
+$color_athens_gray_approx: #eeeff7;
+$color_east_bay_60_approx: rgba(67, 87, 121, 0.6);
+
+//@extend-elements
+//original selectors
+//#main-nav, #cd-cart
+%extend_1 {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 260px;
+  padding-top: 50px;
+  overflow-y: auto;
+  //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: 0 0 20px $black_20;
+  z-index: 3;
+}
+
+.cd-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cd-container::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.cd-img-replace {
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+#main-nav {
+  @extend %extend_1;
+  left: -100%;
+  background: $white;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: left 0.3s;
+  &.speed-in {
+    left: 0;
+  }
+  ul {
+    a {
+      display: block;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 1em;
+      border-bottom: 1px solid $color_mystic_approx;
+    }
+    .current {
+      //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+      box-shadow: inset 3px 0 $color_east_bay_approx;
+    }
+  }
+}
+
+#cd-cart {
+  @extend %extend_1;
+  right: -100%;
+  background: $white;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: right 0.3s;
+  &.speed-in {
+    right: 0;
+  }
+  > * {
+    padding: 0 1em;
+  }
+  h2 {
+    font-size: 14px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 1em 0;
+  }
+  .cd-cart-items {
+    padding: 0;
+    li {
+      position: relative;
+      padding: 1em;
+      border-top: 1px solid $color_mystic_approx;
+      &:last-child {
+        border-bottom: 1px solid $color_mystic_approx;
+      }
+    }
+  }
+  .cd-qty {
+    color: $color_aluminium_approx;
+  }
+  .cd-time {
+    color: $color_aluminium_approx;
+    margin-top: .4em;
+  }
+  .cd-item-remove {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    bottom: auto;
+    //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 50%;
+  }
+  .cd-cart-total {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    span {
+      float: right;
+    }
+  }
+  .cd-cart-total::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background: $color_de_york_approx;
+    color: $white;
+    text-align: center;
+  }
+  .cd-go-to-cart {
+    text-align: center;
+    margin: 1em 0;
+    a {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media only screen and(min-width: 768px) {
+  #main-nav {
+    width: 350px;
+  }
+  #cd-cart {
+    width: 350px;
+  }
+  main {
+    padding-top: 90px;
+  }
+  #cd-gallery-items li {
+    width: 48%;
+    float: left;
+    margin-bottom: 2em;
+    margin-right: 4%;
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+}
+
+@media only screen and(min-width: 1200px) {
+  #main-nav {
+    width: 25%;
+    padding-top: 80px;
+    position: absolute;
+    height: auto;
+    width: auto;
+    left: auto;
+    right: 8em;
+    padding-top: 0;
+    top: 0;
+    background: transparent;
+    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: none;
+    line-height: 80px;
+    z-index: 4;
+    li {
+      display: inline-block;
+      margin-left: 1em;
+    }
+    ul a {
+      display: inline-block;
+      height: auto;
+      line-height: 1;
+      padding: 1em 1.4em;
+      border-bottom: none;
+      color: $white_80;
+      //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+      border-radius: 0.25em;
+      &.current {
+        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        box-shadow: none;
+        background: $color_east_bay_approx;
+        color: $white;
+      }
+    }
+  }
+  #cd-cart {
+    width: 25%;
+    padding-top: 80px;
+    > * {
+      padding: 0 2em;
+    }
+    .cd-item-remove {
+      right: 2em;
+    }
+    .cd-cart-items li {
+      padding: 1em 2em;
+    }
+  }
+  main {
+    padding-top: 120px;
+  }
+  .no-touch #main-nav ul a:hover {
+    background: $color_east_bay_approx;
+    color: $white;
+  }
+  #cd-gallery-items li {
+    width: 31%;
+    float: left;
+    margin-bottom: 2.5em;
+    margin-right: 3.5%;
+    &:nth-child(2n) {
+      margin-right: 3.5%;
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+}
+
+main {
+  position: relative;
+  min-height: 100%;
+  background: $color_athens_gray_approx;
+  padding-top: 70px;
+  z-index: 1;
+}
+
+#cd-shadow-layer {
+  position: fixed;
+  min-height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: $color_east_bay_60_approx;
+  cursor: pointer;
+  z-index: 2;
+  display: none;
+  &.is-visible {
+    display: block;
+    animation: cd-fade-in 0.3s;
+  }
+}
+
+@-webkit-keyframes cd-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes cd-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes cd-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.no-js #main-nav {
+  position: fixed;
+}
+
+.no-touch #cd-cart {
+  .cd-item-remove:hover {
+    background-color: $color_mystic_approx;
+  }
+  .checkout-btn:hover {
+    background: $color_moss_green_approx;
+  }
+}
+
+#cd-gallery-items li {
+  margin-bottom: 1.5em;
+  img {
+    width: 100%;
+    display: block;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 0.25em;
+  }
+}
