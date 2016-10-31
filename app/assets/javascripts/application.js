@@ -24,3 +24,4 @@
 //= require attachments
 //= require notification
 //= require notify.min
+//= require trumbowyg/trumbowyg
