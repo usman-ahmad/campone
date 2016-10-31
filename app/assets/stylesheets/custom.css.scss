@@ -770,3 +770,25 @@
 .line-through {
   text-decoration: line-through;
 }
+
+// Trumbowyg Editor Styling
+
+.trumbowyg-editor {
+  background-color: #fff;
+}
+
+.trumbowyg-editor ol, ul {
+  margin-left: 20px;
+}
+
+.trumbowyg-editor ol li, ul li {
+  padding-left: 5px;
+}
+
+.trumbowyg-editor ul {
+  list-style: disc;
+}
+
+.trumbowyg-editor ol {
+  list-style: decimal;
+}
