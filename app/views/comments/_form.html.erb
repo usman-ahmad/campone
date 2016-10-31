@@ -10,7 +10,7 @@
 
         <%= render 'shared/error_messages', object: @comment %>
         <div class="form-group">
-          <%= f.cktext_area :content, rows: 8, class: 'form-control' %>
+          <%= f.text_area :content, rows: 8, class: 'form-control description-textarea' %>
         </div>
         <div>
           <%= f.submit class: "custom-btn" %>
