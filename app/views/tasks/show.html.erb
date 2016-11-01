@@ -41,7 +41,7 @@
         <% end %>
         <li class="col-md-12">
           <span class="key">Description: </span>
-          <span class="value"><%= @task.description %></span>
+          <span class="value"><%= @task.description.html_safe %></span>
         </li>
       </ul>
       <div class="col-md-12 todo-item">
