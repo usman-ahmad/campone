@@ -17,7 +17,6 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require moment
-//= require ckeditor/init
 //= require fullcalendar
 //= require custom
 //= require discussions
