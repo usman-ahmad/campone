@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826111947) do
+ActiveRecord::Schema.define(version: 20161101130619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
-    t.integer  "trackable_id"
     t.string   "trackable_type"
-    t.integer  "owner_id"
+    t.integer  "trackable_id"
     t.string   "owner_type"
+    t.integer  "owner_id"
     t.string   "key"
     t.text     "parameters"
-    t.integer  "recipient_id"
     t.string   "recipient_type"
+    t.integer  "recipient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
@@ -46,25 +46,10 @@ ActiveRecord::Schema.define(version: 20160826111947) do
     t.index ["project_id"], name: "index_attachments_on_project_id", using: :btree
   end
 
-  create_table "ckeditor_assets", force: :cascade do |t|
-    t.string   "data_file_name",               null: false
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.integer  "assetable_id"
-    t.string   "assetable_type",    limit: 30
-    t.string   "type",              limit: 30
-    t.integer  "width"
-    t.integer  "height"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-    t.index ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
-  end
-
   create_table "comments", force: :cascade do |t|
     t.text     "content"
-    t.integer  "commentable_id"
     t.string   "commentable_type"
+    t.integer  "commentable_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
@@ -198,8 +183,8 @@ ActiveRecord::Schema.define(version: 20160826111947) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
     t.string   "name"
     t.string   "avatar_file_name"
