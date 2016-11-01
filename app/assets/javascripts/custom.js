@@ -39,7 +39,7 @@ $(document).on('turbolinks:load', function() {
         $('#hide-todo').addClass('customHideEvent');
     });
 
-    $('.description-textarea').trumbowyg({svgPath: '/assets/trumbowyg/images/icons.svg'});
+    $('.description-textarea').trumbowyg();
 
     $('[data-toggle="tooltip"]').tooltip();
 
