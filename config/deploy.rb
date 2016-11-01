@@ -12,7 +12,7 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 set :domain, '45.33.2.211'
 set :deploy_to, '/home/teknuk/camp_one'
 set :repository, 'git@bitbucket.org:teknuk/camp_one.git'
-set :branch, 'deployment_rails5'
+set :branch, 'fe-refactoring'
 set :user, 'teknuk'
 set :forward_agent, true
 

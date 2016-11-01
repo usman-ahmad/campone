@@ -124,7 +124,14 @@ function toggle_panel_visibility($lateral_panel, $background_layer, $body) {
         $background_layer.removeClass('is-visible');
 
     } else {
-        $lateral_panel.addClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+        // Load Notifications List from server
+        $.ajax({
+          url: "/notifications/index.js"
+        }).done(function() {
+          console.log('Notifications Loaded successfully.')
+        });
+
+      $lateral_panel.addClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
             $body.addClass('overflow-hidden');
         });
         $background_layer.addClass('is-visible');
