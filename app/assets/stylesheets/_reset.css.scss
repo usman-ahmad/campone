@@ -64,6 +64,14 @@ ol, ul {
   list-style: none;
 }
 
+.nopadding {
+  padding: 0 !important;
+}
+
+.nomargin {
+  margin: 0 !important;
+}
+
 /* Margin 10-100 */
 .mg-t0   { margin-top: 0 !important;}
 .mg-t4   { margin-top: 4px !important;}
