@@ -21,6 +21,7 @@ class DiscussionsController < ApplicationController
     @commentable = @discussion
     @comments = @commentable.comments
     @comment = Comment.new
+    @contributors = @discussion.private ? @discussion.users : @discussion.project.members
   end
 
   def new

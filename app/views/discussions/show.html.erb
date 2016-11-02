@@ -26,5 +26,19 @@
       <%= render "comments/comments" %>
       <%= render "comments/form" %>
     </div>
+    <div class="col-md-3">
+      <div class="panel panel-default todo-noti-panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">Contributors</h3>
+        </div>
+        <div class="panel-body">
+          <ul style="list-style: decimal">
+            <% @contributors.each do |contributor| %>
+                <li><%= contributor.name %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
