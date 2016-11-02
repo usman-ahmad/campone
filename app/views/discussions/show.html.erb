@@ -7,33 +7,9 @@
       <div class="todo-head-container">
         <div class="user-img-15 pull-left">JB</div>
         <div class="todo_name">
-          <div class="todo-list"> Discussion list</div>
-          <div class="todo-name"> <%= @discussion.title %> </div>
+          <div class="todo-list"> <%= @discussion.title %></div>
         </div>
-      </div>
-      <ul class="col-md-12 todo-info-list">
-        <li class="col-md-4">
-          <span class="key">Title: </span>
-          <span class="value"><%= @discussion.title %></span>
-        </li>
-        <li class="col-md-4">
-          <span class="key">Private: </span>
-          <span class="value"><%= @discussion.private %></span>
-        </li>
-      </ul>
-      <div class="col-md-12 todo-item">
-        <div class="pull-left">
-          <%= link_to new_project_discussion_path(@project), class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-plus"></span>
-              Start New Discussion
-          <% end %>
-
-          <%= link_to project_discussions_path(@project), class: 'btn btn-default' do %>
-              <span class="glyphicon glyphicon-list"></span>
-              List all Discussions
-          <% end %>
-        </div>
-        <div class="pull-right">
+        <div class="pull-right mg-r50">
           <%= link_to edit_project_discussion_path(@project, @discussion), class: 'btn btn-default' do %>
               Edit
           <% end %>
@@ -43,8 +19,8 @@
         </div>
       </div>
       <div class="col-md-12">
-        <span class="key">Description:</span>
-        <span class="value description-value"><%= @discussion.content.html_safe %></span>
+        <span class="value discussion-content"><%= @discussion.content.html_safe %></span>
+        <hr>
       </div>
       <%= render 'attachments/list_attachments', resource: @discussion %>
       <%= render "comments/comments" %>

@@ -502,7 +502,6 @@
 .todo-head-container {
   margin-bottom: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #dedede;
 }
 
 .todo_name {
@@ -799,4 +798,24 @@
 
 .trumbowyg-editor ol {
   list-style: decimal;
+}
+
+.discussion-content {
+  font-weight: normal;
+
+  ol, ul {
+    margin-left: 20px;
+  }
+
+  ol li, ul li {
+    padding-left: 5px;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
 }
