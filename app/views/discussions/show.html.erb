@@ -44,7 +44,7 @@
       </div>
       <div class="col-md-12">
         <span class="key">Description:</span>
-        <span class="value"><%= @discussion.content.html_safe %></span>
+        <span class="value description-value"><%= @discussion.content.html_safe %></span>
       </div>
       <%= render 'attachments/list_attachments', resource: @discussion %>
       <%= render "comments/comments" %>

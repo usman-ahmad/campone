@@ -14,7 +14,7 @@
         <% @attachments.each do |attachment| %>
             <tr>
               <td>
-                <%= link_to attachment.attachment_file_name, '#',
+                <%= link_to attachment.attachment_file_name, '#', class: 'list-anchor',
                             data: { toggle: "modal", target: "#attachmentPreviewModel",
                                     type: attachment.attachment_content_type,
                                     url: attachment.attachment.url,

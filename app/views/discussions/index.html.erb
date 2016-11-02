@@ -17,7 +17,7 @@
     <% @discussions.each do |discussion| %>
         <tr class="anchor-container" data-href="<%= project_discussion_path(@project, discussion) %>">
           <td>
-            <a href="<%= project_discussion_path(@project, discussion) %>"><%= discussion.title %></a>
+            <a href="<%= project_discussion_path(@project, discussion) %>" class="list-anchor"><%= discussion.title %></a>
             <p>Posted By: <%= discussion.posted_by.name + '. on ' + discussion.created_at.localtime.strftime("%B %d, %Y") if discussion.posted_by.present? %> </p>
           </td>
           <td>

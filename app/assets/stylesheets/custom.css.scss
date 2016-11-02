@@ -544,6 +544,10 @@
   margin-left: 5px;
 }
 
+.todo-info-list .description-value {
+  font-weight: normal;
+}
+
 .todo-item {
   overflow: hidden;
   border-radius: 3px;
@@ -737,6 +741,10 @@
 .discussion-list td + td,
 .discussion-list th + th {
   text-align: center;
+}
+
+.discussion-list .list-anchor {
+  font-size: 14px;
 }
 
 /*
