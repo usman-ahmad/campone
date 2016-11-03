@@ -126,17 +126,18 @@ PublicActivity::Activity.class_eval do
 
   def create_message(notice)
     message = notice.id.to_s + '|' + notice.created_at.to_s + '|'+notice.activity.owner.name.to_s
-   if notice.activity.trackable_type.to_s!= 'Comment'
-    if notice.activity.key.include? "create"
-      message += ' created '
-     elsif notice.activity.key.include? "update"
-      message += ' updated '
-     end
-    message += notice.activity.trackable_type.to_s
-    message += ' ' + notice.activity.trackable.title.to_s if notice.activity.trackable.title.present?
-   else
-      message += ' Commented on ' + notice.activity.trackable.commentable.title
+    if notice.comment?
+     message += ' Commented on ' + notice.task_or_discussion.title
+    else
+      if notice.activity.key.include? "create"
+        message += ' created '
+      elsif notice.activity.key.include? "update"
+        message += ' updated '
+      end
+      message += notice.activity.trackable_type.to_s
+      message += ' ' + notice.trackable.title.to_s if notice.trackable.title.present?
+    end
 
-   end
+    message
   end
 end

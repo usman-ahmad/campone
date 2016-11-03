@@ -1,5 +1,6 @@
 <% notifications.each do |notification| %>
   <li>
+    <%= notification_links(notification) %>
     <span class=""><b><%= notification.activity.owner.name if notification.activity.owner %></b></span>
     <%= render_activity notification.activity %>
   </li>
