@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     member do
       get 'index'
       patch 'update'
+      patch 'mark_all_read'
     end
   end
   root 'welcome#index'

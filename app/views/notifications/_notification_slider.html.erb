@@ -1,6 +1,6 @@
 <div id="cd-shadow-layer"></div>
 <div id="cd-cart">
-  <h2>Notifications</h2>
+  <h2>Notifications</h2> <%= link_to 'Mark all read', mark_all_read_notifications_path, method: :patch, remote: true %>
   <ul class="cd-cart-items" id="notificationList">
     <!--populate notifications here-->
   </ul>

@@ -17,4 +17,12 @@ class NotificationsController < ApplicationController
       }
     end
   end
+
+  def mark_all_read
+    respond_to do |format|
+      format.js {
+        current_user.notifications.update_all(status: 'read')
+      }
+    end
+  end
 end
