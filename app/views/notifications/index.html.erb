@@ -43,10 +43,8 @@
               <% notifications.each do |notification| %>
                   <div class="notification-message-container">
                     <a href="#" class="notification-user" style="background-color: #AB5733">JB</a>
-                    <a id="<%= notification.id %>notice"
-                       <% if notification.status =='unread' %> <%= 'class=info' %>
-                       <% elsif notification.status =='read' %> <%= 'class=success-edit' %>
-                       <% end %> onclick="read_notice(<%= notification.id %>);"><i class="fa fa-check-square"></i></a>
+                    <a id="<%= notification.id %>notice" class="<%= notification.status =='read'? 'success-edit' : 'info' %>"
+                       onclick="read_notice(<%= notification.id %>);"><i class="fa fa-check-square"></i></a>
                       <span class="message-info"><b><%= notification.activity.owner.name if notification.activity.owner %></b>
                         <%= render_activity notification.activity %> - <%= time_ago_in_words(notification.created_at) %></span>
                   </div>

@@ -10,9 +10,10 @@ class NotificationsController < ApplicationController
   def update
     respond_to do |format|
       format.json {
-        array = JSON.parse(params[:data_value])
-        id = array[0]
-        Notification.find(id).update_attribute(:status, 'read')
+        ids = JSON.parse(params[:data_value])
+        notifications = Notification.where(id: ids)
+        updated_count = notifications.update_all(status: 'read')
+        render json: { decreasedUnreadCount: updated_count }, status: 200
       }
     end
   end
