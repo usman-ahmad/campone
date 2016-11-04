@@ -1,5 +1,6 @@
 <% notifications.each do |notification| %>
   <li class="<%= notification.unread? ? 'notification-unread' : '' %>" data-notification-id="<%= notification.id %>">
+    <i class="fa fa-times fa-lg" id="deleteNotificationBtn" aria-hidden="true"></i>
     <%= notification_links(notification) %>
     <span class=""><b><%= notification.activity.owner.name if notification.activity.owner %></b></span>
     <%= render_activity notification.activity %>

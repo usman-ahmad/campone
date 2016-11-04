@@ -15,7 +15,7 @@ $(document).on('turbolinks:load', function(){
 
     $.ajax({
       url : "/notifications/"+id,
-      type : "patch",
+      type : "patch"
     }).done(function(data) {
       // Update unread count
       var newUnreadCount = parseInt($('#badge.notification-badge').text()) - 1;
@@ -29,6 +29,20 @@ $(document).on('turbolinks:load', function(){
     update_notice(notificationId)
   });
 
+  $('ul#notificationList').on('click','#deleteNotificationBtn', function(){
+    notificationId = $(this).parent('li').data('notification-id');
+    delete_notice(notificationId);
+  });
+
+  delete_notice = function (id){
+    $.ajax({
+      url : "/notifications/"+id,
+      type : "delete"
+    }).done(function(data) {
+      // Delete that item
+      $("ul#notificationList li[data-notification-id='" + id +"']").remove();
+    });
+  };
   /*
    $('.dropdown-menu').on('click', function(event){
    //The event won't be propagated to the document NODE and

@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101130619) do
+ActiveRecord::Schema.define(version: 20161104145148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
-    t.string   "trackable_type"
     t.integer  "trackable_id"
-    t.string   "owner_type"
+    t.string   "trackable_type"
     t.integer  "owner_id"
+    t.string   "owner_type"
     t.string   "key"
     t.text     "parameters"
-    t.string   "recipient_type"
     t.integer  "recipient_id"
+    t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 20161101130619) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
-    t.string   "commentable_type"
     t.integer  "commentable_id"
+    t.string   "commentable_type"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20161101130619) do
     t.integer  "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.boolean  "is_deleted"
     t.index ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
@@ -183,8 +184,8 @@ ActiveRecord::Schema.define(version: 20161101130619) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.string   "invited_by_type"
     t.integer  "invited_by_id"
+    t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.string   "name"
     t.string   "avatar_file_name"

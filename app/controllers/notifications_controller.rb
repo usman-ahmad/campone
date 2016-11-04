@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  before_action :set_notification, only: [:update]
+  before_action :set_notification, only: [:update, :destroy]
 
   def index
     @notifications = Notification.where(user_id: current_user).order("created_at desc")
@@ -27,6 +27,14 @@ class NotificationsController < ApplicationController
       format.js {
         current_user.notifications.update_all(status: 'read')
       }
+    end
+  end
+
+  def destroy
+    if @notification.update_attributes(is_deleted: true)
+      render json: {}, status: :ok
+    else
+      render json: {status: 'Not Deleted'}, status: :unprocessable_entity
     end
   end
 
