@@ -14,12 +14,11 @@ $(document).on('turbolinks:load', function(){
     var array = [id];
 
     $.ajax({
-      url : "/notifications/update",
+      url : "/notifications/"+id,
       type : "patch",
-      data: {data_value: JSON.stringify(array)}
     }).done(function(data) {
       // Update unread count
-      var newUnreadCount = parseInt($('#badge.notification-badge').text()) - data.decreasedUnreadCount;
+      var newUnreadCount = parseInt($('#badge.notification-badge').text()) - 1;
       $('#badge.notification-badge').text(newUnreadCount > 0 ? newUnreadCount : '')
     });
   };
@@ -119,7 +118,7 @@ function toggle_panel_visibility($lateral_panel, $background_layer, $body) {
   } else {
     // Load Notifications List from server
     $.ajax({
-      url: "/notifications/index.js"
+      url: "/notifications.js"
     }).done(function() {
       console.log('Notifications Loaded successfully.')
     });

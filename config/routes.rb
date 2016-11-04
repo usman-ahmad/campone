@@ -48,10 +48,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  resource :notifications do
-    member do
-      get 'index'
-      patch 'update'
+  resources :notifications do
+    collection do
       patch 'mark_all_read'
     end
   end
