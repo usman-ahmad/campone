@@ -1,7 +1,6 @@
 Commented:
 <% if (comment = activity.trackable) && (activity.trackable.commentable.present?) %>
-  <%= strip_tags comment.content %> on
-  <%= link_to comment.commentable.title, commentable_url(comment) %>
+  <%= truncate(strip_tags(comment.content), :length => 50) %>
 <% else %>
   which has since been removed
 <% end %>

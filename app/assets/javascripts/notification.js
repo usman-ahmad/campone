@@ -10,8 +10,6 @@ $(document).on('turbolinks:load', function(){
   };
 
   update_notice = function (id){
-    // GS 20161103 why we are sending an array?
-    var array = [id];
 
     $.ajax({
       url : "/notifications/"+id,
@@ -30,7 +28,7 @@ $(document).on('turbolinks:load', function(){
   });
 
   $('ul#notificationList').on('click','#deleteNotificationBtn', function(event){
-    notificationId = $(this).parent('li').data('notification-id');
+    notificationId = $(this).parents('li').data('notification-id');
     delete_notice(notificationId);
     event.stopPropagation();
   });
