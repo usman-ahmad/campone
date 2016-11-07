@@ -83,14 +83,16 @@ $color_east_bay_60_approx: rgba(67, 87, 121, 0.6);
   }
   h2 {
     font-size: 14px;
-    font-size: 0.875rem;
-    font-weight: bold;
+    margin-top: 0;
+    font-weight: normal;
     text-transform: uppercase;
-    margin: 1em 0;
+    display: inline-block;
   }
   .cd-cart-items {
+    margin-left: 0;
     padding: 0;
     li {
+      overflow: hidden;
       position: relative;
       padding: 1em;
       border-top: 1px solid $color_mystic_approx;
@@ -209,14 +211,12 @@ $color_east_bay_60_approx: rgba(67, 87, 121, 0.6);
   #cd-cart {
     width: 25%;
     padding-top: 80px;
-    > * {
-      padding: 0 2em;
-    }
     .cd-item-remove {
       right: 2em;
     }
     .cd-cart-items li {
-      padding: 1em 2em;
+      overflow: hidden;
+      padding: 1em 1em;
     }
   }
   main {

@@ -1,8 +1,12 @@
 <% notifications.each do |notification| %>
-  <li class="<%= notification.unread? ? 'notification-unread' : '' %>" data-notification-id="<%= notification.id %>">
-    <i class="fa fa-times fa-lg" id="deleteNotificationBtn" aria-hidden="true"></i>
-    <%= notification_links(notification) %>
-    <span class=""><b><%= notification.activity.owner.name if notification.activity.owner %></b></span>
-    <%= render_activity notification.activity %>
-  </li>
+    <li class="<%= notification.unread? ? 'notification-unread' : '' %>" data-notification-id="<%= notification.id %>">
+    <span style="cursor: pointer; float: left;">
+      <i class="fa fa-times" id="deleteNotificationBtn" aria-hidden="true"></i>
+    </span>
+    <span class="col-md-11" style="padding-right: 0;">
+      <%= notification_links(notification) %>
+      <span class=""><b><%= notification.activity.owner.name if notification.activity.owner %></b></span>
+      <%= render_activity notification.activity %>
+    </span>
+    </li>
 <% end %>
