@@ -29,9 +29,10 @@ $(document).on('turbolinks:load', function(){
     update_notice(notificationId)
   });
 
-  $('ul#notificationList').on('click','#deleteNotificationBtn', function(){
+  $('ul#notificationList').on('click','#deleteNotificationBtn', function(event){
     notificationId = $(this).parent('li').data('notification-id');
     delete_notice(notificationId);
+    event.stopPropagation();
   });
 
   delete_notice = function (id){
