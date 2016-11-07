@@ -26,3 +26,8 @@ $(document).on 'turbolinks:load', ->
   $(".date_picker").datepicker({
     dateFormat: "yy-mm-dd"
   });
+
+  $('.contributors-tooltip').tooltip
+    html: true
+    placement: 'bottom'
+    title: $('.contributors-list').html()

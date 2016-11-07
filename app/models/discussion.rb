@@ -22,4 +22,8 @@ class Discussion < ApplicationRecord
      return last_disc_activity
    end
 
+  def other_contributors
+     private ? users : (project.members - [posted_by])
+  end
+
 end
