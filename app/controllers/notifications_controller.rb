@@ -3,10 +3,11 @@ class NotificationsController < ApplicationController
 
   def index
     @notifications = Notification.where(user_id: current_user).order("created_at desc")
+    @page = params[:page].try(:to_i) || 1
 
     respond_to do |format|
       format.html { @notifications = @notifications.group_by { |n| n.task_or_discussion }}
-      format.js   { @notifications = @notifications.first(10) }
+      format.js   { @notifications = @notifications.paginate(:page => @page, :per_page => 10) }
     end
   end
 

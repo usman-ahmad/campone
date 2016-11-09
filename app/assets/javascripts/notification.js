@@ -129,12 +129,14 @@ function toggle_panel_visibility($lateral_panel, $background_layer, $body) {
     $background_layer.removeClass('is-visible');
 
   } else {
-    // Load Notifications List from server
-    $.ajax({
-      url: "/notifications.js"
-    }).done(function() {
-      console.log('Notifications Loaded successfully.')
-    });
+    if ($('#notificationList li').length == 0){
+      // Load Notifications List from server
+      $.ajax({
+        url: "/notifications.js"
+      }).done(function() {
+        console.log('Notifications Loaded successfully.')
+      });
+    }
 
     $lateral_panel.addClass('speed-in').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
       $body.addClass('overflow-hidden');

@@ -1,1 +1,9 @@
-$('#notificationList').html("<%= j (render 'notifications/notification_list', notifications: @notifications) %>");
+$('#notificationList').append("<%= j (render 'notifications/notification_list', notifications: @notifications) %>");
+
+var show_more_link = $("#show_more_notifications");
+
+<% if @notifications.total_pages == @notifications.current_page %>
+  show_more_link.hide();
+<% else %>
+  show_more_link.attr('href', "<%= notifications_path(page: @page+1) %>");
+<% end %>

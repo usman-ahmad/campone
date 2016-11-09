@@ -63,6 +63,9 @@ gem 'private_pub'
 gem 'bootstrap-social-rails'
 gem 'jquery-ui-sass-rails'
 
+# Pagination library
+gem 'will_paginate', '~> 3.1.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 # Use Unicorn as the app server

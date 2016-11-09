@@ -6,5 +6,6 @@
   <ul class="cd-cart-items" id="notificationList">
     <!--populate notifications here-->
   </ul>
+  <%= link_to 'Show More', notifications_path, :remote => true, :id => 'show_more_notifications' %>
   <p class="cd-go-to-cart"><a href="<%= notifications_path %>">Go to Notification Page</a></p>
 </div>
