@@ -95,5 +95,4 @@ Rails.application.configure do
       authentication:       'plain',
       enable_starttls_auto: true
   }
-  ENV['APP_URL'] = 'https://www.campone.com' #accordind to web address
 end
