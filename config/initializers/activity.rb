@@ -6,9 +6,9 @@ PublicActivity::Activity.class_eval do
 
   def create_notification
     users_to_notify = case self.trackable_type
-                        when "Task"
+                        when 'Task'
                           get_notifiable_users_for_task(trackable)
-                        when "Discussion"
+                        when 'Discussion'
                           get_notifiable_users_for_discussion(trackable)
                         when "Comment"
                           get_notifiable_users_for_comment
@@ -60,9 +60,9 @@ PublicActivity::Activity.class_eval do
 
   def get_notifiable_users_for_comment
     case trackable.commentable_type
-      when "Task"
+      when 'Task'
         get_notifiable_users_for_task(trackable.commentable)
-      when "Discussion"
+      when 'Discussion'
         get_notifiable_users_for_discussion(trackable.commentable)
     end
   end
@@ -84,7 +84,7 @@ PublicActivity::Activity.class_eval do
 
   def get_trackable
     case self.trackable_type
-      when "Task" || "Discussion"
+      when 'Task', 'Discussion'
         trackable
       when "Comment"
         trackable.commentable
@@ -94,20 +94,20 @@ PublicActivity::Activity.class_eval do
 
   def discription
     text = case self.trackable_type
-             when "Task"  || "Discussion"
-               "#{owner.email}: " + activty_type
+             when 'Task', 'Discussion'
+               "#{owner.name}: " + activty_type
              when "Comment"
-               "#{owner.email}: " + activty_type + ': '+ trackable.content
+               "#{owner.name}: " + activty_type + ': '+ trackable.content
            end
     ActionController::Base.helpers.strip_tags text
   end
 
   def get_trackable_url
     case self.trackable_type
-      when "Task" || "Discussion"
-        "#{ENV['APP_URL']}/projects/#{project.id.to_s}/#{trackable_type.downcase}s/#{trackable.id.to_s}"
+      when 'Task', 'Discussion'
+        "#{ENV['HOST']}/projects/#{project.id.to_s}/#{trackable_type.downcase}s/#{trackable.id.to_s}"
       when "Comment"
-        "#{ENV['APP_URL']}/projects/#{project.id.to_s}/#{trackable.commentable_type.downcase}s/#{trackable.commentable.id.to_s}"
+        "#{ENV['HOST']}/projects/#{project.id.to_s}/#{trackable.commentable_type.downcase}s/#{trackable.commentable.id.to_s}"
     end
   end
 
