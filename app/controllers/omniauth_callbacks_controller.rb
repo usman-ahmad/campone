@@ -46,9 +46,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def associate_account
+    # TODO: Improve this feature
     @user = @user.associate_account(params[:user][:existing_email], params[:user][:password])
     if @user != current_user
-      current_user.destroy
+      current_user.hard_delete
+
       set_flash_message(:notice, :success, kind: 'Existing') if is_navigational_format?
       sign_in_and_redirect @user, event: :authentication
     else

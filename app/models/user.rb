@@ -64,6 +64,11 @@ class User < ApplicationRecord
     self
   end
 
+  def hard_delete
+    # TODO: Hard delete contributions and everything else
+    projects.destroy_all
+  end
+
   ##################################################################
   #Below enclosed code writen for the purpose of generating authentication token for API
   before_save :ensure_authentication_token
