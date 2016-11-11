@@ -1,18 +1,15 @@
 <%= form_for([@project, @integration], html: {role: "form", class: "form-horizontal"}) do |f| %>
-  <div class="form-group">
-    <%= f.label :url, 'URL', class: "col-md-2 control-label" %>
-    <div class="col-md-8" placeholder="http://github.com/user/repo_name">
-      <%= f.url_field :url, class: "form-control" %>
-    </div>
-      <div class="col-md-8">
-        <%= f.label :name, 'Name', class: "col-md-2 control-label" %>
-        <%= f.select :name, ["github","bitbucket","slack","hipchat","flowdock", "jira"], class: "form-control"%>
+    <div class="form-group">
+      <%= f.label :url, 'URL', class: "col-md-2" %>
+      <div class="col-md-10">
+        <%= f.url_field :url, class: "form-control" %>
       </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= f.submit class: "btn btn-primary" %>
     </div>
-  </div>
+    <div class="form-group">
+      <%= f.label :name, 'Name', class: "col-md-2" %>
+      <div class="col-md-10">
+        <%= f.select :name, ["github", "bitbucket", "slack", "hipchat", "flowdock", "jira"], {}, class: "form-control" %>
+      </div>
+    </div>
+    <%= f.submit class: "btn btn-success pull-right" %>
 <% end %>
