@@ -1,16 +1,8 @@
-<h2>Invite Users</h2>
-<%= form_tag({controller: "contributions", action: "create"}, method: "post" ) do %>
-  <%= label_tag(:email, "Email :") %>
-  <%= text_field_tag(:email) %>
+<h2>Contributions</h2>
+<div class="col-md-8">
+  <%= render 'contributions/list' %>
+</div>
 
-  <br>
-  <%= label_tag(:role, "Role :") %>
-  <%= select_tag :role, options_for_select(Contribution::ROLES.values)%>
-  <br>
-  <%= submit_tag("Invite") %>
-<% end %>
-
-<h2>Already Invited Users</h2>
-<% @contributions.each do |i| %>
-  <p><%= i.user.email %> <%= "(#{i.role}) " if i.role %></p>
-<% end %>
+<div class="col-md-4">
+  <%= render 'contributions/form' %>
+</div>

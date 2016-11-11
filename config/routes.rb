@@ -17,7 +17,12 @@ Rails.application.routes.draw do
       resources :comments
     end
 
-    resources :contributions, only: [:new, :create]
+    resources :contributions, only: [:new, :create, :destroy] do
+      member do
+        post 'resend_invitation'
+      end
+    end
+
     resources :attachments, only: [:index, :new, :create, :destroy, :edit, :update] do
       member do
         get 'download'

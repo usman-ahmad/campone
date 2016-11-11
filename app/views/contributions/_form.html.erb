@@ -1,0 +1,15 @@
+<%= form_for [@project, @contribution], html: { role: "form", class: 'form-horizontal' } do |f| %>
+  <div class="form-group">
+    <%= f.label :email, class: "col-md-2" %>
+    <div class="col-md-10">
+      <%= f.text_field :email, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :role, class: "col-md-2"  %>
+    <div class="col-md-10">
+      <%= f.select :role, options_for_select(Contribution::ROLES.values), {}, class: "form-control" %>
+    </div>
+  </div>
+  <%= f.submit "Invite", class: "btn btn-success pull-right" %>
+<% end %>

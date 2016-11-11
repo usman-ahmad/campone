@@ -13,7 +13,9 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @contribution  = Contribution.new
     @contributions = @project.contributions
+
     @integration = Integration.new
     @integrations = @project.integrations.all
   end

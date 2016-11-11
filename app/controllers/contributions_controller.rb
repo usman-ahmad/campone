@@ -3,24 +3,39 @@ class ContributionsController < ApplicationController
   load_and_authorize_resource :contribution, :through => :project
 
   before_action :set_project
+  before_action :set_contribution, except: [:new, :create]
+
   def new
+    @contribution  = Contribution.new
     @contributions = @project.contributions
   end
 
   def create
-    user = User.where(email: params[:email]).first
+    contribution =  @project.contributions.create(contribution_params)
+    flash[:alert] = contribution.valid? ? 'Invitations sent.' : contribution.errors.full_messages.join
+    redirect_back(fallback_location: project_path(@project))
+  end
 
-    unless user
-      user = User.invite!(email: params[:email]) if params[:email].present?
-    end
+  def destroy
+    @contribution.destroy
+    redirect_to project_path(@project), notice: 'Removed from contributors.'
+  end
 
-    @project.contributions.create(user: user, role: params[:role] ) if params[:email].present?
-    redirect_to :back
+  def resend_invitation
+    @contribution.resend_invitation
   end
 
   private
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_contribution
+    @contribution = @project.contributions.find(params[:id])
+  end
+
+  def contribution_params
+    params.require(:contribution).permit(:email,:role)
   end
 end
