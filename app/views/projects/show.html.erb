@@ -49,10 +49,21 @@
     <%= render 'integrations/form' %>
   </div>
   <div class="clearfix"></div>
-  <%= link_to "Configure Twitter account to receive notification tweets", user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>
-  <br/>
-  <%= link_to "Integrate Asana account and import your tasks", user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
-  <br/>
-  <%= link_to "Integrate Trello account and import your tasks", user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
-  <br/>
+  <div class="col-md-12 mg-t20" style="padding: 0 0">
+    <div class="col-md-4">
+      <a class="btn btn-block btn-social btn-twitter" href="<%= user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>">
+        <i class="fa fa-twitter"></i> Configure Twitter Account to Receive Notification Tweets
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="btn btn-block btn-social btn-asana" href="<%= user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+        <%= image_tag('asana-fill.png') %> Integrate Asana Account and Import your Tasks
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="btn btn-block btn-social btn-trello" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+        <i class="fa fa-trello"></i> Integrate Trello Account and Import your Tasks
+      </a>
+    </div>
+  </div>
 </div>

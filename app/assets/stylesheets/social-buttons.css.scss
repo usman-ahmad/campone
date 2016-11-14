@@ -1,0 +1,60 @@
+
+.btn-social {
+  position: relative;
+  padding-left: 44px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.btn-social :first-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  line-height: 34px;
+  font-size: 1.6em;
+  text-align: center;
+}
+
+.btn-twitter {
+  color: #fff;
+  background-color: #2ba9e1;
+  border-color: rgba(0, 0, 0, 0.2)
+}
+
+.btn-twitter:hover, .btn-twitter:focus, .btn-twitter:active, .btn-twitter.active {
+  color: #fff;
+  background-color: #1c92c7;
+  border-color: rgba(0, 0, 0, 0.2)
+}
+
+.btn-trello {
+  color: #fff;
+  background-color: #0079bf;
+  border-color: rgba(0, 0, 0, 0.2)
+}
+
+.btn-trello:hover, .btn-trello:focus, .btn-trello:active, .btn-trello.active {
+  color: #fff;
+  background-color: #026faf;
+  border-color: rgba(0, 0, 0, 0.2)
+}
+
+.btn-asana {
+  color: #fff;
+  background-color: #005983;
+  border-color: rgba(0, 0, 0, 0.2)
+}
+
+.btn-asana :first-child {
+  padding: 5px;
+}
+
+.btn-asana:hover, .btn-asana:focus, .btn-asana:active, .btn-asana.active {
+  color: #fff;
+  background-color: #084663;
+  border-color: rgba(0, 0, 0, 0.2)
+}
