@@ -334,4 +334,3 @@ Rails.application.config.to_prepare do
   Devise::UnlocksController.layout 'welcome'
   Devise::PasswordsController.layout 'welcome'
 end
-

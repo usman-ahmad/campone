@@ -105,5 +105,3 @@ class TrelloImport < ImportService
 =end
 
 end
-
-
