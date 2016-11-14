@@ -61,7 +61,7 @@
       </a>
     </div>
     <div class="col-md-4">
-      <a class="btn btn-block btn-social btn-trello" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+      <a class="btn btn-block btn-social btn-trello" data-turbolinks="false" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
         <i class="fa fa-trello"></i> Integrate Trello Account and Import your Tasks
       </a>
     </div>
