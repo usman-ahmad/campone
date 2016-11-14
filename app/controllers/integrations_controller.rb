@@ -37,7 +37,7 @@ class IntegrationsController < ApplicationController
 
   def destroy
     @integration.destroy
-    redirect_to project_integrations_path(@project), notice: 'Integration deleted.'
+    redirect_back fallback_location: project_integrations_path(@project), notice: 'Integration deleted.'
   end
 
   # For now keeping these import related methods here, we'll consider making a new controller

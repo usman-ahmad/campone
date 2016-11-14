@@ -18,7 +18,7 @@ class ImportService
       when 'asana'
         AsanaImport.new(integration)
       else
-        Raise 'Unable to import from this integration'
+        raise 'Unable to import from this integration'
     end
   end
 end

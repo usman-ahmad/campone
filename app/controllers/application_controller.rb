@@ -32,4 +32,8 @@ class ApplicationController < ActionController::Base
       redirect_to finish_signup_path(current_user)
     end
   end
+
+  def importable?(name)
+    %w[trello jira asana].include? name
+  end
 end
