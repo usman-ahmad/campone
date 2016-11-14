@@ -38,6 +38,7 @@ coverage
 # What happens in Vegas stays in Vegas
 /public/system
 /public/uploads
+/public/assets
 
 # Ignore  local environment variables
 /config/initializers/ignored_vars.rb
