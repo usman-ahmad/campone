@@ -129,5 +129,8 @@ gem 'asana'
 gem 'jira-ruby', github: 'zuf/jira-ruby', branch: 'master'
 gem 'ruby-trello', github: 'spodlecki/ruby-trello', branch: 'features/oauth-gem-loosen-restriction'
 
+# To interact with Pivotal Tracker API
+gem 'tracker_api'
+
 # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications.
 gem 'puma'

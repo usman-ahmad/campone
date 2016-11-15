@@ -17,6 +17,8 @@ class ImportService
         JiraImport.new(integration)
       when 'asana'
         AsanaImport.new(integration)
+      when 'tracker'
+        TrackerImport.new(integration)
       else
         raise 'Unable to import from this integration'
     end
