@@ -3,13 +3,17 @@ class Task < ApplicationRecord
   include PublicActivity::Common
 
   extend FriendlyId
-  friendly_id :current_ticket_id, use: [:slugged,:finders], slug_column: :ticket_id
+  friendly_id :current_ticket_id, use: [:slugged, :finders], slug_column: :ticket_id
   alias_attribute :slug, :ticket_id
 
   belongs_to :project
+
   belongs_to :creator, class_name: User, foreign_key: :user_id
-  has_many :comments,    as: :commentable
+  belongs_to :owner, class_name: User, foreign_key: :assigned_to
+
   has_many :attachments, as: :attachable
+
+  has_many :comments,    as: :commentable
 
   before_create :set_position
   after_create  :increment_ticket_counter
@@ -20,9 +24,9 @@ class Task < ApplicationRecord
       MEDIUM: 'Medium',
       HIGH:   'High'
   }
+
   # if you changed the order of any value of PROGRESSES array than it will reflect in lib/state.rb file.
   # So dont change order
-
   PROGRESSES = {
       NO_PROGRESS: 'No progress',
       STARTED:  	 'Started',

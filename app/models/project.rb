@@ -4,12 +4,14 @@ class Project < ApplicationRecord
 
   belongs_to :owner, class_name: 'User'
 
-  has_many :tasks
-  has_many :discussions
   has_many :contributions
   has_many :members, through: :contributions, :source => :user
+
+  has_many :tasks
+  has_many :discussions
   has_many :events
   has_many :attachments
+
   has_many :integrations
   has_many :payloads, through: :integrations
 
