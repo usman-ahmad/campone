@@ -44,7 +44,6 @@ describe 'projects management', type: :feature do
   end
 
   def check_fields
-    expect(page).to have_content('Group:')
     expect(page).to have_content('Name:')
     expect(page).to have_content('camp one')
     expect(page).to have_content('Description:')

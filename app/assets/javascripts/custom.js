@@ -19,14 +19,6 @@ $(document).on('turbolinks:load', function() {
         });
 
     });
-    function showGroupFieldsfiles() {
-        var hideField_discussion = $('#hideField-files');
-        var showField_discussion = $('#showField-files');
-        $('.newgroup_icon').click(function () {
-            showField_discussion.hide();
-            hideField_discussion.removeClass('hide');
-        });
-    }
 
     $('#myTextbox').on('input', function () {
         var hide_todo = $('#hide-todo');
@@ -42,6 +34,4 @@ $(document).on('turbolinks:load', function() {
     $('.description-textarea').trumbowyg();
 
     $('[data-toggle="tooltip"]').tooltip();
-
-    showGroupFieldsfiles();
 });

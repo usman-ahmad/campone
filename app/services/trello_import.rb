@@ -49,13 +49,12 @@ class TrelloImport < ImportService
   end
 
   def create_task_from_payload(payload)
-    card_id   = payload.info['webhook']['action']['data']['card']['id']
-    list_name = payload.info['webhook']['action']['data']['list']['name']
-
+    card_id = payload.info['webhook']['action']['data']['card']['id']
+    # list_name = payload.info['webhook']['action']['data']['list']['name']
     card = @client.find(:card, card_id)
-    group = TaskGroup.find_or_create_by(name: list_name, project_id: @project.id)
-
-    import_task(card, group.id)
+    # group = TaskGroup.find_or_create_by(name: list_name, project_id: @project.id)
+    # import_task(card, group.id)
+    import_task(card)
   end
 
   def project_list
