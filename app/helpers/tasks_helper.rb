@@ -14,12 +14,4 @@ module TasksHelper
         User.find(task.assigned_to).name
     end
   end
-
-  def state_label(state)
-     if state == Task::PROGRESSES[:COMPLETED] || state == Task::PROGRESSES[:CLOSED]
-       state.remove('d')
-     else
-       state.remove('ed')
-     end
-  end
 end

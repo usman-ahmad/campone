@@ -75,11 +75,11 @@ class JiraImport < ImportService
   def map_progress(progress)
     case progress
       when 'To Do'
-        Task::PROGRESSES[:NO_PROGRESS]
+        Task::PROGRESS_MAP[:NO_PROGRESS]
       when 'Done'
-        Task::PROGRESSES[:COMPLETED]
+        Task::PROGRESS_MAP[:COMPLETED]
       when 'In Progress'
-        Task::PROGRESSES[:IN_PROGRESS]
+        Task::PROGRESS_MAP[:IN_PROGRESS]
     end
   end
 end

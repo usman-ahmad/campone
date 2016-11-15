@@ -25,38 +25,32 @@ class Task < ApplicationRecord
       HIGH:   'High'
   }
 
-  # if you changed the order of any value of PROGRESSES array than it will reflect in lib/state.rb file.
-  # So dont change order
-  PROGRESSES = {
-      NO_PROGRESS: 'No progress',
-      STARTED:  	 'Started',
-      IN_PROGRESS: 'In progress',
-      COMPLETED:   'Completed',
-      REJECTED:    'Rejected',
-      ACCEPTED:    'Accepted',
-      DEPLOYED:    'Deployed',
-      CLOSED:      'Closed'
+  PROGRESS_MAP = {
+      NOT_SCHEDULED: 'unscheduled',
+      NO_PROGRESS: 'unstarted',
+      IN_PROGRESS: 'started',
+      PAUSED: 'paused',
+      COMPLETED: 'finished',
+      DEPLOYED: 'delivered',
+      REJECTED: 'rejected',
+      ACCEPTED: 'accepted',
+      CLOSED: 'accepted'
   }
 
-  GET_NEXT_STATE = {
-      :started     => [Task::PROGRESSES[:IN_PROGRESS], Task::PROGRESSES[:CLOSED]],
-      :in_progress => [Task::PROGRESSES[:COMPLETED],   Task::PROGRESSES[:CLOSED]],
-      :completed   => [Task::PROGRESSES[:REJECTED],    Task::PROGRESSES[:ACCEPTED],
-                       Task::PROGRESSES[:DEPLOYED],    Task::PROGRESSES[:CLOSED]],
-      :rejected    => [Task::PROGRESSES[:STARTED],     Task::PROGRESSES[:CLOSED]],
-      :deployed    => [Task::PROGRESSES[:ACCEPTED],    Task::PROGRESSES[:REJECTED]],
-      :accepted    => [Task::PROGRESSES[:DEPLOYED]],
-      :closed      => [Task::PROGRESSES[:STARTED]],
-      :no_progress => [Task::PROGRESSES[:STARTED]],
-  }
+  PROGRESSES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
+  delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
+           to: :current_state
+  COMPLETED_PROGRESSES = %w[finished delivered accepted]
+  NOT_COMPLETED_PROGRESSES = %w[unscheduled unstarted started paused rejected]
 
   validates :title, presence: true
   validates :project, presence: true
 
-  validates :progress, inclusion: { in: PROGRESSES.values }
-  validates :priority, inclusion: { in: PRIORITIES.values }
+  validates_inclusion_of :progress, in: PROGRESSES
+  validates_inclusion_of :priority, in: PRIORITIES.values
 
-  scope :not_completed, -> { where(progress: not_completed_progresses) }
+  scope :completed, -> { where(progress: COMPLETED_PROGRESSES) }
+  scope :not_completed, -> { where(progress: NOT_COMPLETED_PROGRESSES) }
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
@@ -64,32 +58,66 @@ class Task < ApplicationRecord
         due_at < Date.today if due_at.present?
   end
 
-  def not_completed?
-    Task.not_completed_progresses.include?(self.progress)
+  # def not_completed?
+  #   !completed?
+  # end
+  def completed?
+    COMPLETED_PROGRESSES.include?(self.progress)
   end
 
-  def completed?
-    !not_completed?
+  def current_state
+    progress.inquiry
   end
+
+  # :to_do => :unscheduled, :unstarted
+  # :doing => :started, :paused, :rejected
+  # :done => :finished, :delivered, :accepted
 
   def next_states
-    GET_NEXT_STATE[progress.tr(' ', '_').downcase.to_sym]
+    case progress
+      when 'unscheduled'
+        {schedule: 'unstarted', start: 'started'}
+      when 'unstarted'
+        {start: 'started'}
+      when 'started'
+        {pause: 'paused', finish: 'finished'}
+      when 'paused'
+        {resume: 'started'}
+      when 'finished'
+        {deliver: 'delivered'}
+      when 'delivered'
+        {accept: 'accepted', reject: 'rejected'}
+      when 'rejected'
+        {restart: 'started'}
+      when 'accepted'         # :accepted ~ :closed
+        {}
+      else
+        {}
+    end
   end
 
   # TODO: Refactor this method. Right now it wont assign task if it is already assigned to another user.
+  # UA[2016/11/14] - TODO - REFACTOR THIS CREEPY METHOD - (BTW) WHAT IS IT DOING
   def assigned_to_me(current_user)
-    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?(PROGRESSES[:NO_PROGRESS]))
+    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?('unstarted'))
       if update_attributes(assigned_to: current_user.id)
-         'Task assigned to You' end
-    else 'Task already assigned'end
+        'Task assigned to You'
+      end
+    else
+      'Task already assigned'
+    end
   end
 
   # To improve user experience if a user starts progress should't we assign task to him automatically, like pivotal
   def set_progress(current_user, progress)
     if (assigned_to).eql?(current_user.id)
       if update_attributes(progress: progress)
-      else 'status of task could not change' end
-    else   'Task is not assigned to you' end
+      else
+        'status of task could not change'
+      end
+    else
+      'Task is not assigned to you'
+    end
   end
 
   def self.filter_tasks(search_text: nil, include_completed: false)
@@ -105,7 +133,7 @@ class Task < ApplicationRecord
   end
 
   def self.to_csv(options = {})
-    csv_headers = ['title', 'description', 'priority','progress', 'due_at']
+    csv_headers = ['title', 'description', 'priority', 'progress', 'due_at']
 
     CSV.generate(options) do |csv|
       csv << csv_headers
@@ -119,17 +147,14 @@ class Task < ApplicationRecord
   def self.import(file, project, current_user)
     # TODO: Make it atomic
     CSV.foreach(file.path, headers: true) do |row|
-      attributes  = row.to_hash
+      attributes = row.to_hash
       attributes['user_id'] = current_user
 
       project.tasks.create!(attributes)
     end
   end
-  private
 
-  def self.not_completed_progresses
-    [ PROGRESSES[:NO_PROGRESS], PROGRESSES[:STARTED], PROGRESSES[:IN_PROGRESS], PROGRESSES[:REJECTED]]
-  end
+  private
 
   def set_position
     self.position = self.project.tasks.count + 1

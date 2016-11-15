@@ -40,7 +40,7 @@
                   <% if task.assigned_to.present? %>
                     <span class="tag">Assigned To (<%= task_assigned_to task %>)</span>
                   <%end%>
-                  <%= content_tag(:span,"Progress: #{task.progress.humanize}", class:"tag #{ 'hidden' if task.progress == Task::PROGRESSES[:NO_PROGRESS]}" ) %>
+                  <%= content_tag(:span, task.progress, class: 'tag' ) %>
               </span>
 
           <div class="pull-right">

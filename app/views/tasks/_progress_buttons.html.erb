@@ -1,3 +1,3 @@
-<% @task.next_states.each do |state| %>
-    <%= link_to state_label(state), set_progress_project_task_path(@project, @task,progress: state), method: :patch, remote: true, class: 'btn btn-default' %>
+<% @task.next_states.each do |event, state| %>
+    <%= link_to event, set_progress_project_task_path(@project, @task, progress: state), method: :patch, remote: true, class: 'btn btn-default' %>
 <% end %>

@@ -17,18 +17,18 @@ end
 
 
 RSpec.describe Task, type: :model do
-  let(:user)   { create(:user) }
-  let(:project){ create(:project, owner: user, name: 'T E S Ting') }
+  let(:user) { create(:user) }
+  let(:project) { create(:project, owner: user, name: 'T E S Ting') }
 
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:project) }
 
-    it { should     allow_value('No progress','Started','In progress','Completed',
-                                'Rejected','Accepted','Deployed','Closed').for(:progress) }
-    it { should_not allow_value("blah")     .for(:progress) }
+    it { should allow_value('unscheduled', 'unstarted', 'started', 'paused', 'finished', 'delivered', 'rejected',
+                            'accepted').for(:progress) }
+    it { should_not allow_value("blah").for(:progress) }
 
-    it { should     allow_value('None','Low','Medium','High').for(:priority) }
+    it { should allow_value('None', 'Low', 'Medium', 'High').for(:priority) }
     it { should_not allow_value("blah").for(:priority) }
   end
 
@@ -42,9 +42,9 @@ RSpec.describe Task, type: :model do
 
 
   describe 'default values' do
-    expected_values = { progress: 'No progress', priority: 'None' }
+    expected_values = {progress: 'unstarted', priority: 'None'}
 
-    expected_values.each do |key,val|
+    expected_values.each do |key, val|
       it { is_expected.to have_value(key, val) }
     end
   end
@@ -61,7 +61,7 @@ RSpec.describe Task, type: :model do
         task = create(:task, title: 'task two', creator: user, project: project)
         expect(task.position).to eq 2
       end
-      
+
       it 'assigns first position for first task of an other project' do
         another_project = create(:project, owner: user)
         task = create(:task, title: 'task three', creator: user, project: another_project)
@@ -75,17 +75,17 @@ RSpec.describe Task, type: :model do
       end
 
       it 'increases current_ticket_id' do
-        expect{ create(:task, project: project, creator: user) }.to change{ project.current_ticket_id }.by(1)
+        expect { create(:task, project: project, creator: user) }.to change { project.current_ticket_id }.by(1)
       end
     end
   end
 
-    describe 'class level methods' do
+  describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
-    let!(:task)          { create(:task, title: 'task one', description: 'task 1 create ERD',   progress: 'Started',   creator: user, project: project) }
-    let!(:completed_task){ create(:task, title: 'task two', description: 'task 2 create DB',    progress: 'Completed', creator: user, project: project) }
-    let!(:another_task)  { create(:task, title: 'another ', description: 'another description', progress: 'Accepted',  creator: user, project: project) }
+    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', progress: 'started', creator: user, project: project) }
+    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', progress: 'finished', creator: user, project: project) }
+    let!(:another_task) { create(:task, title: 'another ', description: 'another description', progress: 'accepted', creator: user, project: project) }
 
     describe '#filter_tasks' do
       it 'returns non-completed tasks meeting the search criteria' do
@@ -131,16 +131,16 @@ RSpec.describe Task, type: :model do
 
     describe 'CSV import/export' do
       let!(:task1) { create(:task, title: 'create psd', description: 'task one in group',
-                                     progress: 'Started',   creator: user, project: project) }
+                            progress: 'started', creator: user, project: project) }
 
       let!(:task2) { create(:task, title: 'create html templates', description: 'task two in group',
-                                     progress: 'Rejected', priority: 'Medium', creator: user, project: project) }
+                            progress: 'rejected', priority: 'Medium', creator: user, project: project) }
 
 
       describe '#to_csv (export to CSV file)' do
         let!(:exported_string) { Task.all.to_csv }
-        let!(:exported_array)  { CSV.parse(exported_string, headers: true) }
-        let!(:exported_data)   { exported_array.map { |row| row.to_hash }  }
+        let!(:exported_array) { CSV.parse(exported_string, headers: true) }
+        let!(:exported_data) { exported_array.map { |row| row.to_hash } }
 
 
         it 'exports correct number of rows' do
@@ -148,15 +148,15 @@ RSpec.describe Task, type: :model do
         end
 
         describe 'Exported Values' do
-          subject! { exported_data.find{|d| d['title'] == 'create html templates'} }
+          subject! { exported_data.find { |d| d['title'] == 'create html templates' } }
 
           expected_values = {
               title: 'create html templates', description: 'task two in group',
-              progress: 'Rejected', priority: 'Medium'
+              progress: 'rejected', priority: 'Medium'
           }
 
-          expected_values.each do |k,v|
-            it { is_expected.to have_value k, v}
+          expected_values.each do |k, v|
+            it { is_expected.to have_value k, v }
           end
         end
       end
@@ -167,7 +167,7 @@ RSpec.describe Task, type: :model do
         before { Task.import csv_file, project, user }
 
         it 'imports all records' do
-          expect(Task.count).     to eq 8 # 5 existing and 3 newly created from CSV
+          expect(Task.count).to eq 8 # 5 existing and 3 newly created from CSV
         end
 
         describe 'imported task' do
@@ -175,11 +175,11 @@ RSpec.describe Task, type: :model do
 
           expected_values = {
               title: 'add authentication', description: 'use devise',
-              progress: 'Started', priority: 'None'
+              progress: 'started', priority: 'None'
           }
 
-          expected_values.each do |k,v|
-            it { is_expected.to have_value k, v}
+          expected_values.each do |k, v|
+            it { is_expected.to have_value k, v }
           end
         end
       end
@@ -187,7 +187,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe '#assigned_to_me' do
-    let(:another_user){ create(:user) }
+    let(:another_user) { create(:user) }
 
     context 'assigned to nobody' do
       let!(:task) { create(:task, project: project, creator: user) }
@@ -208,7 +208,7 @@ RSpec.describe Task, type: :model do
     end
 
     context 'already in progress' do
-      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, progress: 'In progress') }
+      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, progress: 'started') }
 
       before { task.assigned_to_me(another_user) }
       it 'will not assign task' do
@@ -218,44 +218,44 @@ RSpec.describe Task, type: :model do
   end
 
   describe '#set_progress' do
-    before { task.set_progress(user, 'In progress') }
+    before { task.set_progress(user, 'started') }
 
     context 'Task is assigned to that user' do
       let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
 
       it 'will change progress' do
-        expect(task.progress).to eq 'In progress'
+        expect(task.progress).to eq 'started'
       end
     end
 
     context 'Task is NOT assigned to that user' do
-      let(:another_user){ create(:user) }
+      let(:another_user) { create(:user) }
       let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
 
       it 'would NOT changes progress' do
-        expect(task.progress).to eq 'No progress' # Default value
+        expect(task.progress).to eq 'unscheduled' # Default value
       end
     end
   end
 
   it 'should have title' do
-    expect(build(:low_priority_task, project: project, commenter: project.owner, title:nil )).to_not be_valid
+    expect(build(:low_priority_task, project: project, commenter: project.owner, title: nil)).to_not be_valid
   end
 
   it 'should not allow due date in past', pending: 'Add validation in model if required.' do
-    expect(build(:medium_priority_task, project: project, commenter: project.owner, due_at: (Date.today - 1) )).to_not be_valid
+    expect(build(:medium_priority_task, project: project, commenter: project.owner, due_at: (Date.today - 1))).to_not be_valid
   end
 
   it 'should allow nil due date' do
-    expect(build(:high_priority_task, project: project, commenter: project.owner, due_at: nil )).to be_valid
+    expect(build(:high_priority_task, project: project, commenter: project.owner, due_at: nil)).to be_valid
   end
 
   it 'should allow us to create' do
 
-    expect(create(:low_priority_task,project: project, commenter: project.owner , creator: project.owner ).priority).to eq("Low")
-    expect(create(:low_priority_task,project: project,progress: 'Completed', commenter: project.owner  , creator: project.owner).progress).to eq("Completed")
-    expect(create(:medium_priority_task,project: project , commenter: project.owner , creator: project.owner).priority).to eq("Medium")
-    expect(create(:high_priority_task,project: project,progress: 'No progress' , commenter: project.owner , creator: project.owner).priority).to eq("High")
+    expect(create(:low_priority_task, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Low")
+    expect(create(:low_priority_task, project: project, progress: 'finished', commenter: project.owner, creator: project.owner).progress).to eq("finished")
+    expect(create(:medium_priority_task, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Medium")
+    expect(create(:high_priority_task, project: project, progress: 'unstarted', commenter: project.owner, creator: project.owner).priority).to eq("High")
 
   end
 
