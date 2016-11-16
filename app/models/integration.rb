@@ -7,6 +7,8 @@ class Integration < ApplicationRecord
   belongs_to :project
   has_many :payloads
 
+  # URL is not required for all integrations. We should consider inheritance
+  # There should be way where can define required attributes for an integrations
   validates :url, presence: true
   validates :project_id, presence: true
   validates :name, presence: true
