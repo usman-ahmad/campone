@@ -30,6 +30,7 @@
           <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
           <p class="todo-content">
+            <span class="label label-info progress-status progress-<%= task.progress %>"><%= task.progress %></span>
             <span class="<%= task.completed? ? 'line-through' : '' %>"><%= task.title %></span>
               <span class="tag-holder">
                   <span class="tag <%=  'hidden' if task.priority == 'None' %>">Priority: <%= task.priority %></span>

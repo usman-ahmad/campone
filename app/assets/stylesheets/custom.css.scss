@@ -810,3 +810,46 @@
     list-style: decimal;
   }
 }
+
+.progress-status {
+  margin-right: 10px;
+}
+
+.progress-unscheduled {
+  background-color: #777;
+}
+
+.progress-unstarted {
+  background-color: #c8cbd0;
+  padding: .2em 1.4em .3em;
+}
+
+.progress-started {
+  background-color: #5bc0de;;
+  padding: .2em 2em .3em;
+}
+
+.progress-paused {
+  background-color: #f7c018;
+  padding: .2em 2em .3em;
+}
+
+.progress-finished {
+  background-color: #203e64;
+  padding: .2em 1.9em .3em;
+}
+
+.progress-delivered {
+  background-color: #f39300;
+  padding: .2em 1.6em .3em;
+}
+
+.progress-rejected {
+  background-color: #950828;
+  padding: .2em 1.9em .3em;
+}
+
+.progress-accepted {
+  background-color: #629200;
+  padding: .2em 1.7em .3em;
+}
