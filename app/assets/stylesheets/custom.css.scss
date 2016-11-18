@@ -290,6 +290,7 @@
   border: none;
   background: transparent;
   border-bottom: 1px solid #e4e4e4;
+  padding-top: 5px;
 }
 .custom-ui-state:hover, .custom-ui-state:focus {
   border-bottom-color: #ccc;
@@ -853,3 +854,8 @@
   background-color: #629200;
   padding: .2em 1.7em .3em;
 }
+
+.todo-after + p {
+  margin-bottom: 7px;
+}
+
