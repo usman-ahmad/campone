@@ -1,9 +1,15 @@
 <% content_for(:show_hide_completed) do %>
-    <% include_completed = cookies[:include_completed] == 'true' %>
-    <%= link_to project_tasks_path(@project, include_completed: !include_completed), :data => {:toggle => 'tooltip', :placement => 'bottom'},
-                title: "#{include_completed ? 'Hide Completed Task' : 'Show Completed Task'}" do %>
-        <i class="fa  <%= include_completed ? "fa-eye" : "fa-eye-slash" %>" aria-hidden="true"></i>
-    <% end %>
+    <div class="dropdown">
+      <%= link_to '#', class: 'btn btn-default dropdown-toggle', :data => {:toggle => 'dropdown'} do %>
+          <i class="fa fa-eye" aria-hidden="true"></i>
+      <% end %>
+      <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+        <li><a href="#">Unscheduled Tasks</a></li>
+        <li><a href="#">Current Tasks</a></li>
+        <li><a href="#">Accepted Tasks</a></li>
+        <li class="active"><a href="#">All Tasks</a></li>
+      </ul>
+    </div>
 <% end %>
 
 <% content_for(:search_tasks) do %>

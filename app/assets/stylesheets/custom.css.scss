@@ -857,3 +857,23 @@
   margin-bottom: 7px;
 }
 
+.unscheduled-color {
+  color: #777;
+}
+
+.accepted-color {
+  color: #629200;
+}
+
+.nav-tabs li .dropdown-toggle {
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+  color: #337ab7;
+  margin-top: 7px;
+}
+
+.nav-tabs li .dropdown-toggle:hover,
+.nav-tabs li .dropdown-toggle:focus,
+.nav-tabs li .dropdown-toggle:active {
+  border: 1px solid transparent;
+}
