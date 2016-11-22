@@ -26,33 +26,33 @@
   <div class="col-md-9">
     <ul class="sortable" id="tasks" data-update-url="<%= sort_project_tasks_url %>">
       <% @tasks.each do |task| %>
-        <li id="task_<%= task.id %>" class="ui-state-default custom-ui-state anchor-container" data-href="<%= project_task_path(@project, task) %>">
-          <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
+          <li id="task_<%= task.id %>" class="ui-state-default custom-ui-state anchor-container" data-href="<%= project_task_path(@project, task) %>">
+            <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
-          <p class="todo-content">
-            <%= content_tag(:span, task.progress, class: "label label-info progress-status progress-#{task.progress}") %>
-            <%= task.title %>
-              <span class="tag-holder">
-                <%= content_tag(:span, 'D', class: 'tag', title: 'This task has description') if task.description.present? %>
-                <%= content_tag(:span, 'A', class: 'tag', title: 'This task has attachments') if task.attachments.present? %>
-                <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") unless task.priority.eql?('None') %>
-                <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
-                <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag', title: "Assigned to: #{task_assigned_to task}") if task.assigned_to.present? %>
-                <%= content_tag(:span, "##{task.comments.count}", class: 'tag', title: 'This task has comments') if task.comments.present? %>
-              </span>
+            <p class="todo-content">
+              <%= content_tag(:span, task.progress, class: "label label-info progress-status progress-#{task.progress}") %>
+              <%= task.title %>
+              <%= content_tag :span, class: 'tag-holder' do %>
+                  <%= content_tag(:span, 'D', class: 'tag', title: 'This task has description') if task.description.present? %>
+                  <%= content_tag(:span, 'A', class: 'tag', title: 'This task has attachments') if task.attachments.present? %>
+                  <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") unless task.priority.eql?('None') %>
+                  <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
+                  <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag', title: "Assigned to: #{task_assigned_to task}") if task.assigned_to.present? %>
+                  <%= content_tag(:span, "##{task.comments.count}", class: 'tag', title: 'This task has comments') if task.comments.present? %>
+              <% end %>
 
-          <div class="pull-right todo-after">
-            <a href="<%= edit_project_task_path(@project, task) %>" title="Edit To-Do"><i class="fa fa-pencil customTodo-icon"></i></a>
-            <%= link_to project_task_path(@project, task), method: :delete, data: {confirm: 'Are you sure?'} do %>
-                <i class="fa fa-trash-o customTodo-icon"></i>
-            <% end %>
-          </div>
-          </p>
-        </li>
+            <div class="pull-right todo-after">
+              <a href="<%= edit_project_task_path(@project, task) %>" title="Edit To-Do"><i class="fa fa-pencil customTodo-icon"></i></a>
+              <%= link_to project_task_path(@project, task), method: :delete, data: {confirm: 'Are you sure?'} do %>
+                  <i class="fa fa-trash-o customTodo-icon"></i>
+              <% end %>
+            </div>
+            </p>
+          </li>
       <% end %>
     </ul>
     <div class="newTaskForm">
-        <%= render 'form' %>
+      <%= render 'form' %>
     </div>
   </div>
 </div>
