@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('turbolinks:load', function () {
     var click_on_anchor = false;
     $(".anchor-container").click(function () {
         if (click_on_anchor == true) {
@@ -31,7 +31,11 @@ $(document).on('turbolinks:load', function() {
         $('#hide-todo').addClass('customHideEvent');
     });
 
-    $('.description-textarea').trumbowyg();
+    $('.description-textarea').trumbowyg({
+        resetCss: true,
+        removeformatPasted: true,
+        btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['horizontalRule']]
+    });
 
     $('[data-toggle="tooltip"]').tooltip();
 });
