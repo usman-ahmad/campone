@@ -61,9 +61,10 @@ class Task < ApplicationRecord
   # def not_completed?
   #   !completed?
   # end
-  def completed?
-    COMPLETED_PROGRESSES.include?(self.progress)
-  end
+  # UA[2016/11/22] - NOT BEING USED IN CODE
+  # def completed?
+  #   COMPLETED_PROGRESSES.include?(self.progress)
+  # end
 
   def current_state
     progress.inquiry
