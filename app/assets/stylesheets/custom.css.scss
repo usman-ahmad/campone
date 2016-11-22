@@ -141,7 +141,7 @@
 }
 
 .left-nav > li {
- float: left;
+  float: left;
 }
 
 .dashboard-nav {
@@ -285,32 +285,48 @@
     padding: 0;
   }
 }
-.custom-ui-drag { position: absolute; margin-left: -1.3em; cursor: move }
+
+.custom-ui-drag {
+  position: absolute;
+  margin-left: -1.3em;
+  cursor: move
+}
+
 .custom-ui-state {
   border: none;
   background: transparent;
   border-bottom: 1px solid #e4e4e4;
   padding-top: 5px;
 }
+
 .custom-ui-state:hover, .custom-ui-state:focus {
   border-bottom-color: #ccc;
 }
+
 .todo-content {
   display: inline;
   color: #646363;
   font-size: 14px;
 }
+
 .customTodo-icon {
   font-size: 18px;
   color: #D0D0D0;
   padding: 0 4px;
 }
+
 .customTodo-icon:hover, .customTodo-icon:focus {
   color: #6B7B95;
 }
+
 .tag-holder {
-  margin-left: 5px;
+  margin-left: 2px;
+
+  i.fa, .tag {
+    margin-left: 3px;
+  }
 }
+
 .tag {
   display: inline-block;
   background-color: #eee;
@@ -319,6 +335,7 @@
   font-size: 10px;
   padding: 2px 4px;
 }
+
 .tag a {
   color: #2178c3;
 }
@@ -331,6 +348,7 @@
 .nopadding-left {
   padding-left: 0 !important;
 }
+
 .custom-content-container {
   overflow: hidden;
   padding-top: 30px;
@@ -349,34 +367,41 @@
   border: 1px solid #d3dfeb;
   border-radius: 3px;
 }
+
 .widget:hover, .widget:focus {
   opacity: 1;
 }
+
 .widget img {
   margin-bottom: 10px;
 }
+
 .widget i {
   margin-top: 7px;
   margin-right: 10px;
   color: #6DBAED;
 }
+
 .widget-title {
   font-weight: 400;
   font-size: 18px;
   margin-bottom: 15px;
   color: #000;
 }
+
 .newProject-contianer {
   background-color: #fff;
   border: 1px solid #d3dfeb;
   border-radius: 3px;
 }
+
 .img-back {
   width: 100%;
   height: 100px;
   background: image-url('new_project_background.png') no-repeat;
   margin-bottom: 20px;
 }
+
 .create-project {
   display: block;
   margin: 0 10px 10px 10px;
@@ -384,12 +409,15 @@
   font-size: 18px;
   color: #000;
 }
+
 .create-project span {
   color: #6BB951;
 }
+
 .project-anchors {
   padding: 10px 15px 0;
 }
+
 .anchor-template {
   opacity: 0.8;
   color: #000;
@@ -398,13 +426,16 @@
   line-height: 16px;
   border-top: solid 1px #e7eef2;
 }
+
 .anchor-template:hover, .anchor-template:focus {
   color: #000;
 }
+
 .anchor-template i {
   color: #d3dfeb;
   margin-right: 15px;
 }
+
 .anchor-template:hover i {
   color: #AFAAAA;
 }
@@ -419,16 +450,19 @@
   color: #fff;
   padding: 6px 7px !important;
 }
-.custom-plus:hover , .custom-plus:focus {
+
+.custom-plus:hover, .custom-plus:focus {
   color: #37B800;
   background-color: #fff;
   border: 1px solid #dedede;
   padding: 6px 6px !important;
 }
+
 .custom-select-container {
   width: 30%;
   float: left;
 }
+
 .app-logo {
   text-align: center;
   font-weight: normal;
@@ -436,12 +470,14 @@
   font-size: 100px;
   color: #b9babd;
 }
+
 .invite-logo {
   text-align: center;
   color: #232323;
   font-size: 24px;
   font-weight: 300;
 }
+
 .invite-form {
   overflow: hidden;
   padding: 20px 0;
@@ -449,20 +485,24 @@
   border-radius: 3px;
   background-color: #fff;
 }
+
 .todo-form {
   padding: 15px;
   border-bottom: 1px solid #ddd;
 }
+
 .todo-fields-contianer {
   overflow: hidden;
   margin-bottom: 10px;
 }
+
 .todo-label {
   font-weight: 400;
   padding-top: 5px;
   width: 15%;
   float: left;
 }
+
 .custom-input-container {
   width: 20%;
   float: left;

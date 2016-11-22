@@ -44,9 +44,9 @@
                   <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") unless task.priority.eql?('None') %>
                   <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
                   <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag', title: "Assigned to: #{task_assigned_to task}") if task.assigned_to.present? %>
-                  <%= content_tag(:span, content_tag(:i, "",  class: 'fa fa-commenting-o'), class: '', title: 'This task has description') if task.description.present? %>
-                  <%= content_tag(:span, content_tag(:i, "",  class: 'fa fa-paperclip'), class: '', title: 'This task has attachments') if task.attachments.present? %>
-                  <%= content_tag(:span, content_tag(:i, "#{task.comments.count}",  class: 'fa fa-comments-o'), class: '', title: 'This task has comments') if task.comments.present? %>
+                  <%= content_tag(:i, '',  class: 'fa fa-list-alt', title: 'This task has description') if task.description.present? %>
+                  <%= content_tag(:i, '',  class: 'fa fa-paperclip', title: 'This task has attachments') if task.attachments.present? %>
+                  <%= content_tag(:i, task.comments.count,  class: 'fa fa-commenting-o', title: "This task has #{pluralize(task.comments.count, 'comment')}") if task.comments.present? %>
               <% end %>
 
             <div class="pull-right todo-after">
