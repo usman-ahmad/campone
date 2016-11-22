@@ -772,11 +772,13 @@
   background-color: #fff;
 }
 
-.trumbowyg-editor ol, ul {
+.trumbowyg-editor ol,
+.trumbowyg-editor ul {
   margin-left: 20px;
 }
 
-.trumbowyg-editor ol li, ul li {
+.trumbowyg-editor ol li,
+.trumbowyg-editor ul li {
   padding-left: 5px;
 }
 
