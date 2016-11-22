@@ -4,10 +4,12 @@
           <i class="fa fa-eye" aria-hidden="true"></i>
       <% end %>
       <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-        <li><a href="#">Unscheduled Tasks</a></li>
-        <li><a href="#">Current Tasks</a></li>
-        <li><a href="#">Accepted Tasks</a></li>
-        <li class="active"><a href="#">All Tasks</a></li>
+        <!--<li class="active"><a href="#">Unscheduled Tasks</a></li>-->
+        <% {unscheduled: 'Unscheduled', current: 'Current', accepted: 'Accepted', all: 'All'}.each do |key, title| %>
+            <%= content_tag :li, class: ('active' if @visibility.eql?(key.to_s)) do %>
+                <%= link_to("#{title} Tasks", project_tasks_path(@project, visibility: key)) %>
+            <% end %>
+        <% end %>
       </ul>
     </div>
 <% end %>

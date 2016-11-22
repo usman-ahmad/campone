@@ -40,8 +40,7 @@ class Task < ApplicationRecord
   PROGRESSES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
            to: :current_state
-  COMPLETED_PROGRESSES = %w[finished delivered accepted]
-  NOT_COMPLETED_PROGRESSES = %w[unscheduled unstarted started paused rejected]
+  CURRENT_PROGRESSES = %w[unstarted started paused finished delivered rejected]
 
   validates :title, presence: true
   validates :project, presence: true
@@ -49,8 +48,11 @@ class Task < ApplicationRecord
   validates_inclusion_of :progress, in: PROGRESSES
   validates_inclusion_of :priority, in: PRIORITIES.values
 
-  scope :completed, -> { where(progress: COMPLETED_PROGRESSES) }
-  scope :not_completed, -> { where(progress: NOT_COMPLETED_PROGRESSES) }
+  # COMPLETED_PROGRESSES = %w[finished delivered accepted]
+  # NOT_COMPLETED_PROGRESSES = %w[unscheduled unstarted started paused rejected]
+  # UA[2016/11/22] - NOT USED ANY WHERE # REFACTOR SPECS
+  # scope :completed, -> { where(progress: COMPLETED_PROGRESSES) }
+  # scope :not_completed, -> { where(progress: NOT_COMPLETED_PROGRESSES) }
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
@@ -97,6 +99,17 @@ class Task < ApplicationRecord
     end
   end
 
+  def self.with_progress(visibility_or_progress)
+    case visibility_or_progress
+      when 'current'
+        where(progress: CURRENT_PROGRESSES)
+      when 'all'
+        all
+      else
+        where(progress: visibility_or_progress)
+    end
+  end
+
   # TODO: Refactor this method. Right now it wont assign task if it is already assigned to another user.
   # UA[2016/11/14] - TODO - REFACTOR THIS CREEPY METHOD - (BTW) WHAT IS IT DOING
   def assigned_to_me(current_user)
@@ -121,16 +134,21 @@ class Task < ApplicationRecord
     end
   end
 
-  def self.filter_tasks(search_text: nil, include_completed: false)
-    if include_completed
-      search_text.nil? ? all : all.search(search_text)
-    else
-      search_text.nil? ? not_completed : not_completed.search(search_text)
-    end
-  end
+  # UA[2016/11/22] - NOT USED ANY WHERE # REFACTOR SPECS
+  # def self.filter_tasks(search_text: nil, include_completed: false)
+  #   if include_completed
+  #     search_text.nil? ? all : all.search(search_text)
+  #   else
+  #     search_text.nil? ? not_completed : not_completed.search(search_text)
+  #   end
+  # end
 
   def self.search(text)
-    where("title @@ :q or description @@ :q", q: text)
+    if text.present?
+      where('title @@ :q or description @@ :q', q: text)
+    else
+      all
+    end
   end
 
   def self.to_csv(options = {})

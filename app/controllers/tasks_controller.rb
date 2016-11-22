@@ -6,11 +6,14 @@ class TasksController < ApplicationController
   before_action :set_task,    only: [:show, :edit, :update, :destroy]
 
   def index
-    cookies[:include_completed] = params[:include_completed] if params[:include_completed].present?
+    cookies[:tasks_visibility] = params[:visibility] || cookies[:tasks_visibility]
+    @visibility = cookies[:tasks_visibility] || 'all'
 
     @task = @project.tasks.new
-    @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
-                                         include_completed: cookies[:include_completed] == 'true').order!('position')
+    # @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
+    #                                      include_completed: cookies[:include_completed] == 'true').order!('position')
+
+    @tasks = @project.tasks.with_progress(@visibility).search(params[:search_text]).order!('position')
 
     respond_to do |format|
       format.html
