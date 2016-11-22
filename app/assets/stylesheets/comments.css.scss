@@ -63,7 +63,7 @@
 
 .comment-box .comment-head {
   background: #FCFCFC;
-  padding: 10px 12px;
+  padding: 2px 12px;
   border-bottom: 1px solid #E5E5E5;
   overflow: hidden;
   -webkit-border-radius: 4px 4px 0 0;
@@ -90,7 +90,7 @@
 
 .comment-box .comment-name {
   color: #337ab7;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   float: left;
   margin-right: 10px;
@@ -107,7 +107,7 @@
 .comment-box .comment-content {
   background: #FFF;
   padding: 12px;
-  font-size: 15px;
+  font-size: 14px;
   color: #595959;
   -webkit-border-radius: 0 0 4px 4px;
   -moz-border-radius: 0 0 4px 4px;
@@ -125,4 +125,30 @@
   .comments-list .comment-box {
     width: 390px;
   }
+}
+
+.comment-box .comment-content ol,
+.comment-box .comment-content ul {
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.comment-box .comment-content ol br,
+.comment-box .comment-content ul br {
+  display: none;
+}
+
+.comment-box .comment-content ol li,
+.comment-box .comment-content ul li {
+  margin-bottom: 0;
+  display: list-item;
+  padding-left: 5px;
+}
+
+.comment-box .comment-content ul {
+  list-style-type: disc;
+}
+
+.comment-box .comment-content ol {
+  list-style-type: decimal;
 }
