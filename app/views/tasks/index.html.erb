@@ -33,10 +33,12 @@
             <%= content_tag(:span, task.progress, class: "label label-info progress-status progress-#{task.progress}") %>
             <%= task.title %>
               <span class="tag-holder">
-                <%= content_tag(:span, task.priority, class: 'tag') unless task.priority.eql?('None') %>
-                <%= content_tag(:span, task.due_at, class: 'tag') if task.due_at.present? %>
-                <%= content_tag(:span, "##{task.comments.count}", class: 'tag') if task.comments.present? %>
-                <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag') if task.assigned_to.present? %>
+                <%= content_tag(:span, 'D', class: 'tag', title: 'This task has description') if task.description.present? %>
+                <%= content_tag(:span, 'A', class: 'tag', title: 'This task has attachments') if task.attachments.present? %>
+                <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") unless task.priority.eql?('None') %>
+                <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
+                <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag', title: "Assigned to: #{task_assigned_to task}") if task.assigned_to.present? %>
+                <%= content_tag(:span, "##{task.comments.count}", class: 'tag', title: 'This task has comments') if task.comments.present? %>
               </span>
 
           <div class="pull-right todo-after">
