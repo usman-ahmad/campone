@@ -33,14 +33,10 @@
             <%= content_tag(:span, task.progress, class: "label label-info progress-status progress-#{task.progress}") %>
             <span class="<%= task.completed? ? 'line-through' : '' %>"><%= task.title %></span>
               <span class="tag-holder">
-                  <span class="tag <%=  'hidden' if task.priority == 'None' %>">Priority: <%= task.priority %></span>
-                  <% if task.due_at.present? %>
-                    <span class="tag"> Due Date: <%= task.due_at %></span>
-                  <%end%>
-                    <span class="tag <%=  'hidden' if task.comments.count == 0 %>">Comment (<%= task.comments.count %>)</span>
-                  <% if task.assigned_to.present? %>
-                    <span class="tag">Assigned To (<%= task_assigned_to task %>)</span>
-                  <%end%>
+                <%= content_tag(:span, task.priority, class: 'tag') unless task.priority.eql?('None') %>
+                <%= content_tag(:span, task.due_at, class: 'tag') if task.due_at.present? %>
+                <%= content_tag(:span, "##{task.comments.count}", class: 'tag') if task.comments.present? %>
+                <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag') if task.assigned_to.present? %>
               </span>
 
           <div class="pull-right todo-after">
