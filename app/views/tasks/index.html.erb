@@ -30,7 +30,7 @@
           <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
           <p class="todo-content">
-            <span class="label label-info progress-status progress-<%= task.progress %>"><%= task.progress %></span>
+            <%= content_tag(:span, task.progress, class: "label label-info progress-status progress-#{task.progress}") %>
             <span class="<%= task.completed? ? 'line-through' : '' %>"><%= task.title %></span>
               <span class="tag-holder">
                   <span class="tag <%=  'hidden' if task.priority == 'None' %>">Priority: <%= task.priority %></span>
@@ -41,7 +41,6 @@
                   <% if task.assigned_to.present? %>
                     <span class="tag">Assigned To (<%= task_assigned_to task %>)</span>
                   <%end%>
-                  <%= content_tag(:span, task.progress, class: 'tag' ) %>
               </span>
 
           <div class="pull-right todo-after">
