@@ -12,14 +12,14 @@ module API
         end
       end
 
-      resource:discucssions do
+      resource :discucssions do
         desc "return discussions of project"
           get do
             project.discussions unless !project.present?
           end
         end
 
-      resource:discucssion do
+      resource :discucssion do
         desc "return a selected discussion of a project"
        params do
         requires :discussion_id, type: Integer
@@ -29,7 +29,7 @@ module API
         end
       end
 
-      resource:create_discucssion do
+      resource :create_discucssion do
         desc "create a new discussion on project"
         params do
          requires :title, type: String

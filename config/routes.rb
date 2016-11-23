@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount API::Root => '/'
+  # mount API::Root => '/'
 
   resources :projects do
     resources :tasks do
