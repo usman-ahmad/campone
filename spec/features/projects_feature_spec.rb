@@ -39,7 +39,8 @@ describe 'projects management', type: :feature do
     it 'should display in dashboard' do
       visit projects_path
       expect(page.current_path).to eq projects_path
-      expect(find(:css, 'div.project')).to have_content(project.name)
+      result = page.all('h3.project-name')
+      expect(result.map(&:text)).to have_content(project.name)
     end
   end
 

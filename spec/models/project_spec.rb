@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do
-   let(:user){ create(:user) }
+   let!(:user){ create(:user) }
    let(:project){ create(:project, owner: user) }
 
    describe 'validations' do
@@ -20,7 +20,7 @@ RSpec.describe Project, type: :model do
      it { should have_many(:integrations) }
 
      it 'adds owner to contributors' do
-       expect{ create(:project) }.to change{ Contribution.count }.by(1)
+       expect{ create(:project, owner: user) }.to change{ Contribution.count }.by(1)
      end
 
      it 'assigns owner role to contribution' do
