@@ -23,7 +23,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Using bootstrap
 gem 'bootstrap-sass', '~> 3.3.5'
-gem 'bootstrap-generators', '~> 3.3.4'
 # Use device to login asignup and authentication
 gem 'devise'
 # improve device views
