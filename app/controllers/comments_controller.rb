@@ -3,6 +3,12 @@ class CommentsController < ApplicationController
   before_action :load_commentable
   before_action :comment, only: [:edit, :update, :destroy]
 
+  # Make sure a user is not able comment on other unauthorized projects
+  load_and_authorize_resource :project
+  load_and_authorize_resource :task, :through => :project
+  load_and_authorize_resource :discussion, :through => :project
+  authorize_resource :comment, :through => [:task, :discussion]
+
   def index
     @comments = @commentable.comments
   end

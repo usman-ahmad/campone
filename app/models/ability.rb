@@ -35,6 +35,9 @@ class Ability
 
     can :manage, Contribution, :project => {owner_id: user.id}
 
+    # User can only manage his comments
+    can :manage, Comment, user: user
+
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:
     #
