@@ -1,9 +1,14 @@
 class Ability
   include CanCan::Ability
 
-  ORGANIZER   = Contribution::ROLES[:organizer  ]
-  TEAM_PLAYER = Contribution::ROLES[:team_player]
-  CONTRIBUTOR = Contribution::ROLES[:contributor]
+  # Anything except deleting a project
+  MANAGER = Contribution::ROLES[:manager]
+
+  # Full edit/delete access without ability to invite people or add integrations
+  MEMBER = Contribution::ROLES[:member]
+
+  # Can only view tasks, comments, and other items created by other users.
+  GUEST = Contribution::ROLES[:guest]
 
   def initialize(user)
 
@@ -16,19 +21,19 @@ class Ability
     # Project Permissions
     can :manage, Project, owner: user
     # All roles can read project
-    can :read,   Project, :contributions => { :role => [ORGANIZER, TEAM_PLAYER, CONTRIBUTOR] , user_id: user.id }
-    # organizer can update project
-    can :update, Project, :contributions => { :role => ORGANIZER , user_id: user.id }
+    can :read, Project, :contributions => {:role => [MANAGER, MEMBER, GUEST], user_id: user.id}
+    # manager can update project
+    can :update, Project, :contributions => {:role => MANAGER, user_id: user.id}
 
     can :manage, Task
     can :manage, Discussion
     can :manage, Attachment
 
     can :create, Contribution do |contribution|
-      contribution.project.contributions.where(role: ORGANIZER, user_id: user.id).present?
+      contribution.project.contributions.where(role: MANAGER, user_id: user.id).present?
     end
-    
-    can :manage, Contribution, :project => { owner_id: user.id }
+
+    can :manage, Contribution, :project => {owner_id: user.id}
 
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:

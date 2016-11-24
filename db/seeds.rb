@@ -15,7 +15,7 @@ puts 'db/seeds started'
 
 
 puts 'creating user'
-user = FactoryGirl.create_list(:user,5)
+user = FactoryGirl.create_list(:user, 5)
 
 puts 'creating Project'
 project = FactoryGirl.create(:project, owner: user.first)
@@ -35,18 +35,18 @@ project_with_task_discussions = FactoryGirl.create(:project_with_task_discussion
 puts 'creating discussion'
 discussion = FactoryGirl.create(:private_discussion, project: project, commenter: project.owner, user: project.owner)
 
-projects =[project,single_task_project, many_tasks_project, project_with_discussions, project_with_task_discussions]
+projects =[project, single_task_project, many_tasks_project, project_with_discussions, project_with_task_discussions]
 
 puts 'creating user_discussion and contributions'
 user.each do |user|
   FactoryGirl.create(:user_discussion, user: user, discussion: discussion)
 end
 
-FactoryGirl.create(:organizer_contribution, user: user[1], project: projects[0])
-FactoryGirl.create(:team_player_contribution, user: user[1], project: projects[1])
-FactoryGirl.create(:contributor_contribution, user: user[2], project: projects[2])
-FactoryGirl.create(:organizer_contribution, user: user[4], project: projects[3])
-FactoryGirl.create(:contributor_contribution, user: user[4], project: projects[4])
+FactoryGirl.create(:manager_contribution, user: user[1], project: projects[0])
+FactoryGirl.create(:member_contribution, user: user[1], project: projects[1])
+FactoryGirl.create(:guest_contribution, user: user[2], project: projects[2])
+FactoryGirl.create(:manager_contribution, user: user[4], project: projects[3])
+FactoryGirl.create(:guest_contribution, user: user[4], project: projects[4])
 
 PublicActivity::Activity.all.each do |activity|
   activity.create_notification

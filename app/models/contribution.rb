@@ -7,15 +7,15 @@ class Contribution < ApplicationRecord
   before_validation :invite_and_set_user
 
   ROLES = {
-      organizer:   'Organizer',
-      team_player: 'Team player',
-      contributor: 'Contributor',
-      owner:       'Owner',
+      manager: 'Manager',
+      member: 'Member',
+      guest: 'Guest',
+      owner: 'Owner',
   }
 
-  validates :user, presence: { message: 'not created. Check your email.' },
-            uniqueness: { scope: :project, message: "Already invited on this project." }
-  validates :role, inclusion: { in: ROLES.values }
+  validates :user, presence: {message: 'not created. Check your email.'},
+            uniqueness: {scope: :project, message: 'Already invited on this project.'}
+  validates :role, inclusion: {in: ROLES.values}
 
   def resend_invitation
     invite(user.email)

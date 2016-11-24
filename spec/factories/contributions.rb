@@ -3,21 +3,21 @@ FactoryGirl.define do
     project
     user
 
-    trait :organizer do
-      role 'Organizer'
-      end
-
-    trait :team_player do
-      role 'Team player'
+    trait :manager do
+      role 'Manager'
     end
 
-    trait :contributor do
-      role 'Contributor'
+    trait :member do
+      role 'Member'
     end
 
-    factory :organizer_contribution,   traits: [:organizer]
-    factory :team_player_contribution, traits: [:team_player]
-    factory :contributor_contribution, traits: [:contributor]
+    trait :guest do
+      role 'Guest'
+    end
+
+    factory :manager_contribution, traits: [:manager]
+    factory :member_contribution, traits: [:member]
+    factory :guest_contribution, traits: [:guest]
   end
 
 end
