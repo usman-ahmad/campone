@@ -10,10 +10,10 @@
       <tr>
         <td><%= contribution.user.email %></td>
         <td><%= "#{contribution.role}" if contribution.role %></td>
-        <td>...</td>
+        <td><%= joined_status(contribution) %></td>
         <td>
-          <%= link_to 'Delete', project_contribution_path(@project, contribution), method: :delete, data: {confirm: 'Are you sure?'} %> -
-          <%= link_to 'Resend Invitation', resend_invitation_project_contribution_path(@project, contribution), method: :post %>
+          <%= link_to 'Delete', project_contribution_path(@project, contribution), method: :delete, data: {confirm: 'Are you sure?'} %>
+          <%= link_to 'Resend Invitation', resend_invitation_project_contribution_path(@project, contribution), method: :post if contribution.user.invitation_accepted? %>
         </td>
       </tr>
     <% end %>
