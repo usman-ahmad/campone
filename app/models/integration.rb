@@ -35,7 +35,7 @@ class Integration < ApplicationRecord
   end
   
   def self.asana(auth)
-    puts auth.pretty_inspect
+    # puts auth.pretty_inspect
     find_or_create_by(name: auth.provider, url: 'https://app.asana.com/'+ auth.info.name) do |integration|
       integration.token =   auth.credentials.refresh_token
     end

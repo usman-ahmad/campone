@@ -2,7 +2,7 @@ class Attachment < ApplicationRecord
   has_attached_file :attachment,
                     styles:
                         lambda { |a|
-                          puts "aaaaaaaaa#{a.inspect}"
+                          # puts "aaaaaaaaa#{a.inspect}"
                           if a.instance.is_image?
                             { thumb: "100x100#" }
                           elsif a.instance.is_video?

@@ -15,14 +15,13 @@ describe 'attachments feature', type: :feature do
       project
       discussion
     end
+
     it 'should create discussion with attachment' do
       visit project_discussions_path(project)
-      find('a', text: 'New Discussion').click
       fill_in 'discussion_title', with: 'how to deliver'
-      fill_in 'discussion_content', with: 'there is a need of discussion about how to deliver notifications'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg')
+      page.find_all('img[title= "test_attachment.jpg"]')
     end
 
     it 'should attach file when update to discussion' do
@@ -30,7 +29,7 @@ describe 'attachments feature', type: :feature do
       find('a', text: 'Edit').click
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg')
+      page.find_all('img[title= "test_attachment.jpg"]')
     end
   end
 
@@ -41,11 +40,10 @@ describe 'attachments feature', type: :feature do
     end
     it 'should create task with attachment' do
       visit project_tasks_path(project)
-      find('a', text: 'New Task').click
-      fill_in 'task_title', with: 'create erd diagram'
+      fill_in 'task[title]', with: 'create erd diagram'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg')
+      page.find_all('img[title= "test_attachment.jpg"]')
     end
     it 'should attach file when update to task' do
       visit project_task_path(project, task)
@@ -53,7 +51,7 @@ describe 'attachments feature', type: :feature do
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       sleep(2)
       find('input[name="commit"]').click
-      page.find('a', text: 'test_attachment.jpg')
+      page.find_all('img[title= "test_attachment.jpg"]')
     end
   end
 
