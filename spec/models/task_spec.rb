@@ -233,7 +233,7 @@ RSpec.describe Task, type: :model do
       let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
 
       it 'would NOT changes progress' do
-        expect(task.progress).to eq 'unscheduled' # Default value
+        expect(task.progress).to eq 'unstarted' # Default value
       end
     end
   end

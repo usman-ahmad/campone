@@ -8,10 +8,10 @@ RSpec.describe VCSParser, type: :model do
 
   it 'verifies default values' do
     expect(task_1.ticket_id).to eq 'ticket-1'
-    expect(task_1.progress).to eq 'No progress'
+    expect(task_1.progress).to eq 'unstarted'
 
     expect(task_2.ticket_id).to eq 'ticket-2'
-    expect(task_2.progress).to eq 'No progress'
+    expect(task_2.progress).to eq 'unstarted'
   end
 
   describe 'Available actions to complete a task' do
@@ -19,7 +19,7 @@ RSpec.describe VCSParser, type: :model do
     actions.each do |action|
       it "#{action.ljust(10)} ex: #{(action + ' ticket-1').ljust(20)} (marks ticket_1 as completed)" do
         expect { VCSParser::CommitParser.perform_actions!("#{action} #ticket-1") }.
-            to change{ task_1.reload.progress }.from('No progress').to('Completed')
+            to change{ task_1.reload.progress }.from('unstarted').to('finished')
       end
     end
   end
@@ -29,12 +29,12 @@ RSpec.describe VCSParser, type: :model do
     actions.each do |action|
       it "#{action.ljust(10)} ex: #{(action + ' ticket-1').ljust(20)} (marks ticket_1 as started)" do
         expect { VCSParser::CommitParser.perform_actions!("#{action} #ticket-1") }.
-            to change{ task_1.reload.progress }.from('No progress').to('In progress')
+            to change{ task_1.reload.progress }.from('unstarted').to('started')
       end
     end
     
-    it 'will not change start status if status is other than No progress' do
-      task_1.update_attributes(progress: 'Completed')
+    it 'will not change start status if status is other than unstarted' do
+      task_1.update_attributes(progress: 'finished')
       expect { VCSParser::CommitParser.perform_actions!("start #ticket-1") }.
           to_not change{ task_1.reload.progress }
     end
@@ -55,7 +55,7 @@ RSpec.describe VCSParser, type: :model do
     commits.each do |commit|
       it "marks both tasks as completed ex: #{commit[:message].ljust(30)} (#{commit[:des]})" do
         expect { VCSParser::CommitParser.perform_actions!(commit[:message]) }.to change{ [task_1.reload.progress, task_2.reload.progress ] }.
-                   from(['No progress', 'No progress']).to(['Completed', 'Completed'])
+                   from(['unstarted', 'unstarted']).to(['finished', 'finished'])
       end
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe VCSParser, type: :model do
     it "will mark ticket_1 as completed and ticket_2 as In progress. ex: fixed #ticket-1 and started #ticket-2" do
       expect { VCSParser::CommitParser.perform_actions!('fixed #ticket-1 and started #ticket-2') }.
           to change{ [task_1.reload.progress, task_2.reload.progress ] }.
-                 from(['No progress', 'No progress']).to(['Completed', 'In progress'])
+                 from(['unstarted', 'unstarted']).to(['finished', 'started'])
     end
   end
 

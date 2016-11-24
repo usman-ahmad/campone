@@ -7,6 +7,7 @@ FactoryGirl.define do
     sequence(:description) { |n| description[(n % description.size)]}
     project
     due_at Date.today
+    progress 'unstarted'
 
     transient do
       commenter { project.owner }
