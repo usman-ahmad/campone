@@ -917,3 +917,63 @@
 .nav-tabs li .dropdown-toggle:active {
   border: 1px solid transparent;
 }
+
+.custom-header {
+  background-color: #39A1E7;
+  color: #fff;
+  padding: 10px 0 10px 20px;
+  margin-bottom: 10px;
+}
+
+.custom-content {
+  border-radius: 0;
+}
+
+.modal-btn {
+  display: inline-block;
+  line-height: 1.42857143;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 7px 15px 7px 15px;
+  border: 1px solid #dedede;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+  font-weight: 700;
+  opacity: .7;
+}
+
+.saveChange-btn {
+  background-color: #449D44;
+  color: #fff;
+}
+
+.saveChange-btn:hover, .saveChange-btn:focus {
+  background-color: #fff;
+  color: #449D44;
+}
+
+.close-btn {
+  background-color: #fff;
+  color: #39A1E7;
+}
+
+.close-btn:hover, .close-btn:focus {
+  background-color: #39A1E7;
+  color: #fff;
+}
+
+.file-icon {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 30px;
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  padding: 7px 9px 0;
+  font-size: 13px;
+}
+
+.file-icon:hover, .file-icon:focus {
+  color: #000;
+}

@@ -1,47 +1,55 @@
-<%= form_for([@project, @discussion], html: { class: "form-horizontal", role: "form" , multipart: true}) do |f| %>
+<div class="modal fade" id="discussion" tabindex="-1" role="dialog" aria-labelledby="discussion">
+  <div class="modal-dialog todo-dialog" role="document">
+    <div class="modal-content custom-content">
+      <div class="modal-header custom-header">
+        <h4 class="modal-title" id="discsussion">Add Discussion</h4>
+      </div>
+      <%= form_for([@project, @discussion], html: {role: "form", multipart: true}) do |f| %>
 
-  <%= render 'shared/error_messages', object: @discussion  %>
+          <div class="modal-body">
 
-  <div class="form-group">
-    <%= f.label :title, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :title, class: "form-control", autofocus: true  %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :content, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_area :content, class: "form-control description-textarea" %>
-    </div>
-  </div>
-      <!-- This is a security hole, user_id can get changed from view, should be in controller -->
-      <%# f.hidden_field :user_id, :value => current_user.id %>
-  <div class="form-group">
-    <%= f.label :private, class: "col-sm-2 control-label" %>
-    <div>
-      <%= f.check_box :private%>
-    </div>
-  </div>
+            <%= render 'shared/error_messages', object: @discussion %>
 
-  <div class="form-group" id="private-discussions">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= f.fields_for :user_discussions do |f| %>
-        <div class="private-invitation"> <!--NOTE: below 2 checkboxes must be siblings of same element, JS requirement -->
-          <%= f.check_box :_destroy , class: 'delete-user-from-discussion', checked: f.object.new_record?, hidden: true %>
-          <input type="checkbox" class="include-user-or-not" <%= "checked" if f.object.persisted? %> >
+            <div class="form-group">
+              <%= f.label :title, class: "custom-label" %>
+              <%= f.text_field :title, class: "form-control", autofocus: true %>
+            </div>
+            <div class="form-group">
+              <%= f.label :content, class: "custom-label" %>
+              <%= f.text_area :content, class: "form-control description-textarea" %>
+            </div>
+            <!-- This is a security hole, user_id can get changed from view, should be in controller -->
+            <%# f.hidden_field :user_id, :value => current_user.id %>
+            <div class="col-md-6">
+              <div class="form-group">
+                <%= f.label :private, class: "col-sm-4 custom-label" %>
+                <div>
+                  <%= f.check_box :private %>
+                </div>
+              </div>
 
-          <%= f.label :user_id, f.object.user.email %>
-          <%= f.hidden_field :user_id %>
-        </div>
+              <div class="form-group" id="private-discussions">
+                <%= f.fields_for :user_discussions do |f| %>
+                    <div class="private-invitation"> <!--NOTE: below 2 checkboxes must be siblings of same element, JS requirement -->
+                      <%= f.check_box :_destroy, class: 'delete-user-from-discussion', checked: f.object.new_record?, hidden: true %>
+                      <input type="checkbox" class="include-user-or-not" <%= "checked" if f.object.persisted? %> >
+
+                      <%= f.label :user_id, f.object.user.email %>
+                      <%= f.hidden_field :user_id %>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <%= render 'attachments/browse_attachments' %>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="modal-footer">
+            <button type="button" class="modal-btn close-btn" data-dismiss="modal">Close</button>
+            <%= f.submit class: "modal-btn saveChange-btn" %>
+          </div>
+          </div>
       <% end %>
-    </div>
-  </div>
-
-  <%= render 'attachments/browse_attachments' %>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= f.submit class: "btn btn-primary" %>
-    </div>
-  </div>
-<% end %>
+      </div>
+</div>

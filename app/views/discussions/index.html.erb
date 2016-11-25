@@ -2,9 +2,6 @@
     <%= render 'shared/tab_nav', project: @project, active: 'discussion' %>
 <% end %>
 <div class="table-responsive">
-  <div>
-    <h3 class="heading-3 pull-left">Discussion List</h3>
-  </div>
   <table class="table table-hover col-md-12 discussion-list">
     <thead>
     <tr>
@@ -42,10 +39,6 @@
     <% end %>
     </tbody>
   </table>
-  <div class="col-md-7">
-    <div class="page-header">
-      <h3>Start New Discussion</h3>
-    </div>
+    <a class="custom-btn mg-r20 pull-right" data-toggle="modal" data-target="#discussion">Add Discussion</a>
     <%= render 'form' %>
-  </div>
 </div>
