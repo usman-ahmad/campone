@@ -37,11 +37,15 @@ class DiscussionsController < ApplicationController
     @discussion = @project.discussions.new(discussion_params)
     @discussion.attachments_array=params[:attachments_array]
 
-    if @discussion.save
-      @discussion.create_activity :create, owner: current_user
-      redirect_to [@project, :discussions], notice: 'Discussion was successfully created.'
-    else
-      render :new
+    respond_to do |format|
+      if @discussion.save
+        @discussion.create_activity :create, owner: current_user
+        format.html { redirect_to [@project, :discussions], notice: 'Discussion was successfully created.' }
+        format.json { render json: @discussion , status: :created }
+      else
+        format.html { render :new }
+        format.json { render json: @discussion.errors, status: :unprocessable_entity }
+      end
     end
   end
 

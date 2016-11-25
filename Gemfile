@@ -72,6 +72,9 @@ gem 'unicorn'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# for generating JSON response
+gem 'active_model_serializers', '~> 0.10.0'
+
 group :development do
   # Preview email in the default browser instead of sending it.
   gem "letter_opener"

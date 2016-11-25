@@ -38,4 +38,30 @@ $(document).on('turbolinks:load', function () {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
+
+
+    // TODO: improve this.
+    // for now converting active record errors to string.
+    // We can highlight input labels or fields
+    function prettyErrors(data){
+      var errors;
+      for(var key in data){
+        errors = key + " : " + data[key].join() + '<br />';
+      }
+      return errors;
+    }
+
+    $('form#new_discussion').on('ajax:complete', function(event, xhr, response){
+      console.log('event',event);
+      console.log('xhr',xhr);
+      console.log('settings',response);
+
+      if(response == 'success'){
+        location.reload();
+      } else {
+        $('#errorMessages').html(prettyErrors(xhr.responseJSON));
+      }
+    });
+
 });
+
