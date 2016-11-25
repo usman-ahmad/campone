@@ -3,6 +3,10 @@ class IntegrationsController < ApplicationController
   before_action :set_integration,    only: [:show, :edit, :update, :destroy, :new_import, :start_import]
   before_action :set_import_service,  only: [:new_import, :start_import]
 
+  load_and_authorize_resource :project
+  load_and_authorize_resource :integration, :through => :project
+
+
   def index
     @integrations = @project.integrations.all
   end

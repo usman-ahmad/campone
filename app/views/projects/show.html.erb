@@ -39,31 +39,33 @@
     <%= render 'contributions/form' %>
   </div>
   <div class="clearfix"></div>
-  <div class="page-header">
-    <h2>Integrations</h2>
-  </div>
-  <div class="col-md-8">
-    <%= render 'integrations/list' %>
-  </div>
-  <div class="col-md-4">
-    <%= render 'integrations/form' %>
-  </div>
-  <div class="clearfix"></div>
-  <div class="col-md-12 mg-t20" style="padding: 0 0">
-    <div class="col-md-4">
-      <a class="btn btn-block btn-social btn-twitter" href="<%= user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>">
-        <i class="fa fa-twitter"></i> Configure Twitter Account to Receive Notification Tweets
-      </a>
+  <% if can? :manage, @project.integrations.build %>
+    <div class="page-header">
+      <h2>Integrations</h2>
+    </div>
+    <div class="col-md-8">
+      <%= render 'integrations/list' %>
     </div>
     <div class="col-md-4">
-      <a class="btn btn-block btn-social btn-asana" href="<%= user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
-        <%= image_tag('asana-fill.png') %> Integrate Asana Account and Import your Tasks
-      </a>
+      <%= render 'integrations/form' %>
     </div>
-    <div class="col-md-4">
-      <a class="btn btn-block btn-social btn-trello" data-turbolinks="false" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
-        <i class="fa fa-trello"></i> Integrate Trello Account and Import your Tasks
-      </a>
+    <div class="clearfix"></div>
+    <div class="col-md-12 mg-t20" style="padding: 0 0">
+      <div class="col-md-4">
+        <a class="btn btn-block btn-social btn-twitter" href="<%= user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>">
+          <i class="fa fa-twitter"></i> Configure Twitter Account to Receive Notification Tweets
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-block btn-social btn-asana" href="<%= user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+          <%= image_tag('asana-fill.png') %> Integrate Asana Account and Import your Tasks
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-block btn-social btn-trello" data-turbolinks="false" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+          <i class="fa fa-trello"></i> Integrate Trello Account and Import your Tasks
+        </a>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

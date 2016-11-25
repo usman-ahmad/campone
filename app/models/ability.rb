@@ -38,6 +38,10 @@ class Ability
     # User can only manage his comments
     can :manage, Comment, user: user
 
+    can :manage, Integration do |integration|
+      integration.project.owner == user
+    end
+
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:
     #
