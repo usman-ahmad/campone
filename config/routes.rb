@@ -17,7 +17,7 @@ Rails.application.routes.draw do
       resources :comments
     end
 
-    resources :contributions, only: [:new, :create, :destroy] do
+    resources :contributions do
       member do
         post 'resend_invitation'
       end

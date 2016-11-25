@@ -29,7 +29,7 @@ class Ability
     can :manage, Discussion
     can :manage, Attachment
 
-    can :create, Contribution do |contribution|
+    can [:create, :update], Contribution do |contribution|
       contribution.project.contributions.where(role: MANAGER, user_id: user.id).present?
     end
 

@@ -8,8 +8,8 @@
   <div class="form-group">
     <%= f.label :role, class: "col-md-2"  %>
     <div class="col-md-10">
-      <%= f.select :role, options_for_select(Contribution::ROLES.values), {}, class: "form-control" %>
+      <%= f.select :role, options_for_select(Contribution::ROLES.values, selected: @contribution.role), {}, class: "form-control" %>
     </div>
   </div>
-  <%= f.submit "Invite", class: "btn btn-success pull-right" %>
+  <%= f.submit @contribution.new_record? ? "Invite" : "Update" , class: "btn btn-success pull-right" %>
 <% end %>

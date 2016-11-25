@@ -3,7 +3,10 @@ class ContributionsController < ApplicationController
   load_and_authorize_resource :contribution, :through => :project
 
   before_action :set_project
-  before_action :set_contribution, except: [:new, :create]
+  before_action :set_contribution, except: [:new, :create, :index]
+
+  def index
+  end
 
   def new
     @contribution  = Contribution.new
@@ -13,6 +16,19 @@ class ContributionsController < ApplicationController
   def create
     contribution =  @project.contributions.create(contribution_params)
     flash[:alert] = contribution.valid? ? 'Invitations sent.' : contribution.errors.full_messages.join
+    redirect_back(fallback_location: project_path(@project))
+  end
+
+  def edit
+  end
+
+  def update
+    if @contribution.update_attributes(contribution_params)
+      flash[:alert] = 'Updated successfully.'
+    else
+      flash[:alert] = @contribution.errors.full_messages.join
+    end
+
     redirect_back(fallback_location: project_path(@project))
   end
 

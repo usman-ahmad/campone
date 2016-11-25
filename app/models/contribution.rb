@@ -21,6 +21,10 @@ class Contribution < ApplicationRecord
     invite(user.email)
   end
 
+  def email
+    user.try(:email)
+  end
+
   private
 
   def invite_and_set_user
