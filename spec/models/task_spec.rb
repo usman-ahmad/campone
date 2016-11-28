@@ -186,57 +186,58 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe '#assigned_to_me' do
-    let(:another_user) { create(:user) }
-
-    context 'assigned to nobody' do
-      let!(:task) { create(:task, progress: 'unstarted', project: project, creator: user) }
-
-      before { task.assigned_to_me(another_user) }
-      it 'assigns task to a user' do
-        expect(task.assigned_to).to eq another_user.id
-      end
-    end
-
-    context 'already assigned' do
-      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
-
-      before { task.assigned_to_me(another_user) }
-      it 'will not assign task' do
-        expect(task.assigned_to).to eq user.id
-      end
-    end
-
-    context 'already in progress' do
-      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, progress: 'started') }
-
-      before { task.assigned_to_me(another_user) }
-      it 'will not assign task' do
-        expect(task.assigned_to).to eq user.id
-      end
-    end
-  end
-
-  describe '#set_progress' do
-    before { task.set_progress(user, 'started') }
-
-    context 'Task is assigned to that user' do
-      let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
-
-      it 'will change progress' do
-        expect(task.progress).to eq 'started'
-      end
-    end
-
-    context 'Task is NOT assigned to that user' do
-      let(:another_user) { create(:user) }
-      let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
-
-      it 'would NOT changes progress' do
-        expect(task.progress).to eq 'unstarted' # Default value
-      end
-    end
-  end
+  # UA[2016/11/29] - METHOD_REMOVED '#assigned_to_me' # REFACTOR SPECS TO TEST NEW SCENARIOS
+  # describe '#assigned_to_me' do
+  #   let(:another_user) { create(:user) }
+  #
+  #   context 'assigned to nobody' do
+  #     let!(:task) { create(:task, progress: 'unstarted', project: project, creator: user) }
+  #
+  #     before { task.assigned_to_me(another_user) }
+  #     it 'assigns task to a user' do
+  #       expect(task.assigned_to).to eq another_user.id
+  #     end
+  #   end
+  #
+  #   context 'already assigned' do
+  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
+  #
+  #     before { task.assigned_to_me(another_user) }
+  #     it 'will not assign task' do
+  #       expect(task.assigned_to).to eq user.id
+  #     end
+  #   end
+  #
+  #   context 'already in progress' do
+  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, progress: 'started') }
+  #
+  #     before { task.assigned_to_me(another_user) }
+  #     it 'will not assign task' do
+  #       expect(task.assigned_to).to eq user.id
+  #     end
+  #   end
+  # end
+  # UA[2016/11/29] - METHOD REMOVED '#set_progress' # REFACTOR SPECS TO TEST NEW SCENARIOS
+  # describe '#set_progress' do
+  #   before { task.set_progress(user, 'started') }
+  #
+  #   context 'Task is assigned to that user' do
+  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
+  #
+  #     it 'will change progress' do
+  #       expect(task.progress).to eq 'started'
+  #     end
+  #   end
+  #
+  #   context 'Task is NOT assigned to that user' do
+  #     let(:another_user) { create(:user) }
+  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
+  #
+  #     it 'would NOT changes progress' do
+  #       expect(task.progress).to eq 'unstarted' # Default value
+  #     end
+  #   end
+  # end
 
   it 'should have title' do
     expect(build(:low_priority_task, project: project, commenter: project.owner, title: nil)).to_not be_valid
