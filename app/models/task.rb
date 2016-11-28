@@ -110,27 +110,37 @@ class Task < ApplicationRecord
     end
   end
 
-  # TODO: Refactor this method. Right now it wont assign task if it is already assigned to another user.
-  # UA[2016/11/14] - TODO - REFACTOR THIS CREEPY METHOD - (BTW) WHAT IS IT DOING
+  # UA[2016/11/28] - assigned_to_me even if the task is started(or any other state) or assigned to anyone else
   def assigned_to_me(current_user)
-    if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?('unstarted'))
-      if update_attributes(assigned_to: current_user.id)
-        'Task assigned to You'
-      end
+    # if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?('unstarted'))
+    #   if update_attributes(assigned_to: current_user.id)
+    #     'Task assigned to You'
+    #   end
+    # else
+    #   'Task already assigned'
+    # end
+    if update_attributes(assigned_to: current_user.id)
+      'Task assigned to You'
     else
-      'Task already assigned'
+      'Task could not be assigned to You'
     end
   end
 
-  # To improve user experience if a user starts progress should't we assign task to him automatically, like pivotal
+  # UA[2016/11/28] - Anyone can set tasks progress (even if not owner of task)
+  # To improve user experience if a user starts progress shouldn't we assign task to him automatically, like pivotal
   def set_progress(current_user, progress)
-    if (assigned_to).eql?(current_user.id)
-      if update_attributes(progress: progress)
-      else
-        'status of task could not change'
-      end
+    # if (assigned_to).eql?(current_user.id)
+    #   if update_attributes(progress: progress)
+    #   else
+    #     'status of task could not change'
+    #   end
+    # else
+    #   'Task is not assigned to you'
+    # end
+    if update_attributes(progress: progress)
+      'Progress of task is updated successfully'
     else
-      'Task is not assigned to you'
+      'Progress of task could not be updated'
     end
   end
 
