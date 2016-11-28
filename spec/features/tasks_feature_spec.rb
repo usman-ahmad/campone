@@ -74,20 +74,21 @@ describe 'tasks management', type: :feature do
     end
 
     # Its better to test single field in one example but for performance we can test many things in one
-    it 'assigns correct values' do
-      fill_in 'Title', with: 'create erd diagram and implement'
-      fill_in 'Description', with: 'Use Microsoft Visio to create ERD'
-      fill_in 'Due at', with: '2016-03-30' # Datepicker
+    it 'assigns correct values', js: true, driver: :selenium do
+      fill_in 'task[title]', with: 'create erd diagram and implement'
+
+      execute_script('$(".description-textarea").trumbowyg("html", "Use Microsoft Visio to create ERD");')
+      fill_in 'task[due_at]', with: '2016-03-30' # Datepicker
 
       select 'High', :from => 'Priority'
       select 'Everybody', :from => 'Assigned to'
 
-      click_button 'Create Task'
-
-      expect(page).to have_content('create erd diagram and implement')
-      expect(page).to have_content('Use Microsoft Visio to create ERD')
+      click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')
 
+      find('li', text: 'create erd diagram and implement').click
+      expect(page).to have_content('create erd diagram and implement')
+      expect(page).to have_content('Use Microsoft Visio to create ERD')
       expect(page).to have_content('High')
       expect(page).to have_content('Everybody')
     end
