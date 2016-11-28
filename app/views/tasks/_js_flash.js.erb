@@ -1,5 +1,0 @@
-if($('.alert').length){
-$('.alert').html("<%= j flash[:notice] %> <button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
-}else { $("#content").prepend("<%= j render 'shared/flash' %>");}
-
-<% flash.clear %>

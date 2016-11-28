@@ -46,9 +46,14 @@
       </ul>
       <div class="col-md-12 todo-item">
         <div class="pull-left">
-          <%= link_to 'Assign to Me', assigned_to_me_project_task_path(@project ,@task),method: :patch, remote: true,  class: 'btn btn-default' %>
+          <%#= link_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, remote: true, class: 'btn btn-default' %>
+          <%= button_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
           <span id = "progress_buttons">
-            <%= render 'tasks/progress_buttons'%>
+            <%#= render 'tasks/progress_buttons'%>
+            <% @task.next_states.each do |event, state| %>
+                <%#= link_to event, set_progress_project_task_path(@project, @task, progress: state), method: :patch, remote: true, class: 'btn btn-default' %>
+                <%= button_to event, set_progress_project_task_path(@project, @task, progress: state), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
+            <% end %>
           </span>
         </div>
         <div class="pull-right">

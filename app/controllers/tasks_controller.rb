@@ -69,13 +69,21 @@ class TasksController < ApplicationController
   end
 
   def assigned_to_me
-    flash[:notice]= @task.assigned_to_me current_user
-    respond_to :js
+    if @task.update_attributes(assigned_to: current_user.id)
+      'Task is assigned to You'
+    else
+      'Task could not be assigned to You'
+    end
+    redirect_to [@project, @task]
   end
 
   def set_progress
-    flash[:notice]= @task.set_progress current_user, params[:progress]
-    respond_to :js
+    if @task.update_attributes(progress: params[:progress])
+      'Progress of task is updated successfully'
+    else
+      'Progress of task could not be updated'
+    end
+    redirect_to [@project, @task]
   end
 
   def sort
