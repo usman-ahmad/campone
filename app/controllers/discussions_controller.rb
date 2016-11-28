@@ -44,7 +44,7 @@ class DiscussionsController < ApplicationController
         format.json { render json: @discussion , status: :created }
       else
         format.html { render :new }
-        format.json { render json: @discussion.errors, status: :unprocessable_entity }
+        format.json { render json: @discussion.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
