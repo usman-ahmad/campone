@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
     resources :attachments, only: [:index, :new, :create, :destroy, :edit, :update] do
       member do
-        get 'download'
+        post 'download'
       end
     end
 

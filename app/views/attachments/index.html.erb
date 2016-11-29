@@ -24,8 +24,9 @@
               <td>
                 <div class="pull-left text-right">
                 </div>
-                <!-- TODO: Add downloding link here-->
-                <a class="file-icon" href="<%= download_project_attachment_path(@project, attachment) %>"><i class="fa fa-download"></i> Download</a>
+                <%= link_to download_project_attachment_path(@project, attachment), method: :post, class: "file-icon" do %>
+                    <i class="fa fa-download"></i> Download
+                <% end %>
                 <%= link_to project_attachment_path(@project, attachment), method: :delete, data: {confirm: 'Are you sure?'}, class: "file-icon" do %>
                     <i class="fa fa-trash-o"></i>
                 <% end %>
