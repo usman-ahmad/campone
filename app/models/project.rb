@@ -10,7 +10,7 @@ class Project < ApplicationRecord
   has_many :tasks
   has_many :discussions
   has_many :events
-  has_many :attachments
+  has_many :attachments, as: :attachable
 
   has_many :integrations
   has_many :payloads, through: :integrations
@@ -28,7 +28,7 @@ class Project < ApplicationRecord
     return unless attachments.present?
 
     attachments.each do |attachment|
-      self.attachments.build(:attachment => attachment, uploader: uploaded_by)
+      self.attachments.build(:attachment => attachment, uploader: uploaded_by, project_id: self.id)
     end
 
     save
