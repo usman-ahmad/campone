@@ -1,47 +1,57 @@
 require 'rails_helper'
 
-describe 'attachments feature', type: :feature do
-  let!(:owner) { create(:user) }
+# UA[2016/12/01] - TODO - REFACTOR FEATURE SPECS - WHAT IS THE FEATURE HERE - WHAT ARE THE SCENARIOS
+# https://www.relishapp.com/rspec/rspec-rails/docs/feature-specs/feature-spec
+# https://github.com/eliotsykes/rspec-rails-examples
+
+describe 'Attachments feature for Projects, Tasks and Discussions', type: :feature do
+  let!(:owner) { create(:user, email: 'u@co.co', password: 'some_password', password_confirmation: 'some_password') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:discussion) { create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner) }
-  let!(:task) { create(:medium_priority_task, title: 'create erd diagram', project: project, commenter: owner, creator: owner) }
-  let!(:project_attachment) { create(:attachment, attachment_file_name: 'test_attachment.jpg', attachment_content_type: 'image/jpeg', attachment_file_size: 559959, user_id: owner.id, attachable: project) }
-  let!(:non_project_attachment) { create(:attachment, attachment_file_name: 'sample_attachment.jpg', attachment_content_type: 'image/png', attachment_file_size: 100392, user_id: owner.id, attachable: task) }
 
   before do
-    login(owner.email, 'secretpassword')
+    login('u@co.co', 'some_password')
   end
 
-  context 'when there is an attachment' do
-
-    before {
+  context 'when there is project with no attachments' do
+    it 'uploads attachment' do
       visit project_attachments_path(project)
-    }
 
-    it 'uploads attachment', js: true, driver: :selenium do
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       find('input[name="commit"]').click
+
       expect(page).to have_content('test_attachment.jpg')
     end
 
-    it 'downloads attachment', js: true, driver: :poltergeist do
-      find('a', text: 'Download').click
+    # UA[2016/12/01] - SHOULD THIS BE A JS SPEC?
+    it 'downloads attachment', js: true do
+      create(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+      visit project_attachments_path(project)
+
+      find('a', text: 'Download').click # UA[2016/12/01] - BRITTLE WAY TO ACCESS - REFACTOR IT
+
       expect(response_headers['Content-Type']).to eq 'image/jpeg'
-      expect(response_headers['Content-Disposition']).to eq 'attachment; filename="test_attachment.jpg"'
+      expect(response_headers['Content-Disposition']).to eq 'attachment; filename="awesome_project_attachment.jpg"'
     end
+  end
 
+  context 'when there is project with existing attachments, and we visit attachments page' do
     it 'enlists project attachment only' do
-      expect(page).to have_content('test_attachment.jpg')
-      expect(page).not_to have_content('sample_attachment.jpg')
+      # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
+      # UA[2016/12/01] - TODO - UPDATE FACTORIES - MAKE THEM PROPER
+      task = create(:medium_priority_task, title: 'create erd diagram', project: project, commenter: owner, creator: owner)
+      create(:attachment, attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
+      create(:attachment, attachment_file_name: 'non_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: task)
+
+      visit project_attachments_path(project)
+
+      expect(page).to have_content('awesome_project_attachment.jpg')
+      expect(page).not_to have_content('non_project_attachment.jpg')
     end
   end
 
 
   context 'when discussion' do
-    before do
-      project
-      discussion
-    end
+    let!(:discussion) { create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner) }
 
     it 'should create discussion with attachment' do
       visit project_discussions_path(project)
@@ -61,10 +71,8 @@ describe 'attachments feature', type: :feature do
   end
 
   context 'when tasks' do
-    before do
-      project
-      task
-    end
+    let!(:task) { create(:medium_priority_task, title: 'create erd diagram', project: project, commenter: owner, creator: owner) }
+
     it 'should create task with attachment' do
       visit project_tasks_path(project)
       fill_in 'task[title]', with: 'create erd diagram'
@@ -72,6 +80,7 @@ describe 'attachments feature', type: :feature do
       find('input[name="commit"]').click
       page.find_all('img[title= "test_attachment.jpg"]')
     end
+
     it 'should attach file when update to task' do
       visit project_task_path(project, task)
       find('a', text: 'Edit').click
