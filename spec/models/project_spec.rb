@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  description       :text
+#  owner_id          :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  slug              :string
+#  current_ticket_id :integer          default(1)
+#
+
 require 'rails_helper'
 
 RSpec.describe Project, type: :model do

@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: payloads
+#
+#  id             :integer          not null, primary key
+#  info           :text
+#  integration_id :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  event          :string
+#
+
 class Payload < ApplicationRecord
   after_create :send_notification,    :if => :vcs?
   after_create :perform_transitions,  :if => :vcs?  # Perform actions on commit for VCS system like github and Bitbucket etc

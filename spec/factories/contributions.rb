@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: contributions
+#
+#  id         :integer          not null, primary key
+#  project_id :integer
+#  user_id    :integer
+#  role       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 FactoryGirl.define do
   factory :contribution do
     project

@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: integrations
+#
+#  id         :integer          not null, primary key
+#  project_id :integer
+#  url        :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  name       :string
+#  token      :string
+#  secret     :string
+#
+
 class Integration < ApplicationRecord
 =begin
   we should consider Inheritance for different type of Integrations

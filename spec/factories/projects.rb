@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id                :integer          not null, primary key
+#  name              :string
+#  description       :text
+#  owner_id          :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  slug              :string
+#  current_ticket_id :integer          default(1)
+#
+
 FactoryGirl.define do
   names = ['desktop medical store MIS', 'online medical store MIS', 'mobile app of MIS', 'face recognition', 'time tracking']
   description = ['it should be created on .net', 'it should be created on ROR', 'it should be created on android', 'this can be create on any language', 'it should be created on php']

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: notifications
+#
+#  id          :integer          not null, primary key
+#  activity_id :integer
+#  user_id     :integer
+#  status      :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  is_deleted  :boolean
+#
+
 class Notification < ApplicationRecord
   belongs_to :activity, :class_name => "PublicActivity::Activity"
   belongs_to :user

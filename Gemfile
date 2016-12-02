@@ -33,7 +33,7 @@ gem 'devise_invitable'
 gem 'paperclip'
 # For generating thumbnails from videos
 gem 'paperclip-av-transcoder'
-# Moment.js is "a lightweight javascript date library for parsing, manipulating, and formatting dates
+# Moment.js is a lightweight javascript date library for parsing, manipulating, and formatting dates
 gem 'momentjs-rails'
 # Use fullcalendar to genrate calendar
 gem 'fullcalendar-rails'
@@ -76,12 +76,14 @@ gem 'unicorn'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development do
+  # Annotate Rails classes with schema and routes info.
+  gem 'annotate'
   # Preview email in the default browser instead of sending it.
-  gem "letter_opener"
+  gem 'letter_opener'
   # User better-error to inspect application error on browser
   gem 'better_errors'
   # Use rails-erd to generate ERD diagram of models
-  gem "rails-erd"
+  gem 'rails-erd'
   # rails_best_practices is a code metric tool to check the quality of Rails code.
   gem 'rails_best_practices'
   # Access an IRB console on exception pages or by using <%= console %> in views

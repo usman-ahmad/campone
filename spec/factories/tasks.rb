@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id          :integer          not null, primary key
+#  title       :string
+#  description :text
+#  project_id  :integer
+#  priority    :string           default("None")
+#  due_at      :date
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  progress    :string           default("unscheduled")
+#  assigned_to :integer
+#  user_id     :integer
+#  position    :integer
+#  ticket_id   :string
+#
+
 FactoryGirl.define do
   names = ['create class diagram','create domain model','create sequaqnce diagram','create system sequance diagram']
   description = ['it should be create on time','before every diagram create it','create it after SSD',' create before sequance diagram','']
