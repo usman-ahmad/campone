@@ -259,23 +259,23 @@ RSpec.describe Task, type: :model do
   # end
 
   it 'should have title' do
-    expect(build(:low_priority_task, project: project, commenter: project.owner, title: nil)).to_not be_valid
+    expect(build(:task, :low_priority, project: project, commenter: project.owner, title: nil)).to_not be_valid
   end
 
   it 'should not allow due date in past', pending: 'Add validation in model if required.' do
-    expect(build(:medium_priority_task, project: project, commenter: project.owner, due_at: (Date.today - 1))).to_not be_valid
+    expect(build(:task, :medium_priority, project: project, commenter: project.owner, due_at: (Date.today - 1))).to_not be_valid
   end
 
   it 'should allow nil due date' do
-    expect(build(:high_priority_task, project: project, commenter: project.owner, due_at: nil)).to be_valid
+    expect(build(:task, :high_priority, project: project, commenter: project.owner, due_at: nil)).to be_valid
   end
 
   it 'should allow us to create' do
 
-    expect(create(:low_priority_task, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Low")
-    expect(create(:low_priority_task, project: project, progress: 'finished', commenter: project.owner, creator: project.owner).progress).to eq("finished")
-    expect(create(:medium_priority_task, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Medium")
-    expect(create(:high_priority_task, project: project, progress: 'unstarted', commenter: project.owner, creator: project.owner).priority).to eq("High")
+    expect(create(:task, :low_priority, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Low")
+    expect(create(:task, :low_priority, project: project, progress: 'finished', commenter: project.owner, creator: project.owner).progress).to eq("finished")
+    expect(create(:task, :medium_priority, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Medium")
+    expect(create(:task, :high_priority, project: project, progress: 'unstarted', commenter: project.owner, creator: project.owner).priority).to eq("High")
 
   end
 

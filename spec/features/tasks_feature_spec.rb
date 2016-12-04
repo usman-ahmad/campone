@@ -4,7 +4,7 @@ describe 'tasks management', type: :feature do
   let!(:owner) { create(:user, name: 'Great Person') }
   let!(:task_owner) { create(:user, name: 'dev team') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:task) { create(:medium_priority_task, title: 'create erd diagram', progress: 'unstarted', project: project, commenter: owner, creator: task_owner) }
+  let!(:task) { create(:task, :medium_priority, title: 'create erd diagram', progress: 'unstarted', project: project, commenter: owner, creator: task_owner) }
 
   before do
     login(owner.email, 'secretpassword')
@@ -39,14 +39,14 @@ describe 'tasks management', type: :feature do
   end
 
   describe 'show/hide completed tasks' do
-    let!(:completed_task) { create(:task, title: 'A completed task', progress: 'finished', project: project, creator: owner ) }
+    let!(:completed_task) { create(:task, title: 'A completed task', progress: 'finished', project: project, creator: owner) }
 
     before do
       visit project_tasks_path(project)
     end
 
     it 'hides completed tasks', pending: 'feature has been redesigned or removed' do
-      expect(page).to     have_css('ul#tasks li', :count => 1)
+      expect(page).to have_css('ul#tasks li', :count => 1)
       expect(page).to_not have_content('A completed task')
     end
 

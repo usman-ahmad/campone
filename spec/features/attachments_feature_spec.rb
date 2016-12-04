@@ -38,7 +38,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     it 'enlists project attachment only' do
       # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
       # UA[2016/12/01] - TODO - UPDATE FACTORIES - MAKE THEM PROPER
-      task = create(:medium_priority_task, title: 'create erd diagram', project: project, commenter: owner, creator: owner)
+      task = create(:task, :medium_priority, title: 'create erd diagram', project: project, commenter: owner, creator: owner)
       create(:attachment, attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
       create(:attachment, attachment_file_name: 'non_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: task)
 
@@ -71,7 +71,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
   end
 
   context 'when tasks' do
-    let!(:task) { create(:medium_priority_task, title: 'create erd diagram', project: project, commenter: owner, creator: owner) }
+    let!(:task) { create(:task, :medium_priority, title: 'create erd diagram', project: project, commenter: owner, creator: owner) }
 
     it 'should create task with attachment' do
       visit project_tasks_path(project)
