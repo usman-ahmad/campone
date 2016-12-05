@@ -39,6 +39,14 @@ $(document).on('turbolinks:load', function () {
         btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['horizontalRule']]
     });
 
+    $('#attachments_array_').on('input:file').change(function () {
+        console.log('activated....');
+        var file_checkbox = $('#hide-checkbox');
+        if ($(this).val().length >= 1) {
+            file_checkbox.removeClass('hidden');
+        }
+    });
+
     $('[data-toggle="tooltip"]').tooltip();
 
 

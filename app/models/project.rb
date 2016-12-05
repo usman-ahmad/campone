@@ -40,12 +40,9 @@ class Project < ApplicationRecord
   # TODO: Refactor and simplify
   def create_attachments(attachments, uploaded_by)
     return unless attachments.present?
-
     attachments.each do |attachment|
-      self.attachments.build(:attachment => attachment, uploader: uploaded_by, project_id: self.id)
+      self.attachments.create(:attachment => attachment, uploader: uploaded_by, project_id: self.id)
     end
-
-    save
   end
 
   def json_events_for_calender

@@ -21,6 +21,10 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comments_params)
     @comment.attachments_array=params[:attachments_array]
 
+    if params[:about_attachment]
+      @project.create_attachments(params[:attachments_array], current_user)
+    end
+
     if @comment.save
       @comment.create_activity :create, owner: current_user
       redirect_to [@project,@commentable], notice: "Comment created."

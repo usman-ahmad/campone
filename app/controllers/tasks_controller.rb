@@ -36,6 +36,10 @@ class TasksController < ApplicationController
     @task = @project.tasks.new(task_params)
     @task.attachments_array=params[:attachments_array]
 
+    if params[:about_attachment]
+      @project.create_attachments(params[:attachments_array], current_user)
+    end
+
     if @task.save
       @task.create_activity :create, owner: current_user
       redirect_to [@project, :tasks], notice: 'Task was successfully created.'

@@ -37,6 +37,10 @@ class DiscussionsController < ApplicationController
     @discussion = @project.discussions.new(discussion_params)
     @discussion.attachments_array=params[:attachments_array]
 
+    if params[:about_attachment]
+      @project.create_attachments(params[:attachments_array], current_user)
+    end
+
     respond_to do |format|
       if @discussion.save
         @discussion.create_activity :create, owner: current_user
