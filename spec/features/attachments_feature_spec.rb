@@ -49,6 +49,52 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
   end
 
+  context 'when creating task, comment or discussion with attachment, and we allow user to show attached file on attachments page' do
+    it 'shows allowed task attachment on attachments page', js: true do
+      visit project_tasks_path(project)
+
+      fill_in 'task[title]', with: 'create entity relationship diagram'
+      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_project_attachment.jpg'))
+      find('input[name="add_files_to_project"]').click
+      find('input[name="commit"]').click
+
+      visit project_attachments_path(project)
+
+      expect(page).to have_content('awesome_project_attachment.jpg')
+      expect(page).to have_content(owner.name)
+    end
+
+    it 'shows allowed comment attachment on attachments page', js: true do
+      task = create(:task, :low_priority, title: 'create flow chart', project: project, commenter: owner, creator: owner)
+      visit project_task_path(project, task)
+
+      execute_script('$("#comment_content").trumbowyg("html", "also mentioned your name & roll no.");')
+      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_project_attachment.jpg'))
+      find('input[name="add_files_to_project"]').click
+      find('input[name="commit"]').click
+
+      visit project_attachments_path(project)
+
+      expect(page).to have_content('awesome_project_attachment.jpg')
+      expect(page).to have_content(owner.name)
+    end
+
+    it 'shows allowed discussion attachment on attachments page', pending: 'ActionController::InvalidAuthenticityToken, js: true' do
+      visit project_discussions_path(project)
+      find('a[data-target="#discussion"]').click
+      fill_in 'discussion_title', with: 'which tool should be used for accounts'
+
+      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_project_attachment.jpg'))
+      find('input[name="add_files_to_project"]').click
+      find('input[name="commit"]').click
+      # save_and_open_page
+      # save_and_open_screenshot
+      visit project_attachments_path(project)
+
+      expect(page).to have_content('awesome_project_attachment.jpg')
+      expect(page).to have_content(owner.name)
+    end
+  end
 
   context 'when discussion' do
     let!(:discussion) { create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner) }
