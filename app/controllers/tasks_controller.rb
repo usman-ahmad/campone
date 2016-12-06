@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   load_and_authorize_resource :task, :through => :project
 
   before_action :set_project
-  before_action :set_task,    only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     cookies[:tasks_visibility] = params[:visibility] || cookies[:tasks_visibility]
@@ -36,7 +36,8 @@ class TasksController < ApplicationController
     @task = @project.tasks.new(task_params)
     @task.attachments_array=params[:attachments_array]
 
-    if params[:about_attachment]
+    # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
+    if params[:add_files_to_project]
       @project.create_attachments(params[:attachments_array], current_user)
     end
 
@@ -103,8 +104,8 @@ class TasksController < ApplicationController
   end
 
   def import
-    Task.import(params[:file],@project, current_user)
-    redirect_to project_tasks_path, notice: "Tasks imported."
+    Task.import(params[:file], @project, current_user)
+    redirect_to project_tasks_path, notice: 'Tasks imported.'
   end
 
   private

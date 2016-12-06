@@ -13,13 +13,8 @@
           <%= f.text_area :content, rows: 8, class: 'form-control description-textarea' %>
         </div>
         <div>
-          <%= f.submit class: "btn btn-success pull-right" %>
-          <div class="form-group col-md-4">
-            <%= render 'attachments/browse_attachments' %>
-          </div>
-          <div class="form-group col-md-4">
-            <%= render 'attachments/allow_attachment' %>
-          </div>
+          <%= f.submit class: 'btn btn-success pull-right' %>
+          <%= render 'attachments/browse_attachments', addable_to_project: true %>
         </div>
     <% end %>
    </div>

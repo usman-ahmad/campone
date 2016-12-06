@@ -3,7 +3,7 @@ class DiscussionsController < ApplicationController
   load_and_authorize_resource :discussion, :through => :project
 
   before_action :set_project
-  before_action :set_discussion,    only: [:show, :edit, :update, :destroy]
+  before_action :set_discussion, only: [:show, :edit, :update, :destroy]
   before_action :build_user_discussions, only: [:edit]
 
   def index
@@ -13,7 +13,7 @@ class DiscussionsController < ApplicationController
     @discussion.attachments.build
 
     @project.members.each do |m|
-      @discussion.user_discussions.build(user: m, notify: true )
+      @discussion.user_discussions.build(user: m, notify: true)
     end
   end
 
@@ -29,7 +29,7 @@ class DiscussionsController < ApplicationController
     @discussion.attachments.build
 
     @project.members.each do |m|
-      @discussion.user_discussions.build(user: m, notify: true )
+      @discussion.user_discussions.build(user: m, notify: true)
     end
   end
 
@@ -37,7 +37,8 @@ class DiscussionsController < ApplicationController
     @discussion = @project.discussions.new(discussion_params)
     @discussion.attachments_array=params[:attachments_array]
 
-    if params[:about_attachment]
+    # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
+    if params[:add_files_to_project]
       @project.create_attachments(params[:attachments_array], current_user)
     end
 
@@ -45,7 +46,7 @@ class DiscussionsController < ApplicationController
       if @discussion.save
         @discussion.create_activity :create, owner: current_user
         format.html { redirect_to [@project, :discussions], notice: 'Discussion was successfully created.' }
-        format.json { render json: @discussion , status: :created }
+        format.json { render json: @discussion, status: :created }
       else
         format.html { render :new }
         format.json { render json: @discussion.errors.full_messages, status: :unprocessable_entity }
@@ -84,7 +85,7 @@ class DiscussionsController < ApplicationController
 
   def discussion_params
     dp = params.require(:discussion).permit(:title, :content, :project_id, :private,
-                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy ])
+                                            user_discussions_attributes: [:id, :user_id, :notify, :_destroy])
     dp.merge(user_id: current_user.id)
 
   end
@@ -94,7 +95,7 @@ class DiscussionsController < ApplicationController
     return if user_ids.blank?
 
     user_ids.each do |user_id|
-      @discussion.user_discussions.build(user_id: user_id, notify: true )
+      @discussion.user_discussions.build(user_id: user_id, notify: true)
     end
   end
 end

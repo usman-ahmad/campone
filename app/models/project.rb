@@ -38,6 +38,7 @@ class Project < ApplicationRecord
   alias :h :url_helpers
 
   # TODO: Refactor and simplify
+  # UA[2016/12/06] - SHOULDN'T WE USE TRANSACTIONS ???
   def create_attachments(attachments, uploaded_by)
     return unless attachments.present?
     attachments.each do |attachment|

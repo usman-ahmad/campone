@@ -4,7 +4,7 @@
 
   <div class="form-group">
     <div class="col-md-4 col-md-offset-2 ">
-      <%= render 'attachments/browse_attachments' %>
+      <%= render 'attachments/browse_attachments', addable_to_project: false %>
     </div>
       <%= f.submit 'Upload', class: "btn btn-primary" %>
   </div>

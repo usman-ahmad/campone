@@ -39,11 +39,12 @@ $(document).on('turbolinks:load', function () {
         btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['horizontalRule']]
     });
 
+    // UA[2016/12/06] - for "attachments/browse_attachments" affects [tasks, discussions, comments]
     $('#attachments_array_').on('input:file').change(function () {
-        console.log('activated....');
-        var file_checkbox = $('#hide-checkbox');
+        //console.log('activated....');
         if ($(this).val().length >= 1) {
-            file_checkbox.removeClass('hidden');
+            $(this).parents('.form-group:first')
+                .find('input#add_files_to_project,label[for="add_files_to_project"]').show();
         }
     });
 

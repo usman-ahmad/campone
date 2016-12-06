@@ -1,3 +1,7 @@
 <div class="form-group">
-    <%= file_field_tag "attachments_array[]", type: :file, multiple: true %>
+  <%= file_field_tag 'attachments_array[]', type: :file, multiple: true %>
+  <% if addable_to_project %>
+      <%= check_box_tag 'add_files_to_project', '1', false, style: 'display: none;' %>
+      <%= label_tag 'add_files_to_project', 'also add to Project Files', class: 'custom-label', style: 'display: none;' %>
+  <% end %>
 </div>

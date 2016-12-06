@@ -21,15 +21,16 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.new(comments_params)
     @comment.attachments_array=params[:attachments_array]
 
-    if params[:about_attachment]
+    # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
+    if params[:add_files_to_project]
       @project.create_attachments(params[:attachments_array], current_user)
     end
 
     if @comment.save
       @comment.create_activity :create, owner: current_user
-      redirect_to [@project,@commentable], notice: "Comment created."
+      redirect_to [@project, @commentable], notice: 'Comment created.'
     else
-      redirect_to [@project,@commentable], notice: "Please write comment"
+      redirect_to [@project, @commentable], notice: 'Please write comment'
     end
   end
 
@@ -40,27 +41,29 @@ class CommentsController < ApplicationController
   def update
     @comment.attachments_array=params[:attachments_array]
     if @comment.update(comments_params)
-      redirect_to [@project,@commentable], notice: "Comment updated."
+      redirect_to [@project, @commentable], notice: 'Comment updated.'
     end
   end
 
   def destroy
     @comment.destroy
-    redirect_to :back,  notice: "Comment deleted."
+    redirect_to :back, notice: 'Comment deleted.'
   end
 
   private
   def comments_params
     params.require(:comment).permit(:content, attachments_array: []).merge(user: current_user)
   end
+
   # def load_commentable
   #   resource, id = request.path.split('/')[1, 2]
   #   @commentable = resource.singularize.classify.constantize.find(id)
   # end
 
   def comment
-    @comment = Comment.find_by(id:params[:id])
+    @comment = Comment.find_by(id: params[:id])
   end
+
   def load_commentable
     klass = [Task, Discussion].detect { |c| params["#{c.name.underscore}_id"] }
     @commentable = klass.find(params["#{klass.name.underscore}_id"])
