@@ -34,7 +34,8 @@ class TasksController < ApplicationController
 
   def create
     @task = @project.tasks.new(task_params)
-    @task.attachments_array=params[:attachments_array]
+    # GS[2015/12/22] - TODO Refactor this, attr_accessor should do the trick
+    @task.attachments_array = params[:attachments_array]
 
     # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
     if params[:add_files_to_project]
@@ -57,9 +58,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    # TODO Refactor this, attr_accessor should do the trick
-    @task.attachments_array=params[:attachments_array]
-
     if @task.update(task_params.except(:user_id))
       @task.create_activity :update, owner: current_user
       redirect_to [@project, @task], notice: 'Task was successfully updated.'

@@ -23,7 +23,7 @@
             <!-- This is a security hole, user_id can get changed from view, should be in controller -->
             <%# f.hidden_field :user_id, :value => current_user.id %>
             <div class="col-md-6">
-              <%= render 'attachments/browse_attachments', addable_to_project: true %>
+              <%= render 'attachments/browse_attachments', addable_to_project: true if @discussion.new_record? %>
             </div>
             <div class="col-md-6">
               <div class="form-group">

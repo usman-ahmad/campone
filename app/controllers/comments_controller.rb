@@ -39,7 +39,6 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment.attachments_array=params[:attachments_array]
     if @comment.update(comments_params)
       redirect_to [@project, @commentable], notice: 'Comment updated.'
     end
@@ -52,7 +51,7 @@ class CommentsController < ApplicationController
 
   private
   def comments_params
-    params.require(:comment).permit(:content, attachments_array: []).merge(user: current_user)
+    params.require(:comment).permit(:content).merge(user: current_user)
   end
 
   # def load_commentable

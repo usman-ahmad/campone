@@ -35,7 +35,7 @@ class DiscussionsController < ApplicationController
 
   def create
     @discussion = @project.discussions.new(discussion_params)
-    @discussion.attachments_array=params[:attachments_array]
+    @discussion.attachments_array = params[:attachments_array]
 
     # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
     if params[:add_files_to_project]
@@ -58,8 +58,6 @@ class DiscussionsController < ApplicationController
   end
 
   def update
-    @discussion.attachments_array=params[:attachments_array]
-
     if @discussion.update(discussion_params.except(:user_id))
       @discussion.create_activity :update, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
