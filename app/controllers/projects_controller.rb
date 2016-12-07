@@ -5,14 +5,14 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    # @projects   = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
-    @projects   = current_user.projects
+    # @projects = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
+    @projects = current_user.projects
   end
 
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @contribution  = Contribution.new
+    @contribution = Contribution.new
     @contributions = @project.contributions
 
     @integration = Integration.new
@@ -69,14 +69,14 @@ class ProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      pp = params.require(:project).permit(:name, :description)
-      pp.merge(owner: current_user)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    pp = params.require(:project).permit(:name, :description)
+    pp.merge(owner: current_user)
+  end
 end

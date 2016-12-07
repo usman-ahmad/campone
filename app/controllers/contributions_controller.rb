@@ -17,7 +17,6 @@ class ContributionsController < ApplicationController
     contribution =  @project.contributions.create(contribution_params)
     if contribution.persisted?
       # send invitation email
-      # UserMailer.contribution_mail(contribution).deliver#_later
       UserMailer.contribution_mail(contribution).deliver#_later
       flash[:alert] = 'Invitations sent.'
     else

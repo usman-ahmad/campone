@@ -1,1 +1,6 @@
-Hello <%= @contribution.user.name %>
+<%= t('devise.mailer.invitation_instructions.hello', email: @contribution.user.email) %>
+
+<%= "#{@contribution.inviter.name} has invited you to #{@contribution.project.name}," %>
+you can accept it through the link below.
+
+<%= project_tasks_url(@contribution.project, :invitation_token => @contribution.token) %>

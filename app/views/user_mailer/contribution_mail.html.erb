@@ -1,7 +1,12 @@
-<p><%= t("devise.mailer.invitation_instructions.hello", email: @contribution.user.email) %></p>
+<p>
+  <%= t('devise.mailer.invitation_instructions.hello', email: @contribution.user.email) %>
+</p>
 
-<p><%= @contribution.inviter.name %> has invited you to <%= @contribution.project.name %>, you can accept it through the link below.</p>
+<p>
+  <%= "#{@contribution.inviter.name} has invited you to #{@contribution.project.name}," %>
+  you can accept it through the link below.
+</p>
 
-<p><%= link_to t("devise.mailer.invitation_instructions.accept"), project_tasks_url(@contribution.project, :invitation_token => @contribution.token) %></p>
-
-
+<p>
+  <%= link_to t('devise.mailer.invitation_instructions.accept'), project_tasks_url(@contribution.project, :invitation_token => @contribution.token) %>
+</p>

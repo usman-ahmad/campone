@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
+
+# Loads environment variables from `.env`, should be on top of application's Gemfile
 gem 'dotenv-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 
