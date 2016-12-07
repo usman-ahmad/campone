@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :authenticate_user!
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :ensure_signup_complete
@@ -11,8 +12,9 @@ class ApplicationController < ActionController::Base
     redirect_back fallback_location: root_url, :alert => exception.message
   end
 
+  # https://github.com/plataformatec/devise/wiki/How-To:-Redirect-back-to-current-page-after-sign-in,-sign-out,-sign-up,-update
   def after_sign_in_path_for(resource)
-    projects_path
+    session['user_return_to'] || projects_path
   end
 
   protected

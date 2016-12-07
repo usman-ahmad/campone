@@ -1,4 +1,7 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # TODO: Rethink it. For now skipping authentication for all actions.
+  skip_before_action :authenticate_user!
+
   before_action :set_user, only: [:finish_signup, :associate_account]
   before_action :set_project, only: [:twitter, :asana, :jira, :trello]
 

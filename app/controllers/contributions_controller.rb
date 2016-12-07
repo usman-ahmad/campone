@@ -15,7 +15,15 @@ class ContributionsController < ApplicationController
 
   def create
     contribution =  @project.contributions.create(contribution_params)
-    flash[:alert] = contribution.valid? ? 'Invitations sent.' : contribution.errors.full_messages.join
+    if contribution.persisted?
+      # send invitation email
+      # UserMailer.contribution_mail(contribution).deliver#_later
+      UserMailer.contribution_mail(contribution).deliver#_later
+      flash[:alert] = 'Invitations sent.'
+    else
+      flash[:alert] = contribution.errors.full_messages.join
+    end
+
     redirect_back(fallback_location: project_path(@project))
   end
 
@@ -52,6 +60,6 @@ class ContributionsController < ApplicationController
   end
 
   def contribution_params
-    params.require(:contribution).permit(:email,:role)
+    params.require(:contribution).permit(:email,:role).merge(inviter: current_user)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161128073351) do
+ActiveRecord::Schema.define(version: 20161201103546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,8 +61,12 @@ ActiveRecord::Schema.define(version: 20161128073351) do
     t.integer  "project_id"
     t.integer  "user_id"
     t.string   "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "token"
+    t.string   "status",     default: "pending"
+    t.integer  "inviter_id"
+    t.index ["inviter_id"], name: "index_contributions_on_inviter_id", using: :btree
     t.index ["project_id"], name: "index_contributions_on_project_id", using: :btree
     t.index ["user_id"], name: "index_contributions_on_user_id", using: :btree
   end
@@ -205,6 +209,7 @@ ActiveRecord::Schema.define(version: 20161128073351) do
   add_foreign_key "comments", "users"
   add_foreign_key "contributions", "projects"
   add_foreign_key "contributions", "users"
+  add_foreign_key "contributions", "users", column: "inviter_id"
   add_foreign_key "discussions", "projects"
   add_foreign_key "events", "projects"
   add_foreign_key "identities", "users"

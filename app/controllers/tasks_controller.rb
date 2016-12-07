@@ -9,6 +9,11 @@ class TasksController < ApplicationController
     cookies[:tasks_visibility] = params[:visibility] || cookies[:tasks_visibility]
     @visibility = cookies[:tasks_visibility] || 'all'
 
+    if params[:invitation_token]
+      contribution = current_user.contributions.where(token: params[:invitation_token]).first
+      contribution.update_attributes(status: 'joined') if contribution
+    end
+
     @task = @project.tasks.new
     # @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
     #                                      include_completed: cookies[:include_completed] == 'true').order!('position')
