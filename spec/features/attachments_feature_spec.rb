@@ -5,7 +5,7 @@ require 'rails_helper'
 # https://github.com/eliotsykes/rspec-rails-examples
 
 describe 'Attachments feature for Projects, Tasks and Discussions', type: :feature do
-  let!(:owner) { create(:user, email: 'u@co.co', password: 'some_password', password_confirmation: 'some_password') }
+  let!(:owner) { create(:user, name: 'Gul Baz Khan', email: 'u@co.co', password: 'some_password', password_confirmation: 'some_password') }
   let!(:project) { create(:project, owner: owner) }
 
   before do
@@ -49,51 +49,81 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
   end
 
-  context 'when creating task, comment or discussion with attachment, and we allow user to show attached file on attachments page' do
-    it 'shows allowed task attachment on attachments page', js: true do
-      visit project_tasks_path(project)
+  context 'on tasks listing page, when creating a new task', js: true do
+    before { visit project_tasks_path(project) }
 
-      fill_in 'task[title]', with: 'create entity relationship diagram'
-      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_project_attachment.jpg'))
-      find('input[name="add_files_to_project"]').click
-      find('input[name="commit"]').click
+    it 'should display add_files_to_project only when some file is attached' do
+      fill_in 'task[title]', with: 'New Task without attachment'
 
-      visit project_attachments_path(project)
+      expect(page).not_to have_content('also add to Project Files')
+      expect(page).not_to have_field('add_files_to_project')
 
-      expect(page).to have_content('awesome_project_attachment.jpg')
-      expect(page).to have_content(owner.name)
+      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
+
+      expect(page).to have_content('also add to Project Files')
+      expect(page).to have_field('add_files_to_project')
     end
 
-    it 'shows allowed comment attachment on attachments page', js: true do
-      task = create(:task, :low_priority, title: 'create flow chart', project: project, commenter: owner, creator: owner)
-      visit project_task_path(project, task)
+    it 'should add file to project files, when checked add_files_to_project' do
+      fill_in 'task[title]', with: 'New Task with attachment'
+      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
 
-      execute_script('$("#comment_content").trumbowyg("html", "also mentioned your name & roll no.");')
-      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_project_attachment.jpg'))
-      find('input[name="add_files_to_project"]').click
-      find('input[name="commit"]').click
-
+      check('add_files_to_project')
+      click_button('Add To-Do')
       visit project_attachments_path(project)
 
-      expect(page).to have_content('awesome_project_attachment.jpg')
-      expect(page).to have_content(owner.name)
+      expect(page).to have_content('awesome_attachment.png')
+      expect(page).to have_content('Upload By: Gul Baz Khan.')
     end
 
-    it 'shows allowed discussion attachment on attachments page', pending: 'ActionController::InvalidAuthenticityToken, js: true' do
-      visit project_discussions_path(project)
-      find('a[data-target="#discussion"]').click
-      fill_in 'discussion_title', with: 'which tool should be used for accounts'
+    it 'should not add file to project files, when unchecked add_files_to_project' do
+      fill_in 'task[title]', with: 'New Task with attachment'
+      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
 
-      page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_project_attachment.jpg'))
-      find('input[name="add_files_to_project"]').click
-      find('input[name="commit"]').click
-      # save_and_open_page
-      # save_and_open_screenshot
+      uncheck('add_files_to_project')
+      click_button('Add To-Do')
       visit project_attachments_path(project)
 
-      expect(page).to have_content('awesome_project_attachment.jpg')
-      expect(page).to have_content(owner.name)
+      expect(page).not_to have_content('awesome_attachment.png')
+      expect(page).not_to have_content('Upload By.')
+      expect(page).to have_content('No Record Exist')
     end
+  end
+
+  # UA[2016/12/07] - TODO - REFACTOR SO THAT SAME TESTS CAN BE REUSED AS THE SCENARIOS ARE SAME WITH VARIATIONS IN PRECONDITIONS
+  context 'on TASK SHOW page, when CREATING A COMMENT, and on DISCUSSIONS LISTING page, when ADDING A DISCUSSION' do
+    it 'should display add_files_to_project only when some file is attached'
+    it 'should add file to project files, when checked add_files_to_project'
+    it 'should not add file to project files, when unchecked add_files_to_project'
+    # it 'shows allowed comment attachment on attachments page', js: true, driver: :selenium do
+    #   task = create(:task, title: 'create flow chart', project: project, commenter: owner, creator: owner)
+    #   visit project_task_path(project, task)
+    #
+    #   execute_script('$("#comment_content").trumbowyg("html", "also mentioned your name & roll no.");')
+    #   page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
+    #   find('input[name="add_files_to_project"]').click
+    #   find('input[name="commit"]').click
+    #
+    #   visit project_attachments_path(project)
+    #
+    #   expect(page).to have_content('awesome_attachment.png')
+    #   expect(page).to have_content(owner.name)
+    # end
+    #
+    # it 'shows allowed discussion attachment on attachments page', js: true, driver: :selenium do
+    #
+    #   visit project_discussions_path(project)
+    #   find('a[data-target="#discussion"]').click
+    #   fill_in 'discussion_title', with: 'which tool should be used for accounts'
+    #
+    #   page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
+    #   find('input[name="add_files_to_project"]').click
+    #   find('input[name="commit"]').click
+    #   visit project_attachments_path(project)
+    #
+    #   expect(page).to have_content('awesome_attachment.png')
+    #   expect(page).to have_content(owner.name)
+    # end
   end
 
   context 'when discussion' do
