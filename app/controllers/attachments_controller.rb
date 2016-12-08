@@ -56,7 +56,7 @@ class AttachmentsController < ApplicationController
   end
 
   def update
-    if @attachment.update(attachment_params)
+    if @attachment.update(attachment_params.except(:attachment))
       redirect_to project_attachments_path(@project), notice: 'Attachment was successfully updated.'
     else
       render :edit

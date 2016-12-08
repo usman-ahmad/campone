@@ -41,6 +41,13 @@
         <span class="key">Attachment Description: </span>
         <span><%= @attachment.description %></span>
       </div>
+
+      <div class="pull-right">
+        <%= link_to edit_project_attachment_path(@project, @attachment), class: 'btn btn-default' do %>
+            <span class="glyphicon glyphicon-pencil"></span>
+            Edit
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
