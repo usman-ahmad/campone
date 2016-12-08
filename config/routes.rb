@@ -52,7 +52,8 @@
 #                                        POST      /projects/:project_id/attachments(.:format)                                  attachments#create
 #                 new_project_attachment GET       /projects/:project_id/attachments/new(.:format)                              attachments#new
 #                edit_project_attachment GET       /projects/:project_id/attachments/:id/edit(.:format)                         attachments#edit
-#                     project_attachment PATCH     /projects/:project_id/attachments/:id(.:format)                              attachments#update
+#                     project_attachment GET       /projects/:project_id/attachments/:id(.:format)                              attachments#show
+#                                        PATCH     /projects/:project_id/attachments/:id(.:format)                              attachments#update
 #                                        PUT       /projects/:project_id/attachments/:id(.:format)                              attachments#update
 #                                        DELETE    /projects/:project_id/attachments/:id(.:format)                              attachments#destroy
 #              get_events_project_events GET       /projects/:project_id/events/get_events(.:format)                            events#get_events
@@ -154,7 +155,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :attachments, only: [:index, :new, :create, :destroy, :edit, :update] do
+    resources :attachments do
       member do
         post 'download'
       end

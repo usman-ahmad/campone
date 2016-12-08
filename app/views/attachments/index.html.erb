@@ -14,16 +14,20 @@
         <% @attachments.each do |attachment| %>
             <tr>
               <td>
-                <%= link_to attachment.attachment_file_name, '#', class: 'list-anchor',
-                            data: { toggle: "modal", target: "#attachmentPreviewModel",
-                                    type: attachment.attachment_content_type,
-                                    url: attachment.attachment.url,
-                                    title: attachment.attachment_file_name } %>
+                <%= link_to attachment.title, project_attachment_path(@project, attachment), class: 'list-anchor' %>
                 <p>Upload By: <%= begin attachment.uploader.name + ". on " + attachment.created_at.localtime.strftime("%B %d, %Y") rescue 'Not Present' end %> </p>
               </td>
               <td>
                 <div class="pull-left text-right">
                 </div>
+                <%= link_to '#', class: 'file-icon',
+                            data: {toggle: "modal", target: "#attachmentPreviewModel",
+                                   type: attachment.attachment_content_type,
+                                   url: attachment.attachment.url,
+                                   title: attachment.attachment_file_name} do %>
+                    <i class="fa fa-eye"></i> Preview
+                <% end %>
+
                 <%= link_to download_project_attachment_path(@project, attachment), method: :post, class: "file-icon" do %>
                     <i class="fa fa-download"></i> Download
                 <% end %>

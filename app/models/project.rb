@@ -14,7 +14,7 @@
 
 class Project < ApplicationRecord
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged,:finders]
+  friendly_id :slug_candidates, use: [:slugged, :finders]
 
   belongs_to :owner, class_name: 'User'
 
@@ -34,15 +34,16 @@ class Project < ApplicationRecord
 
   after_create :add_owner_to_contributors
 
-  delegate :url_helpers, to: "Rails.application.routes"
+  delegate :url_helpers, to: 'Rails.application.routes'
   alias :h :url_helpers
 
   # TODO: Refactor and simplify
   # UA[2016/12/06] - SHOULDN'T WE USE TRANSACTIONS ???
   def create_attachments(attachments, uploaded_by)
-    return unless attachments.present?
+    return if attachments.blank?
+
     attachments.each do |attachment|
-      self.attachments.create(:attachment => attachment, uploader: uploaded_by, project_id: self.id)
+      self.attachments.create(attachment: attachment, title: attachment.original_filename, uploader: uploaded_by, project_id: self.id)
     end
   end
 
@@ -87,7 +88,7 @@ class Project < ApplicationRecord
 
     # TODO: Try SecureRandom
     # generate a random string of length 3
-    random_chars  = (0...3).map { ('a'..'z').to_a[rand(26)] }.join
+    random_chars = (0...3).map { ('a'..'z').to_a[rand(26)] }.join
 
     [
         name_initials,

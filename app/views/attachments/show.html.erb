@@ -1,0 +1,46 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: '' %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-12 show-page-head">
+  </div>
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="col-md-9">
+
+      <div class="col-md-4">
+        <span class="key">Attachment Title: </span>
+        <span class="value"><%= @attachment.title %></span>
+      </div>
+
+      <div class="col-md-4">
+        <span class="key">Attachment Name: </span>
+        <span class="value"><%= @attachment.attachment_file_name %></span>
+      </div>
+
+      <div class="col-md-4">
+        <span class="key">Attachment Size: </span>
+        <span class="value"><%= (@attachment.attachment_file_size.to_f/1000).round(2) %> kb</span>
+      </div>
+
+      <div class="col-md-4">
+        <span class="key">Upload By: </span>
+        <span class="value">
+          <%= begin
+                @attachment.uploader.name rescue 'Not Present'
+              end %>
+        </span>
+      </div>
+
+      <div class="col-md-4">
+        <span class="key">Uploaded On: </span>
+        <span class="value"><%= @attachment.created_at.localtime.strftime("%B %d, %Y") %></span>
+      </div>
+
+      <div class="col-md-12">
+        <span class="key">Attachment Description: </span>
+        <span><%= @attachment.description %></span>
+      </div>
+    </div>
+  </div>
+</div>

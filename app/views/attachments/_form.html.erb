@@ -1,11 +1,26 @@
-<%= form_for([@project, @attachment], html: { class: "form-horizontal", role: "form", multipart: true }) do |f| %>
+<%= form_for([@project, @attachment], html: {class: 'form-horizontal', role: 'form', multipart: true}) do |f| %>
 
-  <%= render 'shared/error_messages', object: @attachment  %>
+    <%= render 'shared/error_messages', object: @attachment %>
 
-  <div class="form-group">
-    <div class="col-md-4 col-md-offset-2 ">
-      <%= render 'attachments/browse_attachments', addable_to_project: false %>
+    <div class="col-md-offset-4 col-md-4">
+      <div class="form-group">
+        <%= f.label :title, class: 'custom-label' %>
+        <%= f.text_field :title, class: 'form-control', placeholder: 'Title' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :description, class: 'custom-label' %>
+        <%= f.text_area :description, class: 'form-control', placeholder: 'Description' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.file_field :attachment, type: :file %>
+      </div>
+
+      <div class="form-group">
+        <%= f.submit class: 'btn btn-primary pull-right' %>
+      </div>
     </div>
-      <%= f.submit 'Upload', class: "btn btn-primary" %>
-  </div>
 <% end %>
+
+<div class="clearfix"></div>
