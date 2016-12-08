@@ -48,6 +48,14 @@
 #                                        PUT       /projects/:project_id/contributions/:id(.:format)                            contributions#update
 #                                        DELETE    /projects/:project_id/contributions/:id(.:format)                            contributions#destroy
 #            download_project_attachment POST      /projects/:project_id/attachments/:id/download(.:format)                     attachments#download
+#            project_attachment_comments GET       /projects/:project_id/attachments/:attachment_id/comments(.:format)          comments#index
+#                                        POST      /projects/:project_id/attachments/:attachment_id/comments(.:format)          comments#create
+#         new_project_attachment_comment GET       /projects/:project_id/attachments/:attachment_id/comments/new(.:format)      comments#new
+#        edit_project_attachment_comment GET       /projects/:project_id/attachments/:attachment_id/comments/:id/edit(.:format) comments#edit
+#             project_attachment_comment GET       /projects/:project_id/attachments/:attachment_id/comments/:id(.:format)      comments#show
+#                                        PATCH     /projects/:project_id/attachments/:attachment_id/comments/:id(.:format)      comments#update
+#                                        PUT       /projects/:project_id/attachments/:attachment_id/comments/:id(.:format)      comments#update
+#                                        DELETE    /projects/:project_id/attachments/:attachment_id/comments/:id(.:format)      comments#destroy
 #                    project_attachments GET       /projects/:project_id/attachments(.:format)                                  attachments#index
 #                                        POST      /projects/:project_id/attachments(.:format)                                  attachments#create
 #                 new_project_attachment GET       /projects/:project_id/attachments/new(.:format)                              attachments#new
@@ -159,6 +167,7 @@ Rails.application.routes.draw do
       member do
         post 'download'
       end
+      resources :comments
     end
 
     resources :events do

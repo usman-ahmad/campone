@@ -37,6 +37,7 @@ class Attachment < ApplicationRecord
   belongs_to :project
   belongs_to :attachable, polymorphic: true
   belongs_to :uploader, class_name: User, foreign_key: :user_id
+  has_many :comments, as: :commentable
 
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe
@@ -58,5 +59,13 @@ class Attachment < ApplicationRecord
 
   def is_video?
     attachment_content_type.match('video.*')
+  end
+
+  def project
+    if self.attachable_type =='Project'
+      self.attachable
+    elsif self.attachable_type == 'Discussion' || self.attachable_type =='Task'
+      self.attachable.project
+    end
   end
 end

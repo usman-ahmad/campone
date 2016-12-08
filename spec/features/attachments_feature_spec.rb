@@ -53,6 +53,17 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
       expect(page).to have_content('awesome_project_attachment.jpg')
       expect(page).not_to have_content('non_project_attachment.jpg')
     end
+
+    it 'comments on an attachment', js: true do
+      create(:attachment, title: 'commented attachment', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
+      visit project_attachments_path(project)
+      click_link 'commented attachment'
+
+      execute_script('$("#comment_content").trumbowyg("html", "First comment for testing purpose.");')
+      click_button 'Create Comment'
+
+      expect(page).to have_content('First comment for testing purpose.')
+    end
   end
 
   context 'on tasks listing page, when creating a new task', js: true do

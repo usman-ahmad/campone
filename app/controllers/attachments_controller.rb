@@ -12,7 +12,11 @@ class AttachmentsController < ApplicationController
     @attachment = Attachment.new(project: @project)
   end
 
+  # UA[2016/12/08] - WRONG STYLE PARAMETER PASSING - RECHECK THE VIEW LAYER AND REFACTOR PARTIALS
   def show
+    @comments = @attachment.comments
+    @comment = Comment.new
+    @commentable = @attachment
   end
 
   def new

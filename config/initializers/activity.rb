@@ -50,6 +50,11 @@ PublicActivity::Activity.class_eval do
     task.project.members.map(&:id) - [owner_id]
   end
 
+  def get_notifiable_users_for_attachment(attachment)
+    # owner_id represents current_user, Do not send notifications to creator
+    attachment.project.members.map(&:id) - [owner_id]
+  end
+
   def get_notifiable_users_for_discussion(discussion)
     if discussion.private?
       discussion.users.map(&:id) - [owner_id]
@@ -64,6 +69,8 @@ PublicActivity::Activity.class_eval do
         get_notifiable_users_for_task(trackable.commentable)
       when 'Discussion'
         get_notifiable_users_for_discussion(trackable.commentable)
+      when 'Attachment'
+        get_notifiable_users_for_attachment(trackable.commentable)
     end
   end
 
