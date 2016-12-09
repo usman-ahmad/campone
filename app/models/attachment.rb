@@ -31,8 +31,8 @@ class Attachment < ApplicationRecord
                           end
                         },
                     default_url: '/images/:style/missing_file_type.png',
+                    path: ':rails_root/public/system/attachments/attachments/:id_partition/:style/:filename',
                     processors: lambda { |a| a.is_video? ? [:transcoder] : [:thumbnail] }
-
 
   belongs_to :project
   belongs_to :attachable, polymorphic: true
