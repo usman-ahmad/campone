@@ -54,11 +54,11 @@ class Attachment < ApplicationRecord
   end
 
   def is_image?
-    attachment_content_type.match('image.*')
+    !!attachment_content_type.match('image.*')
   end
 
   def is_video?
-    attachment_content_type.match('video.*')
+    !!attachment_content_type.match('video.*')
   end
 
   def project

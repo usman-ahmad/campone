@@ -24,7 +24,7 @@ class Project < ApplicationRecord
   has_many :tasks
   has_many :discussions
   has_many :events
-  has_many :attachments, as: :attachable
+  has_many :attachments, as: :attachable, class_name: 'ProjectAttachment'
 
   has_many :integrations
   has_many :payloads, through: :integrations

@@ -9,7 +9,7 @@ class AttachmentsController < ApplicationController
 
   def index
     @attachments = @project.attachments
-    @attachment = Attachment.new(project: @project)
+    @attachment = ProjectAttachment.new(project: @project)
   end
 
   # UA[2016/12/08] - WRONG STYLE PARAMETER PASSING - RECHECK THE VIEW LAYER AND REFACTOR PARTIALS
@@ -51,7 +51,7 @@ class AttachmentsController < ApplicationController
   end
 
   def destroy
-    @attachment = Attachment.find(params[:id])
+    @attachment = ProjectAttachment.find(params[:id])
     @attachment.destroy
     redirect_to project_attachments_path(@project), notice: 'Attachment was successfully deleted.'
   end

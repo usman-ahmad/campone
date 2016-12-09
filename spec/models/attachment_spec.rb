@@ -20,5 +20,51 @@
 require 'rails_helper'
 
 RSpec.describe Attachment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { create(:user) }
+  let(:project) { create(:project, owner: user) }
+  let(:attachment) { create(:attachment, attachable_id: project.id, project: project,
+                            attachment: File.new('spec/files/awesome_project_attachment.jpg')) }
+
+  describe 'associations' do
+    it { should belong_to :project }
+    it { should belong_to :uploader }
+    it { should belong_to(:attachable) }
+  end
+
+  describe 'validations' do
+
+    it { should validate_presence_of :attachment }
+
+    it 'is not valid without an attachment' do
+      attachment = Attachment.new(attachment: nil)
+      expect(attachment).to_not be_valid
+    end
+  end
+
+  it 'is an instance of Attachment' do
+    expect(attachment).to be_an Attachment
+  end
+
+  # TODO: To be confirm
+  # it 'has a valid factory' do
+  #   create(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg')).should be_valid
+  # end
+
+  it 'increment attachments count' do
+    expect { create(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg')) }.to change { Attachment.count }.by(1)
+  end
+
+  it 'should have project' do
+    expect(attachment.project).to eq(project)
+  end
+
+  describe '#is_image?' do
+    it 'should be an image' do
+      expect(attachment.is_image?).to be_truthy
+    end
+
+    it 'should be not image' do
+      expect(attachment.is_video?).to be_falsey
+    end
+  end
 end
