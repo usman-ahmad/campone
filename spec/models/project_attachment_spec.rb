@@ -23,16 +23,11 @@ RSpec.describe ProjectAttachment, type: :model do
   let(:user) { create(:user) }
   let(:project) { create(:project, owner: user) }
 
-  describe 'validations' do
+  context 'validations' do
     it { should validate_presence_of :title }
 
-    it 'should not be valid without title and attachment' do
-      attachment = Attachment.new(title: nil, attachment: nil)
-      expect(attachment).to_not be_valid
-    end
-
     it 'should be valid attachment' do
-      expect(build(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'),  project: project)).to be_valid
+      expect(build(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), project: project)).to be_valid
     end
   end
 end

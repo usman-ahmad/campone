@@ -11,6 +11,7 @@ require 'spec_helper'
 require 'factory_girl_rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+require "paperclip/matchers"
 
 Capybara.javascript_driver = :poltergeist
 
@@ -56,6 +57,8 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.include Paperclip::Shoulda::Matchers
 end
 
 

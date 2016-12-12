@@ -21,9 +21,28 @@ FactoryGirl.define do
   factory :attachment do
     title 'My attachment title'
     description 'description of my attachment.'
-    attachable_id 1
-    attachable_type 'MyString'
     project nil
-  end
 
+    trait :with_attachment_data do
+      attachment_file_name 'test_attachment.png'
+      attachment_content_type 'images/png'
+      attachment_file_size 559959
+      attachment_updated_at '2016-12-14 07:30:41'
+    end
+
+    trait :with_real_attachment do
+      attachment File.new('spec/files/awesome_project_attachment.jpg')
+    end
+
+    trait :with_comments do
+      transient do
+        commenter 'user'
+        comments_count 1
+      end
+
+      after(:create) do |attachment, evaluator|
+        create_list(:comment, evaluator.comments_count, commenter: evaluator.commenter, commentable: attachment)
+      end
+    end
+  end
 end
