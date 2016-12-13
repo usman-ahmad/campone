@@ -24,8 +24,7 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    # @attachment = @project.attachments.new(attachment_params)
-    @attachment = @project.attachments.new(attachment_params.except(:attachment_file_name))
+    @attachment = @project.attachments.new(attachment_params.except(:attachment_name))
 
     if @attachment.save
       flash[:notice]= 'Attachment was successfully created.'
@@ -61,13 +60,6 @@ class AttachmentsController < ApplicationController
   end
 
   def update
-    (@attachment.attachment.styles.keys+[:original]).each do |style|
-      path = @attachment.attachment.path(style)
-      if path != (File.join(File.dirname(path), params[:attachment][:attachment_file_name]))
-        FileUtils.move(path, File.join(File.dirname(path), params[:attachment][:attachment_file_name]))
-      end
-    end
-
     if @attachment.update(attachment_params.except(:attachment))
       redirect_to project_attachment_path(@project, @attachment), notice: 'Attachment was successfully updated.'
     else
@@ -86,6 +78,6 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(:title, :description, :attachment_file_name, :attachment).merge(uploader: current_user)
+    params.require(:attachment).permit(:title, :description, :attachment, :attachment_name).merge(uploader: current_user)
   end
 end

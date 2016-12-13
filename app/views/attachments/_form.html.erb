@@ -15,14 +15,12 @@
 
       <% if @attachment.persisted? %>
           <div class="form-group">
-            <%= f.label :attachment_file_name, class: "custom-label" %>
+            <%= f.label :attachment_file_name, class: 'custom-label' %>
             -
             <span class="key"><%= @attachment.attachment_file_name %></span>
-            <%= f.text_field :attachment_file_name, class: "form-control", placeholder: "File Name" %>
+            <%= f.text_field :attachment_name, class: 'form-control', placeholder: 'File Name' %>
           </div>
-      <% end %>
-
-      <% if @attachment.new_record? %>
+      <% elsif @attachment.new_record? %>
           <div class="form-group">
             <%= f.file_field :attachment, type: :file %>
           </div>

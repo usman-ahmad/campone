@@ -42,15 +42,22 @@ class Attachment < ApplicationRecord
 
   ATTACHABLE_TYPES = %w(Task Discussion Comment)
 
+  attr_accessor :attachment_name
+
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe
 
   # validates_inclusion_of :attachable_type, in: ATTACHABLE_TYPES
   validates_inclusion_of :attachable_type, in: Proc.new { |a| a.class::ATTACHABLE_TYPES }
+  validates_presence_of :attachment_name, on: :update
 
   validates_attachment :attachment, presence: true,
                        content_type: {:not => NOT_ALLOWED_CONTENT_TYPES, message: 'should NOT be executable.'},
                        size: {in: 0..20.megabytes, message: 'should NOT be greater than 20MB.'}
+
+  def attachment_name
+    @attachment_name || (File.basename(attachment_file_name, File.extname(attachment_file_name)) if attachment.present?)
+  end
 
   def attach_from_url(url)
     self.attachment = URI.parse(url)
@@ -66,5 +73,25 @@ class Attachment < ApplicationRecord
 
   def project
     self.attachable.project # self.attachable >>> [task discussion comment]
+  end
+
+  before_update :update_file_name
+
+  def update_file_name
+    return if @attachment_name.blank?
+
+    extension = File.extname(self.attachment_file_name)
+    new_file_name = @attachment_name + extension
+
+    (self.attachment.styles.keys + [:original]).each do |style|
+      file_name_with_path = self.attachment.path(style)
+      directory = File.dirname(file_name_with_path)
+
+      if file_name_with_path != File.join(directory, new_file_name)
+        FileUtils.move(file_name_with_path, File.join(directory, new_file_name))
+      end
+    end
+
+    self.attachment_file_name = new_file_name
   end
 end
