@@ -15,6 +15,7 @@
 #  updated_at              :datetime         not null
 #  user_id                 :integer
 #  title                   :string
+#  type                    :string
 #
 
 class Attachment < ApplicationRecord
@@ -32,18 +33,20 @@ class Attachment < ApplicationRecord
                         },
                     default_url: '/images/:style/missing_file_type.png',
                     path: ':rails_root/public/system/attachments/attachments/:id_partition/:style/:filename',
+                    url: '/system/attachments/attachments/:id_partition/:style/:filename',
                     processors: lambda { |a| a.is_video? ? [:transcoder] : [:thumbnail] }
 
   belongs_to :project
   belongs_to :attachable, polymorphic: true
   belongs_to :uploader, class_name: User, foreign_key: :user_id
-  has_many :comments, as: :commentable
+
+  ATTACHABLE_TYPES = %w(Task Discussion Comment)
 
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe
 
-  # UA[2016/12/08] - NEED 'validates_presence_of :title' FOR PROJECT ATTACHMENTS ONLY
-  # validates_presence_of :title
+  # validates_inclusion_of :attachable_type, in: ATTACHABLE_TYPES
+  validates_inclusion_of :attachable_type, in: Proc.new { |a| a.class::ATTACHABLE_TYPES }
 
   validates_attachment :attachment, presence: true,
                        content_type: {:not => NOT_ALLOWED_CONTENT_TYPES, message: 'should NOT be executable.'},
@@ -62,10 +65,6 @@ class Attachment < ApplicationRecord
   end
 
   def project
-    if self.attachable_type =='Project'
-      self.attachable
-    elsif self.attachable_type == 'Discussion' || self.attachable_type =='Task'
-      self.attachable.project
-    end
+    self.attachable.project # self.attachable >>> [task discussion comment]
   end
 end

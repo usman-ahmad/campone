@@ -19,13 +19,20 @@ class Comment < ApplicationRecord
 
   has_many :attachments, as: :attachable
 
+  # COMMENTABLE_TYPES = %w(Task Discussion ProjectAttachment_AS_Attachment)
+
   validates :content, presence: true
 
   def attachments_array=(array)
     return unless array.present?
 
     array.each do |file|
-      attachments.build(:attachment => file, project: self.commentable_type.constantize.find(self.commentable_id).project, user_id: self.user_id  )
+      # attachments.build(:attachment => file, project: self.commentable_type.constantize.find(self.commentable_id).project, user_id: self.user_id  )
+      attachments.build(:attachment => file, project: self.commentable.project, user_id: self.user_id  )
     end
+  end
+
+  def project
+    self.commentable.project # self.attachable >>> [task discussion attachment]
   end
 end
