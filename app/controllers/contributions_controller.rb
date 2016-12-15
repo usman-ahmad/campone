@@ -19,8 +19,8 @@ class ContributionsController < ApplicationController
   def create
     contribution =  @project.contributions.create(contribution_params)
     if contribution.persisted?
-      # send invitation email
-      UserMailer.contribution_mail(contribution).deliver#_later
+      # send invitation email if user exist in system (prevent duplicate email if already sent by devise invitable)
+      UserMailer.contribution_mail(contribution).deliver if contribution.user.accepted_or_not_invited?
       flash[:alert] = 'Invitations sent.'
     else
       flash[:alert] = contribution.errors.full_messages.join

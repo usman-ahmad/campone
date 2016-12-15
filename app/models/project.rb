@@ -79,7 +79,7 @@ class Project < ApplicationRecord
   Now we can remove owner from project, as we have added owner role in Contribution
 =end
   def add_owner_to_contributors
-    self.contributions.create(user: self.owner, role: Contribution::ROLES[:owner])
+    self.contributions.create(user: self.owner, status: 'joined', role: Contribution::ROLES[:owner])
   end
 
   # Try to create a slug with initials of project name, if its already taken try next combination of initials and random characters

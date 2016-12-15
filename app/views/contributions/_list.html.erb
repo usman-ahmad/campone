@@ -14,7 +14,7 @@
             <td>
               <%= button_to 'Delete', project_contribution_path(@project, contribution), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
               <%= link_to 'Edit', edit_project_contribution_path(@project, contribution), class: 'btn btn-default' %>
-              <%= button_to 'Resend Invitation', resend_invitation_project_contribution_path(@project, contribution), method: :post, class: 'btn btn-default', form: {style: 'display: inline-block;'} unless contribution.user.invitation_accepted? %>
+              <%= button_to 'Resend Invitation', resend_invitation_project_contribution_path(@project, contribution), method: :post, class: 'btn btn-default', form: {style: 'display: inline-block;'} if contribution.status != 'joined' %>
             </td>
           </tr>
       <% end %>

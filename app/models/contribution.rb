@@ -38,7 +38,11 @@ class Contribution < ApplicationRecord
   validates :status, inclusion: {in: STATUSES}
 
   def resend_invitation
-    invite(user.email)
+    if user.accepted_or_not_invited?
+      UserMailer.contribution_mail(self).deliver
+    else
+      invite(user.email)
+    end
   end
 
   def email
