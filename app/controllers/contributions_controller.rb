@@ -1,9 +1,12 @@
 class ContributionsController < ApplicationController
+  # This hook must come before authorization
+  before_action :set_contribution_by_token, only: [:join]
+
   load_and_authorize_resource :project
   load_and_authorize_resource :contribution, :through => :project
 
-  before_action :set_project
-  before_action :set_contribution, except: [:new, :create, :index]
+  before_action :set_project, except: [:join]
+  before_action :set_contribution, except: [:new, :create, :index, :join]
 
   def index
   end
@@ -48,6 +51,16 @@ class ContributionsController < ApplicationController
     @contribution.resend_invitation
   end
 
+  def join
+    if @contribution.update_attributes(status: 'joined')
+      flash[:alert] = 'You have successfully joined this project.'
+    else
+      flash[:alert] = 'Something went wrong. We are unable to change your status.'
+    end
+
+    redirect_to project_tasks_path(@contribution.project)
+  end
+
   private
 
   def set_project
@@ -56,6 +69,10 @@ class ContributionsController < ApplicationController
 
   def set_contribution
     @contribution = @project.contributions.find(params[:id])
+  end
+
+  def set_contribution_by_token
+    @contribution = Contribution.where(token: params[:id]).first
   end
 
   def contribution_params

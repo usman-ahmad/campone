@@ -182,6 +182,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :contributions, only: :join do
+    get :join, on: :member
+  end
+
 
   devise_for :users, :controllers => {omniauth_callbacks: 'omniauth_callbacks'}
 

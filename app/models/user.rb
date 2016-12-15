@@ -55,7 +55,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   after_create :create_demo_project
-  after_create :update_contributions_status
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
@@ -126,10 +125,6 @@ class User < ApplicationRecord
     demo_data = YAML.load_file('db/demo_project.yml')
     project   = Project.create(demo_data['project'].merge(owner: self))
     project.tasks.create(demo_data['tasks'])
-  end
-
-  def update_contributions_status
-    contributions.update_all(status: 'joined')
   end
 
 end

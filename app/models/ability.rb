@@ -11,6 +11,7 @@ class Ability
   GUEST = Contribution::ROLES[:guest]
 
   def initialize(user)
+    alias_action :create, :read, :update, :destroy, :to => :crud
 
     # Guest User
     user ||= User.new
@@ -33,7 +34,8 @@ class Ability
       contribution.project.contributions.where(role: MANAGER, user_id: user.id).present?
     end
 
-    can :manage, Contribution, :project => {owner_id: user.id}
+    can [:crud, :resend_invitation], Contribution, :project => {owner_id: user.id}
+    can :join, Contribution, user: user
 
     # User can only manage his comments
     can :manage, Comment, user: user

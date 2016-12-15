@@ -17,6 +17,11 @@ class ApplicationController < ActionController::Base
     session['user_return_to'] || projects_path
   end
 
+  def after_accept_path_for(resource)
+    resource.contributions.update_all(status: 'joined')
+    session['user_return_to'] || projects_path
+  end
+
   protected
 
   def configure_permitted_parameters
