@@ -387,6 +387,7 @@ GEM
     rake (11.2.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    remotipart (1.3.1)
     representable (3.0.1)
       declarative (~> 0.0.5)
       uber (>= 0.0.15, < 0.2.0)
@@ -551,6 +552,7 @@ DEPENDENCIES
   rails
   rails-erd
   rails_best_practices
+  remotipart
   rspec-rails
   ruby-trello!
   sass-rails (~> 5.0)
