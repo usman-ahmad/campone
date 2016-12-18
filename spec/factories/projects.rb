@@ -13,44 +13,43 @@
 #
 
 FactoryGirl.define do
-  names = ['desktop medical store MIS', 'online medical store MIS', 'mobile app of MIS', 'face recognition', 'time tracking']
-  description = ['it should be created on .net', 'it should be created on ROR', 'it should be created on android', 'this can be create on any language', 'it should be created on php']
+  titles = ['Green Grass', 'Blue Sky', 'Fully Ripe Orange', 'Red Blood Cells', 'Grey Scale']
 
   factory :project do
-    sequence(:name) { |n| names[(n % names.size)] }
-    sequence(:description) { |n| description[(n % description.size)] }
+    sequence(:name) { |n| titles[(n % 5)] }
+    description 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     association :owner, factory: :user
-  end
 
-  factory :project_with_single_task, parent: :project do
-    after(:create) do |project|
-      create(:task, :low_priority, project: project, commenter: project.owner, creator: project.owner)
+    trait :with_tasks do
+      transient do
+        task_owner { owner }
+        task_count 3
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:task, evaluator.task_count, project: project, creator: evaluator.task_owner)
+      end
+    end
+
+    trait :with_discussions do
+      transient do
+        discussion_owner { owner }
+        discussion_count 3
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:discussion, evaluator.discussion_count, project: project, posted_by: evaluator.discussion_owner)
+      end
+    end
+
+    trait :with_attachments do
+      transient do
+        attachments_count 3
+      end
+
+      after(:create) do |project, evaluator|
+        create_list(:project_attachment, evaluator.attachments_count, uploader: project.owner, attachable: project)
+      end
     end
   end
-
-  factory :project_with_many_tasks, parent: :project do
-    after(:create) do |project|
-      create(:task, :low_priority, project: project, commenter: project.owner, creator: project.owner)
-      create(:task, :low_priority, project: project, progress: 'finished', commenter: project.owner, creator: project.owner)
-      create(:task, :medium_priority, project: project, commenter: project.owner, creator: project.owner)
-      create(:task, :medium_priority, project: project, commenter: project.owner, creator: project.owner)
-      create(:task, :high_priority, project: project, progress: 'unstarted', commenter: project.owner, creator: project.owner)
-      create(:task, :high_priority, project: project, progress: 'started', commenter: project.owner, creator: project.owner)
-    end
-  end
-
-  factory :project_with_discussions, parent: :project do
-    after(:create) do |project|
-      create(:none_private_discussion, project: project, commenter: project.owner, user: project.owner)
-      create(:private_discussion, project: project, commenter: project.owner, user: project.owner)
-    end
-  end
-
-  factory :project_with_task_discussions, parent: :project do
-    after(:create) do |project|
-      create(:none_private_discussion, project: project, commenter: project.owner, user: project.owner)
-      create(:task, :medium_priority, project: project, commenter: project.owner, creator: project.owner)
-    end
-  end
-
 end

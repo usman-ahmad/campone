@@ -32,11 +32,12 @@
 #
 
 FactoryGirl.define do
-  names = ['waqas','salman','sunny','asad','irtaza']
+  names = ['user one', 'user two', 'user three']
+
   factory :user do
-    sequence(:name) { |n| names[(n % names.size)]}
-    sequence(:email) { |n| "teknuk-#{names[(n % names.size)]}@ruby.com"}
-    password "secretpassword"
-    password_confirmation "secretpassword"
+    sequence(:name) { |n| names[n % 3] }
+    sequence(:email) { |n| "#{names[n % 3].gsub(' ', '_')}_#{n}@teknuk.com" }
+    password 'secret_password'
+    password_confirmation 'secret_password'
   end
 end

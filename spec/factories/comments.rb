@@ -12,18 +12,23 @@
 #
 
 FactoryGirl.define do
-  comments = ['very nice','i dont link','it can be improve']
+  comments = ['lorem ipsum dolor sit amet', 'lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Excepteur sint occaecat cupidatat non proident']
+
   factory :comment do
-    sequence(:content) { |n| comments[(n % comments.size)]}
-    user
+    sequence(:content) { |n| comments[(n % 3)] }
 
-    transient do
-      commenter 'user'
+    trait :with_attachments do
+      transient do
+        attachments_count 1
+      end
+
+      after(:create) do |comment, evaluator|
+        create_list(:attachment, evaluator.attachments_count, uploader: comment.user, attachable: comment)
+      end
     end
 
-    after(:create) do |comment,  evaluator|
-     comment.create_activity :create, owner: evaluator.commenter
-
-    end
+    # after(:create) do |comment, evaluator|
+    #   comment.create_activity :create, owner: comment.user
+    # end
   end
 end
