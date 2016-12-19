@@ -45,10 +45,10 @@ RSpec.describe Task, type: :model do
 
     it { should allow_value('unscheduled', 'unstarted', 'started', 'paused', 'finished', 'delivered', 'rejected',
                             'accepted').for(:progress) }
-    it { should_not allow_value("blah").for(:progress) }
+    it { should_not allow_value('blah').for(:progress) }
 
     it { should allow_value('None', 'Low', 'Medium', 'High').for(:priority) }
-    it { should_not allow_value("blah").for(:priority) }
+    it { should_not allow_value('blah').for(:priority) }
   end
 
   describe 'associations' do
@@ -90,7 +90,7 @@ RSpec.describe Task, type: :model do
 
     describe 'current_ticket_id' do
       it 'assigns correct ticket_id to task' do
-        expect(task.ticket_id).to eq "test-1"
+        expect(task.ticket_id).to eq 'test-1'
       end
 
       it 'increases current_ticket_id' do
@@ -259,24 +259,22 @@ RSpec.describe Task, type: :model do
   # end
 
   it 'should have title' do
-    expect(build(:task, :low_priority, project: project, commenter: project.owner, title: nil)).to_not be_valid
+    expect(build(:task, project: project, title: nil)).to_not be_valid
   end
 
   it 'should not allow due date in past', pending: 'Add validation in model if required.' do
-    expect(build(:task, :medium_priority, project: project, commenter: project.owner, due_at: (Date.today - 1))).to_not be_valid
+    expect(build(:task, priority: 'Medium', project: project, due_at: (Date.today - 1))).to_not be_valid
   end
 
   it 'should allow nil due date' do
-    expect(build(:task, :high_priority, project: project, commenter: project.owner, due_at: nil)).to be_valid
+    expect(build(:task, project: project, due_at: nil)).to be_valid
   end
 
   it 'should allow us to create' do
-
-    expect(create(:task, :low_priority, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Low")
-    expect(create(:task, :low_priority, project: project, progress: 'finished', commenter: project.owner, creator: project.owner).progress).to eq("finished")
-    expect(create(:task, :medium_priority, project: project, commenter: project.owner, creator: project.owner).priority).to eq("Medium")
-    expect(create(:task, :high_priority, project: project, progress: 'unstarted', commenter: project.owner, creator: project.owner).priority).to eq("High")
-
+    expect(create(:task, priority: 'Low', project: project, creator: project.owner).priority).to eq('Low')
+    expect(create(:task, priority: 'Low', project: project, progress: 'finished', creator: project.owner).progress).to eq('finished')
+    expect(create(:task, priority: 'Medium', project: project, creator: project.owner).priority).to eq('Medium')
+    expect(create(:task, priority: 'High', project: project, progress: 'unstarted', creator: project.owner).priority).to eq('High')
   end
 
 end

@@ -23,13 +23,12 @@ require 'rails_helper'
 RSpec.describe Attachment, type: :model do
   let(:user) { create(:user) }
   let(:project) { create(:project, owner: user) }
-  let(:attachment) { create(:attachment, :with_comments, comments_count: 4, commenter: user, attachable: project, attachment: File.new('spec/files/awesome_project_attachment.jpg')) }
+  let(:project_attachment) { create(:project_attachment, :with_comments, comments_count: 4, commenter: user, attachable: project, attachment: File.new('spec/files/awesome_project_attachment.jpg')) }
 
   context 'associations' do
     it { should belong_to :project }
     it { should belong_to(:uploader).class_name('User').with_foreign_key('user_id') }
     it { should belong_to(:attachable) }
-    it { should have_many(:comments) }
   end
 
   context 'validations - paperclip' do
@@ -42,17 +41,17 @@ RSpec.describe Attachment, type: :model do
   end
 
   it 'has a valid factories' do
-    create(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), attachable: project).should be_valid
-    create(:attachment, :with_attachment_data, attachable: project).should be_valid
-    create(:attachment, :with_real_attachment, attachable: project).should be_valid
-    create(:attachment, :with_attachment_data, :with_comments, comments_count: 3, commenter: user, attachable: project).should be_valid
+    create(:project_attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), attachable: project).should be_valid
+    create(:project_attachment, :with_attachment_data, attachable: project).should be_valid
+    create(:project_attachment, :with_real_attachment, attachable: project).should be_valid
+    create(:project_attachment, :with_attachment_data, :with_comments, comments_count: 3, commenter: user, attachable: project).should be_valid
   end
 
   it 'ensures comments on attachment' do
-    expect(attachment.comments.count).to eq(4)
+    expect(project_attachment.comments.count).to eq(4)
 
-    attachment.comments.each do |comment|
-      expect(comment.commentable).to eq(attachment)
+    project_attachment.comments.each do |comment|
+      expect(comment.commentable).to eq(project_attachment)
       expect(comment.commentable.attachable).to eq(project)
     end
   end
@@ -71,27 +70,27 @@ RSpec.describe Attachment, type: :model do
   end
 
   it 'increment attachments count' do
-    expect { create(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg')) }.to change { Attachment.count }.by(1)
+    expect { create(:project_attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), attachable: project) }.to change { Attachment.count }.by(1)
   end
 
   context '#is_image?' do
     it 'should be an image' do
-      expect(attachment.is_image?).to be_truthy
+      expect(project_attachment.is_image?).to be_truthy
     end
 
     it 'should not be image' do
-      expect(attachment.is_video?).to be_falsey
+      expect(project_attachment.is_video?).to be_falsey
     end
   end
 
   context '#project' do
     let(:task) { create(:task, title: 'task one', creator: user, project: project) }
-    let(:discussion) { create(:none_private_discussion, project: project, commenter: project.owner, user: project.owner) }
     let(:task_attachment) { create(:attachment, attachable: task, attachment: File.new('spec/files/awesome_project_attachment.jpg')) }
-    let(:discussion_attachment) { create(:attachment, :with_attachment_data, attachable: discussion) }
+    # let(:discussion) { create(:discussion, private: false, project: project, user: project.owner) }
+    # let(:discussion_attachment) { create(:attachment, :with_attachment_data, attachable: discussion) }
 
     it 'should return attachment project' do
-      expect(attachment.attachable).to eq(project)
+      expect(project_attachment.attachable).to eq(project)
     end
 
     it 'should return task attachment project' do

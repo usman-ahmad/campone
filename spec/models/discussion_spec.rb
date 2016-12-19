@@ -15,16 +15,16 @@
 require 'rails_helper'
 
 RSpec.describe Discussion, type: :model do
-  let(:user){ create_list(:user, 3) }
-  let(:project){ create(:project, owner: user.first) }
+  let(:user) { create_list(:user, 3) }
+  let(:project) { create(:project, owner: user.first) }
 
   describe 'title' do
     it 'should present' do
-      expect(build(:none_private_discussion,project: project, commenter: project.owner, title:nil , user: project.owner)).to_not be_valid
+      expect(build(:discussion, private: false, project: project, title: nil, posted_by: project.owner)).to_not be_valid
     end
   end
   describe 'invite on discussion' do
-    let(:discussion) {create(:private_discussion,project: project, commenter: project.owner, user: project.owner)}
+    let(:discussion) { create(:discussion, private: true, project: project, posted_by: project.owner) }
 
     it 'should share with users' do
       user.each do |user|

@@ -28,7 +28,7 @@ RSpec.describe ProjectAttachment, type: :model do
     it { should validate_presence_of :title }
 
     it 'should be valid attachment' do
-      expect(build(:attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), project: project)).to be_valid
+      expect(build(:project_attachment, attachment: File.new('spec/files/awesome_project_attachment.jpg'), attachable: project)).to be_valid
     end
   end
 end
