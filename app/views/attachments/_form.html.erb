@@ -15,7 +15,7 @@
 
       <% if @attachment.persisted? %>
           <div class="form-group">
-            <%= f.label :attachment_file_name, class: 'custom-label' %>
+            <%= f.label :attachment_name, class: 'custom-label' %>
             -
             <span class="key"><%= @attachment.attachment_file_name %></span>
             <%= f.text_field :attachment_name, class: 'form-control', placeholder: 'File Name' %>

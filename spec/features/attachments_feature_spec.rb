@@ -29,6 +29,26 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
       expect(page).to have_content('Attachment Name: test_attachment.jpg')
     end
 
+    it 'updates the newly created attachment' do
+
+      create(:project_attachment, title: 'consectetur adipiscing elit', attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+
+      visit project_attachments_path(project)
+
+      click_link 'consectetur adipiscing elit'
+      click_link 'Edit'
+
+      fill_in 'Title', with: 'consectetur adipiscing'
+      fill_in 'Description', with: 'Excepteur sint non proident'
+      fill_in 'Attachment name', with: 'new name attachment'
+
+      click_button 'Update Attachment'
+
+      expect(page).to have_content('Attachment Title: consectetur adipiscing')
+      expect(page).to have_content('Attachment Name: new name attachment')
+      expect(page).to have_content('Attachment Description: Excepteur sint non proident')
+    end
+
     it 'downloads attachment attached to a project' do
       create(:project_attachment, title: 'the awesome project attachment', attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
       visit project_attachments_path(project)
