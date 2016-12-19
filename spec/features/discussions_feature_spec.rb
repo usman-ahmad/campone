@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe 'discussions management', type: :feature do
-  let!(:owner) { create(:user, name: 'sunny') }
+  let!(:owner) { create(:user, name: 'Prime Minister') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:discussion) {create(:none_private_discussion, title: 'how to deliver', project: project, commenter: owner, user: owner)}
+  let!(:discussion) { create(:discussion, private: false, title: 'NO discussion on PTI vs PML-N vs PPP', project: project, posted_by: owner) }
 
   before do
-    login(owner.email, 'secretpassword')
+    login(owner.email, 'secret_password')
   end
 
   context 'Discussion List' do
@@ -15,14 +15,14 @@ describe 'discussions management', type: :feature do
     end
     it 'should show in Discussion List' do
       find('table.discussion-list > tbody tr', :count => 1)
-      expect(find('table.discussion-list > tbody tr')).to have_content('how to deliver')
+      expect(find('table.discussion-list > tbody tr')).to have_content('NO discussion on PTI vs PML-N vs PPP')
     end
 
     it 'should show posted by' do
-      expect(find('table.discussion-list > tbody tr')).to have_content('sunny')
+      expect(find('table.discussion-list > tbody tr')).to have_content('Prime Minister')
     end
 
-    it 'should open discussion on click', js: true, driver: :selenium do
+    it 'should open discussion on click', js: true do
       find('table.discussion-list > tbody tr:nth-child(1)').click
       expect(page.current_path).to eq project_discussion_path(project, discussion)
     end
@@ -34,32 +34,32 @@ describe 'discussions management', type: :feature do
     end
 
     # TODO: When editor selection is final, then handle this test case
-    it 'creates a discussion', pending: 'discussion content access issue'  do
-      fill_in 'discussion_title', with: 'how to deliver notifications'
-      fill_in 'discussion_content', with: 'discussion about how to deliver notifications'
+    it 'creates a discussion', pending: 'discussion content access issue' do
+      fill_in 'discussion_title', with: 'Upper house vs Lower house.'
+      fill_in 'discussion_content', with: 'Why lower house is lower than the upper house.'
       click_on 'Create Discussion'
-      expect(page).to have_content('how to deliver notifications')
-      expect(page).to have_content('discussion about how to deliver notifications')
+      expect(page).to have_content('Upper house vs Lower house.')
+      expect(page).to have_content('Why lower house is lower than the upper house.')
     end
   end
 
   context 'update' do
     before do
-     visit project_discussion_path(project, discussion)
+      visit project_discussion_path(project, discussion)
     end
     it 'should update title' do
-      expect(page).to have_content('how to deliver')
+      expect(page).to have_content('NO discussion on PTI vs PML-N vs PPP')
       find('a', text: 'Edit').click
-      fill_in 'discussion_title', with: 'how to implement'
+      fill_in 'discussion_title', with: 'Seriously NO political discussion.'
       # find('input[name="commit"]').click
       click_on 'Update Discussion'
-      expect(page).to have_content('how to implement')
+      expect(page).to have_content('Seriously NO political discussion.')
     end
   end
 
   context 'when edit delete and navigate from discussion' do
     before do
-      visit project_discussion_path(project,discussion)
+      visit project_discussion_path(project, discussion)
     end
     it 'should edit' do
       find('a', text: 'Edit').click

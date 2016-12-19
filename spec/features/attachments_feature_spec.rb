@@ -30,7 +30,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'downloads attachment attached to a project' do
-      create(:attachment, title: 'the awesome project attachment', attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'the awesome project attachment', attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
       visit project_attachments_path(project)
 
       find('tr', text: 'the awesome project attachment').click_link('Download')
@@ -43,9 +43,8 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
   context 'when there is project with existing attachments, and we visit attachments page' do
     it 'enlists project attachment only' do
       # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
-      # UA[2016/12/01] - TODO - UPDATE FACTORIES - MAKE THEM PROPER
-      task = create(:task, :medium_priority, title: 'create erd diagram', project: project, commenter: owner, creator: owner)
-      create(:attachment, title: 'awesome_project_attachment.jpg', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
+      task = create(:task, project: project, creator: owner)
+      create(:project_attachment, title: 'awesome_project_attachment.jpg', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
       create(:attachment, attachment_file_name: 'non_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: task)
 
       visit project_attachments_path(project)
@@ -55,10 +54,11 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'comments on an attachment', js: true do
-      create(:attachment, title: 'commented attachment', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
+      create(:project_attachment, title: 'commented attachment here!', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
       visit project_attachments_path(project)
-      click_link 'commented attachment'
+      click_link 'commented attachment here!'
 
+      sleep(1)
       execute_script('$("#comment_content").trumbowyg("html", "First comment for testing purpose.");')
       click_button 'Create Comment'
 

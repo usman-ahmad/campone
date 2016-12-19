@@ -5,18 +5,18 @@ describe 'projects management', type: :feature do
   let!(:project) { create(:project, owner: owner) }
 
   before do
-    login(owner.email, 'secretpassword')
+    login(owner.email, 'secret_password')
   end
 
   describe 'creating a new project' do
     it 'should create project' do
       click_on('Create New Project')
 
-      fill_in 'project_name',        with: 'camp one'
-      fill_in 'project_description', with: 'it should be completed within 3 months'
+      fill_in 'project_name', with: 'sunday morning get together'
+      fill_in 'project_description', with: 'contact with friends and invite them for some desi breakfast'
 
       click_button 'Create Project'
-      expect(page).to have_content('it should be completed within 3 months')
+      expect(page).to have_content('contact with friends and invite them for some desi breakfast')
     end
   end
 
@@ -26,14 +26,14 @@ describe 'projects management', type: :feature do
     end
 
     it 'should edit project' do
-      fill_in 'project_name',        with: 'camp one teknuk'
-      fill_in 'project_description', with: 'This project will create teknuk team'
+      fill_in 'project_name', with: 'saturday morning get together'
+      fill_in 'project_description', with: 'contact with friends at formal and informal level for desi breakfast'
 
       click_button 'Update Project'
 
       expect(page).to have_content('Project was successfully updated.')
-      expect(page).to have_content('camp one teknuk')
-      expect(page).to have_content('This project will create teknuk team')
+      expect(page).to have_content('saturday morning get together')
+      expect(page).to have_content('contact with friends at formal and informal level for desi breakfast')
     end
 
     it 'should display in dashboard' do
@@ -42,13 +42,5 @@ describe 'projects management', type: :feature do
       result = page.all('h3.project-name')
       expect(result.map(&:text)).to have_content(project.name)
     end
-  end
-
-  def check_fields
-    expect(page).to have_content('Name:')
-    expect(page).to have_content('camp one')
-    expect(page).to have_content('Description:')
-    expect(page).to have_content('it should be create within 3 months')
-    expect(page).to have_content('Owner:')
   end
 end

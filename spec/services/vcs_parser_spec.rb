@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe VCSParser, type: :model do
   let(:user)    { create(:user) }
   let(:project) { create(:project, name: 'T i c k e t', owner: user) }
-  let!(:task_1) { create(:task, project: project, creator: user) }
-  let!(:task_2) { create(:task, project: project, creator: user) }
+  let!(:task_1) { create(:task, project: project, creator: user, progress: 'unstarted') }
+  let!(:task_2) { create(:task, project: project, creator: user, progress: 'unstarted') }
 
   it 'verifies default values' do
     expect(task_1.ticket_id).to eq 'ticket-1'

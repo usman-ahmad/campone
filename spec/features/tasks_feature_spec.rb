@@ -4,10 +4,10 @@ describe 'tasks management', type: :feature do
   let!(:owner) { create(:user, name: 'Great Person') }
   let!(:task_owner) { create(:user, name: 'dev team') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:task) { create(:task, :medium_priority, title: 'create erd diagram', progress: 'unstarted', project: project, commenter: owner, creator: task_owner) }
+  let!(:task) { create(:task, title: 'bring bread with eggs', priority: 'Medium', progress: 'unstarted', project: project, creator: task_owner) }
 
   before do
-    login(owner.email, 'secretpassword')
+    login(owner.email, 'secret_password')
   end
 
   describe 'ToDo List' do
@@ -17,29 +17,29 @@ describe 'tasks management', type: :feature do
 
     it 'should show in ToDo list' do
       expect(page).to have_css('ul#tasks li', count: 1)
-      expect(page).to have_content('create erd diagram')
+      expect(page).to have_content('bring bread with eggs')
     end
 
     it 'allow to edit from todo list' do
-      find('li', text: 'create erd diagram').click
+      find('li', text: 'bring bread with eggs').click
       click_on 'Edit'
-      fill_in 'task[title]', with: 'create erd diagram and implement'
+      fill_in 'task[title]', with: 'bring blackcurrant jam also'
 
       click_button 'Update To-Do'
 
-      expect(page).to have_content('create erd diagram')
+      expect(page).to have_content('bring blackcurrant jam also')
       expect(page.current_path).to eq project_task_path(project, task)
     end
 
     it 'allow to delete from todo list', js: true, driver: :selenium do
-      find('li', text: 'create erd diagram').find('.fa-trash-o').click
+      find('li', text: 'bring bread with eggs').find('.fa-trash-o').click
       page.driver.browser.switch_to.alert.accept
       expect(page).to have_css('.ui-sortable li', :count => 0)
     end
   end
 
   describe 'show/hide completed tasks' do
-    let!(:completed_task) { create(:task, title: 'A completed task', progress: 'finished', project: project, creator: owner) }
+    let!(:completed_task) { create(:task, title: 'completed my breakfast', progress: 'finished', project: project, creator: owner) }
 
     before do
       visit project_tasks_path(project)
@@ -47,7 +47,7 @@ describe 'tasks management', type: :feature do
 
     it 'hides completed tasks', pending: 'feature has been redesigned or removed' do
       expect(page).to have_css('ul#tasks li', :count => 1)
-      expect(page).to_not have_content('A completed task')
+      expect(page).to_not have_content('completed my breakfast')
     end
 
     it 'shows completed tasks', pending: 'feature has been redesigned or removed' do
@@ -62,10 +62,10 @@ describe 'tasks management', type: :feature do
     before { visit new_project_task_path(project) }
 
     it 'creates new task when only title is provided' do
-      fill_in 'task[title]', with: 'create erd diagram and implement'
+      fill_in 'task[title]', with: 'kindly make an awesome cup of tea'
       click_button 'Add To-Do'
       expect(page).to have_content('successfully created')
-      expect(page).to have_content('create erd diagram and implement')
+      expect(page).to have_content('kindly make an awesome cup of tea')
     end
 
     it 'would not create task without a title' do
@@ -74,10 +74,10 @@ describe 'tasks management', type: :feature do
     end
 
     # Its better to test single field in one example but for performance we can test many things in one
-    it 'assigns correct values', js: true, driver: :selenium do
-      fill_in 'task[title]', with: 'create erd diagram and implement'
+    it 'assigns correct values', js: true do
+      fill_in 'task[title]', with: 'bring some thing with tea'
 
-      execute_script('$(".description-textarea").trumbowyg("html", "Use Microsoft Visio to create ERD");')
+      execute_script('$(".description-textarea").trumbowyg("html", "bring some date biscuits with some salty stuff");')
       fill_in 'task[due_at]', with: '2016-03-30' # Datepicker
 
       select 'High', :from => 'Priority'
@@ -86,9 +86,10 @@ describe 'tasks management', type: :feature do
       click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')
 
-      find('li', text: 'create erd diagram and implement').click
-      expect(page).to have_content('create erd diagram and implement')
-      expect(page).to have_content('Use Microsoft Visio to create ERD')
+      click_link 'bring some thing with tea'
+
+      expect(page).to have_content('bring some thing with tea')
+      expect(page).to have_content('bring some date biscuits with some salty stuff')
       expect(page).to have_content('High')
       expect(page).to have_content('Everybody')
     end
@@ -104,7 +105,7 @@ describe 'tasks management', type: :feature do
       expect(page.find('span[id="assigned_to"]')).to have_content(owner.name)
     end
 
-    it 'should change progress', js: true, driver: :selenium do
+    it 'should change progress', js: true do
       click_on 'Assign to Me'
       click_on 'start'
       expect(page).to have_content('Assigned To: Great Person')
