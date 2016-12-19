@@ -43,9 +43,9 @@ class AttachmentsController < ApplicationController
     TODO: Security hole, Send_file with a parameter set by user is a security hole
     http://stackoverflow.com/questions/6392003/how-to-download-a-file-from-rails-application
 =end
-    send_file @attachment.attachment.path,
-              :filename => @attachment.attachment_file_name,
-              :type => @attachment.attachment_content_type,
+    send_file @attachment.document.path,
+              :filename => @attachment.document_file_name,
+              :type => @attachment.document_content_type,
               :disposition => 'attachment',
               :x_sendfile => true
   end
@@ -60,7 +60,7 @@ class AttachmentsController < ApplicationController
   end
 
   def update
-    if @attachment.update(attachment_params.except(:attachment))
+    if @attachment.update(attachment_params.except(:document))
       redirect_to project_attachment_path(@project, @attachment), notice: 'Attachment was successfully updated.'
     else
       render :edit
@@ -78,6 +78,6 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(:title, :description, :attachment, :attachment_name).merge(uploader: current_user)
+    params.require(:attachment).permit(:title, :description, :document, :attachment_name).merge(uploader: current_user)
   end
 end

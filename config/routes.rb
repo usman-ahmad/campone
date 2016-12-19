@@ -91,6 +91,7 @@
 #                                        PATCH     /projects/:id(.:format)                                                      projects#update
 #                                        PUT       /projects/:id(.:format)                                                      projects#update
 #                                        DELETE    /projects/:id(.:format)                                                      projects#destroy
+#                      join_contribution GET       /contributions/:id/join(.:format)                                            contributions#join
 #                       new_user_session GET       /users/sign_in(.:format)                                                     devise/sessions#new
 #                           user_session POST      /users/sign_in(.:format)                                                     devise/sessions#create
 #                   destroy_user_session DELETE    /users/sign_out(.:format)                                                    devise/sessions#destroy

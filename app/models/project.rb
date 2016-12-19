@@ -43,7 +43,7 @@ class Project < ApplicationRecord
     return if attachments.blank?
 
     attachments.each do |attachment|
-      self.attachments.create(attachment: attachment, title: attachment.original_filename, uploader: uploaded_by, project_id: self.id)
+      self.attachments.create(document: attachment, title: attachment.original_filename, uploader: uploaded_by, project_id: self.id)
     end
   end
 

@@ -15,12 +15,12 @@
 
       <div class="col-md-4">
         <span class="key">Attachment Name: </span>
-        <span class="value"><%= @attachment.attachment_file_name %></span>
+        <span class="value"><%= @attachment.document_file_name %></span>
       </div>
 
       <div class="col-md-4">
         <span class="key">Attachment Size: </span>
-        <span class="value"><%= (@attachment.attachment_file_size.to_f/1000).round(2) %> kb</span>
+        <span class="value"><%= (@attachment.document_file_size.to_f/1000).round(2) %> kb</span>
       </div>
 
       <div class="col-md-4">

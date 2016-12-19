@@ -22,9 +22,9 @@
                 </div>
                 <%= link_to '#', class: 'file-icon',
                             data: {toggle: "modal", target: "#attachmentPreviewModel",
-                                   type: attachment.attachment_content_type,
-                                   url: attachment.attachment.url,
-                                   title: attachment.attachment_file_name} do %>
+                                   type: attachment.document_content_type,
+                                   url: attachment.document.url,
+                                   title: attachment.document_file_name} do %>
                     <i class="fa fa-eye"></i> Preview
                 <% end %>
 

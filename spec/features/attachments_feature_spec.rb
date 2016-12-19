@@ -18,7 +18,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
 
       fill_in 'Title', with: 'Title of my awesome upload!'
       fill_in 'Description', with: 'Some basic description from client.'
-      page.attach_file('attachment[attachment]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
+      page.attach_file('attachment[document]', File.join(Rails.root, '/spec/files/test_attachment.jpg'))
       click_button 'Create Attachment'
 
       expect(page).to have_content('Title of my awesome upload!')
@@ -31,7 +31,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
 
     it 'updates the newly created attachment' do
 
-      create(:project_attachment, title: 'consectetur adipiscing elit', attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'consectetur adipiscing elit', document: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
 
       visit project_attachments_path(project)
 
@@ -50,7 +50,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'downloads attachment attached to a project' do
-      create(:project_attachment, title: 'the awesome project attachment', attachment: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'the awesome project attachment', document: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
       visit project_attachments_path(project)
 
       find('tr', text: 'the awesome project attachment').click_link('Download')
@@ -64,8 +64,8 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     it 'enlists project attachment only' do
       # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
       task = create(:task, project: project, creator: owner)
-      create(:project_attachment, title: 'awesome_project_attachment.jpg', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
-      create(:attachment, attachment_file_name: 'non_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: task)
+      create(:project_attachment, title: 'awesome_project_attachment.jpg', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project)
+      create(:attachment, document_file_name: 'non_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: task)
 
       visit project_attachments_path(project)
 
@@ -74,7 +74,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'comments on an attachment', js: true do
-      create(:project_attachment, title: 'commented attachment here!', attachment_file_name: 'awesome_project_attachment.jpg', attachment_content_type: 'image/jpeg', attachable: project)
+      create(:project_attachment, title: 'commented attachment here!', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project)
       visit project_attachments_path(project)
       click_link 'commented attachment here!'
 

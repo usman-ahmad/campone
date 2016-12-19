@@ -1,14 +1,14 @@
 <% if resource.attachments.present? %>
-  <h4>Attachments</h4>
+    <h4>Attachments</h4>
 
-  <% resource.attachments.each do |attachment| %>
-      <%= image_tag attachment.attachment.exists?(:thumb) ? attachment.attachment.url(:thumb) : 'missing_file_type.png',
-                    title: attachment.attachment_file_name,
-                    data: { toggle: "modal", target: "#attachmentPreviewModel",
-                            type: attachment.attachment_content_type,
-                            url: attachment.attachment.url,
-                            title: attachment.attachment_file_name } %>
-  <% end %>
+    <% resource.attachments.each do |attachment| %>
+        <%= image_tag attachment.document.exists?(:thumb) ? attachment.document.url(:thumb) : 'missing_file_type.png',
+                      title: attachment.document_file_name,
+                      data: {toggle: "modal", target: "#attachmentPreviewModel",
+                             type: attachment.document_content_type,
+                             url: attachment.document.url,
+                             title: attachment.document_file_name} %>
+    <% end %>
 
-<%= render 'attachments/preview_attachement' %>
+    <%= render 'attachments/preview_attachement' %>
 <% end %>

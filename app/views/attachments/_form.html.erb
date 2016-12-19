@@ -17,12 +17,12 @@
           <div class="form-group">
             <%= f.label :attachment_name, class: 'custom-label' %>
             -
-            <span class="key"><%= @attachment.attachment_file_name %></span>
+            <span class="key"><%= @attachment.document_file_name %></span>
             <%= f.text_field :attachment_name, class: 'form-control', placeholder: 'File Name' %>
           </div>
       <% elsif @attachment.new_record? %>
           <div class="form-group">
-            <%= f.file_field :attachment, type: :file %>
+            <%= f.file_field :document, type: :file %>
           </div>
       <% end %>
 
