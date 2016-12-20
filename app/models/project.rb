@@ -3,7 +3,7 @@
 # Table name: projects
 #
 #  id                :integer          not null, primary key
-#  name              :string
+#  title             :string
 #  description       :text
 #  owner_id          :integer
 #  created_at        :datetime         not null
@@ -29,7 +29,7 @@ class Project < ApplicationRecord
   has_many :integrations
   has_many :payloads, through: :integrations
 
-  validates :name, presence: true
+  validates :title, presence: true
   validates :owner, presence: true
 
   after_create :add_owner_to_contributors
@@ -84,7 +84,7 @@ class Project < ApplicationRecord
 
   # Try to create a slug with initials of project name, if its already taken try next combination of initials and random characters
   def slug_candidates
-    name_initials = self.name.split.map(&:first).join if self.name
+    name_initials = self.title.split.map(&:first).join if self.title
 
     # TODO: Try SecureRandom
     # generate a random string of length 3

@@ -9,7 +9,7 @@ class SlackService < SenderService
         "username": "Camp One",
         "attachments": [
             {
-                "pretext": "Project: #{activity.project.name}",
+                "pretext": "Project: #{activity.project.title}",
                 "title": activity.get_trackable.title,
                 "title_link": activity.get_trackable_url,
                 "text": activity.discription,

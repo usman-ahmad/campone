@@ -4,7 +4,7 @@
   <% @projects.each do |project| %>
     <div>
       <%= radio_button_tag(:external_project_id, project[:id]) %>
-      <%= label_tag(:external_project, project[:name]) %>
+      <%= label_tag(:external_project, project[:title]) %>
     </div>
   <% end %>
   <div><%= submit_tag 'Import' %></div>

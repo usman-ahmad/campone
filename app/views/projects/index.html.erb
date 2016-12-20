@@ -9,7 +9,7 @@
       <section class="bg-white">
           <% @projects.each do |project| %>
               <div class="project anchor-container" data-href="<%= project_tasks_path(project) %>">
-                <h3 class="project-name"><%= project.name %></h3>
+                <h3 class="project-title"><%= project.title %></h3>
 
                 <div class="color_corner" style="border-right-color: #DC4138;">
                   <div class="triangle"></div>

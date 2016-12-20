@@ -12,7 +12,7 @@ describe 'projects management', type: :feature do
     it 'should create project' do
       click_on('Create New Project')
 
-      fill_in 'project_name', with: 'sunday morning get together'
+      fill_in 'project_title', with: 'sunday morning get together'
       fill_in 'project_description', with: 'contact with friends and invite them for some desi breakfast'
 
       click_button 'Create Project'
@@ -26,7 +26,7 @@ describe 'projects management', type: :feature do
     end
 
     it 'should edit project' do
-      fill_in 'project_name', with: 'saturday morning get together'
+      fill_in 'project_title', with: 'saturday morning get together'
       fill_in 'project_description', with: 'contact with friends at formal and informal level for desi breakfast'
 
       click_button 'Update Project'
@@ -39,8 +39,8 @@ describe 'projects management', type: :feature do
     it 'should display in dashboard' do
       visit projects_path
       expect(page.current_path).to eq projects_path
-      result = page.all('h3.project-name')
-      expect(result.map(&:text)).to have_content(project.name)
+      result = page.all('h3.project-title')
+      expect(result.map(&:text)).to have_content(project.title)
     end
   end
 end

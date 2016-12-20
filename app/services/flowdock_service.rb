@@ -14,7 +14,7 @@ class FlowdockService < SenderService
         "title": "#{activity.activty_type}#{':' + activity.trackable.content if activity.trackable_type == 'Comment'}",
         "external_thread_id": "#{activity.get_trackable.id}", #it should be trackable id
         "thread": {
-            "title": "Project: #{activity.project.name} > #{activity.get_trackable.title}",
+            "title": "Project: #{activity.project.title} > #{activity.get_trackable.title}",
             # "body": "If there is any discription it will go here",
             "external_url": "#{activity.get_trackable_url}",
             "status": {

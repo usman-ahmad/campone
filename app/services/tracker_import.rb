@@ -34,7 +34,7 @@ class TrackerImport < ImportService
     projects = []
 
     client.projects.each do |p|
-      projects << { name: p.name, id: p.id }
+      projects << { title: p.title, id: p.id }
     end
 
     projects

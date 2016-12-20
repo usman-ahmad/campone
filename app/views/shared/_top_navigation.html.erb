@@ -12,7 +12,7 @@
         <% if @project && @project.persisted? %>
             <li>
               <a href="<%= project_tasks_path(@project) %>" class=" navbar-brand caret-before">
-                <%= @project.name %>
+                <%= @project.title %>
               </a>
             </li>
             <li class="dropdown">
@@ -21,7 +21,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-right">
                 <% current_user.projects.select { |p| p.id != @project.id }.each do |project| %>
-                    <li><a href="<%= project_tasks_path(project) %>"><%= project.name %></a></li>
+                    <li><a href="<%= project_tasks_path(project) %>"><%= project.title %></a></li>
                 <% end %>
               </ul>
             </li>

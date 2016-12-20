@@ -20,7 +20,7 @@ class TwitterService
 
   def self.message(activity)
     "From : CampOne
-     Project : #{activity.project.name}
+     Project : #{activity.project.title}
      #{activity.get_trackable.title}
      #{activity.discription}"
   end

@@ -3,7 +3,7 @@
 # Table name: projects
 #
 #  id                :integer          not null, primary key
-#  name              :string
+#  title             :string
 #  description       :text
 #  owner_id          :integer
 #  created_at        :datetime         not null
@@ -19,7 +19,7 @@ RSpec.describe Project, type: :model do
   let(:project) { create(:project, owner: user) }
 
   describe 'validations' do
-    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:title) }
     it { should validate_presence_of(:owner) }
   end
 
@@ -43,17 +43,17 @@ RSpec.describe Project, type: :model do
   end
 
   describe 'slug' do
-    let!(:project) { create(:project, owner: user, name: 'T E S Ting') }
+    let!(:project) { create(:project, owner: user, title: 'T E S Ting') }
 
-    it 'should create a slugged ID containing initials of project name' do
+    it 'should create a slugged ID containing initials of project title' do
       expect(project.slug).to match /test/
     end
 
     # TODO: Confirm this is expected behavior
     # If we wanna change slug we can enable History option of friendly_id gem
     # Old links may be pointing to url with old slug, we may have to change ticket_ids as well
-    it 'should NOT update slug on changing project name' do
-      project.update_attributes name: 'New Name'
+    it 'should NOT update slug on changing project title' do
+      project.update_attributes title: 'New Title'
       expect(project.slug).to match /test/
     end
 
@@ -65,8 +65,8 @@ RSpec.describe Project, type: :model do
         allow_any_instance_of(Project).to receive(:slug_candidates).and_return(-> { ['test', ['test', rand.generate]] })
       end
 
-      let!(:project_2) { create(:project, owner: user, name: 'T E S Ting') }
-      let!(:project_3) { create(:project, owner: user, name: 'T E S Ting') }
+      let!(:project_2) { create(:project, owner: user, title: 'T E S Ting') }
+      let!(:project_3) { create(:project, owner: user, title: 'T E S Ting') }
 
       it 'tries new slug' do
         expect(project_2.slug).to match /test-1/

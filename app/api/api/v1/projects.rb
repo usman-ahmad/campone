@@ -25,11 +25,11 @@ module API
       resource :create_project do
         desc "create a new project"
         params do
-          requires :name, type: String
+          requires :title, type: String
           requires :description, type:String
         end
         post do
-         current_user.projects.create(name:params[:name],description:params[:description])
+         current_user.projects.create(title:params[:title],description:params[:description])
         end
       end
 

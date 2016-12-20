@@ -3,7 +3,7 @@
 # Table name: projects
 #
 #  id                :integer          not null, primary key
-#  name              :string
+#  title             :string
 #  description       :text
 #  owner_id          :integer
 #  created_at        :datetime         not null
@@ -16,7 +16,7 @@ FactoryGirl.define do
   titles = ['Green Grass', 'Blue Sky', 'Fully Ripe Orange', 'Red Blood Cells', 'Grey Scale']
 
   factory :project do
-    sequence(:name) { |n| titles[(n % 5)] }
+    sequence(:title) { |n| titles[(n % 5)] }
     description 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     association :owner, factory: :user
 

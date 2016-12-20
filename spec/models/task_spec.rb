@@ -37,7 +37,7 @@ end
 
 RSpec.describe Task, type: :model do
   let(:user) { create(:user) }
-  let(:project) { create(:project, owner: user, name: 'T E S Ting') }
+  let(:project) { create(:project, owner: user, title: 'T E S Ting') }
 
   describe 'validations' do
     it { should validate_presence_of(:title) }

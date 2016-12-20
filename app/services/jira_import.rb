@@ -46,7 +46,7 @@ class JiraImport < ImportService
 
     jira_projects = client.Project.all
     jira_projects.each do |p|
-      projects << {name: p.name , id: p.id }
+      projects << {title: p.title , id: p.id }
     end
 
     projects

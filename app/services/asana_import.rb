@@ -45,7 +45,7 @@ class AsanaImport < ImportService
       ws_projects = client.projects.find_all(workspace: ws.id)
 
       ws_projects.each do |p|
-        projects << { name: p.name, id: p.id }
+        projects << { title: p.title, id: p.id }
       end
     end
 
