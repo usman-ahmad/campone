@@ -26,8 +26,8 @@
 
       <% if @task.persisted? %>
           <div class="form-group col-md-4">
-            <%= f.label :progress, class: "custom-label" %>
-            <%= f.select :progress, Task::PROGRESSES, {}, {class: 'form-control'} %>
+            <%= f.label :state, class: "custom-label" %>
+            <%= f.select :state, Task::STATES, {}, {class: 'form-control'} %>
           </div>
       <% end %>
 

@@ -10,7 +10,7 @@
 #  due_at      :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  progress    :string           default("unscheduled")
+#  state       :string           default("unscheduled")
 #  assigned_to :integer
 #  user_id     :integer
 #  position    :integer
@@ -21,13 +21,13 @@
 
 FactoryGirl.define do
   titles = ['lorem ipsum dolor sit amet', 'consectetur adipiscing elit', 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua', 'Ut enim ad minim veniam', 'Excepteur sint occaecat cupidatat non proident']
-  progresses = %w[unscheduled unstarted started paused finished delivered rejected accepted]
+  states = %w[unscheduled unstarted started paused finished delivered rejected accepted]
 
   factory :task do
     sequence(:title) { |n| "Task #{n} is #{titles[(n % 5)]}" }
     description 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     due_at Date.today
-    sequence(:progress) { |n| progresses[(n % 8)] }
+    sequence(:state) { |n| states[(n % 8)] }
 
     trait :with_comments do
       transient do

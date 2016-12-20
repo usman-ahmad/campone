@@ -19,7 +19,7 @@ class FlowdockService < SenderService
             "external_url": "#{activity.get_trackable_url}",
             "status": {
                 "color": "green",
-                "value": "#{activity.get_trackable.progress}"
+                "value": "#{activity.get_trackable.state}"
             }
         }
     }

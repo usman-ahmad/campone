@@ -32,7 +32,7 @@ class JiraImport < ImportService
     attributes = {
         title: issue.summary,
         description: issue.description,
-        progress:    map_progress(issue.status.name),
+        state:       map_state(issue.status.name),
         priority:    issue.priority.name,
         created_at:  issue.created,
         updated_at:  issue.updated
@@ -72,14 +72,14 @@ class JiraImport < ImportService
 
   private
 
-  def map_progress(progress)
-    case progress
+  def map_state(state)
+    case state
       when 'To Do'
-        Task::PROGRESS_MAP[:NO_PROGRESS]
+        Task::STATE_MAP[:NO_PROGRESS]
       when 'Done'
-        Task::PROGRESS_MAP[:COMPLETED]
+        Task::STATE_MAP[:COMPLETED]
       when 'In Progress'
-        Task::PROGRESS_MAP[:IN_PROGRESS]
+        Task::STATE_MAP[:IN_PROGRESS]
     end
   end
 end

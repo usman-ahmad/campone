@@ -10,7 +10,7 @@
 #  due_at      :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  progress    :string           default("unscheduled")
+#  state       :string           default("unscheduled")
 #  assigned_to :integer
 #  user_id     :integer
 #  position    :integer
@@ -44,8 +44,8 @@ RSpec.describe Task, type: :model do
     it { should validate_presence_of(:project) }
 
     it { should allow_value('unscheduled', 'unstarted', 'started', 'paused', 'finished', 'delivered', 'rejected',
-                            'accepted').for(:progress) }
-    it { should_not allow_value('blah').for(:progress) }
+                            'accepted').for(:state) }
+    it { should_not allow_value('blah').for(:state) }
 
     it { should allow_value('None', 'Low', 'Medium', 'High').for(:priority) }
     it { should_not allow_value('blah').for(:priority) }
@@ -61,7 +61,7 @@ RSpec.describe Task, type: :model do
 
 
   describe 'default values' do
-    expected_values = {progress: 'unstarted', priority: 'None'}
+    expected_values = {state: 'unstarted', priority: 'None'}
 
     expected_values.each do |key, val|
       it { is_expected.to have_value(key, val) }
@@ -102,9 +102,9 @@ RSpec.describe Task, type: :model do
   describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
-    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', progress: 'started', creator: user, project: project) }
-    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', progress: 'finished', creator: user, project: project) }
-    let!(:another_task) { create(:task, title: 'another ', description: 'another description', progress: 'accepted', creator: user, project: project) }
+    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', state: 'started', creator: user, project: project) }
+    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', state: 'finished', creator: user, project: project) }
+    let!(:another_task) { create(:task, title: 'another ', description: 'another description', state: 'accepted', creator: user, project: project) }
 
     describe '#filter_tasks', pending: 'feature has been redesigned or removed' do
       it 'returns non-completed tasks meeting the search criteria' do
@@ -150,10 +150,10 @@ RSpec.describe Task, type: :model do
 
     describe 'CSV import/export' do
       let!(:task1) { create(:task, title: 'create psd', description: 'task one in group',
-                            progress: 'started', creator: user, project: project) }
+                            state: 'started', creator: user, project: project) }
 
       let!(:task2) { create(:task, title: 'create html templates', description: 'task two in group',
-                            progress: 'rejected', priority: 'Medium', creator: user, project: project) }
+                            state: 'rejected', priority: 'Medium', creator: user, project: project) }
 
 
       describe '#to_csv (export to CSV file)' do
@@ -171,7 +171,7 @@ RSpec.describe Task, type: :model do
 
           expected_values = {
               title: 'create html templates', description: 'task two in group',
-              progress: 'rejected', priority: 'Medium'
+              state: 'rejected', priority: 'Medium'
           }
 
           expected_values.each do |k, v|
@@ -194,7 +194,7 @@ RSpec.describe Task, type: :model do
 
           expected_values = {
               title: 'add authentication', description: 'use devise',
-              progress: 'started', priority: 'None'
+              state: 'started', priority: 'None'
           }
 
           expected_values.each do |k, v|
@@ -210,7 +210,7 @@ RSpec.describe Task, type: :model do
   #   let(:another_user) { create(:user) }
   #
   #   context 'assigned to nobody' do
-  #     let!(:task) { create(:task, progress: 'unstarted', project: project, creator: user) }
+  #     let!(:task) { create(:task, state: 'unstarted', project: project, creator: user) }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'assigns task to a user' do
@@ -227,8 +227,8 @@ RSpec.describe Task, type: :model do
   #     end
   #   end
   #
-  #   context 'already in progress' do
-  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, progress: 'started') }
+  #   context 'already in state' do
+  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, state: 'started') }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'will not assign task' do
@@ -236,15 +236,15 @@ RSpec.describe Task, type: :model do
   #     end
   #   end
   # end
-  # UA[2016/11/29] - METHOD REMOVED '#set_progress' # REFACTOR SPECS TO TEST NEW SCENARIOS
-  # describe '#set_progress' do
-  #   before { task.set_progress(user, 'started') }
+  # UA[2016/11/29] - METHOD REMOVED '#set_state' # REFACTOR SPECS TO TEST NEW SCENARIOS
+  # describe '#set_state' do
+  #   before { task.set_state(user, 'started') }
   #
   #   context 'Task is assigned to that user' do
   #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
   #
-  #     it 'will change progress' do
-  #       expect(task.progress).to eq 'started'
+  #     it 'will change state' do
+  #       expect(task.state).to eq 'started'
   #     end
   #   end
   #
@@ -252,8 +252,8 @@ RSpec.describe Task, type: :model do
   #     let(:another_user) { create(:user) }
   #     let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
   #
-  #     it 'would NOT changes progress' do
-  #       expect(task.progress).to eq 'unstarted' # Default value
+  #     it 'would NOT changes state' do
+  #       expect(task.state).to eq 'unstarted' # Default value
   #     end
   #   end
   # end
@@ -272,9 +272,9 @@ RSpec.describe Task, type: :model do
 
   it 'should allow us to create' do
     expect(create(:task, priority: 'Low', project: project, creator: project.owner).priority).to eq('Low')
-    expect(create(:task, priority: 'Low', project: project, progress: 'finished', creator: project.owner).progress).to eq('finished')
+    expect(create(:task, priority: 'Low', project: project, state: 'finished', creator: project.owner).state).to eq('finished')
     expect(create(:task, priority: 'Medium', project: project, creator: project.owner).priority).to eq('Medium')
-    expect(create(:task, priority: 'High', project: project, progress: 'unstarted', creator: project.owner).priority).to eq('High')
+    expect(create(:task, priority: 'High', project: project, state: 'unstarted', creator: project.owner).priority).to eq('High')
   end
 
 end

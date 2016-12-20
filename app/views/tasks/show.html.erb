@@ -30,8 +30,8 @@
           <span class="value"><%= @task.priority %></span>
         </li>
         <li class="col-md-4">
-          <span class="key">Progress: </span>
-          <span id="progress" class="value"><%= @task.progress.humanize %></span>
+          <span class="key">State: </span>
+          <span id="state" class="value"><%= @task.state.humanize %></span>
         </li>
         <% if @task.creator.present? %>
          <li class="col-md-4">
@@ -48,11 +48,11 @@
         <div class="pull-left">
           <%#= link_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, remote: true, class: 'btn btn-default' %>
           <%= button_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
-          <span id = "progress_buttons">
-            <%#= render 'tasks/progress_buttons'%>
-            <% @task.next_states.each do |event, state| %>
-                <%#= link_to event, set_progress_project_task_path(@project, @task, progress: state), method: :patch, remote: true, class: 'btn btn-default' %>
-                <%= button_to event, set_progress_project_task_path(@project, @task, progress: state), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
+          <span id = "state_buttons">
+            <%#= render 'tasks/state_buttons'%>
+            <% @task.next_states.each do |event, progress| %>
+                <%#= link_to event, set_state_project_task_path(@project, @task, state: progress), method: :patch, remote: true, class: 'btn btn-default' %>
+                <%= button_to event, set_state_project_task_path(@project, @task, state: progress), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
             <% end %>
           </span>
         </div>

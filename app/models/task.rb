@@ -10,7 +10,7 @@
 #  due_at      :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  progress    :string           default("unscheduled")
+#  state       :string           default("unscheduled")
 #  assigned_to :integer
 #  user_id     :integer
 #  position    :integer
@@ -44,7 +44,7 @@ class Task < ApplicationRecord
       HIGH:   'High'
   }
 
-  PROGRESS_MAP = {
+  STATE_MAP = {
       NOT_SCHEDULED: 'unscheduled',
       NO_PROGRESS: 'unstarted',
       IN_PROGRESS: 'started',
@@ -56,22 +56,22 @@ class Task < ApplicationRecord
       CLOSED: 'accepted'
   }
 
-  PROGRESSES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
+  STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
            to: :current_state
-  CURRENT_PROGRESSES = %w[unstarted started paused finished delivered rejected]
+  CURRENT_STATES = %w[unstarted started paused finished delivered rejected]
 
   validates :title, presence: true
   validates :project, presence: true
 
-  validates_inclusion_of :progress, in: PROGRESSES
+  validates_inclusion_of :state, in: STATES
   validates_inclusion_of :priority, in: PRIORITIES.values
 
-  # COMPLETED_PROGRESSES = %w[finished delivered accepted]
-  # NOT_COMPLETED_PROGRESSES = %w[unscheduled unstarted started paused rejected]
+  # COMPLETED_STATES = %w[finished delivered accepted]
+  # NOT_COMPLETED_STATES = %w[unscheduled unstarted started paused rejected]
   # UA[2016/11/22] - NOT USED ANY WHERE # REFACTOR SPECS
-  # scope :completed, -> { where(progress: COMPLETED_PROGRESSES) }
-  # scope :not_completed, -> { where(progress: NOT_COMPLETED_PROGRESSES) }
+  # scope :completed, -> { where(state: COMPLETED_STATES) }
+  # scope :not_completed, -> { where(state: NOT_COMPLETED_STATES) }
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
@@ -84,11 +84,11 @@ class Task < ApplicationRecord
   # end
   # UA[2016/11/22] - NOT BEING USED IN CODE
   # def completed?
-  #   COMPLETED_PROGRESSES.include?(self.progress)
+  #   COMPLETED_STATES.include?(self.state)
   # end
 
   def current_state
-    progress.inquiry
+    state.inquiry
   end
 
   # :to_do => :unscheduled, :unstarted
@@ -96,7 +96,7 @@ class Task < ApplicationRecord
   # :done => :finished, :delivered, :accepted
 
   def next_states
-    case progress
+    case state
       when 'unscheduled'
         {schedule: 'unstarted', start: 'started'}
       when 'unstarted'
@@ -118,21 +118,21 @@ class Task < ApplicationRecord
     end
   end
 
-  def self.with_progress(visibility_or_progress)
-    case visibility_or_progress
+  def self.with_state(visibility_or_state)
+    case visibility_or_state
       when 'current'
-        where(progress: CURRENT_PROGRESSES)
+        where(state: CURRENT_STATES)
       when 'all'
         all
       else
-        where(progress: visibility_or_progress)
+        where(state: visibility_or_state)
     end
   end
 
   # UA[2016/11/28] - moved to controller with plain "update_attributes" call # REFACTOR SPECS
   # UA[2016/11/28] - assigned_to_me even if the task is started(or any other state) or assigned to anyone else
   # def assigned_to_me(current_user)
-  #   # if (!assigned_to.present? || assigned_to.eql?(0)) && (progress.eql?('unstarted'))
+  #   # if (!assigned_to.present? || assigned_to.eql?(0)) && (state.eql?('unstarted'))
   #   #   if update_attributes(assigned_to: current_user.id)
   #   #     'Task assigned to You'
   #   #   end
@@ -147,21 +147,21 @@ class Task < ApplicationRecord
   # end
 
   # UA[2016/11/28] - moved to controller with plain "update_attributes" call # REFACTOR SPECS
-  # UA[2016/11/28] - Anyone can set tasks progress (even if not owner of task)
-  # # To improve user experience if a user starts progress shouldn't we assign task to him automatically, like pivotal
-  # def set_progress(current_user, progress)
+  # UA[2016/11/28] - Anyone can set tasks state (even if not owner of task)
+  # # To improve user experience if a user starts state shouldn't we assign task to him automatically, like pivotal
+  # def set_state(current_user, state)
   #   # if (assigned_to).eql?(current_user.id)
-  #   #   if update_attributes(progress: progress)
+  #   #   if update_attributes(state: state)
   #   #   else
   #   #     'status of task could not change'
   #   #   end
   #   # else
   #   #   'Task is not assigned to you'
   #   # end
-  #   if update_attributes(progress: progress)
-  #     'Progress of task is updated successfully'
+  #   if update_attributes(state: state)
+  #     'State of task is updated successfully'
   #   else
-  #     'Progress of task could not be updated'
+  #     'State of task could not be updated'
   #   end
   # end
 
@@ -183,7 +183,7 @@ class Task < ApplicationRecord
   end
 
   def self.to_csv(options = {})
-    csv_headers = ['title', 'description', 'priority', 'progress', 'due_at']
+    csv_headers = ['title', 'description', 'priority', 'state', 'due_at']
 
     CSV.generate(options) do |csv|
       csv << csv_headers

@@ -5,7 +5,7 @@
 #               new_import_project_tasks GET       /projects/:project_id/tasks/new_import(.:format)                             tasks#new_import
 #                   import_project_tasks POST      /projects/:project_id/tasks/import(.:format)                                 tasks#import
 #            assigned_to_me_project_task PATCH     /projects/:project_id/tasks/:id/assigned_to_me(.:format)                     tasks#assigned_to_me
-#              set_progress_project_task PATCH     /projects/:project_id/tasks/:id/set_progress(.:format)                       tasks#set_progress
+#                 set_state_project_task PATCH     /projects/:project_id/tasks/:id/set_state(.:format)                          tasks#set_state
 #                  project_task_comments GET       /projects/:project_id/tasks/:task_id/comments(.:format)                      comments#index
 #                                        POST      /projects/:project_id/tasks/:task_id/comments(.:format)                      comments#create
 #               new_project_task_comment GET       /projects/:project_id/tasks/:task_id/comments/new(.:format)                  comments#new
@@ -150,7 +150,7 @@ Rails.application.routes.draw do
         post :import
       end
 
-      patch :assigned_to_me, :set_progress, on: :member
+      patch :assigned_to_me, :set_state, on: :member
       resources :comments
     end
 

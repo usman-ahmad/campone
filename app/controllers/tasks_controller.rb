@@ -13,7 +13,7 @@ class TasksController < ApplicationController
     # @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
     #                                      include_completed: cookies[:include_completed] == 'true').order!('position')
 
-    @tasks = @project.tasks.with_progress(@visibility).search(params[:search_text]).order!('position')
+    @tasks = @project.tasks.with_state(@visibility).search(params[:search_text]).order!('position')
 
     respond_to do |format|
       format.html
@@ -80,11 +80,11 @@ class TasksController < ApplicationController
     redirect_to [@project, @task]
   end
 
-  def set_progress
-    if @task.update_attributes(progress: params[:progress])
-      'Progress of task is updated successfully'
+  def set_state
+    if @task.update_attributes(state: params[:state])
+      'State of task is updated successfully'
     else
-      'Progress of task could not be updated'
+      'State of task could not be updated'
     end
     redirect_to [@project, @task]
   end
@@ -117,7 +117,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    tp = params.require(:task).permit(:title, :description, :progress, :project_id, :priority, :due_at, :assigned_to)
+    tp = params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :assigned_to)
     tp.merge(user_id: current_user.id)
   end
 end
