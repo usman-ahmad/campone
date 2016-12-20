@@ -37,13 +37,25 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  # For now commenting out all unused associations
+  # Note: We may remove owner_id from project, as we are adding owner role with contributions
+  # has_many :owned_projects, class_name: 'Project', foreign_key: :owner_id
+
   has_many :contributions
   has_many :projects, through: :contributions, source: :project
+  # has_many :invited_users, through: :contributions, source: :user, foreign_key: :owner_id
 
+  # has_many :created_tasks # which he created on any project
+  has_many :assigned_tasks, class_name: Task, foreign_key: :assigned_to
+
+  # has_many :started_discussions # started_by this user
   has_many :user_discussions
   has_many :discussions, through: :user_discussions
 
-  has_many :assigned_tasks, class_name: Task, foreign_key: :assigned_to
+  # Should we distinguish project_attachments ?
+  # has_many :attachments # all attachments either on project, task, discussion or comment
+  # has_many :comments
+
   has_many :notifications
   has_many :identities, dependent: :destroy
 

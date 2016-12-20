@@ -16,6 +16,7 @@ class Project < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
+  # Now we can remove owner from project, as we have added owner role in Contribution, see #add_owner_to_contributors
   belongs_to :owner, class_name: 'User'
 
   has_many :contributions
@@ -74,10 +75,6 @@ class Project < ApplicationRecord
 
   private
 
-=begin
-  TODO:
-  Now we can remove owner from project, as we have added owner role in Contribution
-=end
   def add_owner_to_contributors
     self.contributions.create(user: self.owner, status: 'joined', role: Contribution::ROLES[:owner])
   end
