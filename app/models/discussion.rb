@@ -17,7 +17,7 @@ class Discussion < ApplicationRecord
   include PublicActivity::Common
 
   belongs_to :project
-  belongs_to :posted_by, class_name: User, foreign_key: :user_id
+  belongs_to :opener, class_name: User, foreign_key: :user_id
 
   has_many :user_discussions
   has_many :users ,through: :user_discussions
@@ -37,7 +37,7 @@ class Discussion < ApplicationRecord
    end
 
   def other_contributors
-     private ? users : (project.members - [posted_by])
+     private ? users : (project.members - [opener])
   end
 
 end

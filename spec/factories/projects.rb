@@ -38,7 +38,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |project, evaluator|
-        create_list(:discussion, evaluator.discussion_count, project: project, posted_by: evaluator.discussion_owner)
+        create_list(:discussion, evaluator.discussion_count, project: project, opener: evaluator.discussion_owner)
       end
     end
 

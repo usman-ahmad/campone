@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'discussions management', type: :feature do
   let!(:owner) { create(:user, name: 'Prime Minister') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:discussion) { create(:discussion, private: false, title: 'NO discussion on PTI vs PML-N vs PPP', project: project, posted_by: owner) }
+  let!(:discussion) { create(:discussion, private: false, title: 'NO discussion on PTI vs PML-N vs PPP', project: project, opener: owner) }
 
   before do
     login(owner.email, 'secret_password')
@@ -18,7 +18,7 @@ describe 'discussions management', type: :feature do
       expect(find('table.discussion-list > tbody tr')).to have_content('NO discussion on PTI vs PML-N vs PPP')
     end
 
-    it 'should show posted by' do
+    it 'should show opened by' do
       expect(find('table.discussion-list > tbody tr')).to have_content('Prime Minister')
     end
 

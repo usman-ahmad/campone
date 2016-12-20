@@ -21,7 +21,7 @@ FactoryGirl.define do
 
     trait :with_comments do
       transient do
-        commenter { posted_by }
+        commenter { opener }
         comments_count 1
       end
 
@@ -36,7 +36,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |discussion, evaluator|
-        create_list(:attachment, evaluator.attachments_count, uploader: discussion.posted_by, attachable: discussion)
+        create_list(:attachment, evaluator.attachments_count, uploader: discussion.opener, attachable: discussion)
       end
     end
 
