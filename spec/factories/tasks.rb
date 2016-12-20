@@ -51,9 +51,9 @@ FactoryGirl.define do
     end
 
     # after(:create) do |task, evaluator|
-    #   task.update_attributes(creator: evaluator.creator)
+    #   task.update_attributes(reporter: evaluator.reporter)
     #   task.comments << create_list(:comment, 5, user: evaluator.commenter, commentable_id: task.id, commentable_type: task.class.name, commenter: evaluator.commenter)
-    #   task.create_activity :create, owner: evaluator.creator
+    #   task.create_activity :create, owner: evaluator.reporter
     # end
   end
 end

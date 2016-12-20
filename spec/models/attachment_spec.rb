@@ -84,7 +84,7 @@ RSpec.describe Attachment, type: :model do
   end
 
   context '#project' do
-    let(:task) { create(:task, title: 'task one', creator: user, project: project) }
+    let(:task) { create(:task, title: 'task one', reporter: user, project: project) }
     let(:task_attachment) { create(:attachment, attachable: task, document: File.new('spec/files/awesome_project_attachment.jpg')) }
     # let(:discussion) { create(:discussion, private: false, project: project, user: project.owner) }
     # let(:discussion_attachment) { create(:attachment, :with_attachment_data, attachable: discussion) }

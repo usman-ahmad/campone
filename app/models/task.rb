@@ -27,7 +27,7 @@ class Task < ApplicationRecord
 
   belongs_to :project
 
-  belongs_to :creator, class_name: User, foreign_key: :user_id
+  belongs_to :reporter, class_name: User, foreign_key: :user_id
   belongs_to :owner, class_name: User, foreign_key: :assigned_to
 
   has_many :attachments, as: :attachable

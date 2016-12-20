@@ -27,7 +27,7 @@ FactoryGirl.define do
       end
 
       after(:create) do |project, evaluator|
-        create_list(:task, evaluator.task_count, project: project, creator: evaluator.task_owner)
+        create_list(:task, evaluator.task_count, project: project, reporter: evaluator.task_owner)
       end
     end
 

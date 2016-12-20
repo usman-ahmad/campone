@@ -46,7 +46,7 @@ PublicActivity::Activity.class_eval do
   end
 
   def get_notifiable_users_for_task(task)
-    # owner_id represents current_user, Do not send notifications to creator
+    # owner_id represents current_user, Do not send notifications to reporter
     task.project.members.map(&:id) - [owner_id]
   end
 

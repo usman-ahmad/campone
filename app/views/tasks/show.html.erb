@@ -33,10 +33,10 @@
           <span class="key">State: </span>
           <span id="state" class="value"><%= @task.state.humanize %></span>
         </li>
-        <% if @task.creator.present? %>
+        <% if @task.reporter.present? %>
          <li class="col-md-4">
           <span class="key">Created By: </span>
-          <span class="value"> <%= @task.creator.name %> </span>
+          <span class="value"> <%= @task.reporter.name %> </span>
          </li>
         <% end %>
         <li class="col-md-12">

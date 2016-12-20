@@ -53,7 +53,7 @@ RSpec.describe Task, type: :model do
 
   describe 'associations' do
     it { should belong_to(:project) }
-    it { should belong_to(:creator) }
+    it { should belong_to(:reporter) }
 
     it { should have_many(:comments) }
     it { should have_many(:attachments) }
@@ -69,7 +69,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'callbacks' do
-    let!(:task) { create(:task, title: 'task one', creator: user, project: project) }
+    let!(:task) { create(:task, title: 'task one', reporter: user, project: project) }
 
     describe 'set_position' do
       it 'assigns first position' do
@@ -77,13 +77,13 @@ RSpec.describe Task, type: :model do
       end
 
       it 'assigns second position' do
-        task = create(:task, title: 'task two', creator: user, project: project)
+        task = create(:task, title: 'task two', reporter: user, project: project)
         expect(task.position).to eq 2
       end
 
       it 'assigns first position for first task of an other project' do
         another_project = create(:project, owner: user)
-        task = create(:task, title: 'task three', creator: user, project: another_project)
+        task = create(:task, title: 'task three', reporter: user, project: another_project)
         expect(task.position).to eq 1
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'increases current_ticket_id' do
-        expect { create(:task, project: project, creator: user) }.to change { project.current_ticket_id }.by(1)
+        expect { create(:task, project: project, reporter: user) }.to change { project.current_ticket_id }.by(1)
       end
     end
   end
@@ -102,9 +102,9 @@ RSpec.describe Task, type: :model do
   describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
-    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', state: 'started', creator: user, project: project) }
-    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', state: 'finished', creator: user, project: project) }
-    let!(:another_task) { create(:task, title: 'another ', description: 'another description', state: 'accepted', creator: user, project: project) }
+    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', state: 'started', reporter: user, project: project) }
+    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', state: 'finished', reporter: user, project: project) }
+    let!(:another_task) { create(:task, title: 'another ', description: 'another description', state: 'accepted', reporter: user, project: project) }
 
     describe '#filter_tasks', pending: 'feature has been redesigned or removed' do
       it 'returns non-completed tasks meeting the search criteria' do
@@ -150,10 +150,10 @@ RSpec.describe Task, type: :model do
 
     describe 'CSV import/export' do
       let!(:task1) { create(:task, title: 'create psd', description: 'task one in group',
-                            state: 'started', creator: user, project: project) }
+                            state: 'started', reporter: user, project: project) }
 
       let!(:task2) { create(:task, title: 'create html templates', description: 'task two in group',
-                            state: 'rejected', priority: 'Medium', creator: user, project: project) }
+                            state: 'rejected', priority: 'Medium', reporter: user, project: project) }
 
 
       describe '#to_csv (export to CSV file)' do
@@ -210,7 +210,7 @@ RSpec.describe Task, type: :model do
   #   let(:another_user) { create(:user) }
   #
   #   context 'assigned to nobody' do
-  #     let!(:task) { create(:task, state: 'unstarted', project: project, creator: user) }
+  #     let!(:task) { create(:task, state: 'unstarted', project: project, reporter: user) }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'assigns task to a user' do
@@ -219,7 +219,7 @@ RSpec.describe Task, type: :model do
   #   end
   #
   #   context 'already assigned' do
-  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
+  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: user.id) }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'will not assign task' do
@@ -228,7 +228,7 @@ RSpec.describe Task, type: :model do
   #   end
   #
   #   context 'already in state' do
-  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id, state: 'started') }
+  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: user.id, state: 'started') }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'will not assign task' do
@@ -241,7 +241,7 @@ RSpec.describe Task, type: :model do
   #   before { task.set_state(user, 'started') }
   #
   #   context 'Task is assigned to that user' do
-  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: user.id) }
+  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: user.id) }
   #
   #     it 'will change state' do
   #       expect(task.state).to eq 'started'
@@ -250,7 +250,7 @@ RSpec.describe Task, type: :model do
   #
   #   context 'Task is NOT assigned to that user' do
   #     let(:another_user) { create(:user) }
-  #     let!(:task) { create(:task, project: project, creator: user, assigned_to: another_user.id) }
+  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: another_user.id) }
   #
   #     it 'would NOT changes state' do
   #       expect(task.state).to eq 'unstarted' # Default value
@@ -271,10 +271,10 @@ RSpec.describe Task, type: :model do
   end
 
   it 'should allow us to create' do
-    expect(create(:task, priority: 'Low', project: project, creator: project.owner).priority).to eq('Low')
-    expect(create(:task, priority: 'Low', project: project, state: 'finished', creator: project.owner).state).to eq('finished')
-    expect(create(:task, priority: 'Medium', project: project, creator: project.owner).priority).to eq('Medium')
-    expect(create(:task, priority: 'High', project: project, state: 'unstarted', creator: project.owner).priority).to eq('High')
+    expect(create(:task, priority: 'Low', project: project, reporter: project.owner).priority).to eq('Low')
+    expect(create(:task, priority: 'Low', project: project, state: 'finished', reporter: project.owner).state).to eq('finished')
+    expect(create(:task, priority: 'Medium', project: project, reporter: project.owner).priority).to eq('Medium')
+    expect(create(:task, priority: 'High', project: project, state: 'unstarted', reporter: project.owner).priority).to eq('High')
   end
 
 end

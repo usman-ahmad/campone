@@ -31,7 +31,7 @@ class TrelloImport < ImportService
   end
 
   def import_task(card)
-    # TODO: Manage State and Task Creator
+    # TODO: Manage State and Task Reporter
     attributes = {
         title: card.name,
         description: card.desc,
