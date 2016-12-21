@@ -13,8 +13,10 @@
           <%= link_to edit_project_discussion_path(@project, @discussion), class: 'btn btn-default' do %>
               Edit
           <% end %>
-          <%= link_to project_discussion_path(@project, @discussion), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
+          <% if can? :destroy, @discussion %>
+            <%= link_to project_discussion_path(@project, @discussion), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
               Delete
+            <% end %>
           <% end %>
         </div>
       </div>

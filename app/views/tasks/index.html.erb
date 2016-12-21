@@ -56,8 +56,10 @@
 
             <div class="pull-right todo-after">
               <a href="<%= edit_project_task_path(@project, task) %>" title="Edit To-Do"><i class="fa fa-pencil customTodo-icon"></i></a>
-              <%= link_to project_task_path(@project, task), method: :delete, data: {confirm: 'Are you sure?'} do %>
-                  <i class="fa fa-trash-o customTodo-icon"></i>
+              <% if can? :destroy, task %>
+                <%= link_to project_task_path(@project, task), method: :delete, data: {confirm: 'Are you sure?'} do %>
+                    <i class="fa fa-trash-o customTodo-icon"></i>
+                <% end %>
               <% end %>
             </div>
             </p>

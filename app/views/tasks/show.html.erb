@@ -60,8 +60,10 @@
           <%= link_to edit_project_task_path(@project ,@task), class: 'btn btn-default' do %>
               Edit
           <% end %>
-          <%= link_to project_task_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
+          <% if can? :destroy, @task %>
+            <%= link_to project_task_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
               Delete
+            <% end %>
           <% end %>
         </div>
       </div>
