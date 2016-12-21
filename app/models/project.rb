@@ -19,15 +19,19 @@ class Project < ApplicationRecord
   # Now we can remove owner from project, as we have added owner role in Contribution, see #add_owner_to_contributors
   belongs_to :owner, class_name: 'User'
 
-  has_many :contributions
+  # deleting a project will delete its tasks, discussions and attachments (including comments, attachments)
+  # which can break notifications
+  # TODO: Fix notifications making them flat
+  # TODO: Update deleting mechanism (Ask for project name)
+  has_many :contributions, dependent: :destroy
   has_many :members, through: :contributions, :source => :user
 
-  has_many :tasks
-  has_many :discussions
-  has_many :events
-  has_many :attachments, as: :attachable, class_name: 'ProjectAttachment'
+  has_many :tasks, dependent: :destroy
+  has_many :discussions, dependent: :destroy
+  has_many :events, dependent: :destroy
+  has_many :attachments, as: :attachable, class_name: 'ProjectAttachment', dependent: :destroy
 
-  has_many :integrations
+  has_many :integrations, dependent: :destroy
   has_many :payloads, through: :integrations
 
   validates :title, presence: true

@@ -37,6 +37,10 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  # TODO: Deactivate User (Update devise) For now we do not allow deleting a user
+  # https://github.com/plataformatec/devise/wiki/How-to:-Soft-delete-a-user-when-user-deletes-account
+  # What should we do with project of deactivated users?
+
   # For now commenting out all unused associations
   # Note: We may remove owner_id from project, as we are adding owner role with contributions
   # has_many :owned_projects, class_name: 'Project', foreign_key: :owner_id

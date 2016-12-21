@@ -19,15 +19,15 @@ class Discussion < ApplicationRecord
   belongs_to :project
   belongs_to :opener, class_name: User, foreign_key: :user_id
 
-  has_many :user_discussions
+  has_many :user_discussions, dependent: :destroy
   has_many :users ,through: :user_discussions
 
-  has_many :comments,    as: :commentable
-  has_many :attachments, as: :attachable
+  has_many :comments,    as: :commentable, dependent: :destroy
+  has_many :attachments, as: :attachable, dependent: :destroy
 
   validates :title, presence: true
 
-  accepts_nested_attributes_for :user_discussions ,:allow_destroy => true
+  accepts_nested_attributes_for :user_discussions, :allow_destroy => true
 
    def last_activity
       last_comment_activity  =  PublicActivity::Activity.where(trackable_id: comments.last.id, trackable_type: "Comment").last if  comments.last.present?

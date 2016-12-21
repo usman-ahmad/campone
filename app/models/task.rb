@@ -30,9 +30,8 @@ class Task < ApplicationRecord
   belongs_to :reporter, class_name: User, foreign_key: :user_id
   belongs_to :owner, class_name: User, foreign_key: :assigned_to
 
-  has_many :attachments, as: :attachable
-
-  has_many :comments,    as: :commentable
+  has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :comments,    as: :commentable, dependent: :destroy
 
   before_create :set_position
   after_create  :increment_ticket_counter

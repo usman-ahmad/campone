@@ -17,7 +17,7 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
-  has_many :attachments, as: :attachable
+  has_many :attachments, as: :attachable, dependent: :destroy
 
   # COMMENTABLE_TYPES = %w(Task Discussion ProjectAttachment_AS_Attachment)
 

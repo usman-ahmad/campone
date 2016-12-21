@@ -19,7 +19,7 @@
 #
 
 class ProjectAttachment < Attachment
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   ATTACHABLE_TYPES = %w(Project)
 
