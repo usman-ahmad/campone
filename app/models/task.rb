@@ -31,16 +31,16 @@ class Task < ApplicationRecord
   belongs_to :owner, class_name: User, foreign_key: :assigned_to
 
   has_many :attachments, as: :attachable, dependent: :destroy
-  has_many :comments,    as: :commentable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   before_create :set_position
-  after_create  :increment_ticket_counter
+  after_create :increment_ticket_counter
 
   PRIORITIES = {
-      NONE:   'None',
-      LOW:    'Low',
+      NONE: 'None',
+      LOW: 'Low',
       MEDIUM: 'Medium',
-      HIGH:   'High'
+      HIGH: 'High'
   }
 
   STATE_MAP = {
@@ -74,8 +74,7 @@ class Task < ApplicationRecord
 
   # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
   def due_date
-    errors.add(:due_at, "can't be in the past") if
-        due_at < Date.today if due_at.present?
+    errors.add(:due_at, "can't be in the past") if due_at < Date.today if due_at.present?
   end
 
   # def not_completed?
@@ -110,7 +109,7 @@ class Task < ApplicationRecord
         {accept: 'accepted', reject: 'rejected'}
       when 'rejected'
         {restart: 'started'}
-      when 'accepted'         # :accepted ~ :closed
+      when 'accepted' # :accepted ~ :closed
         {}
       else
         {}
@@ -201,6 +200,54 @@ class Task < ApplicationRecord
 
       project.tasks.create!(attributes)
     end
+  end
+
+  # copies a task into another project.
+  # params
+  # ======
+  # => project: where you want to copy your task to
+  # => mover: current_user moving this tasks. User must have access to the above project
+  # => options: with_comments(default: false), with_attachments(default: true)
+  # Example: task.copy_to(project, user, with_attachments: false)
+  # TODO: 1) Copy attachments of comments. 2) Provide an option to delete original task (like move). 3) Write specs
+  # We may prefer to create a new class i-e TaskMover.new(task, project, mover, options).move!
+  def copy_to(project, mover, options = {})
+    return false if Ability.new(mover).cannot? :read, project
+
+    default_options = {
+        with_comments: false,
+        with_attachments: true
+    }
+    options = default_options.merge(options)
+
+    reporter = project.members.include?(self.reporter) ? self.reporter : mover
+    owner = project.members.include?(self.owner) ? self.owner : nil
+
+    attrs = self.attributes.slice('title', 'description', 'priority', 'progress', 'due_at').merge!(reporter: reporter, owner: owner)
+    task = project.tasks.create(attrs)
+
+    if options[:with_comments]
+      self.comments.each do |c|
+        if project.members.include?(c.user)
+          task.comments << c.dup
+        else
+          # We may prefer to use dummy user names (User 1) instead of actual user name
+          task.comments << Comment.new(user: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
+        end
+      end
+    end
+
+    if options[:with_attachments]
+      self.attachments.each do |a|
+        attachment = a.dup
+        attachment.document = a.document
+        task.attachments << attachment
+      end
+    end
+
+    task.save
+
+    task
   end
 
   private
