@@ -99,6 +99,114 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  describe '#copy_to' do
+    let(:owner_of_projects) { create(:user) }
+    let(:base_project) { create(:project, title: 'Original task wala project', owner: owner_of_projects) }
+    let(:target_project) { create(:project, title: 'Nawa project', owner: owner_of_projects) }
+
+    context 'for simple task' do
+      let(:simple_task_to_copy) { create(:task, title: 'sadi kapi wala task', priority: 'Medium', owner: owner_of_projects, reporter: user, project: base_project) }
+      let(:task_copy) { simple_task_to_copy.copy_to(target_project, owner_of_projects) }
+
+      it 'should increment task count of target project' do
+        expect { simple_task_to_copy.copy_to(target_project, owner_of_projects) }.to change { target_project.tasks.count }.by(1)
+      end
+
+      it 'should return clone of simple task in target project' do
+        expect(task_copy).to be_an_instance_of(Task)
+        expect(task_copy).to be_persisted
+        expect(task_copy).not_to eq simple_task_to_copy
+        expect(target_project.tasks).not_to include(simple_task_to_copy)
+        expect(target_project.tasks).to include(task_copy)
+        expect(task_copy.project).to eq target_project
+        expect(task_copy.owner).to eq owner_of_projects
+        expect(task_copy.reporter).to eq owner_of_projects
+        expect(task_copy.priority).to eq 'Medium'
+        expect(task_copy.title).to eq 'sadi kapi wala task'
+      end
+
+      it 'should not remove original task from source project' do
+        task_copy
+        expect { simple_task_to_copy.copy_to(target_project, owner_of_projects) }.not_to change { base_project.tasks.count }
+        expect(base_project.tasks).to include(simple_task_to_copy)
+      end
+
+      context 'reporter of task is not in the target project' do
+        let(:other_user) { create(:user) }
+        let(:task_with_other_reporter) { create(:task, title: 'naye reporter wala task', reporter: other_user, project: base_project) }
+        let(:task_copy) { task_with_other_reporter.copy_to(target_project, owner_of_projects) }
+
+        it 'should set the reporter to task mover' do
+          expect(task_copy.reporter).to eq owner_of_projects
+        end
+      end
+
+      context 'reporter of task is also present in the target project' do
+        let(:other_user) { create(:user) }
+        let(:task_with_other_reporter) { create(:task, title: 'naye reporter wala task', reporter: other_user, project: base_project) }
+        let(:task_copy) { task_with_other_reporter.copy_to(target_project, owner_of_projects) }
+
+        before { target_project.contributions.create(user_id: other_user.id, role: 'Member') }
+
+        it 'should set the reporter to reporter of original task' do
+          expect(task_copy.reporter).to eq other_user
+        end
+      end
+    end
+
+    context 'for task with comments' do
+      it 'should copy task and not comments when with_comments is false' do
+        expect do
+          task_with_comments = create(:task, :with_comments, comments_count: 3, reporter: owner_of_projects, project: base_project)
+          task_with_comments.copy_to(target_project, owner_of_projects, with_comments: false)
+        end.not_to change { Comment.where(commentable: target_project.tasks).count }
+      end
+
+      it 'should copy task and comments when with_comments is true' do
+        expect do
+          task_with_comments = create(:task, :with_comments, comments_count: 4, reporter: owner_of_projects, project: base_project)
+          task_with_comments.copy_to(target_project, owner_of_projects, with_comments: true)
+        end.to change { Comment.where(commentable: target_project.tasks).count }.by(4)
+      end
+
+      context 'when with_comments is set to true' do
+        let(:task_commenter) { create(:user) }
+        let(:task_from_commenter) { create(:task, :with_comments, comments_count: 3, commenter: task_commenter, project: base_project) }
+        let(:task_copy) { task_from_commenter.copy_to(target_project, owner_of_projects, with_comments: true) }
+
+        context 'commenter of task is not present in the target project' do
+          it 'should set the commenter to mover of the task' do
+            expect(task_copy.comments.map(&:user).uniq).to eq [owner_of_projects]
+          end
+        end
+
+        context 'commenter of task is also present in the target project' do
+          before { target_project.contributions.create(user_id: task_commenter.id, role: 'Member') }
+
+          it 'should set the commenter to commenter of original task' do
+            expect(task_copy.comments.map(&:user).uniq).to eq [task_commenter]
+          end
+        end
+      end
+    end
+
+    context 'for task with attachments' do
+      it 'should copy task and not attachments when with_attachments is false' do
+        expect do
+          task_with_attachments = create(:task, :with_attachments, attachments_count: 2, reporter: owner_of_projects, project: base_project)
+          task_with_attachments.copy_to(target_project, owner_of_projects, with_attachments: false)
+        end.not_to change { Attachment.where(attachable: target_project.tasks).count }
+      end
+
+      it 'should copy task and attachments when with_attachments is true' do
+        expect do
+          task_with_attachments = create(:task, :with_attachments, attachments_count: 3, reporter: owner_of_projects, project: base_project)
+          task_with_attachments.copy_to(target_project, owner_of_projects, with_attachments: true)
+        end.to change { Attachment.where(attachable: target_project.tasks).count }.by(3)
+      end
+    end
+  end
+
   describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
