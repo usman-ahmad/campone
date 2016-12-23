@@ -61,9 +61,17 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project.destroy
+
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
+      format.html do
+        if @project.title == params[:confirm_project]
+          @project.destroy
+          redirect_to projects_url, notice: 'Project was successfully destroyed.'
+        else
+          redirect_back(fallback_location: project_path(@project), notice: 'Project verification failed.')
+        end
+      end
+
       format.json { head :no_content }
     end
   end

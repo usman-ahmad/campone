@@ -1,0 +1,33 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Delete Project Confirmation </h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you ABSOLUTELY sure?<br>
+          Unexpected bad things will happen if you don't read this!
+        </p>
+        <p>This action CANNOT be undone. This will permanently delete the <%= project.title %> project, tasks, discussions, and comments, and remove all member associations.</p>
+
+        <p>Please type in the name of the project to confirm.</p>
+
+        <%= form_tag(project_path(project), method: :delete) do %>
+          <div class="form-group">
+            <%= text_field_tag :confirm_project, nil, class: 'form-control' %>
+          </div>
+          <%= submit_tag 'Delete', class: "btn btn-danger" %>
+        <% end %>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -46,7 +46,8 @@ class Ability
 
     # GS[2016-12-22] For now restrict delete cuz it can break notifications.
     # We'll allow it after making flat notifications
-    # cannot :destroy, [Project, Task, Discussion, Comment, Attachment]
+    cannot :destroy, [Project, Task, Discussion, Comment, Attachment]
+
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:
     #

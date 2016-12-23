@@ -14,15 +14,22 @@
 
       <p><%= @project.owner.name %></p>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-6">
       <h5>Description:</h5>
 
       <p><%= @project.description %></p>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
       <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
           <span class="glyphicon glyphicon-pencil"></span>
           Edit
+      <% end %>
+
+      <% if can? :destroy, @project %>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+          <span class="glyphicon glyphicon-trash"></span> Delete
+        </button>
+        <%= render 'projects/delete_project_modal', project: @project %>
       <% end %>
 
     </div>
