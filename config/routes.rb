@@ -95,28 +95,28 @@
 #                       new_user_session GET       /users/sign_in(.:format)                                                     devise/sessions#new
 #                           user_session POST      /users/sign_in(.:format)                                                     devise/sessions#create
 #                   destroy_user_session DELETE    /users/sign_out(.:format)                                                    devise/sessions#destroy
-#  user_google_oauth2_omniauth_authorize GET|POST  /users/auth/google_oauth2(.:format)                                          omniauth_callbacks#passthru
-#   user_google_oauth2_omniauth_callback GET|POST  /users/auth/google_oauth2/callback(.:format)                                 omniauth_callbacks#google_oauth2
-#        user_twitter_omniauth_authorize GET|POST  /users/auth/twitter(.:format)                                                omniauth_callbacks#passthru
-#         user_twitter_omniauth_callback GET|POST  /users/auth/twitter/callback(.:format)                                       omniauth_callbacks#twitter
-#          user_asana_omniauth_authorize GET|POST  /users/auth/asana(.:format)                                                  omniauth_callbacks#passthru
-#           user_asana_omniauth_callback GET|POST  /users/auth/asana/callback(.:format)                                         omniauth_callbacks#asana
-#           user_jira_omniauth_authorize GET|POST  /users/auth/jira(.:format)                                                   omniauth_callbacks#passthru
-#            user_jira_omniauth_callback GET|POST  /users/auth/jira/callback(.:format)                                          omniauth_callbacks#jira
-#         user_trello_omniauth_authorize GET|POST  /users/auth/trello(.:format)                                                 omniauth_callbacks#passthru
-#          user_trello_omniauth_callback GET|POST  /users/auth/trello/callback(.:format)                                        omniauth_callbacks#trello
+#  user_google_oauth2_omniauth_authorize GET|POST  /users/auth/google_oauth2(.:format)                                          users/omniauth_callbacks#passthru
+#   user_google_oauth2_omniauth_callback GET|POST  /users/auth/google_oauth2/callback(.:format)                                 users/omniauth_callbacks#google_oauth2
+#        user_twitter_omniauth_authorize GET|POST  /users/auth/twitter(.:format)                                                users/omniauth_callbacks#passthru
+#         user_twitter_omniauth_callback GET|POST  /users/auth/twitter/callback(.:format)                                       users/omniauth_callbacks#twitter
+#          user_asana_omniauth_authorize GET|POST  /users/auth/asana(.:format)                                                  users/omniauth_callbacks#passthru
+#           user_asana_omniauth_callback GET|POST  /users/auth/asana/callback(.:format)                                         users/omniauth_callbacks#asana
+#           user_jira_omniauth_authorize GET|POST  /users/auth/jira(.:format)                                                   users/omniauth_callbacks#passthru
+#            user_jira_omniauth_callback GET|POST  /users/auth/jira/callback(.:format)                                          users/omniauth_callbacks#jira
+#         user_trello_omniauth_authorize GET|POST  /users/auth/trello(.:format)                                                 users/omniauth_callbacks#passthru
+#          user_trello_omniauth_callback GET|POST  /users/auth/trello/callback(.:format)                                        users/omniauth_callbacks#trello
 #                          user_password POST      /users/password(.:format)                                                    devise/passwords#create
 #                      new_user_password GET       /users/password/new(.:format)                                                devise/passwords#new
 #                     edit_user_password GET       /users/password/edit(.:format)                                               devise/passwords#edit
 #                                        PATCH     /users/password(.:format)                                                    devise/passwords#update
 #                                        PUT       /users/password(.:format)                                                    devise/passwords#update
-#               cancel_user_registration GET       /users/cancel(.:format)                                                      devise_invitable/registrations#cancel
-#                      user_registration POST      /users(.:format)                                                             devise_invitable/registrations#create
-#                  new_user_registration GET       /users/sign_up(.:format)                                                     devise_invitable/registrations#new
-#                 edit_user_registration GET       /users/edit(.:format)                                                        devise_invitable/registrations#edit
-#                                        PATCH     /users(.:format)                                                             devise_invitable/registrations#update
-#                                        PUT       /users(.:format)                                                             devise_invitable/registrations#update
-#                                        DELETE    /users(.:format)                                                             devise_invitable/registrations#destroy
+#               cancel_user_registration GET       /users/cancel(.:format)                                                      users/registrations#cancel
+#                      user_registration POST      /users(.:format)                                                             users/registrations#create
+#                  new_user_registration GET       /users/sign_up(.:format)                                                     users/registrations#new
+#                 edit_user_registration GET       /users/edit(.:format)                                                        users/registrations#edit
+#                                        PATCH     /users(.:format)                                                             users/registrations#update
+#                                        PUT       /users(.:format)                                                             users/registrations#update
+#                                        DELETE    /users(.:format)                                                             users/registrations#destroy
 #                 accept_user_invitation GET       /users/invitation/accept(.:format)                                           devise/invitations#edit
 #                 remove_user_invitation GET       /users/invitation/remove(.:format)                                           devise/invitations#destroy
 #                        user_invitation POST      /users/invitation(.:format)                                                  devise/invitations#create
@@ -188,7 +188,7 @@ Rails.application.routes.draw do
   end
 
 
-  devise_for :users, :controllers => {omniauth_callbacks: 'omniauth_callbacks'}
+  devise_for :users, :controllers => {omniauth_callbacks: 'users/omniauth_callbacks', :registrations => 'users/registrations'}
 
   devise_scope :user do
     match '/users/:id/finish_signup', :to => 'omniauth_callbacks#finish_signup', via: [:get, :patch], :as => :finish_signup

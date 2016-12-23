@@ -29,6 +29,7 @@
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
 #  authentication_token   :string
+#  deleted_at             :datetime
 #
 
 require 'rails_helper'

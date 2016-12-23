@@ -29,10 +29,11 @@
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
 #  authentication_token   :string
+#  deleted_at             :datetime
 #
 
 class User < ApplicationRecord
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :avatar, styles: {medium: '300x300>', thumb: '100x100>'}
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   validates :name, presence: true
@@ -113,8 +114,26 @@ class User < ApplicationRecord
     self
   end
 
+  # instead of deleting, indicate the user requested a delete & timestamp it
+  def soft_delete
+    update_attribute(:deleted_at, Time.current)
+  end
+
+  # ensure user account is active
+  def active_for_authentication?
+    super && !deleted_at
+  end
+
+  # provide a custom message for a deleted account
+  def inactive_message
+    !deleted_at ? super : "You've deleted your account. Contact our support for further help."
+  end
+
   def hard_delete
-    # TODO: Hard delete contributions and everything else
+    # TODO: Hard delete contributions and everything else,
+    # required when a users authenticates via oauth (i-e google)
+    # but he wants to associate that account with existing Camp One account.
+    # We'll delete the user created via oauth and link that google account with existing account.
     projects.destroy_all
   end
 
@@ -132,7 +151,7 @@ class User < ApplicationRecord
     loop do
       token = Devise.friendly_token
       break token unless User.where(authentication_token: token).first
-    endauthenticate_user!
+      # endauthenticate_user!
     end
   end
   #################################################################
