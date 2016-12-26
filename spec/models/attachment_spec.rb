@@ -25,6 +25,9 @@ RSpec.describe Attachment, type: :model do
   let(:project) { create(:project, owner: user) }
   let(:project_attachment) { create(:project_attachment, :with_comments, comments_count: 4, commenter: user, attachable: project, document: File.new('spec/files/awesome_project_attachment.jpg')) }
 
+  let(:task) { create(:task, title: 'hash task', reporter: user, project: project) }
+  let(:attachment) { create(:attachment, document: File.new('spec/files/awesome_project_attachment.jpg'), attachable: task) }
+
   context 'associations' do
     it { should belong_to :project }
     it { should belong_to(:uploader).class_name('User').with_foreign_key('user_id') }
@@ -55,6 +58,22 @@ RSpec.describe Attachment, type: :model do
       expect(comment.commentable.attachable).to eq(project)
     end
   end
+
+  it '#destroys' do
+    expect do
+      attachment
+    end.to change { Attachment.count }.by(1)
+
+    path = attachment.document.path
+    expect(File).to exist(path)
+
+    expect do
+      attachment.destroy
+    end.to change { Attachment.count }.by(-1)
+
+    expect(File).not_to exist(path)
+  end
+
 
   context 'db' do
     context 'columns' do

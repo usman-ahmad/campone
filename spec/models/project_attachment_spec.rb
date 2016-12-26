@@ -30,5 +30,28 @@ RSpec.describe ProjectAttachment, type: :model do
     it 'should be valid attachment' do
       expect(build(:project_attachment, document: File.new('spec/files/awesome_project_attachment.jpg'), attachable: project)).to be_valid
     end
+
+    describe '#destroy' do
+      let(:camp_project_owner) { create(:user) }
+      let(:camp_project) { create(:project, title: 'US project', owner: camp_project_owner) }
+      let(:project_attachment) { create(:project_attachment, :with_real_attachment, :with_comments, comments_count: 4, commenter: camp_project_owner, attachable: camp_project) }
+
+      it 'deletes attachment with comments' do
+        expect do
+          project_attachment
+        end.to change { camp_project.attachments.count }.by(1)
+                   .and change { Comment.where(commentable: camp_project.attachments).count }.by(4)
+
+        path = camp_project.attachments.first.document.path
+        expect(File).to exist(path)
+
+        expect do
+          project_attachment.destroy
+        end.to change { camp_project.attachments.count }.by(-1)
+                   .and change { Comment.where(commentable: camp_project.attachments).count }.by(-4)
+
+        expect(File).not_to exist(path)
+      end
+    end
   end
 end

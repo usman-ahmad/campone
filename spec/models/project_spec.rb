@@ -42,6 +42,43 @@ RSpec.describe Project, type: :model do
     end
   end
 
+  describe '#destroy' do
+    let(:camp_owner) { create(:user) }
+    let(:camp_project) { create(:project, :with_tasks, :with_discussions, :with_attachments, attachments_count: 2, task_owner: camp_owner, task_count: 2, discussion_owner: camp_owner, discussion_count: 2, title: 'UAE project', owner: camp_owner) }
+    let(:king_project) { create(:project, :with_tasks, :with_discussions, :with_attachments, attachments_count: 2, real_attachments: true, task_owner: camp_owner, task_count: 2, discussion_owner: camp_owner, discussion_count: 2, title: 'King project', owner: camp_owner) }
+
+    it 'deletes the project with its tasks, discussions and attachments' do
+      expect do
+        camp_project
+      end.to change { Task.count }.by(2)
+                 .and change { ProjectAttachment.count }.by(2)
+                          .and change { Discussion.count }.by(2)
+
+      expect do
+        camp_project.destroy
+      end.to change { camp_project.tasks.count }.by(-2)
+                 .and change { camp_project.attachments.count }.by(-2)
+                          .and change { camp_project.discussions.count }.by(-2)
+    end
+
+    it 'deletes the project with its tasks, discussions and real attachments' do
+      expect do
+        king_project
+      end.to change { ProjectAttachment.count }.by(2)
+
+      path = king_project.attachments.first.document.path
+      expect(File).to exist(path)
+
+      expect do
+        king_project.destroy
+      end.to change { king_project.tasks.count }.by(-2)
+                 .and change { king_project.attachments.count }.by(-2)
+                          .and change { king_project.discussions.count }.by(-2)
+
+      expect(File).not_to exist(path)
+    end
+  end
+
   describe 'slug' do
     let!(:project) { create(:project, owner: user, title: 'T E S Ting') }
 
