@@ -1,0 +1,30 @@
+<li id="task_<%= task.id %>" class="ui-state-default custom-ui-state">
+  <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
+
+  <p class="todo-content">
+    <%= content_tag(:span, task.state, class: "label label-info progress-status progress-#{task.state}") %>
+
+    <%= link_to project_task_path(task.project, task) do %>
+        <%= content_tag(:strong, task.ticket_id.upcase) %>
+        <%= task.title %>
+    <% end %>
+
+    <%= content_tag :span, class: 'tag-holder' do %>
+        <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") unless task.priority.eql?('None') %>
+        <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
+        <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag', title: "Assigned to: #{task_assigned_to task}") if task.assigned_to.present? %>
+        <%= content_tag(:i, '', class: 'fa fa-list-alt', title: 'This task has description') if task.description.present? %>
+        <%= content_tag(:i, '', class: 'fa fa-paperclip', title: 'This task has attachments') if task.attachments.present? %>
+        <%= content_tag(:i, task.comments.count, class: 'fa fa-commenting-o', title: "This task has #{pluralize(task.comments.count, 'comment')}") if task.comments.present? %>
+    <% end %>
+
+  <div class="pull-right todo-after">
+    <a href="<%= edit_project_task_path(task.project, task) %>" title="Edit To-Do"><i class="fa fa-pencil customTodo-icon"></i></a>
+    <% if can? :destroy, task %>
+        <%= link_to project_task_path(task.project, task), method: :delete, data: {confirm: 'Are you sure?'} do %>
+            <i class="fa fa-trash-o customTodo-icon"></i>
+        <% end %>
+    <% end %>
+  </div>
+  </p>
+</li>
