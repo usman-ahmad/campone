@@ -200,9 +200,11 @@ RSpec.describe Task, type: :model do
 
       it 'should copy task and attachments when with_attachments is true' do
         expect do
-          task_with_attachments = create(:task, :with_attachments, attachments_count: 3, reporter: owner_of_projects, project: base_project)
+          task_with_attachments = create(:task, :with_attachments, attachments_count: 3, real_attachments: true, reporter: owner_of_projects, project: base_project)
           task_with_attachments.copy_to(target_project, owner_of_projects, with_attachments: true)
         end.to change { Attachment.where(attachable: target_project.tasks).count }.by(3)
+
+        expect(File).to exist(target_project.tasks.last.attachments.last.document.path)
       end
     end
   end

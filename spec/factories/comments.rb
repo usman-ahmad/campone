@@ -20,10 +20,15 @@ FactoryGirl.define do
     trait :with_attachments do
       transient do
         attachments_count 1
+        real_attachments false
       end
 
       after(:create) do |comment, evaluator|
-        create_list(:attachment, evaluator.attachments_count, uploader: comment.user, attachable: comment)
+        if evaluator.real_attachments
+          create_list(:attachment, evaluator.attachments_count, :with_real_attachment, uploader: comment.user, attachable: comment)
+        else
+          create_list(:attachment, evaluator.attachments_count, :with_attachment_data, uploader: comment.user, attachable: comment)
+        end
       end
     end
 
