@@ -18,7 +18,7 @@
 #
 
 class Task < ApplicationRecord
-  include Attachable
+  # include Attachable
   include PublicActivity::Common
 
   extend FriendlyId
@@ -71,12 +71,12 @@ class Task < ApplicationRecord
   # UA[2016/11/22] - NOT USED ANY WHERE # REFACTOR SPECS
   # scope :completed, -> { where(state: COMPLETED_STATES) }
   # scope :not_completed, -> { where(state: NOT_COMPLETED_STATES) }
-
-  # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
-  def due_date
-    errors.add(:due_at, "can't be in the past") if due_at < Date.today if due_at.present?
-  end
-
+  #
+  # # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
+  # def due_date
+  #   errors.add(:due_at, "can't be in the past") if due_at < Date.today if due_at.present?
+  # end
+  #
   # def not_completed?
   #   !completed?
   # end
@@ -84,6 +84,14 @@ class Task < ApplicationRecord
   # def completed?
   #   COMPLETED_STATES.include?(self.state)
   # end
+
+  def attachments_array=(array)
+    return unless array.present?
+
+    array.each do |file|
+      attachments.build(:document => file, project: self.project, user_id: self.user_id)
+    end
+  end
 
   def current_state
     state.inquiry

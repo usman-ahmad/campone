@@ -13,7 +13,7 @@
 #
 
 class Discussion < ApplicationRecord
-  include Attachable
+  # include Attachable
   include PublicActivity::Common
 
   belongs_to :project
@@ -28,6 +28,14 @@ class Discussion < ApplicationRecord
   validates :title, presence: true
 
   accepts_nested_attributes_for :user_discussions, :allow_destroy => true
+
+  def attachments_array=(array)
+    return unless array.present?
+
+    array.each do |file|
+      attachments.build(:document => file, project: self.project, user_id: self.user_id)
+    end
+  end
 
    def last_activity
       last_comment_activity  =  PublicActivity::Activity.where(trackable_id: comments.last.id, trackable_type: "Comment").last if  comments.last.present?
