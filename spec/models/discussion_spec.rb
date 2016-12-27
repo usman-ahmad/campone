@@ -18,22 +18,30 @@ RSpec.describe Discussion, type: :model do
   let(:user) { create_list(:user, 3) }
   let(:project) { create(:project, owner: user.first) }
 
-  describe 'title' do
-    it 'should present' do
-      expect(build(:discussion, private: false, project: project, title: nil, opener: project.owner)).to_not be_valid
-    end
+  context 'validations' do
+    it { should validate_presence_of(:title) }
   end
-  describe 'invite on discussion' do
-    let(:discussion) { create(:discussion, private: true, project: project, opener: project.owner) }
 
-    it 'should share with users' do
-      user.each do |user|
-        FactoryGirl.create(:user_discussion, user: user, discussion: discussion)
-      end
-      expect(discussion.users.count).to eq(3)
-    end
-
+  context 'associations' do
+    it { should have_many(:users) }
+    it { should belong_to(:opener) }
+    it { should belong_to(:project) }
+    it { should have_many(:comments) }
+    it { should have_many(:attachments) }
+    it { should have_many(:user_discussions) }
   end
+
+  # UA[2016/12/31] - TODO - WRITE PROPER SPECS
+  # describe 'invite on discussion' do
+  #   let(:discussion) { create(:discussion, private: true, project: project, opener: project.owner) }
+  #
+  #   it 'should share with users' do
+  #     user.each do |user|
+  #       FactoryGirl.create(:user_discussion, user: user, discussion: discussion)
+  #     end
+  #     expect(discussion.users.count).to eq(3)
+  #   end
+  # end
 
   describe '#destroy' do
     let(:camp_project_owner) { create(:user) }

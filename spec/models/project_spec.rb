@@ -24,7 +24,7 @@ RSpec.describe Project, type: :model do
   end
 
   describe 'associations' do
-    it { should belong_to(:owner) }
+    it { should belong_to(:owner).class_name('User') }
     it { should have_many(:tasks) }
     it { should have_many(:discussions) }
     it { should have_many(:contributions) }

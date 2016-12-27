@@ -53,8 +53,7 @@ RSpec.describe Task, type: :model do
 
   describe 'associations' do
     it { should belong_to(:project) }
-    it { should belong_to(:reporter) }
-
+    it { should belong_to(:reporter).class_name('User').with_foreign_key('user_id') }
     it { should have_many(:comments) }
     it { should have_many(:attachments) }
   end
