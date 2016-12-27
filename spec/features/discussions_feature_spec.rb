@@ -33,11 +33,15 @@ describe 'discussions management', type: :feature do
       visit project_discussions_path(project)
     end
 
-    # TODO: When editor selection is final, then handle this test case
-    it 'creates a discussion', pending: 'discussion content access issue' do
-      fill_in 'discussion_title', with: 'Upper house vs Lower house.'
-      fill_in 'discussion_content', with: 'Why lower house is lower than the upper house.'
-      click_on 'Create Discussion'
+    it 'creates a discussion', js: true do
+      find('a[data-target="#discussion"]').click
+
+      fill_in 'Title', with: 'Upper house vs Lower house.'
+      execute_script('$("#discussion_content").trumbowyg("html", "Why lower house is lower than the upper house.");')
+      click_button 'Create Discussion'
+
+      find('a', text: 'Upper house vs Lower house.').click
+
       expect(page).to have_content('Upper house vs Lower house.')
       expect(page).to have_content('Why lower house is lower than the upper house.')
     end
@@ -67,17 +71,19 @@ describe 'discussions management', type: :feature do
       expect(page.current_path).to eq edit_project_discussion_path(project, discussion)
     end
 
-    it 'should navigate to Discussion List', pending: 'feature has been redesigned or removed' do
-      find('a', text: 'List all Discussions').click
-      sleep(2)
-      expect(page.current_path).to eq project_discussions_path(project)
-    end
-
-    it 'should navigate to new discussion', pending: 'feature has been redesigned or removed' do
-      find('a', text: 'Start New Discussion').click
-      sleep(2)
-      expect(page.current_path).to eq new_project_discussion_path(project)
-    end
+    # TODO: Feature has been removed
+    # RN[2016/12/26]
+    # it 'should navigate to Discussion List', pending: 'feature has been redesigned or removed' do
+    #   find('a', text: 'List all Discussions').click
+    #   sleep(2)
+    #   expect(page.current_path).to eq project_discussions_path(project)
+    # end
+    #
+    # it 'should navigate to new discussion', pending: 'feature has been redesigned or removed' do
+    #   find('a', text: 'Start New Discussion').click
+    #   sleep(2)
+    #   expect(page.current_path).to eq new_project_discussion_path(project)
+    # end
 
     it 'should delete', :js => true, driver: :selenium do
       find('a', text: 'Delete').click

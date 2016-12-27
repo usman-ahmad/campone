@@ -425,9 +425,11 @@ RSpec.describe Task, type: :model do
     expect(build(:task, project: project, title: nil)).to_not be_valid
   end
 
-  it 'should not allow due date in past', pending: 'Add validation in model if required.' do
-    expect(build(:task, priority: 'Medium', project: project, due_at: (Date.today - 1))).to_not be_valid
-  end
+  # TODO: This validation is rejected in module due to it will cause issue while updating old task and importing tasks from third party
+  # RN[2016/12/26]
+  # it 'should not allow due date in past', pending: 'Add validation in model if required.' do
+  #   expect(build(:task, priority: 'Medium', project: project, due_at: (Date.today - 1))).to_not be_valid
+  # end
 
   it 'should allow nil due date' do
     expect(build(:task, project: project, due_at: nil)).to be_valid
