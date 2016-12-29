@@ -72,7 +72,7 @@ class TasksController < ApplicationController
   end
 
   def assigned_to_me
-    if @task.update_attributes(assigned_to: current_user.id)
+    if @task.update_attributes(owner_id: current_user.id)
       'Task is assigned to You'
     else
       'Task could not be assigned to You'
@@ -117,7 +117,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    tp = params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :assigned_to)
+    tp = params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id)
     tp.merge(reporter_id: current_user.id)
   end
 end

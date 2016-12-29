@@ -81,7 +81,7 @@ describe 'tasks management', type: :feature do
       fill_in 'task[due_at]', with: '2016-03-30' # Datepicker
 
       select 'High', :from => 'Priority'
-      select 'Everybody', :from => 'Assigned to'
+      select 'Everybody', :from => 'task[owner_id]'
 
       click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')

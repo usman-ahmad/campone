@@ -5,13 +5,13 @@ module TasksHelper
   end
 
   def task_assigned_to(task)
-    case task.assigned_to
+    case task.owner_id
       when nil
         'Nobody'
       when 0
         'Everybody'
       else
-        User.find(task.assigned_to).name
+        User.find(task.owner_id).name
     end
   end
 end

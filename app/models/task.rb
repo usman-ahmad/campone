@@ -11,7 +11,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  state       :string           default("unscheduled")
-#  assigned_to :integer
+#  owner_id    :integer
 #  reporter_id :integer
 #  position    :integer
 #  ticket_id   :string
@@ -28,7 +28,7 @@ class Task < ApplicationRecord
   belongs_to :project
 
   belongs_to :reporter, class_name: User, foreign_key: :reporter_id
-  belongs_to :owner, class_name: User, foreign_key: :assigned_to
+  belongs_to :owner, class_name: User, foreign_key: :owner_id
 
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
@@ -138,14 +138,14 @@ class Task < ApplicationRecord
   # UA[2016/11/28] - moved to controller with plain "update_attributes" call # REFACTOR SPECS
   # UA[2016/11/28] - assigned_to_me even if the task is started(or any other state) or assigned to anyone else
   # def assigned_to_me(current_user)
-  #   # if (!assigned_to.present? || assigned_to.eql?(0)) && (state.eql?('unstarted'))
-  #   #   if update_attributes(assigned_to: current_user.id)
+  #   # if (!owner_id.present? || owner_id.eql?(0)) && (state.eql?('unstarted'))
+  #   #   if update_attributes(owner_id: current_user.id)
   #   #     'Task assigned to You'
   #   #   end
   #   # else
   #   #   'Task already assigned'
   #   # end
-  #   if update_attributes(assigned_to: current_user.id)
+  #   if update_attributes(owner_id: current_user.id)
   #     'Task assigned to You'
   #   else
   #     'Task could not be assigned to You'
@@ -156,7 +156,7 @@ class Task < ApplicationRecord
   # UA[2016/11/28] - Anyone can set tasks state (even if not owner of task)
   # # To improve user experience if a user starts state shouldn't we assign task to him automatically, like pivotal
   # def set_state(current_user, state)
-  #   # if (assigned_to).eql?(current_user.id)
+  #   # if (owner_id).eql?(current_user.id)
   #   #   if update_attributes(state: state)
   #   #   else
   #   #     'status of task could not change'

@@ -11,7 +11,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  state       :string           default("unscheduled")
-#  assigned_to :integer
+#  owner_id    :integer
 #  reporter_id :integer
 #  position    :integer
 #  ticket_id   :string
