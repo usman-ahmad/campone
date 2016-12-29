@@ -12,7 +12,7 @@
 #  updated_at  :datetime         not null
 #  state       :string           default("unscheduled")
 #  assigned_to :integer
-#  user_id     :integer
+#  reporter_id :integer
 #  position    :integer
 #  ticket_id   :string
 #
@@ -27,7 +27,7 @@ class Task < ApplicationRecord
 
   belongs_to :project
 
-  belongs_to :reporter, class_name: User, foreign_key: :user_id
+  belongs_to :reporter, class_name: User, foreign_key: :reporter_id
   belongs_to :owner, class_name: User, foreign_key: :assigned_to
 
   has_many :attachments, as: :attachable, dependent: :destroy
@@ -89,7 +89,7 @@ class Task < ApplicationRecord
     return unless array.present?
 
     array.each do |file|
-      attachments.build(:document => file, project: self.project, user_id: self.user_id)
+      attachments.build(:document => file, project: self.project, user_id: self.reporter_id)
     end
   end
 
@@ -204,7 +204,7 @@ class Task < ApplicationRecord
     # TODO: Make it atomic
     CSV.foreach(file.path, headers: true) do |row|
       attributes = row.to_hash
-      attributes['user_id'] = current_user
+      attributes['reporter_id'] = current_user
 
       project.tasks.create!(attributes)
     end

@@ -58,7 +58,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params.except(:user_id))
+    if @task.update(task_params.except(:reporter_id))
       @task.create_activity :update, owner: current_user
       redirect_to [@project, @task], notice: 'Task was successfully updated.'
     else
@@ -118,6 +118,6 @@ class TasksController < ApplicationController
 
   def task_params
     tp = params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :assigned_to)
-    tp.merge(user_id: current_user.id)
+    tp.merge(reporter_id: current_user.id)
   end
 end

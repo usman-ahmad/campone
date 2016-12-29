@@ -12,7 +12,7 @@
 #  updated_at  :datetime         not null
 #  state       :string           default("unscheduled")
 #  assigned_to :integer
-#  user_id     :integer
+#  reporter_id :integer
 #  position    :integer
 #  ticket_id   :string
 #
@@ -53,7 +53,7 @@ RSpec.describe Task, type: :model do
 
   describe 'associations' do
     it { should belong_to(:project) }
-    it { should belong_to(:reporter).class_name('User').with_foreign_key('user_id') }
+    it { should belong_to(:reporter).class_name('User').with_foreign_key('reporter_id') }
     it { should have_many(:comments) }
     it { should have_many(:attachments) }
   end

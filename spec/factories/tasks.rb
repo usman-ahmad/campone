@@ -12,7 +12,7 @@
 #  updated_at  :datetime         not null
 #  state       :string           default("unscheduled")
 #  assigned_to :integer
-#  user_id     :integer
+#  reporter_id :integer
 #  position    :integer
 #  ticket_id   :string
 #
