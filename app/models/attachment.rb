@@ -13,7 +13,7 @@
 #  project_id            :integer
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  user_id               :integer
+#  uploader_id           :integer
 #  title                 :string
 #  type                  :string
 #
@@ -38,7 +38,7 @@ class Attachment < ApplicationRecord
 
   belongs_to :project
   belongs_to :attachable, polymorphic: true
-  belongs_to :uploader, class_name: User, foreign_key: :user_id
+  belongs_to :uploader, class_name: User, foreign_key: :uploader_id
 
   ATTACHABLE_TYPES = %w(Task Discussion Comment)
 

@@ -4,7 +4,7 @@
 #     return unless array.present?
 #
 #     array.each do |file|
-#       attachments.build(:document => file, project: self.project, user_id: self.user_id)
+#       attachments.build(:document => file, project: self.project, uploader_id: self.user_id)
 #     end
 #   end
 # end

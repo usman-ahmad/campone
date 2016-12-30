@@ -13,7 +13,7 @@
 #  project_id            :integer
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  user_id               :integer
+#  uploader_id           :integer
 #  title                 :string
 #  type                  :string
 #
@@ -30,7 +30,7 @@ RSpec.describe Attachment, type: :model do
 
   context 'associations' do
     it { should belong_to :project }
-    it { should belong_to(:uploader).class_name('User').with_foreign_key('user_id') }
+    it { should belong_to(:uploader).class_name('User').with_foreign_key('uploader_id') }
     it { should belong_to(:attachable) }
   end
 

@@ -28,7 +28,7 @@ class Comment < ApplicationRecord
 
     array.each do |file|
       # attachments.build(:attachment => file, project: self.commentable_type.constantize.find(self.commentable_id).project, user_id: self.user_id  )
-      attachments.build(:document => file, project: self.commentable.project, user_id: self.user_id  )
+      attachments.build(:document => file, project: self.commentable.project, uploader_id: self.user_id  )
     end
   end
 

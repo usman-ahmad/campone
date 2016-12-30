@@ -31,7 +31,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
 
     it 'updates the newly created attachment' do
 
-      create(:project_attachment, title: 'consectetur adipiscing elit', document: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'consectetur adipiscing elit', document: File.new('spec/files/awesome_project_attachment.jpg'), uploader_id: owner.id, attachable: project)
 
       visit project_attachments_path(project)
 
@@ -50,7 +50,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'downloads attachment attached to a project' do
-      create(:project_attachment, title: 'the awesome project attachment', document: File.new('spec/files/awesome_project_attachment.jpg'), user_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'the awesome project attachment', document: File.new('spec/files/awesome_project_attachment.jpg'), uploader_id: owner.id, attachable: project)
       visit project_attachments_path(project)
 
       find('tr', text: 'the awesome project attachment').click_link('Download')

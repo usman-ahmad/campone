@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161229075916) do
+ActiveRecord::Schema.define(version: 20161230065744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,10 +42,11 @@ ActiveRecord::Schema.define(version: 20161229075916) do
     t.integer  "project_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
-    t.integer  "user_id"
+    t.integer  "uploader_id"
     t.string   "title"
     t.string   "type"
     t.index ["project_id"], name: "index_attachments_on_project_id", using: :btree
+    t.index ["uploader_id"], name: "index_attachments_on_uploader_id", using: :btree
   end
 
   create_table "comments", force: :cascade do |t|
@@ -211,6 +212,7 @@ ActiveRecord::Schema.define(version: 20161229075916) do
   end
 
   add_foreign_key "attachments", "projects"
+  add_foreign_key "attachments", "users", column: "uploader_id"
   add_foreign_key "comments", "users"
   add_foreign_key "contributions", "projects"
   add_foreign_key "contributions", "users"
