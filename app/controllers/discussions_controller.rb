@@ -58,7 +58,7 @@ class DiscussionsController < ApplicationController
   end
 
   def update
-    if @discussion.update(discussion_params.except(:user_id))
+    if @discussion.update(discussion_params.except(:opener_id))
       @discussion.create_activity :update, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
     else
@@ -84,7 +84,7 @@ class DiscussionsController < ApplicationController
   def discussion_params
     dp = params.require(:discussion).permit(:title, :content, :project_id, :private,
                                             user_discussions_attributes: [:id, :user_id, :notify, :_destroy])
-    dp.merge(user_id: current_user.id)
+    dp.merge(opener_id: current_user.id)
 
   end
 

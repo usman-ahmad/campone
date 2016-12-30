@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161230065744) do
+ActiveRecord::Schema.define(version: 20161230091405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,8 @@ ActiveRecord::Schema.define(version: 20161230065744) do
     t.integer  "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.integer  "opener_id"
+    t.index ["opener_id"], name: "index_discussions_on_opener_id", using: :btree
     t.index ["project_id"], name: "index_discussions_on_project_id", using: :btree
   end
 
@@ -218,6 +219,7 @@ ActiveRecord::Schema.define(version: 20161230065744) do
   add_foreign_key "contributions", "users"
   add_foreign_key "contributions", "users", column: "inviter_id"
   add_foreign_key "discussions", "projects"
+  add_foreign_key "discussions", "users", column: "opener_id"
   add_foreign_key "events", "projects"
   add_foreign_key "identities", "users"
   add_foreign_key "integrations", "projects"
