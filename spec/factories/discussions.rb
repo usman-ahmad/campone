@@ -18,6 +18,7 @@ FactoryGirl.define do
   factory :discussion do
     sequence(:title) { |n| titles[(n % 4)] }
     content 'Praesent vel ex bibendum, malesuada purus et, eleifend tortor. Sed ut fringilla tellus. Aenean laoreet ornare eros ut ultrices.'
+    performer { opener }
 
     trait :with_comments do
       transient do

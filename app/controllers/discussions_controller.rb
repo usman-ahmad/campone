@@ -6,7 +6,7 @@ class DiscussionsController < ApplicationController
   before_action :set_discussion, only: [:show, :edit, :update, :destroy]
   before_action :build_user_discussions, only: [:edit]
 
-  before_action :set_performer, only: [:create, :update, :destroy]
+  before_action :set_performer, only: [:update, :destroy]
 
   def index
     @discussions = @project.discussions
@@ -36,8 +36,9 @@ class DiscussionsController < ApplicationController
   end
 
   def create
-    @discussion = @project.discussions.new(discussion_params)
+    @discussion = @project.discussions.new(discussion_params.merge(performer: current_user))
     @discussion.attachments_array = params[:attachments_array]
+    @discussion.performer = current_user
 
     # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
     if params[:add_files_to_project]
@@ -60,7 +61,7 @@ class DiscussionsController < ApplicationController
   end
 
   def update
-    if @discussion.update(discussion_params.except(:opener_id))
+    if @discussion.update(discussion_params)
       @discussion.create_activity :update, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
     else
@@ -84,10 +85,8 @@ class DiscussionsController < ApplicationController
   end
 
   def discussion_params
-    dp = params.require(:discussion).permit(:title, :content, :project_id, :private,
-                                            user_discussions_attributes: [:id, :user_id, :notify, :_destroy])
-    dp.merge(opener_id: current_user.id)
-
+    params.require(:discussion).permit(:title, :content, :project_id, :private,
+                                       user_discussions_attributes: [:id, :user_id, :notify, :_destroy])
   end
 
   def build_user_discussions

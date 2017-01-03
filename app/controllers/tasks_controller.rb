@@ -36,7 +36,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = @project.tasks.new(task_params)
+    @task = @project.tasks.new(task_params.merge(performer: current_user))
     # GS[2015/12/22] - TODO Refactor this, attr_accessor should do the trick
     @task.attachments_array = params[:attachments_array]
 
@@ -61,7 +61,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params.except(:reporter_id))
+    if @task.update(task_params)
       @task.create_activity :update, owner: current_user
       redirect_to [@project, @task], notice: 'Task was successfully updated.'
     else
@@ -120,8 +120,8 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    tp = params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id)
-    tp.merge(reporter_id: current_user.id)
+    params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id)
+    # .merge(reporter_id: current_user.id) # use performer in TaskController#set_performer ... Task#set_reporter
   end
 
   def set_performer

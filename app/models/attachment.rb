@@ -40,6 +40,8 @@ class Attachment < ApplicationRecord
   belongs_to :attachable, polymorphic: true
   belongs_to :uploader, class_name: User, foreign_key: :uploader_id
 
+  before_create :set_uploader
+
   ATTACHABLE_TYPES = %w(Task Discussion Comment)
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe
@@ -93,5 +95,11 @@ class Attachment < ApplicationRecord
     end
 
     self.document_file_name = new_file_name
+  end
+
+  private
+
+  def set_uploader
+    self.uploader = performer
   end
 end

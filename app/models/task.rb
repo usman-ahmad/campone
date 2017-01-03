@@ -33,7 +33,11 @@ class Task < ApplicationRecord
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 
+  # should't we add validation for presence of reporter
+  # validates :reporter, presence: true
+
   before_create :set_position
+  before_create :set_reporter
   after_create :increment_ticket_counter
 
   PRIORITIES = {
@@ -230,19 +234,20 @@ class Task < ApplicationRecord
     }
     options = default_options.merge(options)
 
-    reporter = project.members.include?(self.reporter) ? self.reporter : mover
+    performer = project.members.include?(self.reporter) ? self.reporter : mover
     owner = project.members.include?(self.owner) ? self.owner : nil
 
-    attrs = self.attributes.slice('title', 'description', 'priority', 'progress', 'due_at').merge!(reporter: reporter, owner: owner)
+    attrs = self.attributes.slice('title', 'description', 'priority', 'progress', 'due_at').merge!(performer: performer, owner: owner)
     task = project.tasks.create(attrs)
 
     if options[:with_comments]
       self.comments.each do |c|
         if project.members.include?(c.user)
+          c.performer = c.user
           task.comments << c.dup
         else
           # We may prefer to use dummy user names (User 1) instead of actual user name
-          task.comments << Comment.new(user: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
+          task.comments << Comment.new(performer: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
         end
       end
     end
@@ -264,6 +269,10 @@ class Task < ApplicationRecord
 
   def set_position
     self.position = self.project.tasks.count + 1
+  end
+
+  def set_reporter
+    self.reporter = performer
   end
 
   def current_ticket_id

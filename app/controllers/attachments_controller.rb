@@ -7,7 +7,7 @@ class AttachmentsController < ApplicationController
   before_action :set_project
   before_action :set_attachment, only: [:edit, :update, :download]
 
-  before_action :set_performer, only: [:create, :update, :destroy]
+  before_action :set_performer, only: [:update, :destroy]
 
   def index
     @attachments = @project.attachments
@@ -26,7 +26,7 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    @attachment = @project.attachments.new(attachment_params.except(:attachment_name))
+    @attachment = @project.attachments.new(attachment_params.merge(performer: current_user).except(:attachment_name))
 
     if @attachment.save
       flash[:notice]= 'Attachment was successfully created.'
@@ -80,7 +80,7 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(:title, :description, :document, :attachment_name).merge(uploader: current_user)
+    params.require(:attachment).permit(:title, :description, :document, :attachment_name)
   end
 
   def set_performer

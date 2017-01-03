@@ -12,12 +12,12 @@ class ContributionsController < ApplicationController
   end
 
   def new
-    @contribution  = Contribution.new
+    @contribution = Contribution.new
     @contributions = @project.contributions
   end
 
   def create
-    contribution =  @project.contributions.create(contribution_params)
+    contribution = @project.contributions.create(contribution_params.merge(inviter: current_user))
     if contribution.persisted?
       # send invitation email if user exist in system (prevent duplicate email if already sent by devise invitable)
       UserMailer.contribution_mail(contribution).deliver if contribution.user.accepted_or_not_invited?
@@ -76,6 +76,6 @@ class ContributionsController < ApplicationController
   end
 
   def contribution_params
-    params.require(:contribution).permit(:email,:role).merge(inviter: current_user)
+    params.require(:contribution).permit(:email, :role)
   end
 end

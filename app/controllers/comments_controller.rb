@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   before_action :load_commentable
   before_action :comment, only: [:edit, :update, :destroy]
 
-  before_action :set_performer, only: [:create, :update, :destroy]
+  before_action :set_performer, only: [:update, :destroy]
 
   # Make sure a user is not able comment on other unauthorized projects
   load_and_authorize_resource :project
@@ -22,6 +22,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.new(comments_params)
     @comment.attachments_array=params[:attachments_array]
+    @comment.performer = current_user
 
     # UA[2016/12/06] - MOVE THESE MODEL RELATED LOGIC TO AR_CALLBACKS
     if params[:add_files_to_project]
@@ -53,7 +54,7 @@ class CommentsController < ApplicationController
 
   private
   def comments_params
-    params.require(:comment).permit(:content).merge(user: current_user)
+    params.require(:comment).permit(:content)
   end
 
   # def load_commentable

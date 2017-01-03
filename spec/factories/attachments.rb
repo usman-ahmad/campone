@@ -20,6 +20,7 @@
 
 FactoryGirl.define do
   factory :attachment do
+    performer { uploader }
     trait :with_attachment_data do
       document_file_name 'no_file_here.png'
       document_content_type 'images/png'

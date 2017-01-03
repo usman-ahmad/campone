@@ -15,6 +15,7 @@ FactoryGirl.define do
   comments = ['lorem ipsum dolor sit amet', 'lorem ipsum dolor sit amet, consectetur adipiscing elit', 'Excepteur sint occaecat cupidatat non proident']
 
   factory :comment do
+    performer { user }
     sequence(:content) { |n| comments[(n % 3)] }
 
     trait :with_attachments do

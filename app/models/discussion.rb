@@ -31,6 +31,8 @@ class Discussion < ApplicationRecord
 
   attr_accessor :performer
 
+  before_create :set_opener
+
   def attachments_array=(array)
     return unless array.present?
 
@@ -50,4 +52,9 @@ class Discussion < ApplicationRecord
     private ? users : (project.members - [opener])
   end
 
+  private
+
+  def set_opener
+    self.opener = performer
+  end
 end

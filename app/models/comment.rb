@@ -23,6 +23,7 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
+  before_create :set_user
   attr_accessor :performer
 
   def attachments_array=(array)
@@ -36,5 +37,11 @@ class Comment < ApplicationRecord
 
   def project
     self.commentable.project # self.attachable >>> [task discussion attachment]
+  end
+
+  private
+
+  def set_user
+    self.user = performer
   end
 end
