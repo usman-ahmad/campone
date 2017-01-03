@@ -41,11 +41,11 @@ class Attachment < ApplicationRecord
   belongs_to :uploader, class_name: User, foreign_key: :uploader_id
 
   ATTACHABLE_TYPES = %w(Task Discussion Comment)
-
-  attr_accessor :attachment_name
-
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe
+
+  attr_accessor :attachment_name
+  attr_accessor :performer
 
   # validates_inclusion_of :attachable_type, in: ATTACHABLE_TYPES
   validates_inclusion_of :attachable_type, in: Proc.new { |a| a.class::ATTACHABLE_TYPES }

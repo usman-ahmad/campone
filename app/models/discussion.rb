@@ -29,6 +29,8 @@ class Discussion < ApplicationRecord
 
   accepts_nested_attributes_for :user_discussions, :allow_destroy => true
 
+  attr_accessor :performer
+
   def attachments_array=(array)
     return unless array.present?
 

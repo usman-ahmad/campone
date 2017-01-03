@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
   before_action :load_commentable
   before_action :comment, only: [:edit, :update, :destroy]
 
+  before_action :set_performer, only: [:create, :update, :destroy]
+
   # Make sure a user is not able comment on other unauthorized projects
   load_and_authorize_resource :project
   load_and_authorize_resource :task, :through => :project
@@ -70,5 +72,9 @@ class CommentsController < ApplicationController
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_performer
+    @comment.performer = current_user
   end
 end

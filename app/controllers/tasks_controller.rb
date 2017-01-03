@@ -5,6 +5,9 @@ class TasksController < ApplicationController
   before_action :set_project
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
+  # UA[2017/01/10] - WHAT ABOUT SORT AND IMPORT
+  before_action :set_performer, only: [:create, :update, :destroy, :set_state, :assigned_to_me]
+
   def index
     cookies[:tasks_visibility] = params[:visibility] || cookies[:tasks_visibility]
     @visibility = cookies[:tasks_visibility] || 'all'
@@ -119,5 +122,9 @@ class TasksController < ApplicationController
   def task_params
     tp = params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id)
     tp.merge(reporter_id: current_user.id)
+  end
+
+  def set_performer
+    @task.performer = current_user
   end
 end

@@ -6,6 +6,8 @@ class DiscussionsController < ApplicationController
   before_action :set_discussion, only: [:show, :edit, :update, :destroy]
   before_action :build_user_discussions, only: [:edit]
 
+  before_action :set_performer, only: [:create, :update, :destroy]
+
   def index
     @discussions = @project.discussions
 
@@ -95,5 +97,9 @@ class DiscussionsController < ApplicationController
     user_ids.each do |user_id|
       @discussion.user_discussions.build(user_id: user_id, notify: true)
     end
+  end
+
+  def set_performer
+    @discussion.performer = current_user
   end
 end

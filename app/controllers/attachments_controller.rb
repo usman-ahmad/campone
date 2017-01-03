@@ -7,6 +7,8 @@ class AttachmentsController < ApplicationController
   before_action :set_project
   before_action :set_attachment, only: [:edit, :update, :download]
 
+  before_action :set_performer, only: [:create, :update, :destroy]
+
   def index
     @attachments = @project.attachments
     @attachment = ProjectAttachment.new(project: @project)
@@ -79,5 +81,9 @@ class AttachmentsController < ApplicationController
 
   def attachment_params
     params.require(:attachment).permit(:title, :description, :document, :attachment_name).merge(uploader: current_user)
+  end
+
+  def set_performer
+    @attachment.performer = current_user
   end
 end

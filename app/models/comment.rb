@@ -23,6 +23,8 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
+  attr_accessor :performer
+
   def attachments_array=(array)
     return unless array.present?
 

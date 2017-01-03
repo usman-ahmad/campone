@@ -55,6 +55,8 @@ class Task < ApplicationRecord
       CLOSED: 'accepted'
   }
 
+  attr_accessor :performer
+
   STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
            to: :current_state
