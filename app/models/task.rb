@@ -19,6 +19,9 @@
 
 class Task < ApplicationRecord
   # include Attachable
+  include Notifiable
+  act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title
+
   include PublicActivity::Common
 
   extend FriendlyId
@@ -59,6 +62,7 @@ class Task < ApplicationRecord
       CLOSED: 'accepted'
   }
 
+  # UA[2017/01/10] - Performer can be refactored in notifiable module
   attr_accessor :performer
 
   STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
@@ -71,6 +75,10 @@ class Task < ApplicationRecord
 
   validates_inclusion_of :state, in: STATES
   validates_inclusion_of :priority, in: PRIORITIES.values
+
+  def notification_receivers
+    project.members - [performer]
+  end
 
   # COMPLETED_STATES = %w[finished delivered accepted]
   # NOT_COMPLETED_STATES = %w[unscheduled unstarted started paused rejected]

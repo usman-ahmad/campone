@@ -11,13 +11,17 @@
 #  is_deleted  :boolean
 #
 
+# TODO: Rename to UserNotification
 class Notification < ApplicationRecord
   belongs_to :activity, :class_name => "PublicActivity::Activity"
   belongs_to :user
 
   default_scope { where(is_deleted: [false, nil]) }
 
-  enum status: [:unread, :read]
+  validates :receiver, presence: true
+
+  # To create shortcut methods like notification.performer_name instead of notification.content['performer_name']
+  store_accessor :content, [:performer_name, :text, :action, :resource_id, :resource_type, :resource_fid, :resource_link, :project_fid]
 
   before_create { self.status = :unread }
 

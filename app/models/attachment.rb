@@ -102,4 +102,8 @@ class Attachment < ApplicationRecord
   def set_uploader
     self.uploader = performer
   end
+
+  def notification_receivers
+    project.members - [performer]
+  end
 end

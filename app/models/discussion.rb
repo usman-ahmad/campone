@@ -14,7 +14,11 @@
 
 class Discussion < ApplicationRecord
   # include Attachable
+  include Notifiable
   include PublicActivity::Common
+
+  include Notifiable
+  act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title
 
   belongs_to :project
   belongs_to :opener, class_name: User, foreign_key: :opener_id
@@ -48,13 +52,25 @@ class Discussion < ApplicationRecord
     return last_disc_activity
   end
 
+  def notification_performer
+    opener
+  end
+
+
+  # TODO: Add specs
+  # other_contributors; except opener (who started this discussion)
   def other_contributors
-    private ? users : (project.members - [opener])
+    (private ? users : project.members) - [opener]
   end
 
   private
 
   def set_opener
     self.opener = performer
+  end
+
+  def notification_receivers
+    # TODO: Fix current user
+    (private ? users : project.members) - [performer]
   end
 end
