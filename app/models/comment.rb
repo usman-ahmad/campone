@@ -12,7 +12,7 @@
 #
 
 class Comment < ApplicationRecord
-  include PublicActivity::Common
+  # include PublicActivity::Common
 
   include Notifiable
   act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :content

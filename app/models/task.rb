@@ -22,7 +22,7 @@ class Task < ApplicationRecord
   include Notifiable
   act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title
 
-  include PublicActivity::Common
+  # include PublicActivity::Common
 
   extend FriendlyId
   friendly_id :current_ticket_id, use: [:slugged, :finders], slug_column: :ticket_id

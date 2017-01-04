@@ -15,7 +15,7 @@
 class Discussion < ApplicationRecord
   # include Attachable
   include Notifiable
-  include PublicActivity::Common
+  # include PublicActivity::Common
 
   include Notifiable
   act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title
@@ -46,10 +46,14 @@ class Discussion < ApplicationRecord
   end
 
   def last_activity
-    last_comment_activity = PublicActivity::Activity.where(trackable_id: comments.last.id, trackable_type: "Comment").last if comments.last.present?
-    last_disc_activity = activities.last if activities.last.present?
-    return last_comment_activity = last_comment_activity.created_at > last_disc_activity.created_at ? last_comment_activity : last_disc_activity unless !(last_comment_activity.present? && last_disc_activity.present?)
-    return last_disc_activity
+    # last_comment_activity = PublicActivity::Activity.where(trackable_id: comments.last.id, trackable_type: "Comment").last if comments.last.present?
+    # last_disc_activity = activities.last if activities.last.present?
+    # return last_comment_activity = last_comment_activity.created_at > last_disc_activity.created_at ? last_comment_activity : last_disc_activity unless !(last_comment_activity.present? && last_disc_activity.present?)
+    # return last_disc_activity
+
+    # TODO: Fix, for now returning last activity on discussion, we should also check comments
+    # what about, if we touch commentable while creating comment
+    notifications.order(created_at: :asc).last
   end
 
   def notification_performer

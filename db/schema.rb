@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161230091405) do
+ActiveRecord::Schema.define(version: 20161230151243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activities", force: :cascade do |t|
+  create_table "activities_backup", force: :cascade do |t|
     t.integer  "trackable_id"
     t.string   "trackable_type"
     t.integer  "owner_id"
@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 20161230091405) do
     t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
-    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+    t.index ["owner_id", "owner_type"], name: "index_activities_backup_on_owner_id_and_owner_type", using: :btree
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_backup_on_recipient_id_and_recipient_type", using: :btree
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_backup_on_trackable_id_and_trackable_type", using: :btree
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -116,15 +116,15 @@ ActiveRecord::Schema.define(version: 20161230091405) do
     t.index ["project_id"], name: "index_integrations_on_project_id", using: :btree
   end
 
-  create_table "notifications", force: :cascade do |t|
+  create_table "notifications_backup", force: :cascade do |t|
     t.integer  "activity_id"
     t.integer  "user_id"
     t.integer  "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.boolean  "is_deleted"
-    t.index ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
-    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
+    t.index ["activity_id"], name: "index_notifications_backup_on_activity_id", using: :btree
+    t.index ["user_id"], name: "index_notifications_backup_on_user_id", using: :btree
   end
 
   create_table "payloads", force: :cascade do |t|
@@ -223,8 +223,8 @@ ActiveRecord::Schema.define(version: 20161230091405) do
   add_foreign_key "events", "projects"
   add_foreign_key "identities", "users"
   add_foreign_key "integrations", "projects"
-  add_foreign_key "notifications", "activities"
-  add_foreign_key "notifications", "users"
+  add_foreign_key "notifications_backup", "activities_backup", column: "activity_id"
+  add_foreign_key "notifications_backup", "users"
   add_foreign_key "payloads", "integrations"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users", column: "reporter_id"

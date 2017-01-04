@@ -1,3 +1,4 @@
+# TODO: Delete this class
 PublicActivity::Activity.class_eval do
   has_many :notifications
   has_many :users, through: :notifications
@@ -16,7 +17,7 @@ PublicActivity::Activity.class_eval do
 
     users_to_notify.each do |user|
       notice = Notification.create!(activity_id: self.id, user_id: user)
-      send_notifications_to_user( notice,user)
+      send_notifications_to_user(notice, user)
     end
   end
 
@@ -134,7 +135,7 @@ PublicActivity::Activity.class_eval do
   def create_message(notice)
     message = notice.id.to_s + '|' + notice.created_at.to_s + '|'+notice.activity.owner.name.to_s
     if notice.comment?
-     message += ' Commented on ' + notice.task_or_discussion.title
+      message += ' Commented on ' + notice.task_or_discussion.title
     else
       if notice.activity.key.include? "create"
         message += ' created '

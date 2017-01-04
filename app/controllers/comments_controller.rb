@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
     end
 
     if @comment.save
-      @comment.create_activity :create, owner: current_user
+      # @comment.create_activity :create, owner: current_user
       redirect_to [@project, @commentable], notice: 'Comment created.'
     else
       redirect_to [@project, @commentable], notice: 'Please write comment'

@@ -47,7 +47,7 @@ class DiscussionsController < ApplicationController
 
     respond_to do |format|
       if @discussion.save
-        @discussion.create_activity :create, owner: current_user
+        # @discussion.create_activity :create, owner: current_user
         format.html { redirect_to [@project, :discussions], notice: 'Discussion was successfully created.' }
         format.json { render json: @discussion, status: :created }
       else
@@ -62,7 +62,7 @@ class DiscussionsController < ApplicationController
 
   def update
     if @discussion.update(discussion_params)
-      @discussion.create_activity :update, owner: current_user
+      # @discussion.create_activity :update, owner: current_user
       redirect_to [@project, @discussion], notice: 'Discussion was successfully updated.'
     else
       render :edit

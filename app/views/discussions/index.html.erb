@@ -25,14 +25,20 @@
         <tr class="anchor-container" data-href="<%= project_discussion_path(@project, discussion) %>">
           <td>
             <a href="<%= project_discussion_path(@project, discussion) %>" class="list-anchor"><%= discussion.title %></a>
-            <p>Opened By: <%= discussion.opener.name + '. on ' + discussion.created_at.localtime.strftime("%B %d, %Y") if discussion.opener.present? %> </p>
+
+            <p>
+              Opened By:
+              <%= discussion.opener.name + '. on ' + discussion.created_at.localtime.strftime("%B %d, %Y") if discussion.opener.present? %>
+            </p>
           </td>
           <td>
             <%= discussion.opener.name %> with <a href="#" class="contributors-tooltip">Others</a>
           </td>
           <td>
-            <span><%= discussion.last_activity.created_at.localtime.strftime("%B %d, %Y -  %l : %M %p") if discussion.last_activity.present? %></span><br>
-            <span> by <%= discussion.last_activity.owner.name if discussion.last_activity.present? %> </span>
+            <% if discussion.last_activity.present? %>
+                <span><%= discussion.last_activity.created_at.localtime.strftime("%B %d, %Y -  %l : %M %p") %></span><br>
+                <span> by <%= discussion.last_activity.performer_name %> </span>
+            <% end %>
           </td>
           <td><%= discussion.comments.count %></td>
         </tr>

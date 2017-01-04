@@ -1,13 +1,13 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:update, :destroy]
-
+  # TODO: FIX THIS FILE
   def index
     @notifications = Notification.where(user_id: current_user).order("created_at desc")
     @page = params[:page].try(:to_i) || 1
 
     respond_to do |format|
-      format.html { @notifications = @notifications.group_by { |n| n.task_or_discussion }}
-      format.js   { @notifications = @notifications.paginate(:page => @page, :per_page => 10) }
+      format.html { @notifications = @notifications.group_by { |n| n.task_or_discussion } }
+      format.js { @notifications = @notifications.paginate(:page => @page, :per_page => 10) }
     end
   end
 
