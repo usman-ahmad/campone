@@ -2,21 +2,26 @@
 #
 # Table name: notifications
 #
-#  id          :integer          not null, primary key
-#  activity_id :integer
-#  user_id     :integer
-#  status      :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  is_deleted  :boolean
+#  id              :integer          not null, primary key
+#  receiver_id     :integer
+#  performer_id    :integer
+#  content         :json
+#  notifiable_type :string
+#  notifiable_id   :integer
+#  read            :boolean          default(FALSE)
+#  hidden          :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 # TODO: Rename to UserNotification
 class Notification < ApplicationRecord
-  belongs_to :activity, :class_name => "PublicActivity::Activity"
-  belongs_to :user
+  belongs_to :receiver, class_name: 'User'
+  belongs_to :performer, class_name: 'User' # We can use it while updating i-e if user changes his name
+  belongs_to :notifiable, polymorphic: true
 
-  default_scope { where(is_deleted: [false, nil]) }
+
+  default_scope { where(hidden: [false, nil]) }
 
   validates :receiver, presence: true
 

@@ -1,10 +1,6 @@
 # Usage, in your model include Notifiable module like `include Notifiable`
-# Call act_as_notifiable method.
-# You class must provide following methods
-# notification_performer -> Must return Single Object ex. User.first
-# notification_receivers -> Returning Array of Objects ex [User.first(2)]
-# notification_content -> Should return content to be displayed. ex. 'you text here.'
-# You can override these methods by passing parameters to act_as_notifiable, see method
+# Call act_as_notifiable method. See act_as_notifiable for more details
+# example: `act_as_notifiable performer: Proc.new{Current.user}, receivers: :notification_receivers, content_method: :title`
 
 module Notifiable
   extend ActiveSupport::Concern
@@ -20,7 +16,10 @@ module Notifiable
     has_many :notifications, as: :notifiable, dependent: :nullify
 
     # allowed parameters are performer, receivers and content_method
-    # ex: `act_as_notifiable performer: :custom_reporter, receivers: :custom_receivers, content_method: :title`
+    # Your class must provide following methods
+    # performer -> A method that must return Single Object ex. User.first
+    # receivers -> A method returning Array of Objects like [User1, User2]
+    # content_method -> A method returning content to be displayed. ex. 'your text here.'
     # TODO: Provide support for Proc and Lambda
     def self.act_as_notifiable(options={})
       self.notifiable_config = {
@@ -48,9 +47,41 @@ module Notifiable
       end
     end
 
-    puts "NOTIFICATION: "
-    puts "#{notifiable_config[:performer].try(:name) rescue nil} #{action} #{self.class.name}"
-    puts "Notification_receivers: ", self.send(notifiable_config[:receivers]).compact.map(&:id).inspect rescue nil
+    performer = self.send(notifiable_config[:performer])
+    receivers = self.send(notifiable_config[:receivers])
+
+    content = {
+        resource_id: self.id,
+        resource_type: self.class.name,
+        resource_fid: self.try(:friendly_id), # friendly_id not implemented for discussion, we can show project_fid
+        project_fid: self.project.friendly_id,
+        resource_link: notifiable_link, # we can make url at run time, but for performance creating it here.
+        performer_name: performer.try(:name),
+        performer_id: performer.try(:id),
+        action: action,
+        text: self.send(notifiable_config[:content_method])
+    }
+
+    # TODO: Decrease number of queries and write specs for notifications
+    receivers.each do |receiver|
+      Notification.create(receiver: receiver, performer: performer, notifiable: self, content: content)
+    end
+  end
+
+
+  def notifiable_link
+    resource =
+        case self.class.name
+          when 'Task', 'Discussion'
+            self
+          when "Comment"
+            self.commentable
+        end
+
+    pluralize_resource = resource.class.name.downcase.pluralize
+    resource_id = resource.try(:friendly_id) || resource.id
+
+    "/projects/#{project.friendly_id}/#{pluralize_resource}/#{resource_id}"
   end
 
   def notifiable_config

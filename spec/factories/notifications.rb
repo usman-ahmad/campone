@@ -2,13 +2,16 @@
 #
 # Table name: notifications
 #
-#  id          :integer          not null, primary key
-#  activity_id :integer
-#  user_id     :integer
-#  status      :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  is_deleted  :boolean
+#  id              :integer          not null, primary key
+#  receiver_id     :integer
+#  performer_id    :integer
+#  content         :json
+#  notifiable_type :string
+#  notifiable_id   :integer
+#  read            :boolean          default(FALSE)
+#  hidden          :boolean          default(FALSE)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 FactoryGirl.define do

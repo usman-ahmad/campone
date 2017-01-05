@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161230151243) do
+ActiveRecord::Schema.define(version: 20170102103611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,21 @@ ActiveRecord::Schema.define(version: 20161230151243) do
     t.string   "token"
     t.string   "secret"
     t.index ["project_id"], name: "index_integrations_on_project_id", using: :btree
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "receiver_id"
+    t.integer  "performer_id"
+    t.json     "content",         default: {}
+    t.string   "notifiable_type"
+    t.integer  "notifiable_id"
+    t.boolean  "read",            default: false
+    t.boolean  "hidden",          default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id", using: :btree
+    t.index ["performer_id"], name: "index_notifications_on_performer_id", using: :btree
+    t.index ["receiver_id"], name: "index_notifications_on_receiver_id", using: :btree
   end
 
   create_table "notifications_backup", force: :cascade do |t|
@@ -223,6 +238,8 @@ ActiveRecord::Schema.define(version: 20161230151243) do
   add_foreign_key "events", "projects"
   add_foreign_key "identities", "users"
   add_foreign_key "integrations", "projects"
+  add_foreign_key "notifications", "users", column: "performer_id"
+  add_foreign_key "notifications", "users", column: "receiver_id"
   add_foreign_key "notifications_backup", "activities_backup", column: "activity_id"
   add_foreign_key "notifications_backup", "users"
   add_foreign_key "payloads", "integrations"

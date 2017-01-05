@@ -61,7 +61,8 @@ class User < ApplicationRecord
   # has_many :attachments # all attachments either on project, task, discussion or comment
   # has_many :comments
 
-  has_many :notifications
+  # has_many :sent_notifications, foreign_key: :actor_id
+  has_many :notifications, foreign_key: :receiver_id # received notification
   has_many :identities, dependent: :destroy
 
   attr_accessor :existing_email, :existing_password
