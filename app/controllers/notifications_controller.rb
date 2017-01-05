@@ -1,8 +1,8 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:update, :destroy]
-  # TODO: FIX THIS FILE
+
   def index
-    @notifications = Notification.where(user_id: current_user).order("created_at desc")
+    @notifications = Notification.where(receiver: current_user).order("created_at desc")
     @page = params[:page].try(:to_i) || 1
 
     respond_to do |format|
@@ -11,10 +11,15 @@ class NotificationsController < ApplicationController
     end
   end
 
+  # this is used for marking a notifications as read
   def update
     respond_to do |format|
       format.json {
-        if @notification.update_attributes(status: 'read')
+
+        # on successful update we decrease notification count from views using js
+        # making sure that notification is unread before updating it
+        # An other option is that we can calculate unread count on server side and sent it back with with response
+        if !@notification.read? && @notification.update_attributes(read: true)
           render json: {}, status: :ok
         else
           render json: @notification.errors, status: :unprocessable_entity
@@ -26,13 +31,13 @@ class NotificationsController < ApplicationController
   def mark_all_read
     respond_to do |format|
       format.js {
-        current_user.notifications.update_all(status: 'read')
+        current_user.notifications.update_all(read: true)
       }
     end
   end
 
   def destroy
-    if @notification.update_attributes(is_deleted: true)
+    if @notification.update_attributes(hidden: true)
       render json: {}, status: :ok
     else
       render json: {status: 'Not Deleted'}, status: :unprocessable_entity

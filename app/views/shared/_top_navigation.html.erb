@@ -31,11 +31,10 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <% if current_user %>
-
           <ul class="nav navbar-nav navbar-right">
             <li class="badge-list">
               <a class="dashboard-nav" id="cd-cart-trigger" title="Notification">
-                <% notice_count = true || current_user.notifications.where(:status => 'unread').count %>
+                <% notice_count = current_user.notifications.unread.count %>
                 <i class="fa fa-bell-o"></i>
             <span id="badge" class="badge notification-badge"
                   <% if notice_count==0 %> <%= 'style=display:none' %><% end %> >
@@ -54,7 +53,6 @@
             </li>
           </ul>
       <% end %>
-
     </div>
   </div>
 </nav>

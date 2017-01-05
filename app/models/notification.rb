@@ -28,15 +28,33 @@ class Notification < ApplicationRecord
   # To create shortcut methods like notification.performer_name instead of notification.content['performer_name']
   store_accessor :content, [:performer_name, :text, :action, :resource_id, :resource_type, :resource_fid, :resource_link, :project_fid]
 
-  before_create { self.status = :unread }
+  default_scope { where(hidden: [false, nil]) }
 
-  delegate :trackable, :to => :activity
+  scope :unread, -> { where(read: false) }
+
+  # utility method that returns action like 'Created Task'
+  # For now combining action with type, we can customize it i-e instead of 'Created Comment' return 'commented'
+  def resource_action
+    [action, resource_type].join(' ')
+  end
 
   def comment?
-    self.activity.trackable_type == 'Comment'
+    self.notifiable_type == 'Comment'
   end
 
+  # TODO: Remove dependency, for now using this methods in NotificationsController#index
   def task_or_discussion
-    comment? ? trackable.commentable : trackable
+    comment? ? notifiable.commentable : notifiable
   end
+
+  def send_faye_notifications
+    message = [performer_name, resource_action, text].join(' ')
+
+    begin
+      PrivatePub.publish_to('/messages/private/user'+ receiver.to_s, message: message)
+    rescue => ex
+      logger.error ex.message
+    end
+  end
+
 end
