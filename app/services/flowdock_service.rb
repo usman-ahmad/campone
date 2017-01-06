@@ -8,18 +8,19 @@ class FlowdockService < SenderService
     {
         "event": "activity",
         "author": {
-            "name": "#{activity.owner.email}",
+            "name": "#{activity[:performer_name]}",
             # "avatar": "https://avatars.githubusercontent.com/u/3017123?v=3"
         },
-        "title": "#{activity.activty_type}#{':' + activity.trackable.content if activity.trackable_type == 'Comment'}",
-        "external_thread_id": "#{activity.get_trackable.id}", #it should be trackable id
+        "title": activity[:text],
+        "external_thread_id": "#{activity[:resource_id]}", #it should be trackable id
         "thread": {
-            "title": "Project: #{activity.project.title} > #{activity.get_trackable.title}",
+            "title": "Project: #{activity[:project_title]} > #{activity[:text]}",
             # "body": "If there is any discription it will go here",
-            "external_url": "#{activity.get_trackable_url}",
+            "external_url": "#{activity[:absolute_url]}",
             "status": {
                 "color": "green",
-                "value": "#{activity.get_trackable.state}"
+                # TODO: Set Correct value
+                "value": "OK"
             }
         }
     }

@@ -442,4 +442,78 @@ RSpec.describe Task, type: :model do
     expect(create(:task, priority: 'High', project: project, state: 'unstarted', reporter: project.owner).priority).to eq('High')
   end
 
+  describe 'notifications' do
+    let(:owner) { create(:user, name: 'Owner name') }
+    let(:other_user) { create(:user) }
+
+    # Also creating one member user. Notification should be created for all members except performer.
+    let(:project) { create(:project, owner: owner, title: 'T E S Ting', member_users: [other_user]) }
+
+    it { is_expected.to be_a Notifiable }
+    it { is_expected.to respond_to :create_user_notifications }
+    # it { is_expected.to callback(:create_user_notifications).after(:commit) }
+
+    it 'implements act_as_notifiable' do
+      expect(Task).to respond_to(:act_as_notifiable).with(1).argument
+      # expect(Task).to receive(:act_as_notifiable).with(hash_including(performer: anything, receivers: :notification_receivers, content_method: :title))
+    end
+
+
+    context 'test' do
+      before do
+        # we can stub performer
+        # allow(task).to receive(:performer).and_return(owner)
+        # allow_any_instance_of(Task).to receive(:performer).and_return(owner)
+        task.performer = owner
+      end
+    end
+
+    context 'on create' do
+      let(:task) { build(:task, project: project, title: 'Task for testing notifications', id: 1001, performer: owner) }
+      let(:notification) { other_user.notifications.last }
+
+      it 'creates notifications' do
+        expect{task.save}.to change(Notification, :count).by(1)
+
+        expect(notification.receiver).to eq other_user
+        expect(notification.performer_name).to eq 'Owner name'
+        expect(notification.notifiable).to eq task
+
+        expect(notification.text).to eq 'Task for testing notifications'
+        expect(notification.action).to eq 'Created'
+        expect(notification.resource_id).to eq 1001
+        expect(notification.resource_type).to eq 'Task'
+        expect(notification.resource_fid).to eq 'test-1'
+        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.project_fid).to eq 'test'
+      end
+    end
+
+
+    context 'on update' do
+      let!(:task) { create(:task, project: project, performer: owner, title: 'Task for testing notifications') }
+      let(:notification) { other_user.notifications.last }
+
+      it 'creates notifications' do
+        expect{task.update_attributes(title: 'My updated task')}.to change(Notification, :count).by(1)
+
+        expect(notification.action).to eq 'Updated'
+        expect(notification.text).to eq 'My updated task'
+      end
+    end
+
+    context 'on destroy' do
+      let!(:task) { create(:task, project: project, performer: owner, title: 'Task for testing notifications') }
+      let(:notification) { other_user.notifications.last }
+
+      it 'creates notifications' do
+        expect{task.destroy}.to change(Notification, :count).by(1)
+        expect(notification.notifiable).to eq nil # as notifiable is deleted
+        expect(notification.action).to eq 'Deleted'
+        expect(notification.text).to eq 'Task for testing notifications'
+      end
+    end
+
+  end
+
 end

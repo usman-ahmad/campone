@@ -1,7 +1,7 @@
 class SenderService
-  def initialize(uri,params)
-    @uri     = uri
-    @params  = params
+  def initialize(uri, params)
+    @uri = uri
+    @params = params
   end
 
   def deliver
@@ -14,7 +14,22 @@ class SenderService
       response = http.request(request)
       response.body
     rescue => e
-      Rails.logger.error("SlakcService: Error when sending: #{e.message}")
+      Rails.logger.error("Sender Service: Error when sending on #{@uri}: #{e.message}")
+    end
+  end
+
+  def build(integration, activity_data)
+    case integration.name
+      when 'slack'
+        SlackService.new(integration.url, activity_data)
+      when 'hipchat'
+        HipchatService.new(integration.url, activity_data)
+      when 'flowdock'
+        FlowdockService.new(integration.url, activity_data)
+      when 'twitter'
+        TwitterService.new(integration.url, activity_data)
+      else
+        raise 'NOT Sender Service'
     end
   end
 end

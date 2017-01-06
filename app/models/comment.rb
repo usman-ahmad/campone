@@ -15,7 +15,13 @@ class Comment < ApplicationRecord
   # include PublicActivity::Common
 
   include Notifiable
-  act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :content
+  # TODO: VIP Fix. Commentable has many comments, we are using dependent destroy, commentable is deleted first, then comments
+  # While deleting comments we have no reference to commentable, hence notification system is broken
+  # Do not notify if commentable is deleted.
+  act_as_notifiable performer: :performer,
+                    receivers: :notification_receivers,
+                    content_method: :content,
+                    notifiable_integrations: Proc.new { |comment| comment.project.integrations.notifiable if comment.commentable.present? }
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true
@@ -53,6 +59,7 @@ class Comment < ApplicationRecord
   end
 
   def notification_receivers
-    commentable.notification_receivers - [performer]
+    # if commentable is deleted then do not notify
+    commentable.send(:notification_receivers) - [performer] if commentable
   end
 end

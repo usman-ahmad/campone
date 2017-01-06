@@ -20,7 +20,10 @@
 class Task < ApplicationRecord
   # include Attachable
   include Notifiable
-  act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title
+  act_as_notifiable performer: :performer,
+                    receivers: :notification_receivers,
+                    content_method: :title,
+                    notifiable_integrations: Proc.new{|task| task.project.integrations.notifiable}
 
   # include PublicActivity::Common
 

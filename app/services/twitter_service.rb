@@ -19,9 +19,10 @@ class TwitterService
   end
 
   def self.message(activity)
+    # TODO: Apply limit
     "From : CampOne
-     Project : #{activity.project.title}
-     #{activity.get_trackable.title}
-     #{activity.discription}"
+     Project : #{activity[:project_title]}
+    #{activity[:text]}
+    #{activity[:description]}"
   end
 end

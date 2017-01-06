@@ -18,7 +18,10 @@ class Discussion < ApplicationRecord
   # include PublicActivity::Common
 
   include Notifiable
-  act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title
+  act_as_notifiable performer: :performer,
+                    receivers: :notification_receivers,
+                    content_method: :title,
+                    notifiable_integrations: Proc.new { |discussion| discussion.project.integrations.notifiable }
 
   belongs_to :project
   belongs_to :opener, class_name: User, foreign_key: :opener_id

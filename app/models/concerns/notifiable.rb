@@ -12,7 +12,7 @@ module Notifiable
 
   included do
     extend(ClassMethods)
-    after_commit :create_user_notifications
+    after_commit :create_user_notifications, :broadcast_integrations
     has_many :notifications, as: :notifiable, dependent: :nullify
 
     # allowed parameters are performer, receivers and content_method
@@ -25,12 +25,15 @@ module Notifiable
       self.notifiable_config = {
           content_method: options[:content_method],
           receivers: options[:receivers],
-          performer: options[:performer]
+          performer: options[:performer],
+          notifiable_integrations: options[:notifiable_integrations]
       }
     end
   end
 
-  def create_user_notifications
+  def notification_content
+    return if receivers.blank? && notifiable_integrations.blank?
+
     if transaction_include_any_action?([:create])
       action = 'Created'
     elsif transaction_include_any_action?([:destroy])
@@ -47,10 +50,8 @@ module Notifiable
       end
     end
 
-    performer = self.send(notifiable_config[:performer])
-    receivers = self.send(notifiable_config[:receivers])
-
-    content = {
+    # TODO: store this hash into a variable to improve performance
+    {
         resource_id: self.id,
         resource_type: self.class.name,
         resource_fid: self.try(:friendly_id), # friendly_id not implemented for discussion, we can show project_fid
@@ -59,15 +60,25 @@ module Notifiable
         performer_name: performer.try(:name),
         performer_id: performer.try(:id),
         action: action,
-        text: self.send(notifiable_config[:content_method])
+        text: notification_text
     }
+  end
 
+  def create_user_notifications
     # TODO: Decrease number of queries and write specs for notifications
     receivers.each do |receiver|
-      Notification.create(receiver: receiver, performer: performer, notifiable: self, content: content)
+      Notification.create(receiver: receiver, performer: performer, notifiable: self, content: notification_content)
     end
   end
 
+  # broadcast on notifiable integrations
+  def broadcast_integrations
+    notifiable_integrations.each do |integration|
+      SenderService.build(integration, notification_content.merge(extra_info)).deliver
+    end
+  end
+
+  private
 
   def notifiable_link
     resource =
@@ -78,14 +89,56 @@ module Notifiable
             self.commentable
         end
 
-    pluralize_resource = resource.class.name.downcase.pluralize
+    pluralize_resource = resource.class.model_name.collection
     resource_id = resource.try(:friendly_id) || resource.id
 
+    # Its better to start URL with '/' otherwise it will make them relative to page.
     "/projects/#{project.friendly_id}/#{pluralize_resource}/#{resource_id}"
+  end
+
+  def resource_action
+    "#{notification_content[:action]} #{notification_content[:resource_type]}"
+  end
+
+  def extra_info
+    {
+        project_title: self.project.title,
+        description: notifiable_description,
+        absolute_url: ENV['HOST'] + notification_content[:resource_link]
+    }
+  end
+
+  # TODO: Simplify
+  # used while broadcasting on notifiable_integrations
+  def notifiable_description
+    text = case notification_content[:resource_type]
+             when 'Task', 'Discussion'
+               "#{notification_content[:performer_name]}: " + resource_action
+             when "Comment"
+               "#{notification_content[:performer_name]}: " + resource_action + ': '+ notification_content[:text]
+           end
+
+    ActionController::Base.helpers.strip_tags text
   end
 
   def notifiable_config
     self.class.notifiable_config
+  end
+
+  def notifiable_integrations
+    notifiable_config[:notifiable_integrations].call(self) || [ ]
+  end
+
+  def performer
+    self.send(notifiable_config[:performer])
+  end
+
+  def receivers
+    self.send(notifiable_config[:receivers]) || []
+  end
+
+  def notification_text
+    ActionController::Base.helpers.strip_tags(self.send(notifiable_config[:content_method]))
   end
 
 end

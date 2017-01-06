@@ -7,10 +7,10 @@ class HipchatService < SenderService
   def self.message(activity)
     {
         "from": "Camp One",
-        "message": "Project: #{activity.project.title} -
-                    #{activity.get_trackable.title} -
-                    #{activity.get_trackable_url} -
-                    #{activity.discription}"
+        "message": "Project: #{activity[:project_title]} -
+                    #{activity[:text]} -
+                    #{activity[:absolute_url]} -
+                    #{activity[:description]}"
     }
   end
 end
