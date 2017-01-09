@@ -20,6 +20,10 @@ FactoryGirl.define do
     description 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     association :owner, factory: :user
 
+    transient do
+      member_users []
+    end
+
     trait :with_tasks do
       transient do
         task_owner { owner }
@@ -56,5 +60,13 @@ FactoryGirl.define do
         end
       end
     end
+
+
+    after(:create) do |project, evaluator|
+      evaluator.member_users.each do |user|
+        create(:contribution, project: project, user: user, role: 'Member')
+      end
+    end
+
   end
 end

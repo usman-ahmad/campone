@@ -49,4 +49,87 @@ RSpec.describe Comment, type: :model do
       expect(File).not_to exist(path)
     end
   end
+
+  describe 'notifications' do
+    let(:owner) { create(:user, name: 'Owner name') }
+    let(:other_user) { create(:user) }
+    let(:project) { create(:project, owner: owner, title: 'T E S Ting', member_users: [other_user]) }
+    let!(:task) { create(:task, project: project, id: 1001) }
+
+    it { is_expected.to be_a Notifiable }
+
+    it 'implements act_as_notifiable' do
+      expect(Comment).to respond_to(:act_as_notifiable).with(1).argument
+    end
+
+    context 'on create' do
+      let(:comment) { build(:comment, id: 1001, user: owner, performer: owner, commentable: task, content: 'Comment for testing notifications') }
+
+      it 'creates notifications' do
+        expect { comment.save }.to change(Notification, :count).by(1)
+
+        notification = other_user.notifications.last
+
+        expect(notification.receiver).to eq other_user
+        expect(notification.performer_name).to eq 'Owner name'
+        expect(notification.notifiable).to eq comment
+
+        expect(notification.text).to eq 'Comment for testing notifications'
+        expect(notification.action).to eq 'Created'
+        expect(notification.resource_id).to eq 1001
+        expect(notification.resource_type).to eq 'Comment'
+        expect(notification.resource_fid).to eq nil
+        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.project_fid).to eq 'test'
+      end
+    end
+
+
+    context 'on update' do
+      let(:other_user) { create(:user) }
+      let!(:comment) { create(:comment, commentable: task, content: 'Comment for testing notifications', id: 1001, performer: owner) }
+
+      it 'creates notifications' do
+        expect { comment.update_attributes(content: 'My updated comment') }.to change(Notification, :count).by(1)
+
+        notification = other_user.notifications.last
+
+        expect(notification.receiver).to eq other_user
+        expect(notification.performer_name).to eq 'Owner name'
+        expect(notification.notifiable).to eq comment
+
+        expect(notification.text).to eq 'My updated comment'
+        expect(notification.action).to eq 'Updated'
+        expect(notification.resource_id).to eq 1001
+        expect(notification.resource_type).to eq 'Comment'
+        expect(notification.resource_fid).to eq nil
+        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.project_fid).to eq 'test'
+      end
+    end
+
+    context 'on destroy' do
+      let(:other_user) { create(:user) }
+      let!(:comment) { create(:comment, commentable: task, content: 'Comment for testing notifications', id: 1001, performer: owner) }
+
+      it 'creates notifications' do
+        expect { comment.destroy }.to change(Notification, :count).by(1)
+
+        notification = other_user.notifications.last
+
+        expect(notification.receiver).to eq other_user
+        expect(notification.performer_name).to eq 'Owner name'
+        expect(notification.notifiable).to eq nil # as notifiable is deleted
+
+        expect(notification.text).to eq 'Comment for testing notifications'
+        expect(notification.action).to eq 'Deleted'
+        expect(notification.resource_id).to eq 1001
+        expect(notification.resource_type).to eq 'Comment'
+        expect(notification.resource_fid).to eq nil
+        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.project_fid).to eq 'test'
+      end
+    end
+
+  end # notifications
 end

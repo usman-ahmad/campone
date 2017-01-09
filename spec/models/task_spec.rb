@@ -56,6 +56,8 @@ RSpec.describe Task, type: :model do
     it { should belong_to(:reporter).class_name('User').with_foreign_key('reporter_id') }
     it { should have_many(:comments) }
     it { should have_many(:attachments) }
+
+    it { is_expected.to have_many :notifications }
   end
 
 
@@ -459,6 +461,43 @@ RSpec.describe Task, type: :model do
     end
 
 
+    describe '#notification_receivers' do
+      let(:task) { build(:task, owner: owner, project: project) }
+
+      context 'when owner is performer' do
+        before do
+          task.performer = owner
+        end
+
+        it 'notifies other user' do
+          expect(task.send(:notification_receivers).count).to eq(1)
+          expect(task.send(:notification_receivers)).to include(other_user)
+        end
+      end
+
+      context 'when other user is performer' do
+        before do
+          task.performer = other_user
+        end
+        it 'notifies owner' do
+          expect(task.send(:notification_receivers).count).to eq(1)
+          expect(task.send(:notification_receivers)).to include(owner)
+        end
+      end
+
+      context 'when project has no contributions and owner is performer' do
+        let(:project) { create(:project, owner: owner) }
+
+        before do
+          task.performer = owner
+        end
+
+        it 'does not generate any notification' do
+          expect(task.send(:notification_receivers).count).to eq(0)
+        end
+      end
+    end
+
     context 'test' do
       before do
         # we can stub performer
@@ -473,7 +512,22 @@ RSpec.describe Task, type: :model do
       let(:notification) { other_user.notifications.last }
 
       it 'creates notifications' do
-        expect{task.save}.to change(Notification, :count).by(1)
+        expect { task.save }.to change(Notification, :count).by(1)
+
+        expect(notification.receiver).to eq other_user
+        expect(notification.performer_name).to eq 'Owner name'
+        expect(notification.notifiable).to eq task
+
+        expect(notification.text).to eq 'Task for testing notifications'
+      end
+    end
+
+    context 'on create' do
+      let(:task) { build(:task, project: project, title: 'Task for testing notifications', id: 1001, performer: owner) }
+      let(:notification) { other_user.notifications.last }
+
+      it 'creates notifications' do
+        expect { task.save }.to change(Notification, :count).by(1)
 
         expect(notification.receiver).to eq other_user
         expect(notification.performer_name).to eq 'Owner name'
@@ -495,7 +549,7 @@ RSpec.describe Task, type: :model do
       let(:notification) { other_user.notifications.last }
 
       it 'creates notifications' do
-        expect{task.update_attributes(title: 'My updated task')}.to change(Notification, :count).by(1)
+        expect { task.update_attributes(title: 'My updated task') }.to change(Notification, :count).by(1)
 
         expect(notification.action).to eq 'Updated'
         expect(notification.text).to eq 'My updated task'
@@ -507,7 +561,7 @@ RSpec.describe Task, type: :model do
       let(:notification) { other_user.notifications.last }
 
       it 'creates notifications' do
-        expect{task.destroy}.to change(Notification, :count).by(1)
+        expect { task.destroy }.to change(Notification, :count).by(1)
         expect(notification.notifiable).to eq nil # as notifiable is deleted
         expect(notification.action).to eq 'Deleted'
         expect(notification.text).to eq 'Task for testing notifications'
