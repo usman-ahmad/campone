@@ -31,8 +31,10 @@ class Task < ApplicationRecord
   friendly_id :current_ticket_id, use: [:slugged, :finders], slug_column: :ticket_id
   alias_attribute :slug, :ticket_id
 
-  belongs_to :project
+  # Acts As Taggable On uses scopes to create an association for tags. This way you can mix and match to filter down your results.
+  acts_as_taggable_on :tags
 
+  belongs_to :project
   belongs_to :reporter, class_name: User, foreign_key: :reporter_id
   belongs_to :owner, class_name: User, foreign_key: :owner_id
 
@@ -41,6 +43,7 @@ class Task < ApplicationRecord
 
   # should't we add validation for presence of reporter
   # validates :reporter, presence: true
+  validates_format_of :tag_list, with: /\A[\w-]+\z/, on: [:create, :update]
 
   before_create :set_position
   before_create :set_reporter

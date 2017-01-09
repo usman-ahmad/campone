@@ -10,6 +10,7 @@
     <% end %>
 
     <%= content_tag :span, class: 'tag-holder' do %>
+        <%= content_tag(:span, "##{task.tag_list}", class: 'tag', title: "Tags: #{task.tag_list}") if task.tag_list.present? %>
         <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") unless task.priority.eql?('None') %>
         <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
         <%= content_tag(:span, "@#{task_assigned_to task}", class: 'tag', title: "Assigned to: #{task_assigned_to task}") if task.owner_id.present? %>

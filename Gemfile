@@ -30,6 +30,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~> 3.3.5'
 # Use device to login asignup and authentication
 gem 'devise'
+# A tagging plugin for Rails applications that allows for custom tagging along dynamic contexts.
+gem 'acts-as-taggable-on', '~> 4.0'
 # improve device views
 gem 'devise-bootstrap-views'
 # invite users

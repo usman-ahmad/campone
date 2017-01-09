@@ -24,6 +24,11 @@
         </div>
       </div>
 
+      <div class="form-group col-md-4">
+        <%= f.label :tags, class: "custom-label" %>
+        <%= f.text_field :tag_list, class: 'form-control' %>
+      </div>
+
       <% if @task.persisted? %>
           <div class="form-group col-md-4">
             <%= f.label :state, class: "custom-label" %>
