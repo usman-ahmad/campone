@@ -15,6 +15,8 @@
 //= require jquery.remotipart
 //= require private_pub
 //= require jquery.ui.all
+//= require tag-it
+//= require task
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require moment

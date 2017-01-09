@@ -279,6 +279,10 @@ class Task < ApplicationRecord
     task
   end
 
+  def self.get_source_tags
+    ActsAsTaggableOn::Tag.pluck :name
+  end
+
   private
 
   def set_position
