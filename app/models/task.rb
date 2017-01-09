@@ -43,7 +43,7 @@ class Task < ApplicationRecord
 
   # should't we add validation for presence of reporter
   # validates :reporter, presence: true
-  validates_format_of :tag_list, with: /\A[\w-]+\z/, on: [:create, :update]
+  validates_format_of :tag_list, with: /\A[\w\-\,\s]+\z/, allow_blank: true, on: [:create, :update]
 
   before_create :set_position
   before_create :set_reporter
@@ -277,6 +277,10 @@ class Task < ApplicationRecord
     task.save
 
     task
+  end
+
+  def get_tags
+    self.tags.map(&:to_s)
   end
 
   def self.get_source_tags

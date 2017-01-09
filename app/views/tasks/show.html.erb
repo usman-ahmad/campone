@@ -39,10 +39,14 @@
           <span class="value"> <%= @task.reporter.name %> </span>
          </li>
         <% end %>
-        <li class="col-md-4">
-          <span class="key">Tags: </span>
-          <span id="state" class="value">#<%= @task.tag_list %></span>
-        </li>
+        <% if @task.tag_list.present? %>
+            <li class="col-md-4">
+              <span class="key">Tags: </span>
+              <% @task.get_tags.each do |tag| %>
+                  <span id="state" class="value">#<%= tag.upcase %></span>
+              <% end %>
+            </li>
+        <% end %>
         <li class="col-md-12">
           <span class="key">Description: </span>
           <span class="value description-value"><%= @task.description.try(:html_safe) %></span>

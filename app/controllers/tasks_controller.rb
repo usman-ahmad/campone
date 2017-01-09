@@ -13,10 +13,9 @@ class TasksController < ApplicationController
     @visibility = cookies[:tasks_visibility] || 'all'
 
     @task = @project.tasks.new
-    # @tasks = @project.tasks.filter_tasks(search_text: params[:search_text],
-    #                                      include_completed: cookies[:include_completed] == 'true').order!('position')
 
     @tasks = @project.tasks.with_state(@visibility).search(params[:search_text]).order!('position')
+    @tasks = @tasks.tagged_with(params[:tags]) if params[:tags].present?
 
     respond_to do |format|
       format.html
