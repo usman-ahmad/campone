@@ -82,9 +82,11 @@ describe 'tasks management', type: :feature do
 
       select 'High', :from => 'Priority'
       select 'Everybody', :from => 'task[owner_id]'
+      execute_script('$("#task_tag_list").val("TASKS");')
 
       click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')
+      expect(page).to have_content('#TASKS')
 
       click_link 'bring some thing with tea'
 
@@ -92,6 +94,29 @@ describe 'tasks management', type: :feature do
       expect(page).to have_content('bring some date biscuits with some salty stuff')
       expect(page).to have_content('High')
       expect(page).to have_content('Everybody')
+      expect(page).to have_content('#TASKS')
+    end
+
+    it 'creats task with title and single tag', js: true do
+      fill_in 'task[title]', with: 'tag my loptop as admin'
+      execute_script('$("#task_tag_list").val("ADMIN");')
+
+      click_button 'Add To-Do'
+      expect(page).to have_content('#ADMIN')
+
+      click_link 'tag my loptop as admin'
+      expect(page).to have_content('#ADMIN')
+    end
+
+    it 'creats task with title and multiple tags', js: true do
+      fill_in 'task[title]', with: 'tag all office loptops as one two three'
+      execute_script('$("#task_tag_list").val("ONE,TWO,THREE,LAB X");')
+
+      click_button 'Add To-Do'
+      expect(page).to have_content('#LAB X #THREE #TWO #ONE')
+
+      click_link 'tag all office loptops as one two three'
+      expect(page).to have_content('#LAB X #THREE #TWO #ONE')
     end
   end
 

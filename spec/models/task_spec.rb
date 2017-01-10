@@ -210,6 +210,49 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  # UA[2017/01/08] - REVIEW TAG SPECS, TAGGED_WITH, TAG_LIST="a b, c99, #d"
+  context 'tasks with tags' do
+    let(:admin_user) { create(:user, name: 'Admin User') }
+    let(:network_project) { create(:project, title: 'Network App', owner: admin_user) }
+    let(:base_tagged_task) { create(:task, title: 'base tag task', tag_list: 'uk base, us base', reporter: admin_user, project: network_project) }
+
+    it 'creating task with correct tags' do
+      expect do
+        base_tagged_task
+      end.to change { network_project.tasks.count }.by(1)
+
+      # https://github.com/mbleigh/acts-as-taggable-on#relationships
+      # Objects will be returned in descending order based on the total number of matched tags.
+      expect(network_project.tasks.last.tags.map(&:to_s)).to eq(['us base', 'uk base'])
+      expect(network_project.tasks.last).to have_attributes(:tag_list => ['us base', 'uk base'])
+      expect(network_project.tasks.tagged_with(['us base', 'uk base']).count).to eq 1
+      expect(network_project.tasks.last.tag_list.count).to eq 2
+
+      task = network_project.tasks.last
+      task.tag_list.add('awesome', 'slick')
+      task.save
+      task.reload
+
+      expect(network_project.tasks.last.tag_list.count).to eq 4
+
+      task.tag_list.remove('awesome')
+      task.save
+      task.reload
+
+      expect(network_project.tasks.last.tag_list.count).to eq 3
+
+    end
+
+    it 'creating task with wrong tags' do
+      task = build(:task, title: 'hit tag task', tag_list: '#white base, @black base', reporter: admin_user, project: network_project)
+      task.save
+
+      expect(task.errors[:tag_list]).to_not be nil
+      expect(build(:task, title: 'hit tag task', tag_list: '<white base, black base', reporter: admin_user, project: network_project)).to_not be_valid
+      expect { should_not create(:task, title: 'hit tag task', tag_list: '#white base, @black base', reporter: admin_user, project: network_project) }
+    end
+  end
+
   describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
