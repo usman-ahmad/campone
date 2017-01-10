@@ -284,8 +284,13 @@ class Task < ApplicationRecord
     self.tags.map(&:to_s)
   end
 
-  def self.get_source_tags
-    ActsAsTaggableOn::Tag.pluck :name
+  def get_source_tags
+    p_tags = []
+
+    self.project.tasks.each do |task|
+      p_tags = p_tags + task.owner_tags_on(nil, :tags).map { |t| t.name }
+    end
+    p_tags = p_tags.uniq
   end
 
   private

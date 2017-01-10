@@ -16,6 +16,7 @@ class Project < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
+  acts_as_tagger
   # Now we can remove owner from project, as we have added owner role in Contribution, see #add_owner_to_contributors
   belongs_to :owner, class_name: 'User'
 
