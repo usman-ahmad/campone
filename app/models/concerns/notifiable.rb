@@ -74,7 +74,9 @@ module Notifiable
   # broadcast on notifiable integrations
   def broadcast_integrations
     notifiable_integrations.each do |integration|
-      SenderService.build(integration, notification_content.merge(extra_info)).deliver
+      # TODO: Delete unused services
+      # SenderService.build(integration, notification_content.merge(extra_info)).deliver
+      integration.publish(notification_content.merge(extra_info))
     end
   end
 
@@ -126,7 +128,7 @@ module Notifiable
   end
 
   def notifiable_integrations
-    notifiable_config[:notifiable_integrations].call(self) || [ ]
+    notifiable_config[:notifiable_integrations].call(self) || []
   end
 
   def performer

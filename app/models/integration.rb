@@ -10,6 +10,9 @@
 #  name       :string
 #  token      :string
 #  secret     :string
+#  type       :string
+#  title      :string
+#  active     :boolean
 #
 
 class Integration < ApplicationRecord
@@ -32,7 +35,11 @@ class Integration < ApplicationRecord
   scope :flowdock_urls, -> { where(name: 'flowdock').map(&:url) }
   scope :twitter_accounts, -> { where(name: 'twitter') }
 
-  scope :notifiable, -> { where(name: %w[slack hipchat flowdock twitter]) }
+  # scope :notifiable, -> { where(name: %w[slack hipchat flowdock twitter]) }
+  # NotifiableIntegration.all is same as below given notifiable scope
+  # NotifiableIntegration.all.to_sql =>  "SELECT \"integrations\".* FROM \"integrations\" WHERE \"integrations\".\"type\" IN ('NotifiableIntegration', 'TwitterIntegration', 'SlackIntegration')"
+  # But we must set `config.eager_load = true` in `config/environments/development.rb`
+  scope :notifiable, -> { where(type: %w(SlackIntegration HipchatIntegration FlowdockIntegration TwitterIntegration)) }
 
   def self.find_or_create_integration(auth)
     object = find_or_initialize_by(url: auth.info.urls.Twitter)

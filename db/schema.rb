@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104054639) do
+ActiveRecord::Schema.define(version: 20170105142801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,9 @@ ActiveRecord::Schema.define(version: 20170104054639) do
     t.string   "name"
     t.string   "token"
     t.string   "secret"
+    t.string   "type"
+    t.string   "title"
+    t.boolean  "active"
     t.index ["project_id"], name: "index_integrations_on_project_id", using: :btree
   end
 

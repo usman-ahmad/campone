@@ -10,11 +10,12 @@
 #  name       :string
 #  token      :string
 #  secret     :string
+#  type       :string
+#  title      :string
+#  active     :boolean
 #
 
 FactoryGirl.define do
   factory :integration do
-    
   end
-
 end

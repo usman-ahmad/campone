@@ -15,8 +15,14 @@
 #  active     :boolean
 #
 
-require 'rails_helper'
-
-RSpec.describe Integration, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class HipchatIntegration < NotifiableIntegration
+  def message_to_payload(activity)
+    {
+        from: "Camp One",
+        message: "Project: #{activity[:project_title]} -
+                    #{activity[:text]} -
+                    #{activity[:absolute_url]} -
+                    #{activity[:description]}"
+    }
+  end
 end
