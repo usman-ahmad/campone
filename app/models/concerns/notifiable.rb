@@ -1,6 +1,6 @@
 # Usage, in your model include Notifiable module like `include Notifiable`
 # Call act_as_notifiable method. See act_as_notifiable for more details
-# example: `act_as_notifiable performer: Proc.new{Current.user}, receivers: :notification_receivers, content_method: :title`
+# example: `act_as_notifiable performer: :performer, receivers: :notification_receivers, content_method: :title`
 
 module Notifiable
   extend ActiveSupport::Concern
@@ -28,11 +28,12 @@ module Notifiable
     # TODO: Provide support for Proc and Lambda
     def self.act_as_notifiable(options={})
       self.notifiable_config = {
-          content_method: options[:content_method],
-          receivers: options[:receivers],
           performer: options[:performer],
+          receivers: options[:receivers],
+          content_method: options[:content_method],
           notifiable_integrations: options[:notifiable_integrations],
-          notifiable_attributes: options[:only].try(:map, &:to_s) || self.send(:attribute_names)
+          notifiable_attributes: options[:only].try(:map, &:to_s) || self.send(:attribute_names),
+          if: options[:if]
       }.with_indifferent_access
 
       self.notifiable_config[:notifiable_attributes] -= options[:except].try(:map, &:to_s) if options[:except].present?
@@ -154,7 +155,7 @@ module Notifiable
   end
 
   def skip_notifications?
-    changed_notifiable_attributes.blank? || (receivers.blank? && notifiable_integrations.blank?)
+    given = notifiable_config[:if].is_a?(Proc) ? notifiable_config[:if].call(self) : true
+    (!given) || changed_notifiable_attributes.blank? || (receivers.blank? && notifiable_integrations.blank?)
   end
-
 end

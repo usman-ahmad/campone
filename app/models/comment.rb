@@ -21,7 +21,9 @@ class Comment < ApplicationRecord
   act_as_notifiable performer: :performer,
                     receivers: :notification_receivers,
                     content_method: :content,
-                    notifiable_integrations: Proc.new { |comment| comment.project.integrations.notifiable if comment.commentable.present? }
+                    only: [:content],
+                    notifiable_integrations: Proc.new { |comment| comment.project.integrations.notifiable },
+                    if: Proc.new { |comment| comment.commentable.present? }
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true

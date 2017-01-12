@@ -111,7 +111,7 @@ RSpec.describe Discussion, type: :model do
       let(:config) { Discussion.notifiable_config }
 
       it 'assigns correct values' do
-        expect(config[:notifiable_attributes]).to include('id', 'title', 'content')
+        expect(config[:notifiable_attributes]).to include('title', 'content', 'private')
         expect(config[:performer]).to eq :performer
         expect(config[:receivers]).to eq :notification_receivers
         expect(config[:content_method]).to eq :title

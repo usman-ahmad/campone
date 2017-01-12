@@ -21,6 +21,7 @@ class Discussion < ApplicationRecord
   act_as_notifiable performer: :performer,
                     receivers: :notification_receivers,
                     content_method: :title,
+                    only: [:title, :content, :private],
                     notifiable_integrations: Proc.new { |discussion| discussion.project.integrations.notifiable }
 
   belongs_to :project

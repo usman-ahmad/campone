@@ -66,7 +66,7 @@ RSpec.describe Comment, type: :model do
       let(:config) { Comment.notifiable_config }
 
       it 'assigns correct values' do
-        expect(config[:notifiable_attributes]).to include('id', 'content')
+        expect(config[:notifiable_attributes]).to include('content')
         expect(config[:performer]).to eq :performer
         expect(config[:receivers]).to eq :notification_receivers
         expect(config[:content_method]).to eq :content
