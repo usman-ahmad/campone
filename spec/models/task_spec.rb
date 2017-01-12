@@ -541,12 +541,22 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'test' do
-      before do
-        # we can stub performer
-        # allow(task).to receive(:performer).and_return(owner)
-        # allow_any_instance_of(Task).to receive(:performer).and_return(owner)
-        task.performer = owner
+    describe 'notifiable configurations' do
+      let(:config) { Task.notifiable_config }
+
+      it 'assigns correct values' do
+        expect(config[:notifiable_attributes]).to eq ['title', 'description', 'priority', 'state', 'owner_id']
+        expect(config[:performer]).to eq :performer
+        expect(config[:receivers]).to eq :notification_receivers
+        expect(config[:content_method]).to eq :title
+      end
+
+      describe 'Non notifiable attributes' do
+        let!(:task) { create(:task, project: project, title: 'Task for testing notifications', id: 1001, performer: owner) }
+
+        it 'does not create notifications if position is changed' do
+          expect { task.update_attributes(position: 2) }.to change(Notification, :count).by(0)
+        end
       end
     end
 

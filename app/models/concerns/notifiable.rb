@@ -12,7 +12,7 @@ module Notifiable
 
   included do
     extend(ClassMethods)
-    after_commit :create_user_notifications, :broadcast_integrations
+    after_commit :create_user_notifications, :broadcast_integrations, unless: :skip_notifications?
     has_many :notifications, as: :notifiable, dependent: :nullify
 
     # allowed parameters are performer, receivers and content_method
@@ -20,20 +20,26 @@ module Notifiable
     # performer -> A method that must return Single Object ex. User.first
     # receivers -> A method returning Array of Objects like [User1, User2]
     # content_method -> A method returning content to be displayed. ex. 'your text here.'
+    # only ->(optional) Array of notifiable attributes ex. only: [:title, :description] #
+    #   by default all attributes are considered notifiable.
+    #   all values of array will be converted to strings
+    # except: (optional) Array of attributes on which you do not want to create notifications
+    #   ex: except: [:position, :updated_at] (make sure to pas updated_at)
     # TODO: Provide support for Proc and Lambda
     def self.act_as_notifiable(options={})
       self.notifiable_config = {
           content_method: options[:content_method],
           receivers: options[:receivers],
           performer: options[:performer],
-          notifiable_integrations: options[:notifiable_integrations]
-      }
+          notifiable_integrations: options[:notifiable_integrations],
+          notifiable_attributes: options[:only].try(:map, &:to_s) || self.send(:attribute_names)
+      }.with_indifferent_access
+
+      self.notifiable_config[:notifiable_attributes] -= options[:except].try(:map, &:to_s) if options[:except].present?
     end
   end
 
   def notification_content
-    return if receivers.blank? && notifiable_integrations.blank?
-
     if transaction_include_any_action?([:create])
       action = 'Created'
     elsif transaction_include_any_action?([:destroy])
@@ -141,6 +147,14 @@ module Notifiable
 
   def notification_text
     ActionController::Base.helpers.strip_tags(self.send(notifiable_config[:content_method]))
+  end
+
+  def changed_notifiable_attributes
+    previous_changes.keys & notifiable_config[:notifiable_attributes]
+  end
+
+  def skip_notifications?
+    changed_notifiable_attributes.blank? || (receivers.blank? && notifiable_integrations.blank?)
   end
 
 end

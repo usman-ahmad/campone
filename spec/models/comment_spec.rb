@@ -62,6 +62,17 @@ RSpec.describe Comment, type: :model do
       expect(Comment).to respond_to(:act_as_notifiable).with(1).argument
     end
 
+    describe 'notifiable configurations' do
+      let(:config) { Comment.notifiable_config }
+
+      it 'assigns correct values' do
+        expect(config[:notifiable_attributes]).to include('id', 'content')
+        expect(config[:performer]).to eq :performer
+        expect(config[:receivers]).to eq :notification_receivers
+        expect(config[:content_method]).to eq :content
+      end
+    end
+
     context 'on create' do
       let(:comment) { build(:comment, id: 1001, user: owner, performer: owner, commentable: task, content: 'Comment for testing notifications') }
 

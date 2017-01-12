@@ -107,6 +107,17 @@ RSpec.describe Discussion, type: :model do
     it { is_expected.to be_a Notifiable }
     it { is_expected.to respond_to :create_user_notifications }
 
+    describe 'notifiable configurations' do
+      let(:config) { Discussion.notifiable_config }
+
+      it 'assigns correct values' do
+        expect(config[:notifiable_attributes]).to include('id', 'title', 'content')
+        expect(config[:performer]).to eq :performer
+        expect(config[:receivers]).to eq :notification_receivers
+        expect(config[:content_method]).to eq :title
+      end
+    end
+
     describe '#notification_receivers' do
       let(:discussion) { build(:discussion, opener: opener, project: project) }
 

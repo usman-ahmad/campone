@@ -23,7 +23,9 @@ class Task < ApplicationRecord
   act_as_notifiable performer: :performer,
                     receivers: :notification_receivers,
                     content_method: :title,
-                    notifiable_integrations: Proc.new{|task| task.project.integrations.notifiable}
+                    notifiable_integrations: Proc.new{|task| task.project.integrations.notifiable},
+                    only: [:title, :description, :priority, :state, :owner_id ]
+                    # except: [:position, :updated_all]
 
   # include PublicActivity::Common
 
