@@ -16,6 +16,7 @@ class TasksController < ApplicationController
 
     @tasks = @project.tasks.with_state(@visibility).search(params[:search_text]).order!('position')
     @tasks = @tasks.tagged_with(params[:tags]) if params[:tags].present?
+    @tasks = @tasks.having_ownership(params[:owner]) if params[:owner].present?
 
     respond_to do |format|
       format.html

@@ -158,50 +158,9 @@ class Task < ApplicationRecord
     end
   end
 
-  # UA[2016/11/28] - moved to controller with plain "update_attributes" call # REFACTOR SPECS
-  # UA[2016/11/28] - assigned_to_me even if the task is started(or any other state) or assigned to anyone else
-  # def assigned_to_me(current_user)
-  #   # if (!owner_id.present? || owner_id.eql?(0)) && (state.eql?('unstarted'))
-  #   #   if update_attributes(owner_id: current_user.id)
-  #   #     'Task assigned to You'
-  #   #   end
-  #   # else
-  #   #   'Task already assigned'
-  #   # end
-  #   if update_attributes(owner_id: current_user.id)
-  #     'Task assigned to You'
-  #   else
-  #     'Task could not be assigned to You'
-  #   end
-  # end
-
-  # UA[2016/11/28] - moved to controller with plain "update_attributes" call # REFACTOR SPECS
-  # UA[2016/11/28] - Anyone can set tasks state (even if not owner of task)
-  # # To improve user experience if a user starts state shouldn't we assign task to him automatically, like pivotal
-  # def set_state(current_user, state)
-  #   # if (owner_id).eql?(current_user.id)
-  #   #   if update_attributes(state: state)
-  #   #   else
-  #   #     'status of task could not change'
-  #   #   end
-  #   # else
-  #   #   'Task is not assigned to you'
-  #   # end
-  #   if update_attributes(state: state)
-  #     'State of task is updated successfully'
-  #   else
-  #     'State of task could not be updated'
-  #   end
-  # end
-
-  # UA[2016/11/22] - NOT USED ANY WHERE # REFACTOR SPECS
-  # def self.filter_tasks(search_text: nil, include_completed: false)
-  #   if include_completed
-  #     search_text.nil? ? all : all.search(search_text)
-  #   else
-  #     search_text.nil? ? not_completed : not_completed.search(search_text)
-  #   end
-  # end
+  def self.having_ownership(owner)
+    where(owner: owner)
+  end
 
   def self.search(text)
     if text.present?
