@@ -25,10 +25,12 @@
           <span class="value"><%= @task.due_at %></span>
          </li>
         <% end %>
+        <% if @task.priority.present? %>
         <li class="col-md-4">
           <span class="key">Priority: </span>
           <span class="value"><%= @task.priority %></span>
         </li>
+        <% end %>
         <li class="col-md-4">
           <span class="key">State: </span>
           <span id="state" class="value"><%= @task.state.humanize %></span>

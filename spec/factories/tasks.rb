@@ -6,7 +6,7 @@
 #  title       :string
 #  description :text
 #  project_id  :integer
-#  priority    :string           default("None")
+#  priority    :string
 #  due_at      :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

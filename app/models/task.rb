@@ -6,7 +6,7 @@
 #  title       :string
 #  description :text
 #  project_id  :integer
-#  priority    :string           default("None")
+#  priority    :string
 #  due_at      :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -52,13 +52,6 @@ class Task < ApplicationRecord
   before_create :set_reporter
   after_create :increment_ticket_counter
 
-  PRIORITIES = {
-      NONE: 'None',
-      LOW: 'Low',
-      MEDIUM: 'Medium',
-      HIGH: 'High'
-  }
-
   STATE_MAP = {
       NOT_SCHEDULED: 'unscheduled',
       NO_PROGRESS: 'unstarted',
@@ -73,7 +66,7 @@ class Task < ApplicationRecord
 
   # UA[2017/01/10] - Performer can be refactored in notifiable module
   attr_accessor :performer
-
+  PRIORITIES =%w[Low Medium High]
   STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
            to: :current_state
@@ -83,7 +76,7 @@ class Task < ApplicationRecord
   validates :project, presence: true
 
   validates_inclusion_of :state, in: STATES
-  validates_inclusion_of :priority, in: PRIORITIES.values
+  validates_inclusion_of :priority, in: PRIORITIES, :allow_blank => true
 
   def notification_receivers
     project.members - [performer]

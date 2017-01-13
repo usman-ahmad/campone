@@ -6,7 +6,7 @@
 #  title       :string
 #  description :text
 #  project_id  :integer
-#  priority    :string           default("None")
+#  priority    :string
 #  due_at      :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -47,7 +47,7 @@ RSpec.describe Task, type: :model do
                             'accepted').for(:state) }
     it { should_not allow_value('blah').for(:state) }
 
-    it { should allow_value('None', 'Low', 'Medium', 'High').for(:priority) }
+    it { should allow_value('Low', 'Medium', 'High').for(:priority) }
     it { should_not allow_value('blah').for(:priority) }
   end
 
@@ -62,7 +62,7 @@ RSpec.describe Task, type: :model do
 
 
   describe 'default values' do
-    expected_values = {state: 'unstarted', priority: 'None'}
+    expected_values = {state: 'unstarted'}
 
     expected_values.each do |key, val|
       it { is_expected.to have_value(key, val) }
@@ -348,7 +348,7 @@ RSpec.describe Task, type: :model do
 
           expected_values = {
               title: 'add authentication', description: 'use devise',
-              state: 'started', priority: 'None'
+              state: 'started'
           }
 
           expected_values.each do |k, v|

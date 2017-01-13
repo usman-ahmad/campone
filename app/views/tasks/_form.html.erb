@@ -13,7 +13,7 @@
 
       <div class="form-group col-md-4">
         <%= f.label :priority, class: "custom-label" %>
-        <%= f.select :priority, Task::PRIORITIES.values, {}, {class: 'form-control'} %>
+        <%= f.select :priority, Task::PRIORITIES, {:prompt => ['Nothing Selected', nil]}, {class: 'form-control'} %>
       </div>
 
       <div class="form-group col-md-4">

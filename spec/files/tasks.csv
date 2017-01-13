@@ -1,4 +1,4 @@
 title,description,priority,state,due_at
-add bootstrap,download and add latest bootstrap,None,started,2016-02-26
+add bootstrap,download and add latest bootstrap,Low,started,2016-02-26
 add jquery,it shuould not create new group,Medium,rejected,2016-02-26
-add authentication,use devise,None,started,2016-02-26
+add authentication,use devise,,started,2016-02-26
