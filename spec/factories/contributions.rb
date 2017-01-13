@@ -11,6 +11,7 @@
 #  token      :string
 #  status     :string           default("pending")
 #  inviter_id :integer
+#  position   :integer
 #
 
 FactoryGirl.define do

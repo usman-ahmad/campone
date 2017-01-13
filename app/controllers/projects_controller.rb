@@ -5,8 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    # @projects = Project.where(owner: current_user) + Contribution.where(user: current_user).map(&:project)
-    @projects = current_user.projects
+    @projects = current_user.contributions.order('position').map(&:project)
   end
 
   # GET /projects/1
@@ -74,6 +73,13 @@ class ProjectsController < ApplicationController
 
       format.json { head :no_content }
     end
+  end
+
+  def sort
+    params[:project].each_with_index do |id, index|
+      Contribution.find_by(project_id: id, user: current_user).update_attributes(position: index+1)
+    end
+    render :nothing => true
   end
 
   private

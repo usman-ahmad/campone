@@ -11,6 +11,7 @@
 #  token      :string
 #  status     :string           default("pending")
 #  inviter_id :integer
+#  position   :integer
 #
 
 class Contribution < ApplicationRecord
@@ -22,6 +23,7 @@ class Contribution < ApplicationRecord
 
   before_validation :invite_and_set_user
   before_create :generate_token
+  before_create :set_position
 
   ROLES = {
       manager: 'Manager',
@@ -69,5 +71,9 @@ class Contribution < ApplicationRecord
 
   def generate_token
     self.token = "#{project.friendly_id}-#{SecureRandom.hex(15).encode('UTF-8')}"
+  end
+
+  def set_position
+    self.position = self.user.projects.maximum(:position) ? self.user.projects.maximum(:position) + 1 : 1
   end
 end

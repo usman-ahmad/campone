@@ -81,7 +81,8 @@ class Project < ApplicationRecord
   private
 
   def add_owner_to_contributors
-    self.contributions.create(user: self.owner, status: 'joined', role: Contribution::ROLES[:owner])
+    position = self.owner.projects.maximum(:position) ? self.owner.projects.maximum(:position) + 1 : 1
+    self.contributions.create(user: self.owner, status: 'joined', role: Contribution::ROLES[:owner], position: position)
   end
 
   # Try to create a slug with initials of project name, if its already taken try next combination of initials and random characters
