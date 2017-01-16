@@ -82,7 +82,7 @@ describe 'tasks management', type: :feature do
 
       select 'High', :from => 'Priority'
       execute_script('$("#task_tag_list").val("TASKS");')
-      select 'Everybody', :from => 'Owner'
+      select 'Great Person', :from => 'Owner'
 
       click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')
@@ -93,7 +93,7 @@ describe 'tasks management', type: :feature do
       expect(page).to have_content('bring some thing with tea')
       expect(page).to have_content('bring some date biscuits with some salty stuff')
       expect(page).to have_content('High')
-      expect(page).to have_content('Everybody')
+      expect(page).to have_content('Great Person')
       expect(page).to have_content('#TASKS')
     end
 
