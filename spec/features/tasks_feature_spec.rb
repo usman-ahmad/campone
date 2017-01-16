@@ -4,7 +4,7 @@ describe 'tasks management', type: :feature do
   let!(:owner) { create(:user, name: 'Great Person') }
   let!(:task_owner) { create(:user, name: 'dev team') }
   let!(:project) { create(:project, owner: owner) }
-  let!(:task) { create(:task, title: 'bring bread with eggs', priority: 'Medium', state: 'unstarted', project: project, reporter: task_owner) }
+  let!(:task) { create(:task, title: 'bring bread with eggs', priority: 'Medium', state: 'unstarted', project: project, requester: task_owner) }
 
   before do
     login(owner.email, 'secret_password')
@@ -39,7 +39,7 @@ describe 'tasks management', type: :feature do
   end
 
   describe 'show/hide completed tasks' do
-    let!(:completed_task) { create(:task, title: 'completed my breakfast', state: 'finished', project: project, reporter: owner) }
+    let!(:completed_task) { create(:task, title: 'completed my breakfast', state: 'finished', project: project, requester: owner) }
 
     before do
       visit project_tasks_path(project)

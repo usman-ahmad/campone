@@ -2,19 +2,19 @@
 #
 # Table name: tasks
 #
-#  id          :integer          not null, primary key
-#  title       :string
-#  description :text
-#  project_id  :integer
-#  priority    :string
-#  due_at      :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  state       :string           default("unscheduled")
-#  owner_id    :integer
-#  reporter_id :integer
-#  position    :integer
-#  ticket_id   :string
+#  id           :integer          not null, primary key
+#  title        :string
+#  description  :text
+#  project_id   :integer
+#  priority     :string
+#  due_at       :date
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  state        :string           default("unscheduled")
+#  owner_id     :integer
+#  requester_id :integer
+#  position     :integer
+#  ticket_id    :string
 #
 
 class Task < ApplicationRecord
@@ -37,19 +37,19 @@ class Task < ApplicationRecord
   acts_as_taggable_on :tags
 
   belongs_to :project
-  belongs_to :reporter, class_name: User, foreign_key: :reporter_id
+  belongs_to :requester, class_name: User, foreign_key: :requester_id
   belongs_to :owner, class_name: User, foreign_key: :owner_id
 
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 
-  # should't we add validation for presence of reporter
-  # validates :reporter, presence: true
+  # shouldn't we add validation for presence of requester
+  # validates :requester, presence: true
   # validates_format_of :tag_list, with: /\A[\w\-\,\s]+\z/, allow_blank: true, on: [:create, :update]
   validates :tag_list, tag_list: true, allow_blank: true
 
   before_create :set_position
-  before_create :set_reporter
+  before_create :set_requester
   after_create :increment_ticket_counter
 
   STATE_MAP = {
@@ -66,6 +66,7 @@ class Task < ApplicationRecord
 
   # UA[2017/01/10] - Performer can be refactored in notifiable module
   attr_accessor :performer
+
   PRIORITIES =%w[Low Medium High]
   STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
@@ -105,7 +106,7 @@ class Task < ApplicationRecord
     return unless array.present?
 
     array.each do |file|
-      attachments.build(:document => file, project: self.project, uploader_id: self.reporter_id)
+      attachments.build(:document => file, project: self.project, uploader_id: self.requester_id)
     end
   end
 
@@ -179,7 +180,7 @@ class Task < ApplicationRecord
     # TODO: Make it atomic
     CSV.foreach(file.path, headers: true) do |row|
       attributes = row.to_hash
-      attributes['reporter_id'] = current_user
+      attributes['requester_id'] = current_user
 
       project.tasks.create!(attributes)
     end
@@ -203,7 +204,7 @@ class Task < ApplicationRecord
     }
     options = default_options.merge(options)
 
-    performer = project.members.include?(self.reporter) ? self.reporter : mover
+    performer = project.members.include?(self.requester) ? self.requester : mover
     owner = project.members.include?(self.owner) ? self.owner : nil
 
     attrs = self.attributes.slice('title', 'description', 'priority', 'progress', 'due_at').merge!(performer: performer, owner: owner)
@@ -253,8 +254,8 @@ class Task < ApplicationRecord
     self.position = self.project.tasks.count + 1
   end
 
-  def set_reporter
-    self.reporter = performer
+  def set_requester
+    self.requester = performer
   end
 
   def current_ticket_id

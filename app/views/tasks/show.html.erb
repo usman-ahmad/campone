@@ -35,10 +35,10 @@
           <span class="key">State: </span>
           <span id="state" class="value"><%= @task.state.humanize %></span>
         </li>
-        <% if @task.reporter.present? %>
+        <% if @task.requester.present? %>
          <li class="col-md-4">
-          <span class="key">Created By: </span>
-          <span class="value"> <%= @task.reporter.name %> </span>
+          <span class="key">Requester: </span>
+          <span class="value"> <%= @task.requester.name %> </span>
          </li>
         <% end %>
         <% if @task.tag_list.present? %>

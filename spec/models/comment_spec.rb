@@ -28,7 +28,7 @@ RSpec.describe Comment, type: :model do
   describe '#destroy' do
     let(:camp_project_owner) { create(:user) }
     let(:camp_project) { create(:project, title: 'chat project', owner: camp_project_owner) }
-    let(:task_with_comments) { create(:task, :with_comments, comments_count: 3, reporter: camp_project_owner, project: camp_project) }
+    let(:task_with_comments) { create(:task, :with_comments, comments_count: 3, requester: camp_project_owner, project: camp_project) }
     let(:comment_with_real_attachments) { create(:comment, :with_attachments, attachments_count: 2, real_attachments: true, user: camp_project_owner, commentable: task_with_comments) }
 
     it 'deletes task having comments with attachments' do

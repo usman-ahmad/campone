@@ -2,19 +2,19 @@
 #
 # Table name: tasks
 #
-#  id          :integer          not null, primary key
-#  title       :string
-#  description :text
-#  project_id  :integer
-#  priority    :string
-#  due_at      :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  state       :string           default("unscheduled")
-#  owner_id    :integer
-#  reporter_id :integer
-#  position    :integer
-#  ticket_id   :string
+#  id           :integer          not null, primary key
+#  title        :string
+#  description  :text
+#  project_id   :integer
+#  priority     :string
+#  due_at       :date
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  state        :string           default("unscheduled")
+#  owner_id     :integer
+#  requester_id :integer
+#  position     :integer
+#  ticket_id    :string
 #
 
 require 'rails_helper'
@@ -53,7 +53,7 @@ RSpec.describe Task, type: :model do
 
   describe 'associations' do
     it { should belong_to(:project) }
-    it { should belong_to(:reporter).class_name('User').with_foreign_key('reporter_id') }
+    it { should belong_to(:requester).class_name('User').with_foreign_key('requester_id') }
     it { should have_many(:comments) }
     it { should have_many(:attachments) }
 
@@ -70,7 +70,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'callbacks' do
-    let!(:task) { create(:task, title: 'task one', reporter: user, project: project) }
+    let!(:task) { create(:task, title: 'task one', requester: user, project: project) }
 
     describe 'set_position' do
       it 'assigns first position' do
@@ -78,13 +78,13 @@ RSpec.describe Task, type: :model do
       end
 
       it 'assigns second position' do
-        task = create(:task, title: 'task two', reporter: user, project: project)
+        task = create(:task, title: 'task two', requester: user, project: project)
         expect(task.position).to eq 2
       end
 
       it 'assigns first position for first task of an other project' do
         another_project = create(:project, owner: user)
-        task = create(:task, title: 'task three', reporter: user, project: another_project)
+        task = create(:task, title: 'task three', requester: user, project: another_project)
         expect(task.position).to eq 1
       end
     end
@@ -95,7 +95,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'increases current_ticket_id' do
-        expect { create(:task, project: project, reporter: user) }.to change { project.current_ticket_id }.by(1)
+        expect { create(:task, project: project, requester: user) }.to change { project.current_ticket_id }.by(1)
       end
     end
   end
@@ -106,7 +106,7 @@ RSpec.describe Task, type: :model do
     let(:target_project) { create(:project, title: 'Nawa project', owner: owner_of_projects) }
 
     context 'for simple task' do
-      let(:simple_task_to_copy) { create(:task, title: 'sadi kapi wala task', priority: 'Medium', owner: owner_of_projects, reporter: user, project: base_project) }
+      let(:simple_task_to_copy) { create(:task, title: 'sadi kapi wala task', priority: 'Medium', owner: owner_of_projects, requester: user, project: base_project) }
       let(:task_copy) { simple_task_to_copy.copy_to(target_project, owner_of_projects) }
 
       it 'should increment task count of target project' do
@@ -121,7 +121,7 @@ RSpec.describe Task, type: :model do
         expect(target_project.tasks).to include(task_copy)
         expect(task_copy.project).to eq target_project
         expect(task_copy.owner).to eq owner_of_projects
-        expect(task_copy.reporter).to eq owner_of_projects
+        expect(task_copy.requester).to eq owner_of_projects
         expect(task_copy.priority).to eq 'Medium'
         expect(task_copy.title).to eq 'sadi kapi wala task'
       end
@@ -132,25 +132,25 @@ RSpec.describe Task, type: :model do
         expect(base_project.tasks).to include(simple_task_to_copy)
       end
 
-      context 'reporter of task is not in the target project' do
+      context 'requester of task is not in the target project' do
         let(:other_user) { create(:user) }
-        let(:task_with_other_reporter) { create(:task, title: 'naye reporter wala task', reporter: other_user, project: base_project) }
-        let(:task_copy) { task_with_other_reporter.copy_to(target_project, owner_of_projects) }
+        let(:requester) { create(:task, title: 'naye requester wala task', requester: other_user, project: base_project) }
+        let(:task_copy) { requester.copy_to(target_project, owner_of_projects) }
 
-        it 'should set the reporter to task mover' do
-          expect(task_copy.reporter).to eq owner_of_projects
+        it 'should set the requester to task mover' do
+          expect(task_copy.requester).to eq owner_of_projects
         end
       end
 
-      context 'reporter of task is also present in the target project' do
+      context 'requester of task is also present in the target project' do
         let(:other_user) { create(:user) }
-        let(:task_with_other_reporter) { create(:task, title: 'naye reporter wala task', reporter: other_user, project: base_project) }
-        let(:task_copy) { task_with_other_reporter.copy_to(target_project, owner_of_projects) }
+        let(:requester) { create(:task, title: 'naye requester wala task', requester: other_user, project: base_project) }
+        let(:task_copy) { requester.copy_to(target_project, owner_of_projects) }
 
         before { target_project.contributions.create(user_id: other_user.id, role: 'Member') }
 
-        it 'should set the reporter to reporter of original task' do
-          expect(task_copy.reporter).to eq other_user
+        it 'should set the requester to requester of original task' do
+          expect(task_copy.requester).to eq other_user
         end
       end
     end
@@ -158,14 +158,14 @@ RSpec.describe Task, type: :model do
     context 'for task with comments' do
       it 'should copy task and not comments when with_comments is false' do
         expect do
-          task_with_comments = create(:task, :with_comments, comments_count: 3, reporter: owner_of_projects, project: base_project)
+          task_with_comments = create(:task, :with_comments, comments_count: 3, requester: owner_of_projects, project: base_project)
           task_with_comments.copy_to(target_project, owner_of_projects, with_comments: false)
         end.not_to change { Comment.where(commentable: target_project.tasks).count }
       end
 
       it 'should copy task and comments when with_comments is true' do
         expect do
-          task_with_comments = create(:task, :with_comments, comments_count: 4, reporter: owner_of_projects, project: base_project)
+          task_with_comments = create(:task, :with_comments, comments_count: 4, requester: owner_of_projects, project: base_project)
           task_with_comments.copy_to(target_project, owner_of_projects, with_comments: true)
         end.to change { Comment.where(commentable: target_project.tasks).count }.by(4)
       end
@@ -194,14 +194,14 @@ RSpec.describe Task, type: :model do
     context 'for task with attachments' do
       it 'should copy task and not attachments when with_attachments is false' do
         expect do
-          task_with_attachments = create(:task, :with_attachments, attachments_count: 2, reporter: owner_of_projects, project: base_project)
+          task_with_attachments = create(:task, :with_attachments, attachments_count: 2, requester: owner_of_projects, project: base_project)
           task_with_attachments.copy_to(target_project, owner_of_projects, with_attachments: false)
         end.not_to change { Attachment.where(attachable: target_project.tasks).count }
       end
 
       it 'should copy task and attachments when with_attachments is true' do
         expect do
-          task_with_attachments = create(:task, :with_attachments, attachments_count: 3, real_attachments: true, reporter: owner_of_projects, project: base_project)
+          task_with_attachments = create(:task, :with_attachments, attachments_count: 3, real_attachments: true, requester: owner_of_projects, project: base_project)
           task_with_attachments.copy_to(target_project, owner_of_projects, with_attachments: true)
         end.to change { Attachment.where(attachable: target_project.tasks).count }.by(3)
 
@@ -214,7 +214,7 @@ RSpec.describe Task, type: :model do
   context 'tasks with tags' do
     let(:admin_user) { create(:user, name: 'Admin User') }
     let(:network_project) { create(:project, title: 'Network App', owner: admin_user) }
-    let(:base_tagged_task) { create(:task, title: 'base tag task', tag_list: 'uk base, us base', reporter: admin_user, project: network_project) }
+    let(:base_tagged_task) { create(:task, title: 'base tag task', tag_list: 'uk base, us base', requester: admin_user, project: network_project) }
 
     it 'creating task with correct tags' do
       expect do
@@ -244,21 +244,21 @@ RSpec.describe Task, type: :model do
     end
 
     it 'creating task with wrong tags' do
-      task = build(:task, title: 'hit tag task', tag_list: '#white base, @black base', reporter: admin_user, project: network_project)
+      task = build(:task, title: 'hit tag task', tag_list: '#white base, @black base', requester: admin_user, project: network_project)
       task.save
 
       expect(task.errors[:tag_list]).to_not be nil
-      expect(build(:task, title: 'hit tag task', tag_list: '<white base, black base', reporter: admin_user, project: network_project)).to_not be_valid
-      expect { should_not create(:task, title: 'hit tag task', tag_list: '#white base, @black base', reporter: admin_user, project: network_project) }
+      expect(build(:task, title: 'hit tag task', tag_list: '<white base, black base', requester: admin_user, project: network_project)).to_not be_valid
+      expect { should_not create(:task, title: 'hit tag task', tag_list: '#white base, @black base', requester: admin_user, project: network_project) }
     end
   end
 
   describe 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
-    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', state: 'started', reporter: user, project: project) }
-    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', state: 'finished', reporter: user, project: project) }
-    let!(:another_task) { create(:task, title: 'another ', description: 'another description', state: 'accepted', reporter: user, project: project) }
+    let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', state: 'started', requester: user, project: project) }
+    let!(:completed_task) { create(:task, title: 'task two', description: 'task 2 create DB', state: 'finished', requester: user, project: project) }
+    let!(:another_task) { create(:task, title: 'another ', description: 'another description', state: 'accepted', requester: user, project: project) }
 
     describe '#filter_tasks', pending: 'feature has been redesigned or removed' do
       it 'returns non-completed tasks meeting the search criteria' do
@@ -304,10 +304,10 @@ RSpec.describe Task, type: :model do
 
     describe 'CSV import/export' do
       let!(:task1) { create(:task, title: 'create psd', description: 'task one in group',
-                            state: 'started', reporter: user, project: project) }
+                            state: 'started', requester: user, project: project) }
 
       let!(:task2) { create(:task, title: 'create html templates', description: 'task two in group',
-                            state: 'rejected', priority: 'Medium', reporter: user, project: project) }
+                            state: 'rejected', priority: 'Medium', requester: user, project: project) }
 
 
       describe '#to_csv (export to CSV file)' do
@@ -362,9 +362,9 @@ RSpec.describe Task, type: :model do
   describe '#destroy' do
     let(:camp_project_owner) { create(:user) }
     let(:camp_project) { create(:project, title: 'US project', owner: camp_project_owner) }
-    let(:task_with_comments) { create(:task, :with_comments, comments_count: 3, reporter: camp_project_owner, project: camp_project) }
-    let(:task_with_attachments) { create(:task, :with_attachments, attachments_count: 4, reporter: camp_project_owner, project: camp_project) }
-    let(:task_with_real_attachments) { create(:task, :with_attachments, attachments_count: 1, real_attachments: true, reporter: camp_project_owner, project: camp_project) }
+    let(:task_with_comments) { create(:task, :with_comments, comments_count: 3, requester: camp_project_owner, project: camp_project) }
+    let(:task_with_attachments) { create(:task, :with_attachments, attachments_count: 4, requester: camp_project_owner, project: camp_project) }
+    let(:task_with_real_attachments) { create(:task, :with_attachments, attachments_count: 1, real_attachments: true, requester: camp_project_owner, project: camp_project) }
     let(:comment_with_real_attachments) { create(:comment, :with_attachments, attachments_count: 2, real_attachments: true, user: camp_project_owner, commentable: task_with_comments) }
 
     it 'deletes task with comments' do
@@ -418,7 +418,7 @@ RSpec.describe Task, type: :model do
   #   let(:another_user) { create(:user) }
   #
   #   context 'assigned to nobody' do
-  #     let!(:task) { create(:task, state: 'unstarted', project: project, reporter: user) }
+  #     let!(:task) { create(:task, state: 'unstarted', project: project, requester: user) }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'assigns task to a user' do
@@ -427,7 +427,7 @@ RSpec.describe Task, type: :model do
   #   end
   #
   #   context 'already assigned' do
-  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: user.id) }
+  #     let!(:task) { create(:task, project: project, requester: user, assigned_to: user.id) }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'will not assign task' do
@@ -436,7 +436,7 @@ RSpec.describe Task, type: :model do
   #   end
   #
   #   context 'already in state' do
-  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: user.id, state: 'started') }
+  #     let!(:task) { create(:task, project: project, requester: user, assigned_to: user.id, state: 'started') }
   #
   #     before { task.assigned_to_me(another_user) }
   #     it 'will not assign task' do
@@ -449,7 +449,7 @@ RSpec.describe Task, type: :model do
   #   before { task.set_state(user, 'started') }
   #
   #   context 'Task is assigned to that user' do
-  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: user.id) }
+  #     let!(:task) { create(:task, project: project, requester: user, assigned_to: user.id) }
   #
   #     it 'will change state' do
   #       expect(task.state).to eq 'started'
@@ -458,7 +458,7 @@ RSpec.describe Task, type: :model do
   #
   #   context 'Task is NOT assigned to that user' do
   #     let(:another_user) { create(:user) }
-  #     let!(:task) { create(:task, project: project, reporter: user, assigned_to: another_user.id) }
+  #     let!(:task) { create(:task, project: project, requester: user, assigned_to: another_user.id) }
   #
   #     it 'would NOT changes state' do
   #       expect(task.state).to eq 'unstarted' # Default value
@@ -481,10 +481,10 @@ RSpec.describe Task, type: :model do
   end
 
   it 'should allow us to create' do
-    expect(create(:task, priority: 'Low', project: project, reporter: project.owner).priority).to eq('Low')
-    expect(create(:task, priority: 'Low', project: project, state: 'finished', reporter: project.owner).state).to eq('finished')
-    expect(create(:task, priority: 'Medium', project: project, reporter: project.owner).priority).to eq('Medium')
-    expect(create(:task, priority: 'High', project: project, state: 'unstarted', reporter: project.owner).priority).to eq('High')
+    expect(create(:task, priority: 'Low', project: project, requester: project.owner).priority).to eq('Low')
+    expect(create(:task, priority: 'Low', project: project, state: 'finished', requester: project.owner).state).to eq('finished')
+    expect(create(:task, priority: 'Medium', project: project, requester: project.owner).priority).to eq('Medium')
+    expect(create(:task, priority: 'High', project: project, state: 'unstarted', requester: project.owner).priority).to eq('High')
   end
 
   describe 'notifications' do

@@ -25,7 +25,7 @@ RSpec.describe Attachment, type: :model do
   let(:project) { create(:project, owner: user) }
   let(:project_attachment) { create(:project_attachment, :with_comments, comments_count: 4, commenter: user, attachable: project, document: File.new('spec/files/awesome_project_attachment.jpg')) }
 
-  let(:task) { create(:task, title: 'hash task', reporter: user, project: project) }
+  let(:task) { create(:task, title: 'hash task', requester: user, project: project) }
   let(:attachment) { create(:attachment, document: File.new('spec/files/awesome_project_attachment.jpg'), attachable: task) }
 
   context 'associations' do
@@ -103,7 +103,7 @@ RSpec.describe Attachment, type: :model do
   end
 
   context '#project' do
-    let(:task) { create(:task, title: 'task one', reporter: user, project: project) }
+    let(:task) { create(:task, title: 'task one', requester: user, project: project) }
     let(:task_attachment) { create(:attachment, attachable: task, document: File.new('spec/files/awesome_project_attachment.jpg')) }
     # let(:discussion) { create(:discussion, private: false, project: project, user: project.owner) }
     # let(:discussion_attachment) { create(:attachment, :with_attachment_data, attachable: discussion) }

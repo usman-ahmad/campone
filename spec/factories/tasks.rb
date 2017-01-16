@@ -2,19 +2,19 @@
 #
 # Table name: tasks
 #
-#  id          :integer          not null, primary key
-#  title       :string
-#  description :text
-#  project_id  :integer
-#  priority    :string
-#  due_at      :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  state       :string           default("unscheduled")
-#  owner_id    :integer
-#  reporter_id :integer
-#  position    :integer
-#  ticket_id   :string
+#  id           :integer          not null, primary key
+#  title        :string
+#  description  :text
+#  project_id   :integer
+#  priority     :string
+#  due_at       :date
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  state        :string           default("unscheduled")
+#  owner_id     :integer
+#  requester_id :integer
+#  position     :integer
+#  ticket_id    :string
 #
 
 # UA[2016/12/18] - lorem_ipsum_ize the tests - http://www.lipsum.com/ -> 'Why do we use it?'
@@ -28,11 +28,11 @@ FactoryGirl.define do
     description 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     due_at Date.today
     sequence(:state) { |n| states[(n % 8)] }
-    performer { reporter }
+    performer { requester }
 
     trait :with_comments do
       transient do
-        commenter { reporter }
+        commenter { requester }
         comments_count 1
       end
 
@@ -49,17 +49,17 @@ FactoryGirl.define do
 
       after(:create) do |task, evaluator|
         if evaluator.real_attachments
-          create_list(:attachment, evaluator.attachments_count, :with_real_attachment, uploader: task.reporter, attachable: task)
+          create_list(:attachment, evaluator.attachments_count, :with_real_attachment, uploader: task.requester, attachable: task)
         else
-          create_list(:attachment, evaluator.attachments_count, :with_attachment_data, uploader: task.reporter, attachable: task)
+          create_list(:attachment, evaluator.attachments_count, :with_attachment_data, uploader: task.requester, attachable: task)
         end
       end
     end
 
     # after(:create) do |task, evaluator|
-    #   task.update_attributes(reporter: evaluator.reporter)
+    #   task.update_attributes(requester: evaluator.requester)
     #   task.comments << create_list(:comment, 5, user: evaluator.commenter, commentable_id: task.id, commentable_type: task.class.name, commenter: evaluator.commenter)
-    #   task.create_activity :create, owner: evaluator.reporter
+    #   task.create_activity :create, owner: evaluator.requester
     # end
   end
 end

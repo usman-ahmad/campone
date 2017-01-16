@@ -121,7 +121,7 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id, :tag_list)
-    # .merge(reporter_id: current_user.id) # use performer in TaskController#set_performer ... Task#set_reporter
+    # .merge(requester_id: current_user.id) # use performer in TaskController#set_performer ... Task#set_requester
   end
 
   def set_performer

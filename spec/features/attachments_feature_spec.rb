@@ -63,7 +63,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
   context 'when there is project with existing attachments, and we visit attachments page' do
     it 'enlists project attachment only' do
       # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
-      task = create(:task, project: project, reporter: owner)
+      task = create(:task, project: project, requester: owner)
       create(:project_attachment, title: 'awesome_project_attachment.jpg', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project)
       create(:attachment, document_file_name: 'non_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: task)
 
@@ -144,7 +144,7 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     it 'should add file to project files, when checked add_files_to_project'
     it 'should not add file to project files, when unchecked add_files_to_project'
     # it 'shows allowed comment attachment on attachments page', js: true, driver: :selenium do
-    #   task = create(:task, title: 'create flow chart', project: project, commenter: owner, reporter: owner)
+    #   task = create(:task, title: 'create flow chart', project: project, commenter: owner, requester: owner)
     #   visit project_task_path(project, task)
     #
     #   execute_script('$("#comment_content").trumbowyg("html", "also mentioned your name & roll no.");')

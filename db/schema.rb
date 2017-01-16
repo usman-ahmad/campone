@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112132133) do
+ActiveRecord::Schema.define(version: 20170112203812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,16 +197,16 @@ ActiveRecord::Schema.define(version: 20170112132133) do
     t.integer  "project_id"
     t.string   "priority"
     t.date     "due_at"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "state",       default: "unscheduled"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "state",        default: "unscheduled"
     t.integer  "owner_id"
-    t.integer  "reporter_id"
+    t.integer  "requester_id"
     t.integer  "position"
     t.string   "ticket_id"
     t.index ["owner_id"], name: "index_tasks_on_owner_id", using: :btree
     t.index ["project_id"], name: "index_tasks_on_project_id", using: :btree
-    t.index ["reporter_id"], name: "index_tasks_on_reporter_id", using: :btree
+    t.index ["requester_id"], name: "index_tasks_on_requester_id", using: :btree
     t.index ["ticket_id"], name: "index_tasks_on_ticket_id", unique: true, using: :btree
   end
 
@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(version: 20170112132133) do
   add_foreign_key "notifications_backup", "users"
   add_foreign_key "payloads", "integrations"
   add_foreign_key "tasks", "projects"
-  add_foreign_key "tasks", "users", column: "reporter_id"
+  add_foreign_key "tasks", "users", column: "requester_id"
   add_foreign_key "user_discussions", "discussions"
   add_foreign_key "user_discussions", "users"
 end
