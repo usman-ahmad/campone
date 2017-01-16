@@ -3,6 +3,7 @@
 
   <p class="todo-content">
     <%= content_tag(:span, task.state, class: "label label-info progress-status progress-#{task.state}") %>
+    <%= content_tag(:i, '', class: "mg-r10 fa  #{task.task_type == 'bug' ? 'fa-bug' : 'fa-star-o'}", title: "Task Type: #{task.task_type}") %>
 
     <%= link_to project_task_path(task.project, task) do %>
         <%= content_tag(:strong, task.ticket_id.upcase) %>

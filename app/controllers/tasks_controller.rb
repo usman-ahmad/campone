@@ -120,7 +120,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id, :tag_list)
+    params.require(:task).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id, :tag_list, :task_type)
     # .merge(requester_id: current_user.id) # use performer in TaskController#set_performer ... Task#set_requester
   end
 

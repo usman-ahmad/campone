@@ -15,6 +15,7 @@
 #  requester_id :integer
 #  position     :integer
 #  ticket_id    :string
+#  task_type    :string           default("feature")
 #
 
 require 'rails_helper'
@@ -39,19 +40,26 @@ RSpec.describe Task, type: :model do
   let(:user) { create(:user) }
   let(:project) { create(:project, owner: user, title: 'T E S Ting') }
 
-  describe 'validations' do
+  context 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:project) }
+    it { should validate_presence_of(:task_type) }
 
     it { should allow_value('unscheduled', 'unstarted', 'started', 'paused', 'finished', 'delivered', 'rejected',
                             'accepted').for(:state) }
-    it { should_not allow_value('blah').for(:state) }
+    it { should_not allow_value('none', 'blah', 'current').for(:state) }
 
     it { should allow_value('Low', 'Medium', 'High').for(:priority) }
     it { should_not allow_value('blah').for(:priority) }
+
+    it { should allow_value('feature', 'bug').for(:task_type) }
+    it { should_not allow_value('None', 'blah').for(:task_type) }
+
+    # RN[2016/12/26]: 'should not allow due date in past' validation is removed to support updating old tasks and importing tasks from third party
+    it { should allow_value(Date.yesterday, Date.tomorrow).for(:due_at) }
   end
 
-  describe 'associations' do
+  context 'associations' do
     it { should belong_to(:project) }
     it { should belong_to(:requester).class_name('User').with_foreign_key('requester_id') }
     it { should have_many(:comments) }
@@ -61,15 +69,15 @@ RSpec.describe Task, type: :model do
   end
 
 
-  describe 'default values' do
-    expected_values = {state: 'unstarted'}
+  context 'default values' do
+    expected_values = {state: 'unstarted', task_type: 'feature'}
 
     expected_values.each do |key, val|
       it { is_expected.to have_value(key, val) }
     end
   end
 
-  describe 'callbacks' do
+  context 'callbacks' do
     let!(:task) { create(:task, title: 'task one', requester: user, project: project) }
 
     describe 'set_position' do
@@ -253,7 +261,7 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe 'class level methods' do
+  context 'class level methods' do
     # This is sample data used for testing Search and CSV exports
     # Changing this data may break these specs. So dont change or Add/Remove this data.
     let!(:task) { create(:task, title: 'task one', description: 'task 1 create ERD', state: 'started', requester: user, project: project) }
@@ -465,27 +473,6 @@ RSpec.describe Task, type: :model do
   #     end
   #   end
   # end
-
-  it 'should have title' do
-    expect(build(:task, project: project, title: nil)).to_not be_valid
-  end
-
-  # TODO: This validation is rejected in module due to it will cause issue while updating old task and importing tasks from third party
-  # RN[2016/12/26]
-  # it 'should not allow due date in past', pending: 'Add validation in model if required.' do
-  #   expect(build(:task, priority: 'Medium', project: project, due_at: (Date.today - 1))).to_not be_valid
-  # end
-
-  it 'should allow nil due date' do
-    expect(build(:task, project: project, due_at: nil)).to be_valid
-  end
-
-  it 'should allow us to create' do
-    expect(create(:task, priority: 'Low', project: project, requester: project.owner).priority).to eq('Low')
-    expect(create(:task, priority: 'Low', project: project, state: 'finished', requester: project.owner).state).to eq('finished')
-    expect(create(:task, priority: 'Medium', project: project, requester: project.owner).priority).to eq('Medium')
-    expect(create(:task, priority: 'High', project: project, state: 'unstarted', requester: project.owner).priority).to eq('High')
-  end
 
   describe 'notifications' do
     let(:owner) { create(:user, name: 'Owner name') }

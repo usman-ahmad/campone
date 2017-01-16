@@ -307,6 +307,12 @@
   display: inline;
   color: #646363;
   font-size: 14px;
+  .fa-bug {
+    color: #FF3333;
+  }
+   .fa-star-o {
+    color: #FFCC00;;
+  }
 }
 
 .customTodo-icon {
@@ -854,45 +860,47 @@
 .progress-status {
   cursor: default;
   margin-right: 10px;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .progress-unscheduled {
   background-color: #777;
+  padding: 0.3em 0.6em 0.4em;
 }
 
 .progress-unstarted {
   background-color: #c8cbd0;
-  padding: .2em 1.4em .3em;
+  padding: 0.3em 1.2em .4em;
 }
 
 .progress-started {
   background-color: #5bc0de;;
-  padding: .2em 2em .3em;
+  padding: .3em 1.8em .4em;
 }
 
 .progress-paused {
   background-color: #f7c018;
-  padding: .2em 2em .3em;
+  padding: .3em 2.1em .4em;
 }
 
 .progress-finished {
   background-color: #203e64;
-  padding: .2em 1.9em .3em;
+  padding: .3em 1.5em .4em;
 }
 
 .progress-delivered {
   background-color: #f39300;
-  padding: .2em 1.6em .3em;
+  padding: .3em 1.2em .4em;
 }
 
 .progress-rejected {
   background-color: #950828;
-  padding: .2em 1.9em .3em;
+  padding: .3em 1.5em .4em;
 }
 
 .progress-accepted {
   background-color: #629200;
-  padding: .2em 1.7em .3em;
+  padding: .3em 1.5em .4em
 }
 
 .todo-after + p {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112203812) do
+ActiveRecord::Schema.define(version: 20170113121454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20170112203812) do
     t.integer  "requester_id"
     t.integer  "position"
     t.string   "ticket_id"
+    t.string   "task_type",    default: "feature"
     t.index ["owner_id"], name: "index_tasks_on_owner_id", using: :btree
     t.index ["project_id"], name: "index_tasks_on_project_id", using: :btree
     t.index ["requester_id"], name: "index_tasks_on_requester_id", using: :btree

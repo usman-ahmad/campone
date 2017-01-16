@@ -15,10 +15,10 @@
 #  requester_id :integer
 #  position     :integer
 #  ticket_id    :string
+#  task_type    :string           default("feature")
 #
 
 class Task < ApplicationRecord
-  # include Attachable
   include Notifiable
   act_as_notifiable performer: :performer,
                     receivers: :notification_receivers,
@@ -68,6 +68,7 @@ class Task < ApplicationRecord
   attr_accessor :performer
 
   PRIORITIES =%w[Low Medium High]
+  TASK_TYPES = %w(feature bug)
   STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
            to: :current_state
@@ -75,6 +76,7 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :project, presence: true
+  validates :task_type, presence: true, inclusion: {in: TASK_TYPES}
 
   validates_inclusion_of :state, in: STATES
   validates_inclusion_of :priority, in: PRIORITIES, :allow_blank => true
@@ -82,25 +84,6 @@ class Task < ApplicationRecord
   def notification_receivers
     project.members - [performer]
   end
-
-  # COMPLETED_STATES = %w[finished delivered accepted]
-  # NOT_COMPLETED_STATES = %w[unscheduled unstarted started paused rejected]
-  # UA[2016/11/22] - NOT USED ANY WHERE # REFACTOR SPECS
-  # scope :completed, -> { where(state: COMPLETED_STATES) }
-  # scope :not_completed, -> { where(state: NOT_COMPLETED_STATES) }
-  #
-  # # TODO: Delete this code, We are not validating due_date, as it will cause issue while updating old task and importing tasks from third party
-  # def due_date
-  #   errors.add(:due_at, "can't be in the past") if due_at < Date.today if due_at.present?
-  # end
-  #
-  # def not_completed?
-  #   !completed?
-  # end
-  # UA[2016/11/22] - NOT BEING USED IN CODE
-  # def completed?
-  #   COMPLETED_STATES.include?(self.state)
-  # end
 
   def attachments_array=(array)
     return unless array.present?
@@ -113,10 +96,6 @@ class Task < ApplicationRecord
   def current_state
     state.inquiry
   end
-
-  # :to_do => :unscheduled, :unstarted
-  # :doing => :started, :paused, :rejected
-  # :done => :finished, :delivered, :accepted
 
   def next_states
     case state
@@ -231,7 +210,6 @@ class Task < ApplicationRecord
     end
 
     task.save
-
     task
   end
 

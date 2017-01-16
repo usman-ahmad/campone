@@ -49,6 +49,10 @@
               <% end %>
             </li>
         <% end %>
+        <li class="col-md-4">
+          <span class="key">Task Type: </span>
+          <span class="value "><%= @task.task_type.upcase %></span>
+        </li>
         <li class="col-md-12">
           <span class="key">Description: </span>
           <span class="value description-value"><%= @task.description.try(:html_safe) %></span>

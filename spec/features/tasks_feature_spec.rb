@@ -74,7 +74,7 @@ describe 'tasks management', type: :feature do
     end
 
     # Its better to test single field in one example but for performance we can test many things in one
-    it 'assigns correct values', js: true do
+    it 'assigns correct values without select task task_type', js: true do
       fill_in 'task[title]', with: 'bring some thing with tea'
 
       execute_script('$(".description-textarea").trumbowyg("html", "bring some date biscuits with some salty stuff");')
@@ -87,13 +87,13 @@ describe 'tasks management', type: :feature do
       click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')
       expect(page).to have_content('#TASKS')
-
       click_link 'bring some thing with tea'
 
       expect(page).to have_content('bring some thing with tea')
       expect(page).to have_content('bring some date biscuits with some salty stuff')
       expect(page).to have_content('High')
       expect(page).to have_content('Great Person')
+      expect(page).to have_content('FEATURE')
       expect(page).to have_content('#TASKS')
     end
 
@@ -118,6 +118,17 @@ describe 'tasks management', type: :feature do
       click_link 'tag all office loptops as one two three'
       expect(page).to have_content('#LAB X #THREE #TWO #ONE')
     end
+
+    it 'assigns correct values with selecting task task_type', js: true do
+      fill_in 'task[title]', with: 'bring some thing with tea'
+      select 'bug', :from => 'task[task_type]'
+
+      click_button 'Add To-Do'
+      click_link 'bring some thing with tea'
+
+      expect(page).to have_content('bring some thing with tea')
+      expect(page).to have_content('BUG')
+    end
   end
 
   describe 'Update', js: true do
@@ -135,6 +146,16 @@ describe 'tasks management', type: :feature do
       click_on 'start'
       expect(page).to have_content('Owner: Great Person')
       expect(page.find('span[id="state"]')).to have_content('Started')
+    end
+
+    it 'should change task task_type' do
+      expect(page).to have_content('FEATURE')
+
+      click_on 'Edit'
+      select 'bug', :from => 'task[task_type]'
+
+      click_button 'Update To-Do'
+      expect(page).to have_content('BUG')
     end
   end
   # TO DO, ckeditor is dont provide find any element with the help of capybara.

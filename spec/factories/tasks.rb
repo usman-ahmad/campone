@@ -15,6 +15,7 @@
 #  requester_id :integer
 #  position     :integer
 #  ticket_id    :string
+#  task_type    :string           default("feature")
 #
 
 # UA[2016/12/18] - lorem_ipsum_ize the tests - http://www.lipsum.com/ -> 'Why do we use it?'
