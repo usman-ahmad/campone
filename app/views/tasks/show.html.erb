@@ -16,8 +16,8 @@
       </div>
       <ul class="col-md-12 todo-info-list">
         <li class="col-md-4">
-          <span class="key">Assigned To: </span>
-          <span id="assigned_to" class="value"><%= task_assigned_to @task %></span>
+          <span class="key">Owner: </span>
+          <span id="owner" class="value"><%= task_assigned_to @task %></span>
         </li>
         <% if @task.due_at.present? %>
          <li class="col-md-4">

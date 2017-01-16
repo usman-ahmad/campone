@@ -13,9 +13,9 @@
         <% task.get_tags.each do |tag| %>
             <%= link_to("##{tag.upcase}", project_tasks_path(@project, tags: tag), class: 'tag', title: "Tag: #{tag}") %>
         <% end %>
-        <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}")  if task.priority.present? %>
+        <%= content_tag(:span, task.priority, class: 'tag', title: "Priority: #{task.priority}") if task.priority.present? %>
         <%= content_tag(:span, task.due_at, class: 'tag', title: "Due on: #{task.due_at}") if task.due_at.present? %>
-        <%= link_to("@#{task_assigned_to task}", project_tasks_path(@project, owner:task.owner), class: 'tag') if task.owner_id.present?  %>
+        <%= link_to("@#{task_assigned_to task}", project_tasks_path(@project, owner: task.owner), class: 'tag', title: "Owner: #{task_assigned_to task}") if task.owner_id.present? %>
         <%= content_tag(:i, '', class: 'fa fa-list-alt', title: 'This task has description') if task.description.present? %>
         <%= content_tag(:i, '', class: 'fa fa-paperclip', title: 'This task has attachments') if task.attachments.present? %>
         <%= content_tag(:i, task.comments.count, class: 'fa fa-commenting-o', title: "This task has #{pluralize(task.comments.count, 'comment')}") if task.comments.present? %>

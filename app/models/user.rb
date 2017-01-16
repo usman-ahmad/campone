@@ -51,7 +51,8 @@ class User < ApplicationRecord
   # has_many :invited_users, through: :contributions, source: :user, foreign_key: :owner_id
 
   # has_many :created_tasks # which he created on any project
-  has_many :assigned_tasks, class_name: Task, foreign_key: :assigned_to
+# TODO has_many :assigned_tasks => can we rename it?
+  has_many :assigned_tasks, class_name: Task, foreign_key: :owner_id
 
   # has_many :started_discussions # started_by this user
   has_many :user_discussions

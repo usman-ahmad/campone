@@ -81,8 +81,8 @@ describe 'tasks management', type: :feature do
       fill_in 'task[due_at]', with: '2016-03-30' # Datepicker
 
       select 'High', :from => 'Priority'
-      select 'Everybody', :from => 'task[owner_id]'
       execute_script('$("#task_tag_list").val("TASKS");')
+      select 'Everybody', :from => 'Owner'
 
       click_button 'Add To-Do'
       expect(page).to have_content('2016-03-30')
@@ -127,13 +127,13 @@ describe 'tasks management', type: :feature do
 
     it 'should assign to me' do
       click_on 'Assign to Me'
-      expect(page.find('span[id="assigned_to"]')).to have_content(owner.name)
+      expect(page.find('span[id="owner"]')).to have_content(owner.name)
     end
 
     it 'should change state', js: true do
       click_on 'Assign to Me'
       click_on 'start'
-      expect(page).to have_content('Assigned To: Great Person')
+      expect(page).to have_content('Owner: Great Person')
       expect(page.find('span[id="state"]')).to have_content('Started')
     end
   end
