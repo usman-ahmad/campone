@@ -1,23 +1,13 @@
-<div class="clearfix"></div>
 <div class="col-md-12">
-  <ul>
-    <li class="media" style="padding-top: 10px;">
-      <div class="media-left hidden-xs">
-        <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">TJ</span>
+  <%= form_for [@project, @commentable, @comment], html: {multipart: true} do |f| %>
+      <%= render 'shared/error_messages', object: @comment %>
+      <div class="form-group comment-textarea">
+        <%= f.text_area :content, rows: 3, class: 'form-control description-textarea' %>
       </div>
-      <div class="media-body">
-        <%= form_for [@project, @commentable, @comment], html: {multipart: true} do |f| %>
-
-            <%= render 'shared/error_messages', object: @comment %>
-            <div class="form-group">
-              <%= f.text_area :content, rows: 8, class: 'form-control description-textarea' %>
-            </div>
-            <div>
-              <%= f.submit class: 'btn btn-success pull-right' %>
-              <%= render 'attachments/browse_attachments', addable_to_project: true if @comment.new_record? %>
-            </div>
-        <% end %>
+      <div>
+        <%= f.submit class: 'btn btn-success pull-right' %>
+        <%= render 'attachments/browse_attachments', addable_to_project: true if @comment.new_record? %>
       </div>
-    </li>
-  </ul>
+  <% end %>
 </div>
+<div class="clearfix"></div>

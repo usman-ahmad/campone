@@ -1,33 +1,49 @@
-<div class="col-md-12">
-  <div class="comments-container">
-    <ul id="comments-list" class="comments-list">
+<div class="panel panel-default">
+  <div class="panel-body">
+    <ul class="comments-list">
       <% @comments.each do |comment| %>
-          <li>
-            <div class="comment-main-level">
-              <div class="comment-avatar">
-                <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
-              </div>
-              <div class="col-md-10 comment-box nopadding">
-                <div class="comment-head">
-                  <h6 class="comment-name"><%= comment.user.name %></h6>
-                  <span><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago</span>
-                  <% polymorphic_url_array = [@project, @commentable, comment] %>
+          <li class="comment clearfix">
+            <a class="pull-left" href="#">
+              <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
+            </a>
+            <span class="pull-right todo-detail-comment-icon">
+              <% polymorphic_url_array = [@project, @commentable, comment] %>
+              <% if can? :destroy, comment %>
+                <%= link_to polymorphic_path(polymorphic_url_array), method: :delete do %>
+                  <i class="fa fa-trash-o"></i>
+                <% end %>
+                <% end %>
 
-                  <% if can? :destroy, comment %>
-                    <%= link_to polymorphic_path(polymorphic_url_array), method: :delete do %>
-                      <i class="fa fa-trash-o"></i>
-                    <% end %>
-                  <% end %>
+              <%= link_to edit_polymorphic_path(polymorphic_url_array) do %>
+                  <i class="fa fa-pencil"></i>
+              <% end %>
+            </span>
 
-                  <%= link_to edit_polymorphic_path(polymorphic_url_array) do %>
-                      <i class="fa fa-pencil"></i>
-                  <% end %>
-                </div>
-                <div class="comment-content">
-                  <%= simple_format comment.content %>
-                  <%= render 'attachments/list_attachments', resource: comment %>
-                </div>
+            <div class="comment-body">
+              <div class="comment-heading">
+                <h4 class="user"><%= comment.user.name %></h4>
+                <h5 class="time"><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago</h5>
               </div>
+              <p><%= simple_format comment.content %></p>
+              <% if comment.attachments.present? %>
+                  <h4>Attachments</h4>
+                  <% comment.attachments.each do |attachment| %>
+                      <div class="comment-attachment">
+                        <%= image_tag attachment.document.exists?(:thumb) ? attachment.document.url(:thumb) : 'missing_file_type.png',
+                                      title: attachment.document_file_name %>
+                        <div class="mask">
+                        <span class="mask-icon">
+                            <%= content_tag(:i, '', class: 'fa fa-search', data: {toggle: "modal", target: "#attachmentPreviewModel",
+                                                                                  type: attachment.document_content_type,
+                                                                                  url: attachment.document.url,
+                                                                                  title: attachment.document_file_name}) %>
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </span>
+                        </div>
+                      </div>
+                  <% end %>
+              <% end %>
             </div>
           </li>
       <% end %>

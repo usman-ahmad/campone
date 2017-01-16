@@ -5,8 +5,8 @@
 <div class="row">
   <div class="col-md-12 show-page-head">
   </div>
-  <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="col-md-9">
+  <div class="">
+    <div class="col-md-6">
       <div class="todo-head-container">
         <div class="user-img-15 pull-left">JB</div>
         <div class="todo_name">
@@ -15,31 +15,37 @@
         </div>
       </div>
       <ul class="col-md-12 todo-info-list">
+        <% if @task.description.present? %>
+            <li class="col-md-12">
+              <span class="key">Description: </span>
+              <span class="value description-value"><%= @task.description.try(:html_safe) %></span>
+            </li>
+        <% end %>
         <li class="col-md-4">
           <span class="key">Owner: </span>
           <span id="owner" class="value"><%= task_assigned_to @task %></span>
         </li>
         <% if @task.due_at.present? %>
-         <li class="col-md-4">
-          <span class="key">Due By: </span>
-          <span class="value"><%= @task.due_at %></span>
-         </li>
+            <li class="col-md-4">
+              <span class="key">Due By: </span>
+              <span class="value"><%= @task.due_at %></span>
+            </li>
         <% end %>
         <% if @task.priority.present? %>
-        <li class="col-md-4">
-          <span class="key">Priority: </span>
-          <span class="value"><%= @task.priority %></span>
-        </li>
+            <li class="col-md-4">
+              <span class="key">Priority: </span>
+              <span class="value"><%= @task.priority %></span>
+            </li>
         <% end %>
         <li class="col-md-4">
           <span class="key">State: </span>
           <span id="state" class="value"><%= @task.state.humanize %></span>
         </li>
         <% if @task.requester.present? %>
-         <li class="col-md-4">
-          <span class="key">Requester: </span>
-          <span class="value"> <%= @task.requester.name %> </span>
-         </li>
+            <li class="col-md-4">
+              <span class="key">Requester: </span>
+              <span class="value"> <%= @task.requester.name %> </span>
+            </li>
         <% end %>
         <% if @task.tag_list.present? %>
             <li class="col-md-4">
@@ -53,37 +59,31 @@
           <span class="key">Task Type: </span>
           <span class="value "><%= @task.task_type.upcase %></span>
         </li>
-        <li class="col-md-12">
-          <span class="key">Description: </span>
-          <span class="value description-value"><%= @task.description.try(:html_safe) %></span>
-        </li>
       </ul>
       <div class="col-md-12 todo-item">
         <div class="pull-left">
-          <%#= link_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, remote: true, class: 'btn btn-default' %>
           <%= button_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
-          <span id = "state_buttons">
-            <%#= render 'tasks/state_buttons'%>
+          <span id="state_buttons">
             <% @task.next_states.each do |event, progress| %>
-                <%#= link_to event, set_state_project_task_path(@project, @task, state: progress), method: :patch, remote: true, class: 'btn btn-default' %>
                 <%= button_to event, set_state_project_task_path(@project, @task, state: progress), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
             <% end %>
           </span>
         </div>
         <div class="pull-right">
-          <%= link_to edit_project_task_path(@project ,@task), class: 'btn btn-default' do %>
-              Edit
-          <% end %>
-          <% if can? :destroy, @task %>
-            <%= link_to project_task_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
-              Delete
-            <% end %>
+          <%= link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-default' %>
+          <% if can?(:destroy, @task) %>
+              <%= link_to 'Delete', project_task_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
           <% end %>
         </div>
       </div>
       <%= render 'attachments/list_attachments', resource: @task %>
-      <%= render "comments/comments" %>
+    </div>
+    <div class="col-md-6">
+      <h3 class="heading-3">Comments</h3>
       <%= render "comments/form" %>
+      <% if @comments.present? %>
+          <%= render "comments/comments" %>
+      <% end %>
     </div>
   </div>
 </div>
