@@ -20,6 +20,8 @@ $(document).on('turbolinks:load', function () {
         } else {
             modal.find('#attachmentNoPreview').show();
         }
+    }).on('hidden.bs.modal', function () {
+        $(this).find('video#attachmentVideo')[0].pause();
     });
 });
 
