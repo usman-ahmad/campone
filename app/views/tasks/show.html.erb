@@ -3,95 +3,91 @@
 <% end %>
 
 <div class="row">
-  <div class="col-md-12 show-page-head">
-  </div>
-  <div class="">
-    <div class="col-md-6">
-      <div class="todo-head-container">
-        <div class="user-img-15 pull-left">JB</div>
-        <div class="todo_name">
-          <div class="todo-list"> <%= @task.ticket_id.upcase %> </div>
-          <div class="todo-name"> <%= @task.title %> </div>
-        </div>
+  <div class="col-md-6">
+    <div class="todo-head-container">
+      <div class="user-img-15 pull-left">JB</div>
+      <div class="todo_name">
+        <div class="todo-list"> <%= @task.ticket_id.upcase %> </div>
+        <div class="todo-name"> <%= @task.title %> </div>
       </div>
-      <ul class="col-md-12 todo-info-list">
-        <% if @task.description.present? %>
-            <li class="col-md-12">
-              <span class="key">Description: </span>
-              <span class="value description-value"><%= @task.description.try(:html_safe) %></span>
-            </li>
-        <% end %>
-        <li class="col-md-4">
-          <span class="key">Owner: </span>
-          <span id="owner" class="value"><%= task_assigned_to @task %></span>
-        </li>
-        <% if @task.due_at.present? %>
-            <li class="col-md-4">
-              <span class="key">Due By: </span>
-              <span class="value"><%= @task.due_at %></span>
-            </li>
-        <% end %>
-        <% if @task.priority.present? %>
-            <li class="col-md-4">
-              <span class="key">Priority: </span>
-              <span class="value"><%= @task.priority %></span>
-            </li>
-        <% end %>
-        <li class="col-md-4">
-          <span class="key">State: </span>
-          <span id="state" class="value"><%= @task.state.humanize %></span>
-        </li>
-        <% if @task.requester.present? %>
-            <li class="col-md-4">
-              <span class="key">Requester: </span>
-              <span class="value"> <%= @task.requester.name %> </span>
-            </li>
-        <% end %>
-        <% if @task.tag_list.present? %>
-            <li class="col-md-4">
-              <span class="key">Tags: </span>
-              <% @task.get_tags.each do |tag| %>
-                  <span id="state" class="value">#<%= tag.upcase %></span>
-              <% end %>
-            </li>
-        <% end %>
-        <li class="col-md-4">
-          <span class="key">Task Type: </span>
-          <span class="value "><%= @task.task_type.upcase %></span>
-        </li>
-      </ul>
-      <div class="col-md-12 todo-item">
-        <div class="pull-left">
-          <%= button_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
-          <span id="state_buttons">
+    </div>
+    <ul class="col-md-12 todo-info-list">
+      <% if @task.description.present? %>
+          <li class="col-md-12">
+            <span class="key">Description: </span>
+            <span class="value description-value"><%= @task.description.try(:html_safe) %></span>
+          </li>
+      <% end %>
+      <li class="col-md-4">
+        <span class="key">Owner: </span>
+        <span id="owner" class="value"><%= task_assigned_to @task %></span>
+      </li>
+      <% if @task.due_at.present? %>
+          <li class="col-md-4">
+            <span class="key">Due By: </span>
+            <span class="value"><%= @task.due_at %></span>
+          </li>
+      <% end %>
+      <% if @task.priority.present? %>
+          <li class="col-md-4">
+            <span class="key">Priority: </span>
+            <span class="value"><%= @task.priority %></span>
+          </li>
+      <% end %>
+      <li class="col-md-4">
+        <span class="key">State: </span>
+        <span id="state" class="value"><%= @task.state.humanize %></span>
+      </li>
+      <% if @task.requester.present? %>
+          <li class="col-md-4">
+            <span class="key">Requester: </span>
+            <span class="value"> <%= @task.requester.name %> </span>
+          </li>
+      <% end %>
+      <% if @task.tag_list.present? %>
+          <li class="col-md-4">
+            <span class="key">Tags: </span>
+            <% @task.get_tags.each do |tag| %>
+                <span id="state" class="value">#<%= tag.upcase %></span>
+            <% end %>
+          </li>
+      <% end %>
+      <li class="col-md-4">
+        <span class="key">Task Type: </span>
+        <span class="value "><%= @task.task_type.upcase %></span>
+      </li>
+    </ul>
+    <div class="col-md-12 todo-item">
+      <div class="pull-left">
+        <%= button_to 'Assign to Me', assigned_to_me_project_task_path(@project, @task), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
+        <span id="state_buttons">
             <% @task.next_states.each do |event, progress| %>
                 <%= button_to event, set_state_project_task_path(@project, @task, state: progress), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
             <% end %>
           </span>
-        </div>
-        <div class="pull-right">
-          <%= link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-default' %>
-          <% if can?(:destroy, @task) %>
-              <%= link_to 'Delete', project_task_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
-          <% end %>
-        </div>
       </div>
-      <%= render 'attachments/list_attachments', resource: @task %>
-      <label for="attachments_array_" class="task-attachment-file"><span><i class="fa fa-upload fa-2x" aria-hidden="true"></i> Upload File</span></label>
+      <div class="pull-right">
+        <%= link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-default' %>
+        <% if can?(:destroy, @task) %>
+            <%= link_to 'Delete', project_task_path(@project, @task), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" %>
+        <% end %>
+      </div>
+    </div>
+    <%= render 'attachments/list_attachments', resource: @task %>
+    <label for="attachments_array_" class="task-attachment-file"><span><i class="fa fa-upload fa-2x" aria-hidden="true"></i> Upload File</span></label>
 
-      <div class="attachment-div hidden">
-        <div class="col-sm-6 col-md-6">
-          <%= render 'attachments/browse_attachments', addable_to_project: true if @task.persisted? %>
-        </div>
-        <button class="btn btn-success">Add Attachment</button>
+    <div class="attachment-div hidden">
+      <div class="col-sm-6 col-md-6">
+        <%= render 'attachments/browse_attachments', addable_to_project: true if @task.persisted? %>
       </div>
+      <button class="btn btn-success">Add Attachment</button>
     </div>
-    <div class="col-md-6">
-      <h3 class="heading-3">Comments</h3>
-      <%= render "comments/form" %>
-      <% if @comments.present? %>
-          <%= render "comments/comments" %>
-      <% end %>
-    </div>
+  </div>
+  <div class="col-md-6">
+    <h3 class="heading-3 mg-t0">Comments</h3>
+    <%= render "comments/form" %>
+    <% if @comments.present? %>
+        <%= render "comments/comments" %>
+    <% end %>
   </div>
 </div>

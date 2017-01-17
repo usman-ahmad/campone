@@ -47,6 +47,10 @@ $(document).on('turbolinks:load', function () {
         btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['horizontalRule']]
     });
 
+    $('.description-textarea').on('tbwchange', function () {
+        $('.comment-action').removeClass('hidden');
+    });
+
     // UA[2016/12/06] - for "attachments/browse_attachments" affects [tasks, discussions, comments]
     $('#attachments_array_').on('input:file').change(function () {
         //console.log('activated....');

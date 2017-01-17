@@ -3,7 +3,7 @@
     <div class="form-group comment-textarea">
       <%= f.text_area :content, rows: 3, placeholder: 'Add Comment', class: 'form-control description-textarea' %>
     </div>
-    <div>
+    <div class="comment-action hidden mg-b40">
       <%= f.submit class: 'btn btn-success pull-right' %>
       <%= render 'attachments/browse_attachments', addable_to_project: true if @comment.new_record? %>
     </div>
