@@ -15,6 +15,7 @@
 #                                        PATCH     /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#update
 #                                        PUT       /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#update
 #                                        DELETE    /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#destroy
+#        attach_project_task_attachments POST      /projects/:project_id/tasks/:task_id/attachments/attach(.:format)            attachments#attach
 #                          project_tasks GET       /projects/:project_id/tasks(.:format)                                        tasks#index
 #                                        POST      /projects/:project_id/tasks(.:format)                                        tasks#create
 #                       new_project_task GET       /projects/:project_id/tasks/new(.:format)                                    tasks#new
@@ -156,6 +157,9 @@ Rails.application.routes.draw do
 
       patch :assigned_to_me, :set_state, on: :member
       resources :comments
+      resources :attachments, only: :attach do
+        post :attach, on: :collection
+      end
     end
 
     resources :discussions do

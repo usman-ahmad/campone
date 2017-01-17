@@ -29,6 +29,7 @@ class TasksController < ApplicationController
     @commentable = @task
     @comments = @commentable.comments
     @comment = Comment.new
+    @attachment = Attachment.new
   end
 
   def new
