@@ -77,9 +77,13 @@
         </div>
       </div>
       <%= render 'attachments/list_attachments', resource: @task %>
-      <div>
-        <input type="file" name="file-6[]" id="file-6" class="inputfile inputfile-5 hidden" multiple/>
-        <label for="file-6"><span><i class="fa fa-upload fa-2x" aria-hidden="true"></i> Upload File</span></label>
+      <label for="attachments_array_" class="task-attachment-file"><span><i class="fa fa-upload fa-2x" aria-hidden="true"></i> Upload File</span></label>
+
+      <div class="attachment-div hidden">
+        <div class="col-sm-6 col-md-6">
+          <%= render 'attachments/browse_attachments', addable_to_project: true if @task.persisted? %>
+        </div>
+        <button class="btn btn-success">Add Attachment</button>
       </div>
     </div>
     <div class="col-md-6">

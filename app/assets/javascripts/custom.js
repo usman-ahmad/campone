@@ -81,4 +81,8 @@ $(document).on('turbolinks:load', function () {
             $('#errorMessages').html(xhr.responseJSON.join('<br />'));
         }
     });
+    // display browser button with file info when user selected file
+    $('input[type=file]#attachments_array_').change(function () {
+        $(".attachment-div").removeClass('hidden');
+    });
 });

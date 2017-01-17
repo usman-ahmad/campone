@@ -1012,7 +1012,7 @@
   max-width: 100%;
 }
 
-.inputfile-5 + label span {
+.task-attachment-file span {
   text-align: center;
   width: 123px;
   height: 127px;
@@ -1024,16 +1024,16 @@
   margin: 0 auto 10px;
 }
 
-.inputfile-5:focus + label span,
-.inputfile-5.has-focus + label span,
-.inputfile-5 + label:hover span {
+.task-attachment-file:focus span,
+.task-attachment-file.has-focus span,
+.task-attachment-file:hover span {
   cursor: pointer;
 }
 
-.inputfile-5 + label span {
+.task-attachment-file span {
   color: #ccc;
 }
 
-.inputfile-5 + label:hover span {
+.task-attachment-file:hover span {
   color: #8a8282;;
 }
