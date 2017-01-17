@@ -3,54 +3,61 @@
 <% end %>
 
 <div class="row">
-  <div class="col-md-12 show-page-head">
-  </div>
-  <div class="col-md-12 col-sm-12 col-xs-12">
-    <div class="col-md-9">
-
-      <div class="col-md-4">
-        <span class="key">Attachment Title: </span>
-        <span class="value"><%= @attachment.title %></span>
+  <div class="col-md-6">
+    <div class="thumbnail-container">
+      <div class="thumbnail attachment-thumbnail">
+        <a href="<%= @attachment.document.url %>" target="_blank">
+          <%= image_tag(@attachment.document.url) %>
+        </a>
       </div>
-
-      <div class="col-md-4">
-        <span class="key">Attachment Name: </span>
-        <span class="value"><%= @attachment.document_file_name %></span>
-      </div>
-
-      <div class="col-md-4">
-        <span class="key">Attachment Size: </span>
-        <span class="value"><%= (@attachment.document_file_size.to_f/1000).round(2) %> kb</span>
-      </div>
-
-      <div class="col-md-4">
-        <span class="key">Upload By: </span>
-        <span class="value">
-          <%= begin
-                @attachment.uploader.name rescue 'Not Present'
-              end %>
-        </span>
-      </div>
-
-      <div class="col-md-4">
-        <span class="key">Uploaded On: </span>
-        <span class="value"><%= @attachment.created_at.localtime.strftime("%B %d, %Y") %></span>
-      </div>
-
-      <div class="col-md-12">
-        <span class="key">Attachment Description: </span>
-        <span><%= @attachment.description %></span>
-      </div>
-
-      <div class="pull-right">
-        <%= link_to edit_project_attachment_path(@project, @attachment), class: 'btn btn-default' do %>
-            <span class="glyphicon glyphicon-pencil"></span>
-            Edit
-        <% end %>
-      </div>
-
-      <%= render 'comments/comments' %>
-      <%= render 'comments/form' %>
     </div>
+    <div class="col-md-12">
+      <span class="key">Title: </span>
+      <span class="value"><%= @attachment.title %></span>
+    </div>
+    <% if @attachment.description.present? %>
+        <div class="col-md-12">
+          <span class="key">Description: </span>
+          <span class="value"><%= @attachment.description %></span>
+        </div>
+    <% end %>
+    <div class="col-md-6">
+      <span class="key">File Name: </span>
+      <span class="value"><%= @attachment.document_file_name %></span>
+    </div>
+    <div class="col-md-6">
+      <span class="key">Size: </span>
+      <span class="value"><%= number_to_human_size @attachment.document_file_size %></span>
+    </div>
+    <div class="col-md-6">
+      <span class="key">Uploaded By: </span>
+      <span class="value"><%= @attachment.uploader.name %></span>
+    </div>
+    <div class="col-md-6">
+      <span class="key">Uploaded On: </span>
+      <span class="value"><%= @attachment.created_at.localtime.strftime('%B %d, %Y') %></span>
+    </div>
+    <div class="col-md-12 todo-item mg-t20">
+      <%= link_to download_project_attachment_path(@project, @attachment), method: :post, class: 'btn btn-default' do %>
+          <span class="glyphicon glyphicon-download-alt"></span>
+          Download
+      <% end %>
+      <%= link_to edit_project_attachment_path(@project, @attachment), class: 'btn btn-default' do %>
+          <span class="glyphicon glyphicon-pencil"></span>
+          Edit
+      <% end %>
+      <% if can? :destroy, @attachment %>
+          <%= link_to project_attachment_path(@project, @attachment), method: :delete, data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
+              <span class="glyphicon glyphicon-trash"></span>
+          <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h3 class="heading-3">Comments</h3>
+    <%= render 'comments/form' %>
+    <% if @comments.present? %>
+        <%= render 'comments/comments' %>
+    <% end %>
   </div>
 </div>

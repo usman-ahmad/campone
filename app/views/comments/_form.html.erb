@@ -1,13 +1,10 @@
-<div class="col-md-12">
-  <%= form_for [@project, @commentable, @comment], html: {multipart: true} do |f| %>
-      <%= render 'shared/error_messages', object: @comment %>
-      <div class="form-group comment-textarea">
-        <%= f.text_area :content, rows: 3, class: 'form-control description-textarea' %>
-      </div>
-      <div>
-        <%= f.submit class: 'btn btn-success pull-right' %>
-        <%= render 'attachments/browse_attachments', addable_to_project: true if @comment.new_record? %>
-      </div>
-  <% end %>
-</div>
-<div class="clearfix"></div>
+<%= form_for [@project, @commentable, @comment], html: {multipart: true} do |f| %>
+    <%= render 'shared/error_messages', object: @comment %>
+    <div class="form-group comment-textarea">
+      <%= f.text_area :content, rows: 3, placeholder: 'Add Comment', class: 'form-control description-textarea' %>
+    </div>
+    <div>
+      <%= f.submit class: 'btn btn-success pull-right' %>
+      <%= render 'attachments/browse_attachments', addable_to_project: true if @comment.new_record? %>
+    </div>
+<% end %>

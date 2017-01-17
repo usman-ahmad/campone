@@ -24,9 +24,9 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
       expect(page).to have_content('Title of my awesome upload!')
       click_link 'Title of my awesome upload!' # GO TO SHOW ATTACHMENT ACTION
 
-      expect(page).to have_content('Attachment Title: Title of my awesome upload!')
-      expect(page).to have_content('Attachment Description: Some basic description from client.')
-      expect(page).to have_content('Attachment Name: test_attachment.jpg')
+      expect(page).to have_content('Title: Title of my awesome upload!')
+      expect(page).to have_content('Description: Some basic description from client.')
+      expect(page).to have_content('File Name: test_attachment.jpg')
     end
 
     it 'updates the newly created attachment' do
@@ -44,9 +44,9 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
 
       click_button 'Update Attachment'
 
-      expect(page).to have_content('Attachment Title: consectetur adipiscing')
-      expect(page).to have_content('Attachment Name: new name attachment')
-      expect(page).to have_content('Attachment Description: Excepteur sint non proident')
+      expect(page).to have_content('Title: consectetur adipiscing')
+      expect(page).to have_content('File Name: new name attachment')
+      expect(page).to have_content('Description: Excepteur sint non proident')
     end
 
     it 'downloads attachment attached to a project' do
@@ -113,13 +113,12 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
       visit project_attachments_path(project)
 
       expect(page).to have_content('awesome_attachment.png')
-      expect(page).to have_content('Upload By: Gul Baz Khan.')
-
+      expect(page).to have_content('Uploaded by: Gul Baz Khan')
       click_link 'awesome_attachment.png'
 
-      expect(page).to have_content('Attachment Title: awesome_attachment.png')
-      expect(page).to have_content('Attachment Name: awesome_attachment.png')
-      expect(page).to have_content('Upload By: Gul Baz Khan')
+      expect(page).to have_content('Title: awesome_attachment.png')
+      expect(page).to have_content('File Name: awesome_attachment.png')
+      expect(page).to have_content('Uploaded By: Gul Baz Khan')
     end
 
     it 'should not add file to project files, when unchecked add_files_to_project' do

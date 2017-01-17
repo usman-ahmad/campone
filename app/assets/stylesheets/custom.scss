@@ -573,13 +573,13 @@
 }
 
 .key {
+  font-weight: bold;
   font-size: 13px;
   color: #6f6f6f;
 }
 
 .value {
   font-size: 13px;
-  font-weight: bold;
   color: #232323;
   margin-left: 5px;
 }
@@ -986,4 +986,28 @@
 
 .file-icon:hover, .file-icon:focus {
   color: #000;
+}
+.thumbnail-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin-bottom: 20px;
+}
+
+.attachment-thumbnail {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.attachment-thumbnail img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
 }
