@@ -25,25 +25,7 @@
                 <h5 class="time"><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago</h5>
               </div>
               <p><%= simple_format comment.content %></p>
-              <% if comment.attachments.present? %>
-                  <h4>Attachments</h4>
-                  <% comment.attachments.each do |attachment| %>
-                      <div class="comment-attachment">
-                        <%= image_tag attachment.document.exists?(:thumb) ? attachment.document.url(:thumb) : 'missing_file_type.png',
-                                      title: attachment.document_file_name %>
-                        <div class="mask">
-                        <span class="mask-icon">
-                            <%= content_tag(:i, '', class: 'fa fa-search', data: {toggle: "modal", target: "#attachmentPreviewModel",
-                                                                                  type: attachment.document_content_type,
-                                                                                  url: attachment.document.url,
-                                                                                  title: attachment.document_file_name}) %>
-                          <i class="fa fa-download" aria-hidden="true"></i>
-                          <i class="fa fa-trash" aria-hidden="true"></i>
-                        </span>
-                        </div>
-                      </div>
-                  <% end %>
-              <% end %>
+              <%= render 'attachments/list_attachments', resource: comment %>
             </div>
           </li>
       <% end %>
