@@ -1011,3 +1011,29 @@
   max-height: 100%;
   max-width: 100%;
 }
+
+.inputfile-5 + label span {
+  text-align: center;
+  width: 123px;
+  height: 127px;
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
+  display: block;
+  position: relative;
+  padding: 38px 22px;
+  margin: 0 auto 10px;
+}
+
+.inputfile-5:focus + label span,
+.inputfile-5.has-focus + label span,
+.inputfile-5 + label:hover span {
+  cursor: pointer;
+}
+
+.inputfile-5 + label span {
+  color: #ccc;
+}
+
+.inputfile-5 + label:hover span {
+  color: #8a8282;;
+}
