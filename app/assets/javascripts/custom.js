@@ -52,11 +52,12 @@ $(document).on('turbolinks:load', function () {
     });
 
     // UA[2016/12/06] - for "attachments/browse_attachments" affects [tasks, discussions, comments]
-    $('#attachments_array_').on('input:file').change(function () {
+    $('.attachment-array').on('input:file').change(function () {
         //console.log('activated....');
         if ($(this).val().length >= 1) {
+            $(this).next(".attachment-array-value").text($(this).val());
             $(this).parents('.form-group:first')
-                .find('input#add_files_to_project,label[for="add_files_to_project"]').show();
+                .find('input#add_files_to_project,label[data-myID]').show();
         }
     });
 
@@ -86,7 +87,7 @@ $(document).on('turbolinks:load', function () {
         }
     });
     // display browser button with file info when user selected file
-    $('input[type=file]#attachments_array_').change(function () {
+    $('#task-detail-attachment #attachments_array_').change(function () {
         $(".attachment-div").removeClass('hidden');
     });
 });

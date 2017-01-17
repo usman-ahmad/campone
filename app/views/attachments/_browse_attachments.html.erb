@@ -1,7 +1,10 @@
 <div class="form-group">
-  <%= file_field_tag 'attachments_array[]', type: :file, multiple: true %>
+  <%= file_field_tag 'attachments_array[]', class: 'attachment-array', type: :file, multiple: true %>
+  <span class="attachment-array-value"></span>
+
+  <div class="clearfix"></div>
   <% if addable_to_project %>
-      <%= check_box_tag 'add_files_to_project', '1', false, style: 'display: none;' %>
-      <%= label_tag 'add_files_to_project', 'also add to Project Files', class: 'custom-label', style: 'display: none;' %>
+      <%= check_box_tag 'add_files_to_project', '1', false, style: 'display: none;', data: {myID: 1} %>
+      <%= label_tag '', 'also add to Project Files', data: {myID: 1}, class: 'custom-label', style: 'display: none;', disabled: true %>
   <% end %>
 </div>

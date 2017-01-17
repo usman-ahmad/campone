@@ -1037,3 +1037,19 @@
 .task-attachment-file:hover span {
   color: #8a8282;;
 }
+
+.attachment-array {
+  width: 90px;
+  display: inline-block !important;
+}
+
+.attachment-array-value {
+  width: 200px;
+  min-height: 2em;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 28px;
+}
