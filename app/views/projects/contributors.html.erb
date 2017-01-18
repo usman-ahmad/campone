@@ -1,0 +1,22 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: '' %>
+<% end %>
+<div class='custom-tab-container'>
+
+  <%= render 'settings_tab', project: @project, class_name:'active', active:'con' %>
+
+  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
+    <div class='custom-tab-content active'>
+      <div class='tab-content-header'>
+        <h3 class='heading-3'>Users Settings</h3>
+      </div>
+      <hr>
+      <div class='col-md-12'>
+        <%= render 'contributions/list' %>
+      </div>
+      <div class='col-md-6 mg-b20'>
+        <%= render 'contributions/form' %>
+      </div>
+    </div>
+  </div>
+</div>

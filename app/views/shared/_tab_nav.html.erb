@@ -7,7 +7,7 @@
     <li role="presentation" class=<%= "active" if active =='files' %>>
       <a href="<%= project_attachments_path(@project) %>"><i class="fa fa-folder-open-o mg-r10"></i>Files</a></li>
     <li role="presentation" class="pull-right <%= "active" if active =='settings' %>">
-      <a href="<%= project_path(@project) %>"><i class="fa fa-cog mg-r10"></i>Project Settings</a>
+      <a href="<%= settings_project_path(@project) %>"><i class="fa fa-cog mg-r10"></i>Project Settings</a>
     </li>
     <li class= "pull-right <%= active == 'todos' ? "show" : "hidden" %> ">
       <%= yield :search_tasks if content_for?(:search_tasks) %>

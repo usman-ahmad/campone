@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :settings, :contributors, :integrations]
 
   # GET /projects
   # GET /projects.json
@@ -11,11 +11,25 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    redirect_to project_tasks_path(@project)
+    # @contribution = Contribution.new
+    # @contributions = @project.contributions
+    #
+    # @integration = Integration.new
+    # @integrations = @project.integrations.all
+  end
+
+  def settings
+  end
+
+  def contributors
     @contribution = Contribution.new
     @contributions = @project.contributions
+  end
 
+  def integrations
     @integration = Integration.new
-    @integrations = @project.integrations.all
+    @integrations = @project.integrations
   end
 
   # GET /projects/new
@@ -48,7 +62,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.html { redirect_to settings_project_path(@project), notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }

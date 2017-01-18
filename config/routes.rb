@@ -2,6 +2,9 @@
 #
 #                                 Prefix Verb      URI Pattern                                                                  Controller#Action
 #                          sort_projects POST      /projects/sort(.:format)                                                     projects#sort
+#                       settings_project GET       /projects/:id/settings(.:format)                                             projects#settings
+#                   contributors_project GET       /projects/:id/contributors(.:format)                                         projects#contributors
+#                   integrations_project GET       /projects/:id/integrations(.:format)                                         projects#integrations
 #                     sort_project_tasks POST      /projects/:project_id/tasks/sort(.:format)                                   tasks#sort
 #               new_import_project_tasks GET       /projects/:project_id/tasks/new_import(.:format)                             tasks#new_import
 #                   import_project_tasks POST      /projects/:project_id/tasks/import(.:format)                                 tasks#import
@@ -149,6 +152,13 @@ Rails.application.routes.draw do
     collection do
       post :sort
     end
+
+    member do
+      get :settings
+      get :contributors
+      get :integrations
+    end
+
     resources :tasks do
       collection do
         post :sort

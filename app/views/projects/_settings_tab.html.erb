@@ -1,0 +1,13 @@
+<div class='col-lg-2 col-md-2 col-sm-2 col-xs-3 custom-tab-menu'>
+  <div class='list-group'>
+    <a href='<%= settings_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'set'%>'>
+      Project Settings
+    </a>
+    <a href='<%= contributors_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'con'%>'>
+      Users Settings
+    </a>
+    <a href='<%= integrations_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'int' %>'>
+      Integrations Settings
+    </a>
+  </div>
+</div>
