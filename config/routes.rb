@@ -77,6 +77,7 @@
 #                                        DELETE    /projects/:project_id/events/:id(.:format)                                   events#destroy
 #         new_import_project_integration GET       /projects/:project_id/integrations/:id/new_import(.:format)                  integrations#new_import
 #       start_import_project_integration POST      /projects/:project_id/integrations/:id/start_import(.:format)                integrations#start_import
+#      instructions_project_integrations GET       /projects/:project_id/integrations/:name/instructions(.:format)              integrations#instructions
 #                   project_integrations GET       /projects/:project_id/integrations(.:format)                                 integrations#index
 #                                        POST      /projects/:project_id/integrations(.:format)                                 integrations#create
 #                new_project_integration GET       /projects/:project_id/integrations/new(.:format)                             integrations#new
@@ -188,6 +189,8 @@ Rails.application.routes.draw do
         get :new_import
         post :start_import
       end
+
+      get '/:name/instructions' => 'integrations#instructions', on: :collection, as: :instructions
     end
   end
 

@@ -54,6 +54,23 @@ class IntegrationsController < ApplicationController
     redirect_to project_tasks_path(@project), notice: 'Success'
   end
 
+  def instructions
+    integration_name = params[:name]
+
+    @integration = Integration.new
+    @integration.name = integration_name
+
+    # TODO: Uncomment, after creating pages for other integrations
+    # case integration_name
+    #   when 'slack'
+    #     render 'slack'
+    #   else
+    #     redirect_back fallback_location: new_project_integration_path(@project), notice: 'No instructions available'
+    # end
+
+    render 'slack'
+  end
+
   private
 
   def set_project
