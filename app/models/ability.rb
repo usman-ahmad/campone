@@ -1,6 +1,8 @@
 class Ability
   include CanCan::Ability
 
+  OWNER = Contribution::ROLES[:owner]
+
   # Anything except deleting a project
   MANAGER = Contribution::ROLES[:manager]
 
@@ -30,11 +32,11 @@ class Ability
     can :manage, Discussion
     can :manage, Attachment
 
-    can [:create, :update], Contribution do |contribution|
-      contribution.project.contributions.where(role: MANAGER, user_id: user.id).present?
+    can [:crud, :resend_invitation], Contribution do |contribution|
+      contribution.project.contributions.where(role: [MANAGER, OWNER] , user_id: user.id).present?
     end
+    cannot :manage, Contribution, role: OWNER
 
-    can [:crud, :resend_invitation], Contribution, :project => {owner_id: user.id}
     can :join, Contribution, user: user
 
     # User can only manage his comments

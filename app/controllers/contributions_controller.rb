@@ -33,6 +33,7 @@ class ContributionsController < ApplicationController
   end
 
   def update
+    # TODO: Very important. Should not update if role is set to 'Owner'
     if @contribution.update_attributes(contribution_params)
       flash[:alert] = 'Updated successfully.'
     else
@@ -49,6 +50,8 @@ class ContributionsController < ApplicationController
 
   def resend_invitation
     @contribution.resend_invitation
+    flash[:alert] = 'Invitation email sent successfully.'
+    redirect_back(fallback_location: project_path(@project))
   end
 
   def join

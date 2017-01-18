@@ -12,9 +12,16 @@
             <td><%= "#{contribution.role}" if contribution.role %></td>
             <td><%= contribution.status %></td>
             <td>
-              <%= button_to 'Delete', project_contribution_path(@project, contribution), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
-              <%= link_to 'Edit', edit_project_contribution_path(@project, contribution), class: 'btn btn-default' %>
-              <%= button_to 'Resend Invitation', resend_invitation_project_contribution_path(@project, contribution), method: :post, class: 'btn btn-default', form: {style: 'display: inline-block;'} if contribution.status != 'joined' %>
+              <%= button_to_if_can(:destroy, contribution, 'Delete', project_contribution_path(@project, contribution),
+                                   method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-default',
+                                   form: {style: 'display: inline-block;'}) %>
+
+              <%= link_to_if_can(:edit, contribution, 'Edit', edit_project_contribution_path(@project, contribution),
+                                 class: 'btn btn-default') %>
+
+              <% if contribution.status != 'joined' && can?(:resend_invitation, contribution) %>
+                <%= button_to 'Resend Invitation', resend_invitation_project_contribution_path(@project, contribution), method: :post, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
+              <% end %>
             </td>
           </tr>
       <% end %>
