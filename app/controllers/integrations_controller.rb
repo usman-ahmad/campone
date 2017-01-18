@@ -16,11 +16,17 @@ class IntegrationsController < ApplicationController
   end
 
   def create
-    @integration = Integration.new(integration_params)
+    # STI and form_for
+    # http://stackoverflow.com/questions/4507149/best-practices-to-handle-routes-for-sti-subclasses-in-rails
+    # https://devblast.com/b/single-table-inheritance-with-rails-4-part-3
+    # TODO: Make it generic. For now just supporting Slack
+    @integration = SlackIntegration.new(integration_params)
+
     if @integration.save
-      redirect_to [@project, @integration], notice: 'Done from our side. Please follow the given instructions.'
+      # Wo have routes only for integrations
+      redirect_to integrations_project_path(@project), notice: 'Integration added.'
     else
-      render :new
+      redirect_back fallback_location: integrations_project_path(@project), notice: @integration.errors.full_messages
     end
   end
 
@@ -82,7 +88,7 @@ class IntegrationsController < ApplicationController
   end
 
   def integration_params
-    params.require(:integration).permit(:url,:name).merge(project: @project)
+    params.require(:integration).permit(:url,:title).merge(project: @project)
   end
 
   def set_import_service

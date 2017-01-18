@@ -24,11 +24,19 @@ class Integration < ApplicationRecord
   belongs_to :project
   has_many :payloads
 
+  # TODO: Fix validations. Should we validate uniqueness of title
   # URL is not required for all integrations. We should consider inheritance
   # There should be way where can define required attributes for an integrations
   validates :url, presence: true
   validates :project_id, presence: true
-  validates :name, presence: true
+
+  # TODO DELETE NAME ATTRIBUTE
+  # validates :name, presence: true
+
+  AVAILABLE_INTEGRATIONS = %w[slack]
+  NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
+  SOURCE_CODE_INTEGRATION = %w[bitbucket github]
+  IMPORT_TASK_INTEGRATION = %w[asana trello jira]
 
   scope :slack_urls, -> { where(name: 'slack').map(&:url) }
   scope :hipchat_urls, -> { where(name: 'hipchat').map(&:url) }
@@ -40,6 +48,11 @@ class Integration < ApplicationRecord
   # NotifiableIntegration.all.to_sql =>  "SELECT \"integrations\".* FROM \"integrations\" WHERE \"integrations\".\"type\" IN ('NotifiableIntegration', 'TwitterIntegration', 'SlackIntegration')"
   # But we must set `config.eager_load = true` in `config/environments/development.rb`
   scope :notifiable, -> { where(type: %w(SlackIntegration HipchatIntegration FlowdockIntegration TwitterIntegration)) }
+
+  def name
+    # we are using name to dynamically show images. We also have a name column which is useless as we have type now
+    type.underscore.split('_').first rescue ''
+  end
 
   def self.find_or_create_integration(auth)
     object = find_or_initialize_by(url: auth.info.urls.Twitter)

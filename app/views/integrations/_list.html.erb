@@ -1,16 +1,16 @@
 <% if @integrations.present? %>
   <table class="table table-striped table-bordered table-hover">
     <tr>
-      <th class="col-md-2">Name</th>
+      <th class="col-md-2">Title</th>
       <th class="col-md-8">Url</th>
       <th class="col-md-2">Actions</th>
     </tr>
     <% @integrations.each do |integration| %>
       <tr>
-        <td><%= integration.name %></td>
+        <td><%= integration.title %></td>
         <td><%= integration.url %></td>
         <td>
-          <% if integration.name == 'jira' %>
+          <% if integration.name == 'jira' # TODO: FIX %>
             <%= link_to 'Configure', project_integration_path(@project, integration) %> -
           <% end %>
           <%= link_to 'Delete', project_integration_path(@project, integration), method: :delete, data: {confirm: 'Are you sure?'} %>

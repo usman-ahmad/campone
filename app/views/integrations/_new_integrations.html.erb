@@ -1,74 +1,20 @@
-<div class="col-md-12">
-  <div class="panel panel-default integration-panel nopadding">
-    <div class="panel-heading">Add Source Code Integration</div>
-    <div class="panel-body">
-      <ul class="list-inline">
-        <li>
-          <a class="btn btn-block btn-social btn-bitbucket">
-            <%= image_tag ('bitbucket.png') %> Bitbucket
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-block btn-social btn-github">
-            <%= image_tag ('github.png') %> Github
-          </a>
-        </li>
-      </ul>
+<% all_available_integrations.each do |type, integrations| %>
+  <% if integrations.present? %>
+    <div class="col-md-12">
+      <div class="panel panel-default integration-panel nopadding">
+        <div class="panel-heading">Add <%= type %></div>
+        <div class="panel-body">
+          <ul class="list-inline">
+            <% integrations.each do |integration| %>
+              <li>
+                <a class="btn btn-block btn-social btn-<%= integration %>" href="<%= instructions_project_integrations_path(@project, integration) %>">
+                  <%= image_tag ("#{integration}.png") %> <%= integration %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="col-md-12">
-  <div class="panel panel-default integration-panel nopadding">
-    <div class="panel-heading">Add Push Notification Integration</div>
-    <div class="panel-body">
-      <ul class="list-inline">
-        <li>
-          <a class="btn btn-block btn-social btn-twitter">
-            <%= image_tag ('twitter.png') %> Twitter
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-block btn-social btn-slack" href="<%= instructions_project_integrations_path(@project, 'slack') %>">
-            <%= image_tag ('slack.png') %> Slack
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-block btn-social btn-hipchat">
-            <%= image_tag('hipchat.png') %> Hipchat
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-block btn-social btn-flowdock">
-            <%= image_tag('flowdock.png') %> Flowdock
-          </a>
-        </li>
-
-      </ul>
-    </div>
-  </div>
-</div>
-<div class="clearfix"></div>
-<div class="col-md-12">
-  <div class="panel panel-default integration-panel nopadding">
-    <div class="panel-heading">Add Import Task Integration</div>
-    <div class="panel-body">
-      <ul class="list-inline">
-        <li>
-          <a class="btn btn-block btn-social btn-asana">
-            <%= image_tag('asana-fill.png') %> Asana
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-block btn-social btn-trello">
-            <%= image_tag('trello.png') %> Trello
-          </a>
-        </li>
-        <li>
-          <a class="btn btn-block btn-social btn-jira">
-            <%= image_tag('jira-logo.png') %> Jira Atlassian
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+  <% end %>
+<% end %>
