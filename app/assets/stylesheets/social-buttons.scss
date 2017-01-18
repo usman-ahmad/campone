@@ -17,6 +17,7 @@
   line-height: 34px;
   font-size: 1.6em;
   text-align: center;
+  padding: 3px;
 }
 
 .btn-twitter {
@@ -120,10 +121,6 @@
 .btn-flowdock {
   color: #fff;
   background-color: #FF8200;
-}
-
-.btn-flowdock :first-child {
-  padding: 0 5px;
 }
 
 .btn-flowdock:hover, .btn-flowdock:focus, .btn-flowdock:active, .btn-flowdock.active {
