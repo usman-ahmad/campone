@@ -1,15 +1,11 @@
-<%= form_for [@project, @contribution], html: { role: "form", class: 'form-horizontal' } do |f| %>
-  <div class="form-group">
-    <%= f.label :email, class: "col-md-2" %>
-    <div class="col-md-10">
+<%= form_for [@project, @contribution], html: {role: "form", class: 'form-inline'} do |f| %>
+    <div class="form-group mg-r10">
+      <%= f.label :email %>
       <%= f.text_field :email, class: "form-control" %>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :role, class: "col-md-2"  %>
-    <div class="col-md-10">
+    <div class="form-group">
+      <%= f.label :role %>
       <%= f.select :role, options_for_select(Contribution::ROLES.values, selected: @contribution.role), {}, class: "form-control" %>
     </div>
-  </div>
-  <%= f.submit @contribution.new_record? ? "Invite" : "Update" , class: "btn btn-success pull-right" %>
+    <%= f.submit @contribution.new_record? ? "Invite" : "Update", class: "btn btn-success pull-right" %>
 <% end %>
