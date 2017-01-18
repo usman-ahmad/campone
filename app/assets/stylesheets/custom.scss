@@ -251,8 +251,11 @@
 
 .project-user a {
   color: #fff;
-  padding: 10px;
+  padding: 10px 11px;
   border-radius: 100%;
+  font-family: 'Roboto Mono', monospace;
+  display: inline-block;
+  margin-bottom: 3px;
 }
 
 .project-description {
@@ -536,7 +539,8 @@
 .user-img-15 {
   color: #fff;
   background-color: #DD4138;
-  padding: 15px;
+  padding: 10px 11px;
+  font-family: 'Roboto Mono', monospace;
   border-radius: 100%;
 }
 
@@ -1039,7 +1043,8 @@
 }
 
 .attachment-array {
-  width: 90px;
+  width: 100px;
+  color: transparent;
   display: inline-block !important;
 }
 
@@ -1052,4 +1057,8 @@
   overflow: hidden;
   vertical-align: top;
   line-height: 28px;
+}
+
+.show-on-hover:hover > ul.dropdown-menu {
+  display: block;
 }
