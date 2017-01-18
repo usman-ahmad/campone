@@ -86,8 +86,18 @@ $(document).on('turbolinks:load', function () {
             $('#errorMessages').html(xhr.responseJSON.join('<br />'));
         }
     });
+
     // display browser button with file info when user selected file
     $('#task-detail-attachment #attachments_array_').change(function () {
         $(".attachment-div").removeClass('hidden');
+    });
+
+    $("div.custom-tab-menu>div.list-group>a").click(function (e) {
+        e.preventDefault();
+        $(this).siblings('a.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("div.custom-tab>div.custom-tab-content").removeClass("active");
+        $("div.custom-tab>div.custom-tab-content").eq(index).addClass("active");
     });
 });

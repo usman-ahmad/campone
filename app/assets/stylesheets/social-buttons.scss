@@ -58,3 +58,75 @@
   background-color: #084663;
   border-color: rgba(0, 0, 0, 0.2)
 }
+
+.btn-bitbucket {
+  color: #fff;
+  background-color: #205081;
+}
+
+.btn-bitbucket:hover, .btn-bitbucket:focus, .btn-bitbucket:active, .btn-bitbucket.active {
+  color: #fff;
+  background-color: #183c60;
+}
+
+.btn-github {
+  color: #fff;
+  background-color: #444;
+}
+
+.btn-github:hover, .btn-github:focus, .btn-github:active, .btn-github.active {
+  color: #fff;
+  background-color: #303030;
+}
+
+.btn-slack {
+  color: #fff;
+  background-color: #2ab27b;
+}
+
+.btn-slack:hover, .btn-slack:focus, .btn-slack:active, .btn-slack.active {
+  color: #fff;
+  background-color: #2b946a;
+}
+
+.btn-jira {
+  color: #fff;
+  background-color: #205081;
+}
+
+.btn-jira :first-child {
+  padding: 3px 6px;
+}
+
+.btn-jira:hover, .btn-jira:focus, .btn-jira:active, .btn-jira.active {
+  color: #fff;
+  background-color: #084663;
+}
+
+.btn-hipchat {
+  color: #fff;
+  background-color: #3572B0;
+}
+
+.btn-hipchat :first-child {
+  padding: 5px 5px;
+}
+
+.btn-hipchat:hover, .btn-hipchat:focus, .btn-hipchat:active, .btn-hipchat.active {
+  color: #fff;
+  background-color: #225f9d;
+}
+
+.btn-flowdock {
+  color: #fff;
+  background-color: #FF8200;
+}
+
+.btn-flowdock :first-child {
+  padding: 0 5px;
+}
+
+.btn-flowdock:hover, .btn-flowdock:focus, .btn-flowdock:active, .btn-flowdock.active {
+  color: #fff;
+  background-color: #cc6800;
+}

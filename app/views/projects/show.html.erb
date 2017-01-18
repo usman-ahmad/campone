@@ -1,78 +1,172 @@
 <% content_for(:tab_nav) do %>
     <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
 <% end %>
-
-<div class="col-md-12 form-group">
-  <div class="row">
-    <div class="col-md-2">
-      <h5>Title:</h5>
-
-      <p><%= @project.title %></p>
-    </div>
-    <div class="col-md-2">
-      <h5>Owner:</h5>
-
-      <p><%= @project.owner.name %></p>
-    </div>
-    <div class="col-md-6">
-      <h5>Description:</h5>
-
-      <p><%= @project.description %></p>
-    </div>
-    <div class="col-md-2">
-      <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
-          <span class="glyphicon glyphicon-pencil"></span>
-          Edit
-      <% end %>
-
-      <% if can? :destroy, @project %>
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
-          <span class="glyphicon glyphicon-trash"></span> Delete
-        </button>
-        <%= render 'projects/delete_project_modal', project: @project %>
-      <% end %>
-
+<div class="custom-tab-container">
+  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 custom-tab-menu">
+    <div class="list-group">
+      <a href="#" class="list-group-item active">
+        Project Settings
+      </a>
+      <a href="#" class="list-group-item">
+        Users Settings
+      </a>
+      <a href="#" class="list-group-item">
+        Integrations Settings
+      </a>
     </div>
   </div>
-</div>
-<div class="container-fluid">
-  <div class="page-header">
-    <h2>Users</h2>
-  </div>
-  <div class="col-md-8">
-    <%= render 'contributions/list' %>
-  </div>
-  <div class="col-md-4">
-    <%= render 'contributions/form' %>
-  </div>
-  <div class="clearfix"></div>
-  <% if can? :manage, @project.integrations.build %>
-    <div class="page-header">
-      <h2>Integrations</h2>
-    </div>
-    <div class="col-md-8">
-      <%= render 'integrations/list' %>
-    </div>
-    <div class="col-md-4">
-      <%= render 'integrations/form' %>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-md-12 mg-t20" style="padding: 0 0">
-      <div class="col-md-4">
-        <a class="btn btn-block btn-social btn-twitter" href="<%= user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>">
-          <i class="fa fa-twitter"></i> Configure Twitter Account to Receive Notification Tweets
-        </a>
+  <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab">
+    <!-- user section -->
+    <div class="custom-tab-content active">
+      <div class="tab-content-header">
+        <h3 class="heading-3">Project Settings</h3>
+        <button class="btn btn-success pull-right">Save Settings</button>
       </div>
-      <div class="col-md-4">
-        <a class="btn btn-block btn-social btn-asana" href="<%= user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
-          <%= image_tag('asana-fill.png') %> Integrate Asana Account and Import your Tasks
-        </a>
+      <hr>
+      <form class="form-horizontal col-sm-12 col-md-12">
+        <div class="row mg-b20">
+          <fieldset class="col-sm-6 col-md-6">
+            <div class="profile-img pull-left"></div>
+            <button id="avatar" class="btn btn-success">Update Avatar</button>
+          </fieldset>
+          <fieldset class="col-sm-6 col-md-6">
+            <legend class="noBorder">Account Settings</legend>
+            <div class="form-group">
+              <label for="fname" class="col-sm-4 col-md-3 custom-label">First Name</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="text" class="form-control" id="fname" placeholder="First Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="lname" class="col-sm-4 col-md-3 custom-label">Last Name</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="text" class="form-control" id="lname" placeholder="Last Name">
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="row mg-b20">
+          <fieldset class="col-sm-6 col-md-6">
+            <legend class="noBorder">Change Email Address</legend>
+            <div class="form-group">
+              <label for="password" class="col-sm-4 col-md-3 custom-label">Password</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="password" class="form-control" id="password" placeholder="First Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="old_email" class="col-sm-4 col-md-3 custom-label">Old Email</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="text" class="form-control" id="old_email" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="new_email" class="col-sm-4 col-md-3 custom-label">New Email</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="text" class="form-control" id="new_email" placeholder="Last Name">
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="col-sm-6 col-md-6">
+            <legend class="noBorder">Change Password</legend>
+            <div class="form-group">
+              <label for="old_password" class="col-sm-4 col-md-3 custom-label">Old Password</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="password" class="form-control" id="old_password" placeholder="First Name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="new_password" class="col-sm-4 col-md-3 custom-label">New Password</label>
+
+              <div class="col-sm-8 col-md-8">
+                <input type="password" class="form-control" id="new_password" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="form-group mg-t20">
+              <p class="col-sm-12">Forgot password? <a>Click here</a></p>
+            </div>
+          </fieldset>
+        </div>
+        <div class="row mg-b20">
+          <fieldset class="col-sm-6 col-md-6">
+            <legend class="noBorder">Default Home Page</legend>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Dashboard
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Widget Board
+            </label>
+          </fieldset>
+          <fieldset class="col-sm-6 col-md-6">
+            <legend class="noBorder">Time Zone</legend>
+            <select class="form-control">
+              <option>Time Zone Lahore</option>
+              <option>Time Zone Karachi</option>
+            </select>
+          </fieldset>
+        </div>
+        <div class="row mg-b20">
+          <fieldset class="col-sm-6 col-md-6">
+            <legend class="noBorder">Account Deletion</legend>
+            <a class="text-danger">Delete Account</a>
+          </fieldset>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success pull-right">Save Settings</button>
+        </div>
+      </form>
+    </div>
+    <!-- notification section -->
+    <div class="custom-tab-content">
+      <div class="tab-content-header">
+        <h3 class="heading-3">Users Settings</h3>
+        <button class="btn btn-success pull-right">Save Settings</button>
       </div>
-      <div class="col-md-4">
-        <a class="btn btn-block btn-social btn-trello" data-turbolinks="false" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
-          <i class="fa fa-trello"></i> Integrate Trello Account and Import your Tasks
-        </a>
+      <hr>
+      <div class="col-md-6 mg-b20">
+        <%= render 'contributions/form' %>
+      </div>
+      <div class="col-md-12">
+        <%= render 'contributions/list' %>
       </div>
     </div>
-  <% end %>
+
+    <!-- social section -->
+    <div class="custom-tab-content">
+      <div class="tab-content-header">
+        <h3 class="heading-3">Integrations</h3>
+        <button class="btn btn-success pull-right">Save Settings</button>
+      </div>
+      <hr>
+      <div class="col-md-6 mg-b20">
+        <%= render 'integrations/form' %>
+      </div>
+      <div class="col-md-12">
+        <%= render 'integrations/list' %>
+      </div>
+      <div class="col-md-12 mg-b20" style="padding: 0 0">
+        <div class="col-md-4">
+          <a class="btn btn-block btn-social btn-twitter" href="<%= user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>">
+            <i class="fa fa-twitter"></i> Configure Twitter Account to Receive Notification Tweets
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a class="btn btn-block btn-social btn-asana" href="<%= user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+            <%= image_tag('asana-fill.png') %> Integrate Asana Account and Import your Tasks
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a class="btn btn-block btn-social btn-trello" data-turbolinks="false" href="<%= user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>">
+            <i class="fa fa-trello"></i> Integrate Trello Account and Import your Tasks
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
