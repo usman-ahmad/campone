@@ -10,7 +10,7 @@
           <tr>
             <td><%= contribution.user.email %></td>
             <td><%= "#{contribution.role}" if contribution.role %></td>
-            <td><%= contribution.status %></td>
+            <td><%= contribution.status if can?(:resend_invitation, contribution) %></td>
             <td>
               <%= button_to_if_can(:destroy, contribution, 'Delete', project_contribution_path(@project, contribution),
                                    method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-default',

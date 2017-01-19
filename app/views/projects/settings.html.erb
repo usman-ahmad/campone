@@ -10,9 +10,11 @@
         <h3 class='heading-3'>Project Settings</h3>
 
         <div class='pull-right'>
-          <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
-              <span class='glyphicon glyphicon-pencil'></span>
-              Edit
+          <% if can? :edit, @project %>
+            <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
+                <span class='glyphicon glyphicon-pencil'></span>
+                Edit
+            <% end %>
           <% end %>
 
           <% if can? :destroy, @project %>

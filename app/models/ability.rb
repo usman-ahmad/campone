@@ -24,7 +24,7 @@ class Ability
     # Project Permissions
     can :manage, Project, owner: user
     # All roles can read project
-    can :read, Project, :contributions => {:role => [MANAGER, MEMBER, GUEST], user_id: user.id}
+    can [:read, :settings, :contributors], Project, :contributions => {:role => [MANAGER, MEMBER, GUEST], user_id: user.id}
     # manager can update project
     can :update, Project, :contributions => {:role => MANAGER, user_id: user.id}
 
@@ -35,7 +35,10 @@ class Ability
     can [:crud, :resend_invitation], Contribution do |contribution|
       contribution.project.contributions.where(role: [MANAGER, OWNER] , user_id: user.id).present?
     end
+    # owner role is automatically created, we cannot edit it later
     cannot :manage, Contribution, role: OWNER
+    # cannot edit or delete himself
+    cannot :manage, Contribution, user: user
 
     can :join, Contribution, user: user
 

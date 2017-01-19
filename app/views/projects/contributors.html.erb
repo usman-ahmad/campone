@@ -14,9 +14,11 @@
       <div class='col-md-12'>
         <%= render 'contributions/list' %>
       </div>
-      <div class='col-md-12 col-sm-12 col-xs-12 mg-b20'>
-        <%= render 'contributions/form' %>
-      </div>
+      <% if can? :create, Contribution.new(project: @project) %>
+        <div class='col-md-12 col-sm-12 col-xs-12 mg-b20'>
+          <%= render 'contributions/form' %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

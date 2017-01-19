@@ -6,8 +6,10 @@
     <a href='<%= contributors_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'con'%>'>
       Users Settings
     </a>
-    <a href='<%= integrations_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'int' %>'>
-      Integrations Settings
-    </a>
+    <% if can? :create, Integration.new(project: project) %>
+      <a href='<%= integrations_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'int' %>'>
+        Integrations Settings
+      </a>
+    <% end %>
   </div>
 </div>

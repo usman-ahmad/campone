@@ -33,19 +33,23 @@ class ContributionsController < ApplicationController
   end
 
   def update
-    # TODO: Very important. Should not update if role is set to 'Owner'
-    if @contribution.update_attributes(contribution_params)
+    @contribution.assign_attributes(contribution_params)
+
+    # if cannot create contribution with above given values
+    if cannot? :update, @contribution
+      flash[:alert] = 'You can not assign these these values.'
+    elsif @contribution.save
       flash[:alert] = 'Updated successfully.'
     else
       flash[:alert] = @contribution.errors.full_messages.join
     end
 
-    redirect_back(fallback_location: project_path(@project))
+    redirect_back(fallback_location: contributors_project_path(@project))
   end
 
   def destroy
     @contribution.destroy
-    redirect_to project_path(@project), notice: 'Removed from contributors.'
+    redirect_back fallback_location: contributors_project_path(@project), notice: 'Removed from contributors.'
   end
 
   def resend_invitation
