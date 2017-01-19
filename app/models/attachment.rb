@@ -42,7 +42,7 @@ class Attachment < ApplicationRecord
 
   before_create :set_uploader
 
-  ATTACHABLE_TYPES = %w(Task Discussion Comment)
+  ATTACHABLE_TYPES = %w(Story Discussion Comment)
   # TODO BLACKLIST ALL EXECUTABLE FILES
   NOT_ALLOWED_CONTENT_TYPES = %w[application/x-msdownload] # exe
 
@@ -74,7 +74,7 @@ class Attachment < ApplicationRecord
   end
 
   def project
-    self.attachable.project # self.attachable >>> [task discussion comment]
+    self.attachable.project # self.attachable >>> [story discussion comment]
   end
 
   before_update :update_file_name

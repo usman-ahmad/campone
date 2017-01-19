@@ -16,22 +16,22 @@
 # puts 'creating Project'
 # project = FactoryGirl.create(:project, owner: user.first)
 #
-# puts 'creating project_with_single_task'
-# single_task_project = FactoryGirl.create(:project_with_single_task, owner: user.first)
+# puts 'creating project_with_single_story'
+# single_story_project = FactoryGirl.create(:project_with_single_story, owner: user.first)
 #
-# puts 'creating project_with_many_tasks'
-# many_tasks_project = FactoryGirl.create(:project_with_many_tasks, owner: user.first)
+# puts 'creating project_with_many_stories'
+# many_stories_project = FactoryGirl.create(:project_with_many_stories, owner: user.first)
 #
 # puts 'creating project_with_discussions'
 # project_with_discussions = FactoryGirl.create(:project_with_discussions, owner: user.first)
 #
-# puts 'creating project_with_task_discussions'
-# project_with_task_discussions = FactoryGirl.create(:project_with_task_discussions, owner: user.first)
+# puts 'creating project_with_story_discussions'
+# project_with_story_discussions = FactoryGirl.create(:project_with_story_discussions, owner: user.first)
 #
 # puts 'creating discussion'
 # discussion = FactoryGirl.create(:private_discussion, project: project, commenter: project.owner, user: project.owner)
 #
-# projects =[project, single_task_project, many_tasks_project, project_with_discussions, project_with_task_discussions]
+# projects =[project, single_story_project, many_stories_project, project_with_discussions, project_with_story_discussions]
 #
 # puts 'creating user_discussion and contributions'
 # user.each do |user|

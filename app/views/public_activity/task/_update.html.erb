@@ -1,7 +1,7 @@
-updated Task
+updated Story
 
 <% if activity.trackable && activity.trackable.project.present? %>
-  <%= link_to activity.trackable.title, project_task_path(activity.trackable.project, activity.trackable) %>
+  <%= link_to activity.trackable.title, project_story_path(activity.trackable.project, activity.trackable) %>
 <% else %>
   which has since been removed
 <% end %>

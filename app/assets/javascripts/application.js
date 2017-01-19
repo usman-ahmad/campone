@@ -16,7 +16,7 @@
 //= require private_pub
 //= require jquery.ui.all
 //= require tag-it
-//= require task
+//= require story
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require moment

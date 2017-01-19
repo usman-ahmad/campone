@@ -4,7 +4,7 @@ require 'rails_helper'
 # https://www.relishapp.com/rspec/rspec-rails/docs/feature-specs/feature-spec
 # https://github.com/eliotsykes/rspec-rails-examples
 
-describe 'Attachments feature for Projects, Tasks and Discussions', type: :feature do
+describe 'Attachments feature for Projects, Stories and Discussions', type: :feature do
   let!(:owner) { create(:user, name: 'Gul Baz Khan', email: 'u@co.co', password: 'some_password', password_confirmation: 'some_password') }
   let!(:project) { create(:project, owner: owner) }
 
@@ -63,9 +63,9 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
   context 'when there is project with existing attachments, and we visit attachments page' do
     it 'enlists project attachment only' do
       # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
-      task = create(:task, project: project, requester: owner)
+      story = create(:story, project: project, requester: owner)
       create(:project_attachment, title: 'awesome_project_attachment.jpg', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project)
-      create(:attachment, document_file_name: 'non_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: task)
+      create(:attachment, document_file_name: 'non_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: story)
 
       visit project_attachments_path(project)
 
@@ -86,11 +86,11 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
   end
 
-  context 'on tasks listing page, when creating a new task', js: true do
+  context 'on stories listing page, when creating a new story', js: true do
     it 'should display add_files_to_project only when some file is attached' do
-      visit project_tasks_path(project)
+      visit project_stories_path(project)
 
-      fill_in 'task[title]', with: 'New Task without attachment'
+      fill_in 'story[title]', with: 'New Story without attachment'
 
       expect(page).not_to have_content('also add to Project Files')
       expect(page).not_to have_field('add_files_to_project')
@@ -102,9 +102,9 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'should add file to project files, when checked add_files_to_project' do
-      visit project_tasks_path(project)
+      visit project_stories_path(project)
 
-      fill_in 'task[title]', with: 'New Task with attachment'
+      fill_in 'story[title]', with: 'New Story with attachment'
 
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
 
@@ -122,9 +122,9 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
     end
 
     it 'should not add file to project files, when unchecked add_files_to_project' do
-      visit project_tasks_path(project)
+      visit project_stories_path(project)
 
-      fill_in 'task[title]', with: 'New Task with attachment'
+      fill_in 'story[title]', with: 'New Story with attachment'
       page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))
 
       uncheck('add_files_to_project')
@@ -138,13 +138,13 @@ describe 'Attachments feature for Projects, Tasks and Discussions', type: :featu
   end
 
   # UA[2016/12/07] - TODO - REFACTOR SO THAT SAME TESTS CAN BE REUSED AS THE SCENARIOS ARE SAME WITH VARIATIONS IN PRECONDITIONS
-  context 'on TASK SHOW page, when CREATING A COMMENT, and on DISCUSSIONS LISTING page, when ADDING A DISCUSSION' do
+  context 'on STORY SHOW page, when CREATING A COMMENT, and on DISCUSSIONS LISTING page, when ADDING A DISCUSSION' do
     it 'should display add_files_to_project only when some file is attached'
     it 'should add file to project files, when checked add_files_to_project'
     it 'should not add file to project files, when unchecked add_files_to_project'
     # it 'shows allowed comment attachment on attachments page', js: true, driver: :selenium do
-    #   task = create(:task, title: 'create flow chart', project: project, commenter: owner, requester: owner)
-    #   visit project_task_path(project, task)
+    #   story = create(:story, title: 'create flow chart', project: project, commenter: owner, requester: owner)
+    #   visit project_story_path(project, story)
     #
     #   execute_script('$("#comment_content").trumbowyg("html", "also mentioned your name & roll no.");')
     #   page.attach_file('attachments_array[]', File.join(Rails.root, '/spec/files/awesome_attachment.png'))

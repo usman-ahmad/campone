@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 
   def index
     @event = @project.events.build
-    @task  = @project.tasks.build
+    @story  = @project.stories.build
   end
 
   def show

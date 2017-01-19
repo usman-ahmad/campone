@@ -1,4 +1,4 @@
-# TODO: There should be one import against one project, Do't make redundant tasks
+# TODO: There should be one import against one project, Do't make redundant stories
 class ImportService
   attr_reader :client
 

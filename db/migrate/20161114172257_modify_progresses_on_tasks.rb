@@ -1,3 +1,6 @@
+class Task < ApplicationRecord
+end
+
 class ModifyProgressesOnTasks < ActiveRecord::Migration[5.0]
   # PROGRESS_MAP = {
   #     NOT_SCHEDULED: 'unscheduled',

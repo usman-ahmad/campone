@@ -7,8 +7,8 @@ PublicActivity::Activity.class_eval do
 
   def create_notification
     users_to_notify = case self.trackable_type
-                        when 'Task'
-                          get_notifiable_users_for_task(trackable)
+                        when 'Story'
+                          get_notifiable_users_for_story(trackable)
                         when 'Discussion'
                           get_notifiable_users_for_discussion(trackable)
                         when "Comment"
@@ -46,9 +46,9 @@ PublicActivity::Activity.class_eval do
     end
   end
 
-  def get_notifiable_users_for_task(task)
+  def get_notifiable_users_for_story(story)
     # owner_id represents current_user, Do not send notifications to requester
-    task.project.members.map(&:id) - [owner_id]
+    story.project.members.map(&:id) - [owner_id]
   end
 
   def get_notifiable_users_for_attachment(attachment)
@@ -66,8 +66,8 @@ PublicActivity::Activity.class_eval do
 
   def get_notifiable_users_for_comment
     case trackable.commentable_type
-      when 'Task'
-        get_notifiable_users_for_task(trackable.commentable)
+      when 'Story'
+        get_notifiable_users_for_story(trackable.commentable)
       when 'Discussion'
         get_notifiable_users_for_discussion(trackable.commentable)
       when 'Attachment'
@@ -77,7 +77,7 @@ PublicActivity::Activity.class_eval do
 
   def project
     case self.trackable_type
-      when 'Task', 'Discussion'
+      when 'Story', 'Discussion'
         trackable.project
       when 'Comment'
         trackable.commentable.project
@@ -92,7 +92,7 @@ PublicActivity::Activity.class_eval do
 
   def get_trackable
     case self.trackable_type
-      when 'Task', 'Discussion'
+      when 'Story', 'Discussion'
         trackable
       when "Comment"
         trackable.commentable
@@ -102,7 +102,7 @@ PublicActivity::Activity.class_eval do
 
   def discription
     text = case self.trackable_type
-             when 'Task', 'Discussion'
+             when 'Story', 'Discussion'
                "#{owner.name}: " + activty_type
              when "Comment"
                "#{owner.name}: " + activty_type + ': '+ trackable.content
@@ -112,7 +112,7 @@ PublicActivity::Activity.class_eval do
 
   def get_trackable_url
     case self.trackable_type
-      when 'Task', 'Discussion'
+      when 'Story', 'Discussion'
         "#{ENV['HOST']}/projects/#{project.id.to_s}/#{trackable_type.downcase}s/#{trackable.id.to_s}"
       when "Comment"
         "#{ENV['HOST']}/projects/#{project.id.to_s}/#{trackable.commentable_type.downcase}s/#{trackable.commentable.id.to_s}"
@@ -135,7 +135,7 @@ PublicActivity::Activity.class_eval do
   def create_message(notice)
     message = notice.id.to_s + '|' + notice.created_at.to_s + '|'+notice.activity.owner.name.to_s
     if notice.comment?
-      message += ' Commented on ' + notice.task_or_discussion.title
+     message += ' Commented on ' + notice.story_or_discussion.title
     else
       if notice.activity.key.include? "create"
         message += ' created '

@@ -4,21 +4,21 @@
           <i class="fa fa-eye" aria-hidden="true"></i>
       <% end %>
       <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-        <!--<li class="active"><a href="#">Unscheduled Tasks</a></li>-->
+        <!--<li class="active"><a href="#">Unscheduled Stories</a></li>-->
         <% {unscheduled: 'Unscheduled', current: 'Current', accepted: 'Accepted', all: 'All'}.each do |key, title| %>
             <%= content_tag :li, class: ('active' if @visibility.eql?(key.to_s)) do %>
-                <%= link_to("#{title} Tasks", project_tasks_path(@project, visibility: key)) %>
+                <%= link_to("#{title} Stories", project_stories_path(@project, visibility: key)) %>
             <% end %>
         <% end %>
       </ul>
     </div>
 <% end %>
 
-<% content_for(:search_tasks) do %>
+<% content_for(:search_stories) do %>
     <div class="col-md-12">
-      <%= form_tag project_tasks_path(@project), :method => 'get', :class => 'navbar-form mg-t0' do %>
+      <%= form_tag project_stories_path(@project), :method => 'get', :class => 'navbar-form mg-t0' do %>
           <div class="input-group">
-            <%= text_field_tag :search_text, params[:search_text], placeholder: "Search Tasks", class: "form-control" %>
+            <%= text_field_tag :search_text, params[:search_text], placeholder: "Search Stories", class: "form-control" %>
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
           </div>
       <% end %>
@@ -32,10 +32,10 @@
 
 <div class="col-md-12">
   <div class="col-md-9">
-    <ul class="sortable" id="tasks" data-update-url="<%= sort_project_tasks_url %>">
-      <%= render partial: 'task_summary', collection: @tasks, as: :task %>
+    <ul class="sortable" id="stories" data-update-url="<%= sort_project_stories_url %>">
+      <%= render partial: 'story_summary', collection: @stories, as: :story %>
     </ul>
-    <div class="newTaskForm">
+    <div class="newStoryForm">
       <%= render 'form' %>
     </div>
   </div>

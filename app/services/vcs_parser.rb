@@ -68,7 +68,7 @@ class VCSParser
   # Separating this class will make it easy to test
   class CommitParser
 =begin
-    This method will update task status (Performs any actions based on commit message)
+    This method will update story status (Performs any actions based on commit message)
 
     ### Example commit messages
 
@@ -96,21 +96,21 @@ class VCSParser
         ticket_id = match[2]
         action = match[1] || (matches[index-1][1] if index > 0 and seperators.include?(match[0][0]))
 
-        task = Task.find(ticket_id.downcase)
+        story = Story.find(ticket_id.downcase)
         # Determine and perform action to take
-        update_task!(task, action) if task
+        update_story!(story, action) if story
       end
     end
 
-    def self.update_task!(task, action)
+    def self.update_story!(story, action)
       case action.downcase
         when 'start'
           # start the ticket
           # TODO: Using string to match Progress are pron to typo errors. should use named constants
-          task.update_attributes(state: Task::STATE_MAP[:IN_PROGRESS]) if task.state == Task::STATE_MAP[:NO_PROGRESS]
+          story.update_attributes(state: Story::STATE_MAP[:IN_PROGRESS]) if story.state == Story::STATE_MAP[:NO_PROGRESS]
         when 'close', 'fix', 'resolve', 'complete'
           # change status to finish
-          task.update_attributes(state: Task::STATE_MAP[:COMPLETED])
+          story.update_attributes(state: Story::STATE_MAP[:COMPLETED])
         when nil
           # create comment on referenced ticket?
       end

@@ -9,7 +9,7 @@ class Ability
   # Full edit/delete access without ability to invite people or add integrations
   MEMBER = Contribution::ROLES[:member]
 
-  # Can only view tasks, comments, and other items created by other users.
+  # Can only view stories, comments, and other items created by other users.
   GUEST = Contribution::ROLES[:guest]
 
   def initialize(user)
@@ -28,7 +28,7 @@ class Ability
     # manager can update project
     can :update, Project, :contributions => {:role => MANAGER, user_id: user.id}
 
-    can :manage, Task
+    can :manage, Story
     can :manage, Discussion
     can :manage, Attachment
 
@@ -48,7 +48,7 @@ class Ability
 
     # GS[2016-12-22] For now restrict delete cuz it can break notifications.
     # We'll allow it after making flat notifications
-    cannot :destroy, [Project, Task, Discussion, Comment, Attachment]
+    cannot :destroy, [Project, Story, Discussion, Comment, Attachment]
 
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:

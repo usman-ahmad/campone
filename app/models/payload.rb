@@ -13,7 +13,7 @@
 class Payload < ApplicationRecord
   after_create :send_notification,    :if => :vcs?
   after_create :perform_transitions,  :if => :vcs?  # Perform actions on commit for VCS system like github and Bitbucket etc
-  after_create :create_task,          :if => :pms?  # synchronize tasks for project management system like Jira, Asana, Trello etc
+  after_create :create_story,          :if => :pms?  # synchronize stories for project management system like Jira, Asana, Trello etc
 
   belongs_to :integration
   serialize :info
@@ -41,8 +41,8 @@ class Payload < ApplicationRecord
     vcs_parser.push_actions
   end
 
-  def create_task
-    ImportService.build(integration).create_task_from_payload(self)
+  def create_story
+    ImportService.build(integration).create_story_from_payload(self)
   end
 
   private

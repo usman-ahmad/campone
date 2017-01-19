@@ -36,7 +36,7 @@ class Integration < ApplicationRecord
   AVAILABLE_INTEGRATIONS = %w[slack]
   NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
   SOURCE_CODE_INTEGRATION = %w[bitbucket github]
-  IMPORT_TASK_INTEGRATION = %w[asana trello jira]
+  IMPORT_STORY_INTEGRATION = %w[asana trello jira]
 
   scope :slack_urls, -> { where(name: 'slack').map(&:url) }
   scope :hipchat_urls, -> { where(name: 'hipchat').map(&:url) }

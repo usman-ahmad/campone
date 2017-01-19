@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: tasks
+# Table name: stories
 #
 #  id           :integer          not null, primary key
 #  title        :string
@@ -15,10 +15,10 @@
 #  requester_id :integer
 #  position     :integer
 #  ticket_id    :string
-#  task_type    :string           default("feature")
+#  story_type   :string           default("feature")
 #
 
-class Task < ApplicationRecord
+class Story < ApplicationRecord
   include Notifiable
   act_as_notifiable performer: :performer,
                     receivers: :notification_receivers,
@@ -26,7 +26,7 @@ class Task < ApplicationRecord
                     only: [:title, :description, :priority, :state, :owner_id],
                     # except: [:position, :updated_all]
                     on: [:create, :update, :destroy],
-                    notifiable_integrations: Proc.new { |task| task.project.integrations.notifiable }
+                    notifiable_integrations: Proc.new { |story| story.project.integrations.notifiable }
 
   # include PublicActivity::Common
 
@@ -69,7 +69,7 @@ class Task < ApplicationRecord
   attr_accessor :performer
 
   PRIORITIES =%w[Low Medium High]
-  TASK_TYPES = %w(feature bug)
+  STORY_TYPES = %w(feature bug)
   STATES = %w[unscheduled unstarted started paused finished delivered rejected accepted]
   delegate :unscheduled?, :unstarted?, :started?, :paused?, :finished?, :delivered?, :rejected?, :accepted?,
            to: :current_state
@@ -77,7 +77,7 @@ class Task < ApplicationRecord
 
   validates :title, presence: true
   validates :project, presence: true
-  validates :task_type, presence: true, inclusion: {in: TASK_TYPES}
+  validates :story_type, presence: true, inclusion: {in: STORY_TYPES}
 
   validates_inclusion_of :state, in: STATES
   validates_inclusion_of :priority, in: PRIORITIES, :allow_blank => true
@@ -149,8 +149,8 @@ class Task < ApplicationRecord
 
     CSV.generate(options) do |csv|
       csv << csv_headers
-      all.each do |task|
-        attributes = task.attributes
+      all.each do |story|
+        attributes = story.attributes
         csv << attributes.values_at(*csv_headers)
       end
     end
@@ -162,19 +162,19 @@ class Task < ApplicationRecord
       attributes = row.to_hash
       attributes['requester_id'] = current_user
 
-      project.tasks.create!(attributes)
+      project.stories.create!(attributes)
     end
   end
 
-  # copies a task into another project.
+  # copies a story into another project.
   # params
   # ======
-  # => project: where you want to copy your task to
-  # => mover: current_user moving this tasks. User must have access to the above project
+  # => project: where you want to copy your story to
+  # => mover: current_user moving this stories. User must have access to the above project
   # => options: with_comments(default: false), with_attachments(default: true)
-  # Example: task.copy_to(project, user, with_attachments: false)
-  # TODO: 1) Copy attachments of comments. 2) Provide an option to delete original task (like move). 3) Write specs
-  # We may prefer to create a new class i-e TaskMover.new(task, project, mover, options).move!
+  # Example: story.copy_to(project, user, with_attachments: false)
+  # TODO: 1) Copy attachments of comments. 2) Provide an option to delete original story (like move). 3) Write specs
+  # We may prefer to create a new class i-e StoryMover.new(story, project, mover, options).move!
   def copy_to(project, mover, options = {})
     return false if Ability.new(mover).cannot? :read, project
 
@@ -188,16 +188,16 @@ class Task < ApplicationRecord
     owner = project.members.include?(self.owner) ? self.owner : nil
 
     attrs = self.attributes.slice('title', 'description', 'priority', 'progress', 'due_at').merge!(performer: performer, owner: owner)
-    task = project.tasks.create(attrs)
+    story = project.stories.create(attrs)
 
     if options[:with_comments]
       self.comments.each do |c|
         if project.members.include?(c.user)
           c.performer = c.user
-          task.comments << c.dup
+          story.comments << c.dup
         else
           # We may prefer to use dummy user names (User 1) instead of actual user name
-          task.comments << Comment.new(performer: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
+          story.comments << Comment.new(performer: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
         end
       end
     end
@@ -206,12 +206,12 @@ class Task < ApplicationRecord
       self.attachments.each do |a|
         attachment = a.dup
         attachment.document = a.document
-        task.attachments << attachment
+        story.attachments << attachment
       end
     end
 
-    task.save
-    task
+    story.save
+    story
   end
 
   def get_tags
@@ -221,8 +221,8 @@ class Task < ApplicationRecord
   def get_source_tags
     p_tags = []
 
-    self.project.tasks.each do |task|
-      p_tags = p_tags + task.owner_tags_on(nil, :tags).map { |t| t.name }
+    self.project.stories.each do |story|
+      p_tags = p_tags + story.owner_tags_on(nil, :tags).map { |t| t.name }
     end
     p_tags = p_tags.uniq
   end
@@ -230,7 +230,7 @@ class Task < ApplicationRecord
   private
 
   def set_position
-    self.position = self.project.tasks.count + 1
+    self.position = self.project.stories.count + 1
   end
 
   def set_requester

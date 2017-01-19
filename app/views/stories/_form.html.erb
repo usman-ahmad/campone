@@ -1,5 +1,5 @@
-<%= form_for([@project, @task], html: {class: "add-todo-container mg-t20", role: "form", multipart: true}) do |f| %>
-    <%= render 'shared/error_messages', object: @task %>
+<%= form_for([@project, @story], html: {class: "add-todo-container mg-t20", role: "form", multipart: true}) do |f| %>
+    <%= render 'shared/error_messages', object: @story %>
     <%= f.text_field :title, id: "myTextbox", class: "form-control mg-b10", placeholder: "ADD To-Do" %>
     <div id="hide-todo" class="customHideEvent">
       <div class="form-group">
@@ -13,12 +13,12 @@
 
       <div class="form-group col-md-4">
         <%= f.label :priority, class: "custom-label" %>
-        <%= f.select :priority, Task::PRIORITIES, {:prompt => ['Nothing Selected', nil]}, {class: 'form-control'} %>
+        <%= f.select :priority, Story::PRIORITIES, {:prompt => ['Nothing Selected', nil]}, {class: 'form-control'} %>
       </div>
 
       <div class="form-group col-md-4">
-        <%= f.label :task_type, class: "custom-label" %>
-        <%= f.select :task_type, Task::TASK_TYPES, {}, {class: 'form-control'} %>
+        <%= f.label :story_type, class: "custom-label" %>
+        <%= f.select :story_type, Story::STORY_TYPES, {}, {class: 'form-control'} %>
       </div>
 
       <div class="form-group col-md-4">
@@ -31,24 +31,24 @@
 
       <div class="form-group col-md-4">
         <%= f.label :tags, class: "custom-label" %>
-        <%= f.text_field :tag_list, class: 'form-control', value: @task.tag_list.join(', '), data: {autocomplete_sourse: @task.get_source_tags} %>
+        <%= f.text_field :tag_list, class: 'form-control', value: @story.tag_list.join(', '), data: {autocomplete_sourse: @story.get_source_tags} %>
       </div>
 
-      <% if @task.persisted? %>
+      <% if @story.persisted? %>
           <div class="form-group col-md-4">
             <%= f.label :state, class: "custom-label" %>
-            <%= f.select :state, Task::STATES, {}, {class: 'form-control'} %>
+            <%= f.select :state, Story::STATES, {}, {class: 'form-control'} %>
           </div>
       <% end %>
 
       <div class="form-group col-md-4 mg-t10">
         <label></label>
-        <%= render 'attachments/browse_attachments', addable_to_project: true if @task.new_record? %>
+        <%= render 'attachments/browse_attachments', addable_to_project: true if @story.new_record? %>
       </div>
       <div class="clearfix"></div>
       <div class="pull-right">
-        <% if @task.persisted? %>
-            <a type="button" class="btn btn-default" href="<%= project_tasks_path(@project) %>">Back to Tasks</a>
+        <% if @story.persisted? %>
+            <a type="button" class="btn btn-default" href="<%= project_stories_path(@project) %>">Back to Stories</a>
             <%= f.submit 'Update To-Do', class: "btn btn-success" %>
         <% else %>
             <button type="button" class="btn btn-default" id="close-todo">Cancel</button>

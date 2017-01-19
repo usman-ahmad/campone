@@ -4,11 +4,11 @@
 2.00 Fonts CSS
 3.00 Landing Page Section
 4.00 Dashboard Navigation CSS
-5.00 Task List css
+5.00 Story List css
 6.00 Dashboard Home CSS
 7.00 Create Project CSS
-8.00 Task Show CSS
-9.00 Task Comment Section CSS
+8.00 Story Show CSS
+9.00 Story Comment Section CSS
 10.00 Notification Index CSS
 11.00 Discussion Index CSS
 12.00 Files CSS
@@ -265,7 +265,7 @@
 }
 
 /*
-  5.00 Task List css
+  5.00 Story List css
   ------------------
 */
 
@@ -528,7 +528,7 @@
 }
 
 /*
-  8.00 Task Show CSS
+  8.00 Story Show CSS
   -------------------
 */
 
@@ -607,7 +607,7 @@
 }
 
 /*
-  9.00 Task Comment Section CSS
+  9.00 Story Comment Section CSS
   ------------------------------
 */
 
@@ -808,7 +808,7 @@
   color: #000;
 }
 
-.newTaskForm .customHideEvent {
+.newStoryForm .customHideEvent {
   display: none !important;
 }
 
@@ -1016,7 +1016,7 @@
   max-width: 100%;
 }
 
-.task-attachment-file span {
+.story-attachment-file span {
   text-align: center;
   width: 123px;
   height: 127px;
@@ -1028,17 +1028,17 @@
   margin: 0 auto 10px;
 }
 
-.task-attachment-file:focus span,
-.task-attachment-file.has-focus span,
-.task-attachment-file:hover span {
+.story-attachment-file:focus span,
+.story-attachment-file.has-focus span,
+.story-attachment-file:hover span {
   cursor: pointer;
 }
 
-.task-attachment-file span {
+.story-attachment-file span {
   color: #ccc;
 }
 
-.task-attachment-file:hover span {
+.story-attachment-file:hover span {
   color: #8a8282;;
 }
 

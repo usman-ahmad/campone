@@ -10,14 +10,14 @@
     <div class="popup" id="addCalEventPopup" style="padding: 10px">
       <%= render 'events/form' %>
     </div>
-    <div class="popup" id="addCalTaskPopup" style="padding: 10px">
-      <%= render 'tasks/form' %>
+    <div class="popup" id="addCalStoryPopup" style="padding: 10px">
+      <%= render 'stories/form' %>
     </div>
     <div class="form-group">
       <%= label_tag "Type", nil, class: "col-sm-3 control-label" %>
       <div class="col-sm-9" style="margin-bottom: 20px
       ">
-        <%= select_tag "Type", options_for_select([ "Event", "Task" ], "Event"), { id: 'selectEventType', class: 'form-control' }  %>
+        <%= select_tag "Type", options_for_select([ "Event", "Story" ], "Event"), { id: 'selectEventType', class: 'form-control' }  %>
       </div>
     </div>
   </div>
@@ -36,7 +36,7 @@
 <script>
   $(document).ready(function() {
 
-    $('#addCalTaskPopup').hide();
+    $('#addCalStoryPopup').hide();
 
     $( document ).on( 'keydown', function ( e ) {
       if ( e.keyCode === 27 ) { // ESC
@@ -51,15 +51,15 @@
 
       $('#selectEventType').val("Event");
       $('#addCalEventPopup').show();
-      $('#addCalTaskPopup').hide();
+      $('#addCalStoryPopup').hide();
     });
 
     $( "#selectEventType" ).change(function() {
-      if (this.value == "Task"){
-        $('#addCalTaskPopup').show();
+      if (this.value == "Story"){
+        $('#addCalStoryPopup').show();
         $('#addCalEventPopup').hide();
       } else {
-        $('#addCalTaskPopup').hide();
+        $('#addCalStoryPopup').hide();
         $('#addCalEventPopup').show();
       }
     });

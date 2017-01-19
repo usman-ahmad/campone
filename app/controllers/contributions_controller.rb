@@ -61,7 +61,7 @@ class ContributionsController < ApplicationController
       flash[:alert] = 'Something went wrong. We are unable to change your status.'
     end
 
-    redirect_to project_tasks_path(@contribution.project)
+    redirect_to project_stories_path(@contribution.project)
   end
 
   private

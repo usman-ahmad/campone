@@ -57,7 +57,7 @@ class IntegrationsController < ApplicationController
 
   def start_import
     @import_service.import!(params[:external_project_id])
-    redirect_to project_tasks_path(@project), notice: 'Success'
+    redirect_to project_stories_path(@project), notice: 'Success'
   end
 
   def instructions

@@ -51,7 +51,7 @@ $(document).on('turbolinks:load', function () {
         $('.comment-action').removeClass('hidden');
     });
 
-    // UA[2016/12/06] - for "attachments/browse_attachments" affects [tasks, discussions, comments]
+    // UA[2016/12/06] - for "attachments/browse_attachments" affects [stories, discussions, comments]
     $('.attachment-array').on('input:file').change(function () {
         //console.log('activated....');
         if ($(this).val().length >= 1) {
@@ -88,7 +88,7 @@ $(document).on('turbolinks:load', function () {
     });
 
     // display browser button with file info when user selected file
-    $('#task-detail-attachment #attachments_array_').change(function () {
+    $('#story-detail-attachment #attachments_array_').change(function () {
         $(".attachment-div").removeClass('hidden');
     });
 

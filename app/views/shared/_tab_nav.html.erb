@@ -1,7 +1,7 @@
 <div class="custom-container">
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class=<%= "active" if active =='todos' %>>
-      <a href="<%= project_tasks_path(@project) %>"><i class="fa fa-check-circle-o mg-r10"></i>To-Do's</a></li>
+      <a href="<%= project_stories_path(@project) %>"><i class="fa fa-check-circle-o mg-r10"></i>Stories</a></li>
     <li role="presentation" class=<%= "active" if active =='discussion' %>>
       <a href="<%= project_discussions_path(@project) %>"><i class="fa fa-comments-o mg-r10"></i>Discussions</a></li>
     <li role="presentation" class=<%= "active" if active =='files' %>>
@@ -10,7 +10,7 @@
       <a href="<%= settings_project_path(@project) %>"><i class="fa fa-cog mg-r10"></i>Project Settings</a>
     </li>
     <li class= "pull-right <%= active == 'todos' ? "show" : "hidden" %> ">
-      <%= yield :search_tasks if content_for?(:search_tasks) %>
+      <%= yield :search_stories if content_for?(:search_stories) %>
     </li>
 
     <li class="pull-right custom-tooltip <%= active == 'todos' ? "show" : "hidden" %> ">

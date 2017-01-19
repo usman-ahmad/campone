@@ -7,7 +7,7 @@ module API
       end
 
       mount API::V1::Projects
-      mount API::V1::Tasks
+      mount API::V1::Stories
       mount API::V1::Comments
       mount API::V1::Discussions
     end

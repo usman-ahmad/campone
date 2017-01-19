@@ -3,4 +3,4 @@
 <%= "#{@contribution.inviter.name} has invited you to #{@contribution.project.title}," %>
 you can accept it through the link below.
 
-<%= project_tasks_url(@contribution.project, :invitation_token => @contribution.token) %>
+<%= project_stories_url(@contribution.project, :invitation_token => @contribution.token) %>

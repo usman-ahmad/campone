@@ -31,7 +31,7 @@ class Comment < ApplicationRecord
 
   has_many :attachments, as: :attachable, dependent: :destroy
 
-  # COMMENTABLE_TYPES = %w(Task Discussion ProjectAttachment_AS_Attachment)
+  # COMMENTABLE_TYPES = %w(Story Discussion ProjectAttachment_AS_Attachment)
 
   validates :content, presence: true
 
@@ -52,7 +52,7 @@ class Comment < ApplicationRecord
   end
 
   def project
-    self.commentable.project # self.attachable >>> [task discussion attachment]
+    self.commentable.project # self.attachable >>> [story discussion attachment]
   end
 
   private

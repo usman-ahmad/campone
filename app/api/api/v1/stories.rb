@@ -1,6 +1,6 @@
 module API
   module V1
-    class Tasks < Grape::API
+    class Stories < Grape::API
       version 'v1'
       format :json
 
@@ -12,33 +12,33 @@ module API
         end
       end
 
-      resource :tasks do
-        desc "Return list of tasks related to a project"
+      resource :stories do
+        desc "Return list of stories related to a project"
         params do
           requires :project_id , type: Integer
         end
         get do
           if project.present?
-             project.tasks
+             project.stories
           else
             "Project is not found"
           end
         end
       end
 
-      resource :get_task do
-        desc "Return task of a project"
+      resource :get_story do
+        desc "Return story of a project"
         params do
           requires :project_id , type: Integer
-          requires :task_id , type: Integer
+          requires :story_id , type: Integer
         end
         get do
           if project.present?
-            task     =  project.tasks.where(id:params[:task_id]).first
-            if task.present?
-             task
+            story     =  project.stories.where(id:params[:story_id]).first
+            if story.present?
+             story
             else
-              "Task is not Present"
+              "Story is not Present"
             end
           else
             "Project is not found"
@@ -46,20 +46,20 @@ module API
         end
       end
 
-      resource :delete_task do
-        desc "delete task of a project"
+      resource :delete_story do
+        desc "delete story of a project"
         params do
           requires :project_id , type: Integer
-          requires :task_id , type: Integer
+          requires :story_id , type: Integer
         end
         get do
           if project.present?
-            task     =  project.tasks.where(id:params[:task_id]).first
-            if task.present?
-              task.delete
-              "Task deleted"
+            story     =  project.stories.where(id:params[:story_id]).first
+            if story.present?
+              story.delete
+              "Story deleted"
             else
-              "Task is not Present"
+              "Story is not Present"
             end
           else
             "Project is not found"

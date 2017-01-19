@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    redirect_to project_tasks_path(@project)
+    redirect_to project_stories_path(@project)
     # @contribution = Contribution.new
     # @contributions = @project.contributions
     #

@@ -25,7 +25,7 @@ RSpec.describe Project, type: :model do
 
   describe 'associations' do
     it { should belong_to(:owner).class_name('User') }
-    it { should have_many(:tasks) }
+    it { should have_many(:stories) }
     it { should have_many(:discussions) }
     it { should have_many(:contributions) }
     it { should have_many(:members) }
@@ -44,24 +44,24 @@ RSpec.describe Project, type: :model do
 
   describe '#destroy' do
     let(:camp_owner) { create(:user) }
-    let(:camp_project) { create(:project, :with_tasks, :with_discussions, :with_attachments, attachments_count: 2, task_owner: camp_owner, task_count: 2, discussion_owner: camp_owner, discussion_count: 2, title: 'UAE project', owner: camp_owner) }
-    let(:king_project) { create(:project, :with_tasks, :with_discussions, :with_attachments, attachments_count: 2, real_attachments: true, task_owner: camp_owner, task_count: 2, discussion_owner: camp_owner, discussion_count: 2, title: 'King project', owner: camp_owner) }
+    let(:camp_project) { create(:project, :with_stories, :with_discussions, :with_attachments, attachments_count: 2, story_owner: camp_owner, story_count: 2, discussion_owner: camp_owner, discussion_count: 2, title: 'UAE project', owner: camp_owner) }
+    let(:king_project) { create(:project, :with_stories, :with_discussions, :with_attachments, attachments_count: 2, real_attachments: true, story_owner: camp_owner, story_count: 2, discussion_owner: camp_owner, discussion_count: 2, title: 'King project', owner: camp_owner) }
 
-    it 'deletes the project with its tasks, discussions and attachments' do
+    it 'deletes the project with its stories, discussions and attachments' do
       expect do
         camp_project
-      end.to change { Task.count }.by(2)
+      end.to change { Story.count }.by(2)
                  .and change { ProjectAttachment.count }.by(2)
                           .and change { Discussion.count }.by(2)
 
       expect do
         camp_project.destroy
-      end.to change { camp_project.tasks.count }.by(-2)
+      end.to change { camp_project.stories.count }.by(-2)
                  .and change { camp_project.attachments.count }.by(-2)
                           .and change { camp_project.discussions.count }.by(-2)
     end
 
-    it 'deletes the project with its tasks, discussions and real attachments' do
+    it 'deletes the project with its stories, discussions and real attachments' do
       expect do
         king_project
       end.to change { ProjectAttachment.count }.by(2)
@@ -71,7 +71,7 @@ RSpec.describe Project, type: :model do
 
       expect do
         king_project.destroy
-      end.to change { king_project.tasks.count }.by(-2)
+      end.to change { king_project.stories.count }.by(-2)
                  .and change { king_project.attachments.count }.by(-2)
                           .and change { king_project.discussions.count }.by(-2)
 
@@ -118,31 +118,31 @@ RSpec.describe Project, type: :model do
 
   # This seems to be more like validations of factories
   describe 'associations' do
-    context 'when associated with tasks' do
-      let(:project_with_single_task) { create(:project, :with_tasks, task_owner: user, task_count: 1) }
-      let(:project_with_many_tasks) { create(:project, :with_tasks, task_owner: user, task_count: 5) }
+    context 'when associated with stories' do
+      let(:project_with_single_story) { create(:project, :with_stories, story_owner: user, story_count: 1) }
+      let(:project_with_many_stories) { create(:project, :with_stories, story_owner: user, story_count: 5) }
 
-      it 'should have single task' do
-        expect(project_with_single_task.tasks.count).to eq(1)
+      it 'should have single story' do
+        expect(project_with_single_story.stories.count).to eq(1)
       end
 
-      it 'should have many task' do
-        expect(project_with_many_tasks.tasks.count).to eq(5)
+      it 'should have many story' do
+        expect(project_with_many_stories.stories.count).to eq(5)
       end
     end
 
     context 'when associated with Discussions' do
       let(:project_with_discussions) { create(:project, :with_discussions, discussion_owner: user, discussion_count: 2) }
 
-      # let(:project_with_task_discussions) {create(:project_with_task_discussions, owner: user)}
+      # let(:project_with_story_discussions) {create(:project_with_story_discussions, owner: user)}
 
       it 'should have discussions' do
         expect(project_with_discussions.discussions.count).to eq(2)
       end
 
-      # it 'should have task and discussion at a time' do
-      #   expect(project_with_task_discussions.tasks.count).to eq(1)
-      #   expect(project_with_task_discussions.discussions.count).to eq(1)
+      # it 'should have story and discussion at a time' do
+      #   expect(project_with_story_discussions.stories.count).to eq(1)
+      #   expect(project_with_story_discussions.discussions.count).to eq(1)
       #
       # end
     end

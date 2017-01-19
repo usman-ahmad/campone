@@ -1,17 +1,17 @@
 ---
 project:
   name: 'Test Project'
-  description: 'This is a demo project to play with. You can delete it later. We have also created some demo tasks for you'
-tasks:
+  description: 'This is a demo project to play with. You can delete it later. We have also created some demo stories for you'
+stories:
   - title: 'Sign up for Camp One'
     progress: 'Completed'
     priority: 'High'
-    description: 'You have successfully finished this task.'
-  - title: 'Update this task'
+    description: 'You have successfully finished this story.'
+  - title: 'Update this story'
     progress: 'In progress'
     priority: 'Low'
-    description: 'Update this task and change its progress to Completed, Be default Completed tasks are not shown in list but you can change this behavior.'
-  - title: 'Create a new task'
+    description: 'Update this story and change its progress to Completed, Be default Completed stories are not shown in list but you can change this behavior.'
+  - title: 'Create a new story'
     progress: 'No progress'
     priority: 'Medium'
     description: ''
@@ -20,5 +20,5 @@ tasks:
     priority: 'High'
     description: 'Ready to get stared! Create an Actual Project,
     you can invite other people to your project,
-    import your task from other Project Management tools like jira, asana and pivotal etc,
+    import your story from other Project Management tools like jira, asana and pivotal etc,
     add third party integrations like Slack, Github, Bitbucket etc. and much more'

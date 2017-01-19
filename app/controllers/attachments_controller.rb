@@ -89,7 +89,7 @@ class AttachmentsController < ApplicationController
   end
 
   def load_attachable
-    klass = [Task, Discussion, Project].detect { |c| params["#{c.name.underscore}_id"] }
+    klass = [Story, Discussion, Project].detect { |c| params["#{c.name.underscore}_id"] }
     @attachable = klass.find(params["#{klass.name.underscore}_id"])
   end
 

@@ -11,30 +11,30 @@ class AsanaImport < ImportService
   end
 
   def import!(external_project_id)
-    tasks = client.tasks.find_by_project projectId: external_project_id
+    stories = client.stories.find_by_project projectId: external_project_id
 
-    # TODO: Change it, for now importing just 2 tasks for testing
-    tasks.first(2).each do |task|
+    # TODO: Change it, for now importing just 2 stories for testing
+    stories.first(2).each do |story|
       # Use Background Job here
-      import_task(task.id)
+      import_story(story.id)
     end
 
     create_webhook(external_project_id)
   end
 
-  def import_task(task_id)
-    task = @client.tasks.find_by_id task_id
+  def import_story(story_id)
+    story = @client.stories.find_by_id story_id
 
     # TODO: handle assigned_to
     attributes = {
-        title: task.name,
-        description: task.notes,
-        state: task.completed ? Task::STATE_MAP[:COMPLETED] : Task::STATE_MAP[:NO_PROGRESS],
-        created_at: task.created_at,
-        updated_at: task.modified_at
+        title: story.name,
+        description: story.notes,
+        state: story.completed ? Story::STATE_MAP[:COMPLETED] : Story::STATE_MAP[:NO_PROGRESS],
+        created_at: story.created_at,
+        updated_at: story.modified_at
     }
 
-    @project.tasks.create(attributes)
+    @project.stories.create(attributes)
   end
 
   def project_list
@@ -57,17 +57,17 @@ class AsanaImport < ImportService
     client.webhooks.create(resource: id, target: "#{ENV['HOST']}/webhooks/#{@integration.id}")
   end
 
-  def create_task_from_payload(payload)
+  def create_story_from_payload(payload)
 =begin
     Todo: Use Background job, And delay this job for some time i-e 5-10 minutes
-    # when we receive task created hook, It is empty at this point as
-    # Asana creates empty task on pressing enter than updates it gradually as user enters description.
+    # when we receive story created hook, It is empty at this point as
+    # Asana creates empty story on pressing enter than updates it gradually as user enters description.
 =end
     if payload.info['events']
-      events = payload.info['events'].select{|e| e['type'] == 'task' && e['action'] == 'added'}
+      events = payload.info['events'].select{|e| e['type'] == 'story' && e['action'] == 'added'}
 
       events.each do |event|
-        import_task(event['resource'])
+        import_story(event['resource'])
       end
     end
   end

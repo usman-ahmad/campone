@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113121454) do
+ActiveRecord::Schema.define(version: 20170113131553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -166,6 +166,26 @@ ActiveRecord::Schema.define(version: 20170113121454) do
     t.index ["slug"], name: "index_projects_on_slug", unique: true, using: :btree
   end
 
+  create_table "stories", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "project_id"
+    t.string   "priority"
+    t.date     "due_at"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "state",        default: "unscheduled"
+    t.integer  "owner_id"
+    t.integer  "requester_id"
+    t.integer  "position"
+    t.string   "ticket_id"
+    t.string   "story_type",   default: "feature"
+    t.index ["owner_id"], name: "index_stories_on_owner_id", using: :btree
+    t.index ["project_id"], name: "index_stories_on_project_id", using: :btree
+    t.index ["requester_id"], name: "index_stories_on_requester_id", using: :btree
+    t.index ["ticket_id"], name: "index_stories_on_ticket_id", unique: true, using: :btree
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.string   "taggable_type"
@@ -189,26 +209,6 @@ ActiveRecord::Schema.define(version: 20170113121454) do
     t.string  "name"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
-  end
-
-  create_table "tasks", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "project_id"
-    t.string   "priority"
-    t.date     "due_at"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "state",        default: "unscheduled"
-    t.integer  "owner_id"
-    t.integer  "requester_id"
-    t.integer  "position"
-    t.string   "ticket_id"
-    t.string   "task_type",    default: "feature"
-    t.index ["owner_id"], name: "index_tasks_on_owner_id", using: :btree
-    t.index ["project_id"], name: "index_tasks_on_project_id", using: :btree
-    t.index ["requester_id"], name: "index_tasks_on_requester_id", using: :btree
-    t.index ["ticket_id"], name: "index_tasks_on_ticket_id", unique: true, using: :btree
   end
 
   create_table "user_discussions", force: :cascade do |t|
@@ -273,8 +273,8 @@ ActiveRecord::Schema.define(version: 20170113121454) do
   add_foreign_key "notifications_backup", "activities_backup", column: "activity_id"
   add_foreign_key "notifications_backup", "users"
   add_foreign_key "payloads", "integrations"
-  add_foreign_key "tasks", "projects"
-  add_foreign_key "tasks", "users", column: "requester_id"
+  add_foreign_key "stories", "projects"
+  add_foreign_key "stories", "users", column: "requester_id"
   add_foreign_key "user_discussions", "discussions"
   add_foreign_key "user_discussions", "users"
 end

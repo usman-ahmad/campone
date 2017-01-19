@@ -93,7 +93,7 @@ module Notifiable
   def notifiable_link
     resource =
         case self.class.name
-          when 'Task', 'Discussion'
+          when 'Story', 'Discussion'
             self
           when "Comment"
             self.commentable
@@ -122,7 +122,7 @@ module Notifiable
   # used while broadcasting on notifiable_integrations
   def notifiable_description
     text = case notification_content[:resource_type]
-             when 'Task', 'Discussion'
+             when 'Story', 'Discussion'
                "#{notification_content[:performer_name]}: " + resource_action
              when "Comment"
                "#{notification_content[:performer_name]}: " + resource_action + ': '+ notification_content[:text]

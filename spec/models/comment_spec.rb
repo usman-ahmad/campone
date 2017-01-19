@@ -28,23 +28,23 @@ RSpec.describe Comment, type: :model do
   describe '#destroy' do
     let(:camp_project_owner) { create(:user) }
     let(:camp_project) { create(:project, title: 'chat project', owner: camp_project_owner) }
-    let(:task_with_comments) { create(:task, :with_comments, comments_count: 3, requester: camp_project_owner, project: camp_project) }
-    let(:comment_with_real_attachments) { create(:comment, :with_attachments, attachments_count: 2, real_attachments: true, user: camp_project_owner, commentable: task_with_comments) }
+    let(:story_with_comments) { create(:story, :with_comments, comments_count: 3, requester: camp_project_owner, project: camp_project) }
+    let(:comment_with_real_attachments) { create(:comment, :with_attachments, attachments_count: 2, real_attachments: true, user: camp_project_owner, commentable: story_with_comments) }
 
-    it 'deletes task having comments with attachments' do
+    it 'deletes story having comments with attachments' do
       expect do
         comment_with_real_attachments
-      end.to change { Comment.where(commentable: camp_project.tasks).count }.by(1)
-                 .and change { Attachment.where(attachable: task_with_comments.comments).count }.by(2)
+      end.to change { Comment.where(commentable: camp_project.stories).count }.by(1)
+                 .and change { Attachment.where(attachable: story_with_comments.comments).count }.by(2)
 
-      path = task_with_comments.comments.last.attachments.first.document.path
+      path = story_with_comments.comments.last.attachments.first.document.path
       expect(File).to exist(path)
 
       expect do
-        task_with_comments.destroy
-      end.to change { camp_project.tasks.count }.by(-1)
-                 .and change { Comment.where(commentable: camp_project.tasks).count }.by(-4)
-                          .and change { Attachment.where(attachable: task_with_comments.comments).count }.by(-2)
+        story_with_comments.destroy
+      end.to change { camp_project.stories.count }.by(-1)
+                 .and change { Comment.where(commentable: camp_project.stories).count }.by(-4)
+                          .and change { Attachment.where(attachable: story_with_comments.comments).count }.by(-2)
 
       expect(File).not_to exist(path)
     end
@@ -54,7 +54,7 @@ RSpec.describe Comment, type: :model do
     let(:owner) { create(:user, name: 'Owner name') }
     let(:other_user) { create(:user) }
     let(:project) { create(:project, owner: owner, title: 'T E S Ting', member_users: [other_user]) }
-    let!(:task) { create(:task, project: project, id: 1001) }
+    let!(:story) { create(:story, project: project, id: 1001) }
 
     it { is_expected.to be_a Notifiable }
 
@@ -74,7 +74,7 @@ RSpec.describe Comment, type: :model do
     end
 
     context 'on create' do
-      let(:comment) { build(:comment, id: 1001, user: owner, performer: owner, commentable: task, content: 'Comment for testing notifications') }
+      let(:comment) { build(:comment, id: 1001, user: owner, performer: owner, commentable: story, content: 'Comment for testing notifications') }
 
       it 'creates notifications' do
         expect { comment.save }.to change(Notification, :count).by(1)
@@ -90,7 +90,7 @@ RSpec.describe Comment, type: :model do
         expect(notification.resource_id).to eq 1001
         expect(notification.resource_type).to eq 'Comment'
         expect(notification.resource_fid).to eq nil
-        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.resource_link).to eq '/projects/test/stories/test-1'
         expect(notification.project_fid).to eq 'test'
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe Comment, type: :model do
 
     context 'on update', pending: 'scenario has been removed from comments model' do
       let(:other_user) { create(:user) }
-      let!(:comment) { create(:comment, commentable: task, content: 'Comment for testing notifications', id: 1001, performer: owner) }
+      let!(:comment) { create(:comment, commentable: story, content: 'Comment for testing notifications', id: 1001, performer: owner) }
 
       it 'creates notifications' do
         expect { comment.update_attributes(content: 'My updated comment') }.to change(Notification, :count).by(1)
@@ -114,14 +114,14 @@ RSpec.describe Comment, type: :model do
         expect(notification.resource_id).to eq 1001
         expect(notification.resource_type).to eq 'Comment'
         expect(notification.resource_fid).to eq nil
-        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.resource_link).to eq '/projects/test/stories/test-1'
         expect(notification.project_fid).to eq 'test'
       end
     end
 
     context 'on destroy', pending: 'scenario has been removed from comments model' do
       let(:other_user) { create(:user) }
-      let!(:comment) { create(:comment, commentable: task, content: 'Comment for testing notifications', id: 1001, performer: owner) }
+      let!(:comment) { create(:comment, commentable: story, content: 'Comment for testing notifications', id: 1001, performer: owner) }
 
       it 'creates notifications' do
         expect { comment.destroy }.to change(Notification, :count).by(1)
@@ -137,7 +137,7 @@ RSpec.describe Comment, type: :model do
         expect(notification.resource_id).to eq 1001
         expect(notification.resource_type).to eq 'Comment'
         expect(notification.resource_fid).to eq nil
-        expect(notification.resource_link).to eq '/projects/test/tasks/test-1'
+        expect(notification.resource_link).to eq '/projects/test/stories/test-1'
         expect(notification.project_fid).to eq 'test'
       end
     end

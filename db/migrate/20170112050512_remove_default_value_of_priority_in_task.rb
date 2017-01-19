@@ -1,3 +1,6 @@
+class Task < ApplicationRecord
+end
+
 class RemoveDefaultValueOfPriorityInTask < ActiveRecord::Migration[5.0]
   def up
     change_column_default(:tasks, :priority, nil)

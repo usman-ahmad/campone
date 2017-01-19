@@ -1,3 +1,6 @@
+class Task < ApplicationRecord
+end
+
 class AddTicketIdToTasks < ActiveRecord::Migration
   def change
     add_column :tasks, :ticket_id, :string

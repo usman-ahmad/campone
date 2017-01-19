@@ -24,14 +24,14 @@ FactoryGirl.define do
       member_users []
     end
 
-    trait :with_tasks do
+    trait :with_stories do
       transient do
-        task_owner { owner }
-        task_count 3
+        story_owner { owner }
+        story_count 3
       end
 
       after(:create) do |project, evaluator|
-        create_list(:task, evaluator.task_count, project: project, requester: evaluator.task_owner)
+        create_list(:story, evaluator.story_count, project: project, requester: evaluator.story_owner)
       end
     end
 

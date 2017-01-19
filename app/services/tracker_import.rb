@@ -26,7 +26,7 @@ class TrackerImport < ImportService
         state: map_state(story.current_state),
     }
 
-    @project.tasks.create(attributes)
+    @project.stories.create(attributes)
   end
 
 
@@ -46,21 +46,21 @@ class TrackerImport < ImportService
     # planned is mapped to NO_PROGRESS or unstarted
     case state
       when 'unscheduled'
-        Task::STATE_MAP[:NOT_SCHEDULED]
+        Story::STATE_MAP[:NOT_SCHEDULED]
       when 'unstarted'
-        Task::STATE_MAP[:NO_PROGRESS]
+        Story::STATE_MAP[:NO_PROGRESS]
       when 'started'
-        Task::STATE_MAP[:IN_PROGRESS]
+        Story::STATE_MAP[:IN_PROGRESS]
       when 'finished'
-        Task::STATE_MAP[:COMPLETED]
+        Story::STATE_MAP[:COMPLETED]
       when 'delivered'
-        Task::STATE_MAP[:DEPLOYED]
+        Story::STATE_MAP[:DEPLOYED]
       when 'rejected'
-        Task::STATE_MAP[:REJECTED]
+        Story::STATE_MAP[:REJECTED]
       when 'accepted'
-        Task::STATE_MAP[:ACCEPTED]
+        Story::STATE_MAP[:ACCEPTED]
       else
-        Task::STATES[:NO_PROGRESS]
+        Story::STATES[:NO_PROGRESS]
     end
   end
 

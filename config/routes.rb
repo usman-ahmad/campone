@@ -5,28 +5,28 @@
 #                       settings_project GET       /projects/:id/settings(.:format)                                             projects#settings
 #                   contributors_project GET       /projects/:id/contributors(.:format)                                         projects#contributors
 #                   integrations_project GET       /projects/:id/integrations(.:format)                                         projects#integrations
-#                     sort_project_tasks POST      /projects/:project_id/tasks/sort(.:format)                                   tasks#sort
-#               new_import_project_tasks GET       /projects/:project_id/tasks/new_import(.:format)                             tasks#new_import
-#                   import_project_tasks POST      /projects/:project_id/tasks/import(.:format)                                 tasks#import
-#            assigned_to_me_project_task PATCH     /projects/:project_id/tasks/:id/assigned_to_me(.:format)                     tasks#assigned_to_me
-#                 set_state_project_task PATCH     /projects/:project_id/tasks/:id/set_state(.:format)                          tasks#set_state
-#                  project_task_comments GET       /projects/:project_id/tasks/:task_id/comments(.:format)                      comments#index
-#                                        POST      /projects/:project_id/tasks/:task_id/comments(.:format)                      comments#create
-#               new_project_task_comment GET       /projects/:project_id/tasks/:task_id/comments/new(.:format)                  comments#new
-#              edit_project_task_comment GET       /projects/:project_id/tasks/:task_id/comments/:id/edit(.:format)             comments#edit
-#                   project_task_comment GET       /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#show
-#                                        PATCH     /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#update
-#                                        PUT       /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#update
-#                                        DELETE    /projects/:project_id/tasks/:task_id/comments/:id(.:format)                  comments#destroy
-#        attach_project_task_attachments POST      /projects/:project_id/tasks/:task_id/attachments/attach(.:format)            attachments#attach
-#                          project_tasks GET       /projects/:project_id/tasks(.:format)                                        tasks#index
-#                                        POST      /projects/:project_id/tasks(.:format)                                        tasks#create
-#                       new_project_task GET       /projects/:project_id/tasks/new(.:format)                                    tasks#new
-#                      edit_project_task GET       /projects/:project_id/tasks/:id/edit(.:format)                               tasks#edit
-#                           project_task GET       /projects/:project_id/tasks/:id(.:format)                                    tasks#show
-#                                        PATCH     /projects/:project_id/tasks/:id(.:format)                                    tasks#update
-#                                        PUT       /projects/:project_id/tasks/:id(.:format)                                    tasks#update
-#                                        DELETE    /projects/:project_id/tasks/:id(.:format)                                    tasks#destroy
+#                   sort_project_stories POST      /projects/:project_id/stories/sort(.:format)                                 stories#sort
+#             new_import_project_stories GET       /projects/:project_id/stories/new_import(.:format)                           stories#new_import
+#                 import_project_stories POST      /projects/:project_id/stories/import(.:format)                               stories#import
+#           assigned_to_me_project_story PATCH     /projects/:project_id/stories/:id/assigned_to_me(.:format)                   stories#assigned_to_me
+#                set_state_project_story PATCH     /projects/:project_id/stories/:id/set_state(.:format)                        stories#set_state
+#                 project_story_comments GET       /projects/:project_id/stories/:story_id/comments(.:format)                   comments#index
+#                                        POST      /projects/:project_id/stories/:story_id/comments(.:format)                   comments#create
+#              new_project_story_comment GET       /projects/:project_id/stories/:story_id/comments/new(.:format)               comments#new
+#             edit_project_story_comment GET       /projects/:project_id/stories/:story_id/comments/:id/edit(.:format)          comments#edit
+#                  project_story_comment GET       /projects/:project_id/stories/:story_id/comments/:id(.:format)               comments#show
+#                                        PATCH     /projects/:project_id/stories/:story_id/comments/:id(.:format)               comments#update
+#                                        PUT       /projects/:project_id/stories/:story_id/comments/:id(.:format)               comments#update
+#                                        DELETE    /projects/:project_id/stories/:story_id/comments/:id(.:format)               comments#destroy
+#       attach_project_story_attachments POST      /projects/:project_id/stories/:story_id/attachments/attach(.:format)         attachments#attach
+#                        project_stories GET       /projects/:project_id/stories(.:format)                                      stories#index
+#                                        POST      /projects/:project_id/stories(.:format)                                      stories#create
+#                      new_project_story GET       /projects/:project_id/stories/new(.:format)                                  stories#new
+#                     edit_project_story GET       /projects/:project_id/stories/:id/edit(.:format)                             stories#edit
+#                          project_story GET       /projects/:project_id/stories/:id(.:format)                                  stories#show
+#                                        PATCH     /projects/:project_id/stories/:id(.:format)                                  stories#update
+#                                        PUT       /projects/:project_id/stories/:id(.:format)                                  stories#update
+#                                        DELETE    /projects/:project_id/stories/:id(.:format)                                  stories#destroy
 #            project_discussion_comments GET       /projects/:project_id/discussions/:discussion_id/comments(.:format)          comments#index
 #                                        POST      /projects/:project_id/discussions/:discussion_id/comments(.:format)          comments#create
 #         new_project_discussion_comment GET       /projects/:project_id/discussions/:discussion_id/comments/new(.:format)      comments#new
@@ -159,7 +159,7 @@ Rails.application.routes.draw do
       get :integrations
     end
 
-    resources :tasks do
+    resources :stories do
       collection do
         post :sort
         get :new_import

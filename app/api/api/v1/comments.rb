@@ -11,13 +11,13 @@ module API
         end
 
         def commentable
-          klass = [Task, Discussion].detect { |c| params["#{c.name.underscore}_id"] }
+          klass = [Story, Discussion].detect { |c| params["#{c.name.underscore}_id"] }
           @commentable = klass.where(id:params["#{klass.name.underscore}_id"], project_id:project).first
         end
       end
 
       resource :get_comments do
-        desc "Return Comments of a task or discussion that is related to a specific project"
+        desc "Return Comments of a story or discussion that is related to a specific project"
         params do
           requires :project_id , type: Integer
         end
@@ -26,7 +26,7 @@ module API
              if commentable.present?
                 commentable.comments
              else
-              "Task or Discussion is not present to show comments"
+              "Story or Discussion is not present to show comments"
             end
           else
             "Project is not found"
@@ -35,7 +35,7 @@ module API
       end
 
       resource :post_new_comments do
-        desc "post a new Comment on task or discussion that is related to a specific project"
+        desc "post a new Comment on story or discussion that is related to a specific project"
         params do
           requires :project_id , type: Integer
           requires :comment , type: String
@@ -45,7 +45,7 @@ module API
             if commentable.present?
               commentable.comments.create(content:params[:comment],user:current_user)
             else
-              "Task or Discussion is not present to show comments"
+              "Story or Discussion is not present to show comments"
             end
           else
             "Project is not found"

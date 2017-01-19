@@ -6,7 +6,7 @@ class NotificationsController < ApplicationController
     @page = params[:page].try(:to_i) || 1
 
     respond_to do |format|
-      format.html { @notifications = @notifications.group_by { |n| n.task_or_discussion } }
+      format.html { @notifications = @notifications.group_by { |n| n.story_or_discussion } }
       format.js { @notifications = @notifications.paginate(:page => @page, :per_page => 10) }
     end
   end

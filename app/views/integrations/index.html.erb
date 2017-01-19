@@ -1,5 +1,5 @@
 <div class="col-md-12 show-page-head">
-  <%= link_to project_tasks_path(@project) do %>
+  <%= link_to project_stories_path(@project) do %>
       <span><i class="fa fa-arrow-circle-o-left"></i></span>
       Todo's
   <% end %>
@@ -11,11 +11,11 @@
 <%#= link_to "Configure Twitter account to receive notification tweets", user_omniauth_authorize_path(:twitter, params: {project_id: @project.id}) %>
 <%= link_to "Configure Twitter account to receive notification tweets", user_twitter_omniauth_authorize_path(params: {project_id: @project.id}) %>
 <br/>
-<%#= link_to "Integrate Asana account and import your tasks", user_omniauth_authorize_path(:asana, params: {project_id: @project.friendly_id}) %>
-<%= link_to "Integrate Asana account and import your tasks", user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
+<%#= link_to "Integrate Asana account and import your stories", user_omniauth_authorize_path(:asana, params: {project_id: @project.friendly_id}) %>
+<%= link_to "Integrate Asana account and import your stories", user_asana_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
 <br/>
-<%#= link_to "Integrate Trello account and import your tasks", user_omniauth_authorize_path(:trello, params: {project_id: @project.friendly_id}) %>
-<%= link_to "Integrate Trello account and import your tasks", user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
+<%#= link_to "Integrate Trello account and import your stories", user_omniauth_authorize_path(:trello, params: {project_id: @project.friendly_id}) %>
+<%= link_to "Integrate Trello account and import your stories", user_trello_omniauth_authorize_path(params: {project_id: @project.friendly_id}) %>
 <br/>
 
 <table style="width:100%">

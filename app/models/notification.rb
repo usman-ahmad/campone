@@ -32,7 +32,7 @@ class Notification < ApplicationRecord
 
   scope :unread, -> { where(read: false) }
 
-  # utility method that returns action like 'Created Task'
+  # utility method that returns action like 'Created Story'
   # For now combining action with type, we can customize it i-e instead of 'Created Comment' return 'commented'
   def resource_action
     [action, resource_type].join(' ')
@@ -43,7 +43,7 @@ class Notification < ApplicationRecord
   end
 
   # TODO: Remove dependency, for now using this methods in NotificationsController#index
-  def task_or_discussion
+  def story_or_discussion
     comment? ? notifiable.commentable : notifiable
   end
 

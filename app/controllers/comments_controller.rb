@@ -7,9 +7,9 @@ class CommentsController < ApplicationController
 
   # Make sure a user is not able comment on other unauthorized projects
   load_and_authorize_resource :project
-  load_and_authorize_resource :task, :through => :project
+  load_and_authorize_resource :story, :through => :project
   load_and_authorize_resource :discussion, :through => :project
-  authorize_resource :comment, :through => [:task, :discussion]
+  authorize_resource :comment, :through => [:story, :discussion]
 
   def index
     @comments = @commentable.comments
@@ -67,7 +67,7 @@ class CommentsController < ApplicationController
   end
 
   def load_commentable
-    klass = [Task, Discussion, Attachment].detect { |c| params["#{c.name.underscore}_id"] }
+    klass = [Story, Discussion, Attachment].detect { |c| params["#{c.name.underscore}_id"] }
     @commentable = klass.find(params["#{klass.name.underscore}_id"])
   end
 

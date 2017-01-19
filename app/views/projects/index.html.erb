@@ -9,7 +9,7 @@
       <section class="bg-white ">
         <div class="dragable" id="project" data-update-url="<%= sort_projects_url %>">
           <% @projects.each do |project| %>
-              <div class="project anchor-container" id="project_<%= project.id %>" data-href="<%= project_tasks_path(project) %>">
+              <div class="project anchor-container" id="project_<%= project.id %>" data-href="<%= project_stories_path(project) %>">
                 <h3 class="project-title"><%= project.title %></h3>
 
                 <div class="color_corner" style="border-right-color: #DC4138;">
@@ -21,7 +21,7 @@
                 <p class="project-description mg-b10"><%= project.description %></p>
 
                 <div class="project-apps mg-b50">
-                  <a href="<%= project_tasks_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="TO-DO's"><i class="fa fa-check-circle-o"></i></a>
+                  <a href="<%= project_stories_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Stories"><i class="fa fa-check-circle-o"></i></a>
                   <a href="<%= project_discussions_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Discussions"><i class="fa fa-comments-o"></i></a>
                   <a href="<%= project_attachments_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Files"><i class="fa fa-folder-open-o"></i></a>
                   <a href="<%= project_events_path(project) %>" class="project-icon" data-toggle="tooltip" data-placement="bottom" title="Calendar"><i class="fa fa-calendar"></i></a>

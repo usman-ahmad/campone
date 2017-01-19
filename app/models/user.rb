@@ -50,16 +50,16 @@ class User < ApplicationRecord
   has_many :projects, through: :contributions, source: :project
   # has_many :invited_users, through: :contributions, source: :user, foreign_key: :owner_id
 
-  # has_many :created_tasks # which he created on any project
-# TODO has_many :assigned_tasks => can we rename it?
-  has_many :assigned_tasks, class_name: Task, foreign_key: :owner_id
+  # has_many :created_stories # which he created on any project
+# TODO has_many :assigned_stories => can we rename it?
+  has_many :assigned_stories, class_name: Story, foreign_key: :owner_id
 
   # has_many :started_discussions # started_by this user
   has_many :user_discussions
   has_many :discussions, through: :user_discussions
 
   # Should we distinguish project_attachments ?
-  # has_many :attachments # all attachments either on project, task, discussion or comment
+  # has_many :attachments # all attachments either on project, story, discussion or comment
   # has_many :comments
 
   # has_many :sent_notifications, foreign_key: :actor_id
@@ -162,7 +162,7 @@ class User < ApplicationRecord
   # def create_demo_project
   #   demo_data = YAML.load_file('db/demo_project.yml')
   #   project   = Project.create(demo_data['project'].merge(owner: self))
-  #   project.tasks.create(demo_data['tasks'])
+  #   project.stories.create(demo_data['stories'])
   # end
 
 end

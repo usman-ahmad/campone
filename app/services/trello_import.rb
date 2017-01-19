@@ -26,12 +26,12 @@ class TrelloImport < ImportService
 
   def import_list(list)
     list.cards.each do |card|
-      import_task(card)
+      import_story(card)
     end
   end
 
-  def import_task(card)
-    # TODO: Manage State and Task requester
+  def import_story(card)
+    # TODO: Manage State and Story Requester
     attributes = {
         title: card.name,
         description: card.desc,
@@ -39,22 +39,22 @@ class TrelloImport < ImportService
         updated_at: card.last_activity_date,
     }
 
-    task = @project.tasks.build(attributes)
+    story = @project.stories.build(attributes)
 
     card.attachments.each do |attachment|
-      task.attachments.build(project: @project).attach_from_url(attachment.url)
+      story.attachments.build(project: @project).attach_from_url(attachment.url)
     end
 
-    task.save!
+    story.save!
   end
 
-  def create_task_from_payload(payload)
+  def create_story_from_payload(payload)
     card_id = payload.info['webhook']['action']['data']['card']['id']
     # list_name = payload.info['webhook']['action']['data']['list']['name']
     card = @client.find(:card, card_id)
-    # group = TaskGroup.find_or_create_by(name: list_name, project_id: @project.id)
-    # import_task(card, group.id)
-    import_task(card)
+    # group = StoryGroup.find_or_create_by(name: list_name, project_id: @project.id)
+    # import_story(card, group.id)
+    import_story(card)
   end
 
   def project_list
@@ -83,7 +83,7 @@ class TrelloImport < ImportService
   # TODO: Delete webhook, Gem does't provide a way to fetch all webhooks, Either store webhook id on local DB or patch gem
   def create_webhook(model_id)
     @client.create(:webhook,
-                   'description' => 'Task sync for Camp One',
+                   'description' => 'Story sync for Camp One',
                    'idModel'     => model_id,
                    'callbackURL' => "#{ENV['HOST']}/webhooks/#{@integration.id}")
   end

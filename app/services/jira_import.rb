@@ -19,14 +19,14 @@ class JiraImport < ImportService
 
     issues = project.issues
 
-    # TODO: Change it, for now importing just 2 tasks for testing
+    # TODO: Change it, for now importing just 2 stories for testing
     issues.each do |issue|
       # Use Background Job here
-      import_task(issue)
+      import_story(issue)
     end
   end
 
-  def import_task(issue)
+  def import_story(issue)
 
     # TODO: Fix raw Description.
     attributes = {
@@ -38,7 +38,7 @@ class JiraImport < ImportService
         updated_at:  issue.updated
     }
 
-    @project.tasks.create(attributes)
+    @project.stories.create(attributes)
   end
 
   def project_list
@@ -65,9 +65,9 @@ class JiraImport < ImportService
     )
   end
 
-  def create_task_from_payload(payload)
+  def create_story_from_payload(payload)
     issue = client.Issue.find(payload.info['issue']['id'])
-    import_task(issue)
+    import_story(issue)
   end
 
   private
@@ -75,11 +75,11 @@ class JiraImport < ImportService
   def map_state(state)
     case state
       when 'To Do'
-        Task::STATE_MAP[:NO_PROGRESS]
+        Story::STATE_MAP[:NO_PROGRESS]
       when 'Done'
-        Task::STATE_MAP[:COMPLETED]
+        Story::STATE_MAP[:COMPLETED]
       when 'In Progress'
-        Task::STATE_MAP[:IN_PROGRESS]
+        Story::STATE_MAP[:IN_PROGRESS]
     end
   end
 end
