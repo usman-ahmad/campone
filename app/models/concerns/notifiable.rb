@@ -33,6 +33,7 @@ module Notifiable
           content_method: options[:content_method],
           notifiable_integrations: options[:notifiable_integrations],
           notifiable_attributes: options[:only].try(:map, &:to_s) || self.send(:attribute_names),
+          on: options[:on] || [:create, :update, :destroy],
           if: options[:if]
       }.with_indifferent_access
 
@@ -156,6 +157,7 @@ module Notifiable
 
   def skip_notifications?
     given = notifiable_config[:if].is_a?(Proc) ? notifiable_config[:if].call(self) : true
-    (!given) || changed_notifiable_attributes.blank? || (receivers.blank? && notifiable_integrations.blank?)
+    event_performed = transaction_include_any_action?(notifiable_config[:on])
+    (!given) || (!event_performed) || changed_notifiable_attributes.blank? || (receivers.blank? && notifiable_integrations.blank?)
   end
 end

@@ -96,7 +96,7 @@ RSpec.describe Comment, type: :model do
     end
 
 
-    context 'on update' do
+    context 'on update', pending: 'scenario has been removed from comments model' do
       let(:other_user) { create(:user) }
       let!(:comment) { create(:comment, commentable: task, content: 'Comment for testing notifications', id: 1001, performer: owner) }
 
@@ -119,7 +119,7 @@ RSpec.describe Comment, type: :model do
       end
     end
 
-    context 'on destroy' do
+    context 'on destroy', pending: 'scenario has been removed from comments model' do
       let(:other_user) { create(:user) }
       let!(:comment) { create(:comment, commentable: task, content: 'Comment for testing notifications', id: 1001, performer: owner) }
 

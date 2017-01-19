@@ -22,6 +22,7 @@ class Comment < ApplicationRecord
                     receivers: :notification_receivers,
                     content_method: :content,
                     only: [:content],
+                    on: [:create],
                     notifiable_integrations: Proc.new { |comment| comment.project.integrations.notifiable },
                     if: Proc.new { |comment| comment.commentable.present? }
 

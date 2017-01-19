@@ -25,6 +25,7 @@ class Task < ApplicationRecord
                     content_method: :title,
                     only: [:title, :description, :priority, :state, :owner_id],
                     # except: [:position, :updated_all]
+                    on: [:create, :update, :destroy],
                     notifiable_integrations: Proc.new { |task| task.project.integrations.notifiable }
 
   # include PublicActivity::Common
