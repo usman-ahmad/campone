@@ -1,12 +1,13 @@
 class AttachmentsController < ApplicationController
-  load_and_authorize_resource :project
-  load_and_authorize_resource :attachment, :through => :project
 
   # UA[2016/12/07] - 'set_project' and 'set_attachment' SHOULD NOT BE HERE
   # @project and @attachment SHOULD BE SET BY 'load_and_authorize_resource'
   before_action :set_project
   before_action :load_attachable
-  before_action :set_attachment, only: [:edit, :update, :download]
+  before_action :set_attachment, only: [:edit, :update, :destroy, :download, :show]
+
+  load_and_authorize_resource :project
+  load_and_authorize_resource :attachment, :through => :project
 
   before_action :set_performer, only: [:update, :destroy]
 
@@ -62,9 +63,13 @@ class AttachmentsController < ApplicationController
   end
 
   def destroy
-    @attachment = ProjectAttachment.find(params[:id])
-    @attachment.destroy
-    redirect_to project_attachments_path(@project), notice: 'Attachment was successfully deleted.'
+    attachment = @attachment.destroy
+    flash[:notice] = 'Attachment was successfully deleted.'
+    if request.env['HTTP_REFERER'] == project_attachment_url(@project, attachment)
+      redirect_to project_attachments_path(@project)
+    else
+      redirect_back fallback_location: project_attachments_path(@project)
+    end
   end
 
   def edit
@@ -81,7 +86,7 @@ class AttachmentsController < ApplicationController
   private
 
   def set_attachment
-    @attachment = @project.attachments.find(params[:id])
+    @attachment = Attachment.find(params[:id])
   end
 
   def set_project

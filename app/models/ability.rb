@@ -49,9 +49,8 @@ class Ability
       integration.project.owner == user
     end
 
-    # GS[2016-12-22] For now restrict delete cuz it can break notifications.
-    # We'll allow it after making flat notifications
-    cannot :destroy, [Project, Story, Discussion, Comment, Attachment]
+    # AR[2017-01-20]  # Allow it as notifications are working properly
+    # cannot :destroy, [Project, Story, Discussion, Comment, Attachment]
 
     # can :read, Project, :category => { :visible => true }
     # Define abilities for the passed in user here. For example:
