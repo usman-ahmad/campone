@@ -127,3 +127,64 @@
   color: #fff;
   background-color: #cc6800;
 }
+
+//TODO: improve css: use SASS framework extend/inheritance for social icons buttons and label
+
+.integration-list-table > tbody > tr > td {
+  vertical-align: middle;
+  padding-bottom: 6px;
+  padding-top: 10px;
+}
+
+.label-social {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 77px;
+  display: inline-block;
+  text-align: center;
+  padding: 0.5em 0 .6em 1.6em;
+}
+
+.label-social :first-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  line-height: 34px;
+  font-size: 1.6em;
+  text-align: center;
+  padding: 2px 0 0 2px;
+}
+
+.label-trello :first-child {
+  width: 29px;
+  padding-left: 11px;
+}
+
+.label-twitter :first-child,
+.label-asana :first-child {
+  width: 24px;
+  padding: 3px 0 0 8px;
+}
+
+.label-hipchat :first-child {
+  padding: 3px 0 0 5px;
+}
+
+.label-github :first-child {
+  width: 25px;
+  padding: 2px 0 0 7px;
+}
+
+.label-slack :first-child {
+  width: 29px;
+  padding: 2px 0 0 11px;
+}
+
+.label-jira :first-child {
+  width: 29px;
+  padding: 3px 0 0 18px;
+}

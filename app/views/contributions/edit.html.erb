@@ -1,4 +1,26 @@
-<h3>Edit Contribution</h3>
-<div class="col-md-4">
-  <%= render 'contributions/form' %>
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
+<% end %>
+<div class='custom-tab-container'>
+  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'contributors' %>
+
+  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
+    <div class='custom-tab-content active'>
+      <div class='tab-content-header'>
+        <h3 class='heading-3'>Contributors Settings</h3>
+
+        <div class='pull-right'>
+          <%= link_to contributors_project_path(@project), class: 'btn btn-primary' do %>
+              <span class='glyphicon glyphicon-arrow-left'></span>
+              Back
+          <% end %>
+        </div>
+      </div>
+
+      <hr>
+      <div class="col-md-12 mg-b10">
+        <%= render 'contributions/form' %>
+      </div>
+    </div>
+  </div>
 </div>

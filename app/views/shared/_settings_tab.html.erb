@@ -1,0 +1,15 @@
+<div class='col-lg-2 col-md-2 col-sm-2 col-xs-3 custom-tab-menu'>
+  <div class='list-group'>
+    <a href='<%= settings_project_path(project) %>' class='list-group-item <%= "#{class_name}" if active == 'settings' %>'>
+      Project Settings
+    </a>
+    <a href='<%= contributors_project_path(project) %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'contributors' %>'>
+      Contributors Settings
+    </a>
+    <% if can? :create, Integration.new(project: project) %>
+        <a href='<%= integrations_project_path(project) %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'integrations' %>'>
+          Integrations Settings
+        </a>
+    <% end %>
+  </div>
+</div>

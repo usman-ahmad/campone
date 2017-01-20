@@ -1,23 +1,23 @@
 <% content_for(:tab_nav) do %>
-    <%= render 'shared/tab_nav', project: @project, active: '' %>
+    <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
 <% end %>
 <div class='custom-tab-container'>
 
-  <%= render 'settings_tab', project: @project, class_name:'active', active:'con' %>
+  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'contributors' %>
 
   <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
     <div class='custom-tab-content active'>
       <div class='tab-content-header'>
-        <h3 class='heading-3'>Users Settings</h3>
+        <h3 class='heading-3'>Contributors Settings</h3>
       </div>
       <hr>
       <div class='col-md-12'>
         <%= render 'contributions/list' %>
       </div>
       <% if can? :create, Contribution.new(project: @project) %>
-        <div class='col-md-12 col-sm-12 col-xs-12 mg-b20'>
-          <%= render 'contributions/form' %>
-        </div>
+          <div class='col-md-12 col-sm-12 col-xs-12 mg-b20'>
+            <%= render 'contributions/form' %>
+          </div>
       <% end %>
     </div>
   </div>

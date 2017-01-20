@@ -1,8 +1,8 @@
 <% content_for(:tab_nav) do %>
-    <%= render 'shared/tab_nav', project: @project, active: '' %>
+    <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
 <% end %>
 <div class='custom-tab-container'>
-  <%= render 'settings_tab', project: @project, class_name:'active', active:'set' %>
+  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'settings' %>
 
   <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
     <div class='custom-tab-content active'>
@@ -11,10 +11,10 @@
 
         <div class='pull-right'>
           <% if can? :edit, @project %>
-            <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
-                <span class='glyphicon glyphicon-pencil'></span>
-                Edit
-            <% end %>
+              <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
+                  <span class='glyphicon glyphicon-pencil'></span>
+                  Edit
+              <% end %>
           <% end %>
 
           <% if can? :destroy, @project %>
@@ -26,21 +26,21 @@
         </div>
       </div>
       <hr>
-      <div class='col-md-2'>
-        <h5>Title:</h5>
+      <label class="col-md-2 text-right">Title:</label>
 
-        <p><%= @project.title %></p>
-      </div>
-      <div class='col-md-2'>
-        <h5>Owner:</h5>
+      <p class="col-md-10">
+        <%= @project.title %>
+      </p>
+      <label class="col-md-2 text-right">Owner:</label>
 
-        <p><%= @project.owner.name %></p>
-      </div>
-      <div class='col-md-8'>
-        <h5>Description:</h5>
+      <p class="col-md-10">
+        <%= @project.owner.name %>
+      </p>
+      <label class="col-md-2 text-right">Description:</label>
 
-        <p><%= @project.description %></p>
-      </div>
+      <p class="col-md-10">
+        <%= @project.description %>
+      </p>
     </div>
   </div>
 </div>

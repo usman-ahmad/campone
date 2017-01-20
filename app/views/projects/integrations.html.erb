@@ -1,8 +1,8 @@
 <% content_for(:tab_nav) do %>
-    <%= render 'shared/tab_nav', project: @project, active: '' %>
+    <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
 <% end %>
 <div class='custom-tab-container'>
-  <%= render 'settings_tab', project: @project, class_name:'active', active:'int' %>
+  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'integrations' %>
 
   <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
     <div class='custom-tab-content active'>

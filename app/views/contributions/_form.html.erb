@@ -1,13 +1,18 @@
 <%= form_for [@project, @contribution], html: {role: "form", class: 'form-inline'} do |f| %>
-  <% if @contribution.new_record? %>
+    <% if @contribution.new_record? %>
+        <div class="form-group mg-r10">
+          <%= f.label :email %>
+          <%= f.text_field :email, class: "form-control" %>
+        </div>
+    <% else %>
+        <div class="form-group mg-r10">
+          <label>Email: </label>
+          <%= @contribution.user.email %>
+        </div>
+    <% end %>
     <div class="form-group mg-r10">
-      <%= f.label :email %>
-      <%= f.text_field :email, class: "form-control" %>
+      <%= f.label :role, 'Role:' %>
+      <%= f.select :role, options_for_select(Contribution::ROLES.values - ['Owner'], selected: @contribution.role), {}, class: "form-control" %>
     </div>
-  <% end %>
-  <div class="form-group mg-r10">
-    <%= f.label :role %>
-    <%= f.select :role, options_for_select(Contribution::ROLES.values - ['Owner'], selected: @contribution.role), {}, class: "form-control" %>
-  </div>
-  <%= f.submit @contribution.new_record? ? "Invite" : "Update", class: "btn btn-success" %>
+    <%= f.submit @contribution.new_record? ? "Invite" : "Update", class: "btn btn-success" %>
 <% end %>
