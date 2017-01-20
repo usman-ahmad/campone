@@ -29,11 +29,12 @@ $(document).on('turbolinks:load', function () {
         dateFormat: "yy-mm-dd"
     });
 
-    $('.contributors-tooltip').tooltip({
-        html: true,
-        placement: 'bottom',
-        title: $('.contributors-list').html()
-    });
+    // for now using inline tooltip
+    //$('.contributors-tooltip').tooltip({
+    //    html: true,
+    //    placement: 'bottom',
+    //    title: $('.contributors-list').html()
+    //});
 });
 
 // ---
