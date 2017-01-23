@@ -308,7 +308,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
+  # config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
   config.omniauth :twitter,       ENV['TWITTER_KEY'],      ENV['TWITTER_SECRET']
   config.omniauth :asana,         ENV['ASANA_CLIENT_ID'],  ENV['ASANA_CLIENT_SECRET']
   config.omniauth :jira,          ENV['JIRA_CONSUMER_KEY'],
