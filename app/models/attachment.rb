@@ -26,7 +26,7 @@ class Attachment < ApplicationRecord
                           if a.instance.is_image?
                             {thumb: '100x100#'}
                           elsif a.instance.is_video?
-                            {thumb: {geometry: '100x100#', format: 'jpg', time: 10}}
+                            {thumb: {geometry: '100x100#', format: 'jpg', time: 1}}
                           else
                             {}
                           end
