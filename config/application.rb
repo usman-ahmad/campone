@@ -19,5 +19,6 @@ module CampOne
     config.autoload_paths += %W(#{config.root}/services/*)
     config.autoload_paths += %W(#{config.root}/app/validators/)
     config.autoload_paths += Dir["#{config.root}/lib", "#{config.root}/lib/**/"]
+    config.autoload_paths += Dir[ Rails.root.join('app/models/**/') ]
   end
 end
