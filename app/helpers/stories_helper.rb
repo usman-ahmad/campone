@@ -12,4 +12,8 @@ module StoriesHelper
         User.find(story.owner_id).name
     end
   end
+
+  def story_created_time(time)
+    distance_of_time_in_words(Time.current, time)
+  end
 end

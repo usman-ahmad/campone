@@ -56,6 +56,10 @@
         <span class="key">Story Type: </span>
         <span class="value "><%= @story.story_type.upcase %></span>
       </li>
+      <li class="col-md-4">
+        <span class="key">Created At: </span>
+        <span class="value "><%= story_created_time(@story.created_at) %> ago</span>
+      </li>
     </ul>
     <div class="col-md-12 todo-item">
       <div class="pull-left">
