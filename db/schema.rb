@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124104100) do
+ActiveRecord::Schema.define(version: 20170126104001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,9 @@ ActiveRecord::Schema.define(version: 20170124104100) do
     t.string   "ticket_id"
     t.string   "story_type",   default: "feature"
     t.string   "requester_name"
+    t.datetime "closed_at"
+    t.integer  "closed_by_id"
+    t.string   "closed_by_user_name"
     t.index ["owner_id"], name: "index_stories_on_owner_id", using: :btree
     t.index ["project_id"], name: "index_stories_on_project_id", using: :btree
     t.index ["requester_id"], name: "index_stories_on_requester_id", using: :btree

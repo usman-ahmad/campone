@@ -2,21 +2,24 @@
 #
 # Table name: stories
 #
-#  id           :integer          not null, primary key
-#  title        :string
-#  description  :text
-#  project_id   :integer
-#  priority     :string
-#  due_at       :date
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  state        :string           default("unscheduled")
-#  owner_id     :integer
-#  requester_id :integer
-#  position     :integer
-#  ticket_id    :string
-#  story_type   :string           default("feature")
-#  requester_name :string
+#  id                  :integer          not null, primary key
+#  title               :string
+#  description         :text
+#  project_id          :integer
+#  priority            :string
+#  due_at              :date
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  state               :string           default("unscheduled")
+#  owner_id            :integer
+#  requester_id        :integer
+#  position            :integer
+#  ticket_id           :string
+#  story_type          :string           default("feature")
+#  requester_name      :string
+#  closed_at           :datetime
+#  closed_by_id        :integer
+#  closed_by_user_name :string
 #
 
 require 'rails_helper'

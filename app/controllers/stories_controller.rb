@@ -3,10 +3,10 @@ class StoriesController < ApplicationController
   load_and_authorize_resource :story, :through => :project
 
   before_action :set_project
-  before_action :set_story, only: [:show, :edit, :update, :destroy]
+  before_action :set_story, only: [:show, :edit, :update, :destroy, :close]
 
   # UA[2017/01/10] - WHAT ABOUT SORT AND IMPORT
-  before_action :set_performer, only: [:create, :update, :destroy, :set_state, :assigned_to_me]
+  before_action :set_performer, only: [:create, :update, :destroy, :set_state, :assigned_to_me, :close]
 
   def index
     cookies[:stories_visibility] = params[:visibility] || cookies[:stories_visibility]
@@ -17,6 +17,7 @@ class StoriesController < ApplicationController
     @stories = @project.stories.with_state(@visibility).search(params[:search_text]).order!('position')
     @stories = @stories.tagged_with(params[:tags]) if params[:tags].present?
     @stories = @stories.having_ownership(params[:owner]) if params[:owner].present?
+    @stories = @stories.open
 
     respond_to do |format|
       format.html
@@ -30,6 +31,14 @@ class StoriesController < ApplicationController
     @comments = @commentable.comments
     @comment = Comment.new
     @attachment = Attachment.new
+  end
+
+  def close
+    if @story.close
+      redirect_to [@project], notice: 'Story was successfully closed.'
+    else
+      render :show, errors: @story.errors
+    end
   end
 
   def new

@@ -8,6 +8,7 @@
 #                   sort_project_stories POST      /projects/:project_id/stories/sort(.:format)                                 stories#sort
 #             new_import_project_stories GET       /projects/:project_id/stories/new_import(.:format)                           stories#new_import
 #                 import_project_stories POST      /projects/:project_id/stories/import(.:format)                               stories#import
+#                    close_project_story POST      /projects/:project_id/stories/:id/close(.:format)                            stories#close
 #           assigned_to_me_project_story PATCH     /projects/:project_id/stories/:id/assigned_to_me(.:format)                   stories#assigned_to_me
 #                set_state_project_story PATCH     /projects/:project_id/stories/:id/set_state(.:format)                        stories#set_state
 #                 project_story_comments GET       /projects/:project_id/stories/:story_id/comments(.:format)                   comments#index
@@ -101,8 +102,6 @@
 #                       new_user_session GET       /users/sign_in(.:format)                                                     devise/sessions#new
 #                           user_session POST      /users/sign_in(.:format)                                                     devise/sessions#create
 #                   destroy_user_session DELETE    /users/sign_out(.:format)                                                    devise/sessions#destroy
-#  user_google_oauth2_omniauth_authorize GET|POST  /users/auth/google_oauth2(.:format)                                          users/omniauth_callbacks#passthru
-#   user_google_oauth2_omniauth_callback GET|POST  /users/auth/google_oauth2/callback(.:format)                                 users/omniauth_callbacks#google_oauth2
 #        user_twitter_omniauth_authorize GET|POST  /users/auth/twitter(.:format)                                                users/omniauth_callbacks#passthru
 #         user_twitter_omniauth_callback GET|POST  /users/auth/twitter/callback(.:format)                                       users/omniauth_callbacks#twitter
 #          user_asana_omniauth_authorize GET|POST  /users/auth/asana(.:format)                                                  users/omniauth_callbacks#passthru
@@ -132,6 +131,7 @@
 #                          finish_signup GET|PATCH /users/:id/finish_signup(.:format)                                           omniauth_callbacks#finish_signup
 #                      associate_account PATCH     /users/:id/associate_account(.:format)                                       omniauth_callbacks#associate_account
 #            mark_all_read_notifications PATCH     /notifications/mark_all_read(.:format)                                       notifications#mark_all_read
+#                clear_all_notifications PATCH     /notifications/clear_all(.:format)                                           notifications#clear_all
 #                          notifications GET       /notifications(.:format)                                                     notifications#index
 #                                        POST      /notifications(.:format)                                                     notifications#create
 #                       new_notification GET       /notifications/new(.:format)                                                 notifications#new
@@ -164,6 +164,10 @@ Rails.application.routes.draw do
         post :sort
         get :new_import
         post :import
+      end
+
+      member do
+        post :close
       end
 
       patch :assigned_to_me, :set_state, on: :member
