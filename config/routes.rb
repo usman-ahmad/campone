@@ -223,6 +223,7 @@ Rails.application.routes.draw do
   resources :notifications do
     collection do
       patch 'mark_all_read'
+      patch 'clear_all'
     end
   end
   root 'welcome#index'

@@ -38,6 +38,15 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def clear_all
+    respond_to do |format|
+      format.js {
+        # TODO: Update views only if this query is successful
+        current_user.notifications.update_all(hidden: true)
+      }
+    end
+  end
+
   def destroy
     if @notification.update_attributes(hidden: true)
       render json: {}, status: :ok
