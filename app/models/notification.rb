@@ -42,11 +42,6 @@ class Notification < ApplicationRecord
     self.notifiable_type == 'Comment'
   end
 
-  # TODO: Remove dependency, for now using this methods in NotificationsController#index
-  def story_or_discussion
-    comment? ? notifiable.commentable : notifiable
-  end
-
   def send_faye_notifications
     message = [performer_name, resource_action, text].join(' ')
 

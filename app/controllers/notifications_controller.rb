@@ -6,7 +6,9 @@ class NotificationsController < ApplicationController
     @page = params[:page].try(:to_i) || 1
 
     respond_to do |format|
-      format.html { @notifications = @notifications.group_by { |n| n.story_or_discussion } }
+      # TODO: Delete this line and views/notifications/old_index_grouped.html.erb template
+      # format.html { @notifications = @notifications.group_by { |n| n.story_or_discussion } }
+      format.html { @notifications = @notifications.unscoped.paginate(page: @page, :per_page => 30) }
       format.js { @notifications = @notifications.paginate(:page => @page, :per_page => 10) }
     end
   end
