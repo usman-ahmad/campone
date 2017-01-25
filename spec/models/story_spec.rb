@@ -16,6 +16,7 @@
 #  position     :integer
 #  ticket_id    :string
 #  story_type   :string           default("feature")
+#  requester_name :string
 #
 
 require 'rails_helper'

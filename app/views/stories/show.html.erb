@@ -38,10 +38,10 @@
         <span class="key">State: </span>
         <span id="state" class="value"><%= @story.state.humanize %></span>
       </li>
-      <% if @story.requester.present? %>
+      <% if @story.requester_name.present? %>
           <li class="col-md-4">
             <span class="key">Requester: </span>
-            <span class="value"> <%= @story.requester.name %> </span>
+            <span class="value"> <%= @story.requester_name %> </span>
           </li>
       <% end %>
       <% if @story.tag_list.present? %>

@@ -16,6 +16,7 @@
 #  position     :integer
 #  ticket_id    :string
 #  story_type   :string           default("feature")
+#  requester_name :string
 #
 
 class Story < ApplicationRecord
@@ -245,6 +246,7 @@ class Story < ApplicationRecord
 
   def set_requester
     self.requester = performer
+    self.requester_name = performer.name
   end
 
   def current_ticket_id

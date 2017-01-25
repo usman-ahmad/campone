@@ -16,6 +16,7 @@
 #  position     :integer
 #  ticket_id    :string
 #  story_type   :string           default("feature")
+#  requester_name :string
 #
 
 # UA[2016/12/18] - lorem_ipsum_ize the tests - http://www.lipsum.com/ -> 'Why do we use it?'
