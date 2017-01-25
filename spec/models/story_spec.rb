@@ -216,6 +216,20 @@ RSpec.describe Story, type: :model do
         expect(File).to exist(target_project.stories.last.attachments.last.document.path)
       end
     end
+
+    context 'for story with attachments and comments containing attachments' do
+
+      it 'should copy story with all sorts of its direct and indirect attachments and comments' do
+        expect do
+          story_with_attachments_and_comments = create(:story, :with_attachments, attachments_count: 2, real_attachments: true, requester: owner_of_projects, project: base_project)
+          create(:comment, :with_attachments, attachments_count: 2, real_attachments: true, user: owner_of_projects, commentable: story_with_attachments_and_comments)
+          story_with_attachments_and_comments.copy_to(target_project, owner_of_projects, with_comments: true)
+        end.to change { Attachment.where(attachable: target_project.stories).count }.by(2)
+                   .and change { Comment.where(commentable: target_project.stories).count }.by(1)
+
+        expect { Attachment.where(attachable: target_project.stories.last.comments).count eq 2 }
+      end
+    end
   end
 
   # UA[2017/01/08] - REVIEW TAG SPECS, TAGGED_WITH, TAG_LIST="a b, c99, #d"

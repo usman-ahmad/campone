@@ -174,6 +174,7 @@ class Story < ApplicationRecord
   # => options: with_comments(default: false), with_attachments(default: true)
   # Example: story.copy_to(project, user, with_attachments: false)
   # TODO: 1) Copy attachments of comments. 2) Provide an option to delete original story (like move). 3) Write specs
+  # Implemented 1) Copy attachments of comments.
   # We may prefer to create a new class i-e StoryMover.new(story, project, mover, options).move!
   def copy_to(project, mover, options = {})
     return false if Ability.new(mover).cannot? :read, project
@@ -192,12 +193,21 @@ class Story < ApplicationRecord
 
     if options[:with_comments]
       self.comments.each do |c|
+        new_comment= c.dup
+
         if project.members.include?(c.user)
-          c.performer = c.user
-          story.comments << c.dup
+          new_comment.performer = c.user
+          story.comments << new_comment
         else
           # We may prefer to use dummy user names (User 1) instead of actual user name
-          story.comments << Comment.new(performer: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
+          new_comment = Comment.new(performer: mover, content: "#{c.user.name} said: <br> #{c.content} <br><br>")
+          story.comments << new_comment
+        end
+
+        c.attachments.each do |a|
+          attachment = a.dup
+          attachment.document = a.document
+          new_comment.attachments << attachment
         end
       end
     end
