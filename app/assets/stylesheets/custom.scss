@@ -1062,3 +1062,21 @@
 .show-on-hover:hover > ul.dropdown-menu {
   display: block;
 }
+
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+
+.modal-wide .modal-body {
+  overflow-y: auto;
+  min-height: 350px;
+}
+
+.modal-wide .modal-body .carousel .item{
+  min-height: 350px;
+}
+
+.modal-wide .modal-body .carousel .item img {
+  margin: auto;
+}
+
