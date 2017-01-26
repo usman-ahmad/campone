@@ -30,6 +30,7 @@
 #  avatar_updated_at      :datetime
 #  authentication_token   :string
 #  deleted_at             :datetime
+#  username               :string
 #
 
 FactoryGirl.define do

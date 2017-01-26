@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # (in devise 4.0.0) devise_parameter_sanitize API has changed and "for" method was deprecated in favor of "permit"
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:avatar, :name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :username, :email])
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:name, :username])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:avatar, :name, :username])
   end
 
   def ensure_signup_complete
