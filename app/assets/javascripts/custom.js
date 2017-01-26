@@ -92,6 +92,24 @@ $(document).on('turbolinks:load', function () {
         $(".attachment-div").removeClass('hidden');
     });
 
+    $('.carousel').carousel({interval: false});
+
+    $('.modal_div').on('show.bs.modal', function (event) {
+        var url_init, url_slid;
+
+        url_init = $(this).find(".item.active").data("url");
+        $(".modal-title")
+            .html($(this).find(".item.active").data("title"));
+        $(".modal-url").attr('href', url_init);
+
+        $('.carousel_div').bind('slid.bs.carousel', function (e) {
+            url_slid = $(this).find(".item.active").data("url");
+            $(".modal-title")
+                .html($(this).find(".item.active").data("title"));
+            $(".modal-url").attr('href', url_slid);
+        });
+    });
+
     // TODO: No need any where. Check & Remove it
     //$("div.custom-tab-menu>div.list-group>a").click(function (e) {
     //    e.preventDefault();

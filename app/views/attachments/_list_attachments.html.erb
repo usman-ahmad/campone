@@ -7,7 +7,8 @@
                         title: attachment.document_file_name %>
           <div class="mask">
                         <span class="mask-icon">
-                            <%= content_tag(:i, '', class: 'fa fa-search', data: {toggle: "modal", target: "#attachmentPreviewModel",
+                            <%= content_tag(:i, '', class: 'fa fa-search', data: {toggle: "modal",
+                                                                                  target: "#attachmentPreviewModel-#{resource_div_id(resource)}",
                                                                                   type: attachment.document_content_type,
                                                                                   url: attachment.document.url,
                                                                                   title: attachment.document_file_name}) %>
@@ -24,5 +25,46 @@
         </div>
     <% end %>
 
-    <%= render 'attachments/preview_attachement' %>
+    <%#= render 'attachments/preview_attachement', :attachments => resource.attachments %>
+    <div class="modal fade modal_div" id="attachmentPreviewModel-<%= resource_div_id(resource) %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="attachmentTitle"></h4>
+            <a id="downloadAttachmentBtn" class="modal-url" title="Download" data-toggle="tooltip" href="">
+              Download
+              <i class="fa fa-download"></i>
+            </a>
+          </div>
+          <div class="modal-body">
+
+            <div id="carousel-for-<%= resource_div_id(resource) %>" class="carousel slide carousel_div" data-ride="carousel">
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <% resource.attachments.each_with_index do |attachment, index| %>
+                    <%= content_tag :div, class: "item #{"active" if index.zero? }", data: {url: attachment.document.url,
+                                                                                            title: attachment.document_file_name, } do %>
+                        <%= image_tag attachment.document.url, :width => "100%", height: '100%' %>
+                    <% end %>
+                <% end %>
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-for-<%= resource_div_id(resource) %>" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#carousel-for-<%= resource_div_id(resource) %>" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
 <% end %>
