@@ -1,9 +1,5 @@
-<div class="page-header">
-  <%= link_to [@project, @discussion], class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-info-sign"></span>
-    Show
-  <% end %>
-  <h1>Editing Discussion</h1>
-</div>
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: @project, active: '' %>
+<% end %>
 
-<%= render 'form' %>
+  <%= render 'edit_form' %>
