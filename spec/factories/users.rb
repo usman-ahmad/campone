@@ -35,9 +35,11 @@
 
 FactoryGirl.define do
   names = ['user one', 'user two', 'user three']
+  usernames = ['kind_man', 'great_man', 'idle_man']
 
   factory :user do
     sequence(:name) { |n| names[n % 3] }
+    sequence(:username) { |n| usernames[n % 3] + n.to_s }
     sequence(:email) { |n| "#{names[n % 3].gsub(' ', '_')}_#{n}@teknuk.com" }
     password 'secret_password'
     password_confirmation 'secret_password'
