@@ -6,7 +6,8 @@ describe 'discussions management', type: :feature do
   let!(:discussion) { create(:discussion, private: false, title: 'NO discussion on PTI vs PML-N vs PPP', project: project, opener: owner) }
 
   before do
-    login(owner.email, 'secret_password')
+    login_as(owner, :scope => :user)
+    # login(owner.email, 'secret_password')
   end
 
   context 'Discussion List' do

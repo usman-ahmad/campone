@@ -5,7 +5,8 @@ describe 'projects management', type: :feature do
   let!(:project) { create(:project, owner: owner) }
 
   before do
-    login(owner.email, 'secret_password')
+    login_as(owner, :scope => :user, :run_callbacks => false)
+    # login(owner.email, 'secret_password')
   end
 
   describe 'creating a new project' do

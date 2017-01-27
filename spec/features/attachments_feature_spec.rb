@@ -9,7 +9,8 @@ describe 'Attachments feature for Projects, Stories and Discussions', type: :fea
   let!(:project) { create(:project, owner: owner) }
 
   before do
-    login('u@co.co', 'some_password')
+    login_as(owner, :scope => :user)
+    # login('u@co.co', 'some_password')
   end
 
   context 'on files tab when there is project with no attachments' do

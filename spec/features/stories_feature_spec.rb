@@ -7,7 +7,8 @@ describe 'stories management', type: :feature do
   let!(:story) { create(:story, title: 'bring bread with eggs', priority: 'Medium', state: 'unstarted', project: project, requester: story_owner) }
 
   before do
-    login(owner.email, 'secret_password')
+    login_as(owner, :scope => :user)
+    # login(owner.email, 'secret_password')
   end
 
   describe 'ToDo List' do
