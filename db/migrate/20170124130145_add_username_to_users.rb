@@ -3,6 +3,7 @@ class AddUsernameToUsers < ActiveRecord::Migration[5.0]
     add_column :users, :username, :string
     add_index :users, :username, unique: true
 
+    User.reset_column_information
     User.find_each do |user|
       if user.name.present?
         user_name = user.name.split.join('_').downcase
