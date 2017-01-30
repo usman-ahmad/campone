@@ -33,7 +33,7 @@ class Integration < ApplicationRecord
   # TODO DELETE NAME ATTRIBUTE
   # validates :name, presence: true
 
-  AVAILABLE_INTEGRATIONS = %w[slack]
+  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock]
   NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
   SOURCE_CODE_INTEGRATION = %w[bitbucket github]
   IMPORT_STORY_INTEGRATION = %w[asana trello jira]

@@ -204,7 +204,8 @@ Rails.application.routes.draw do
         post :start_import
       end
 
-      get '/:name/instructions' => 'integrations#instructions', on: :collection, as: :instructions
+      get '/:name/instructions' => 'integrations#instructions', on: :collection, as: :instructions,
+          constraints: ->(request) { Integration::AVAILABLE_INTEGRATIONS.include?(request.params[:name]) }
     end
   end
 
