@@ -1,4 +1,4 @@
-class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # TODO: Rethink it. For now skipping authentication for all actions.
   skip_before_action :authenticate_user!
 
@@ -8,8 +8,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def create_integration
     auth = request.env['omniauth.auth']
 
-    integration = @project.integrations.create_with_omniauth(auth)
-    flash['notice'] = integration ? "Successfully integrated #{auth.provider} account." : "#{auth.provider} ntegration Failed"
+    integration = Integration.create_with_omniauth(@project, auth)
+    flash['notice'] = integration ? "Successfully integrated #{auth.provider} account." : "#{auth.provider} integration Failed"
 
     if importable?(integration.name)
       redirect_to new_import_project_integration_path(@project, integration) # Ask to select a project for import

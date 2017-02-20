@@ -42,7 +42,7 @@ class Payload < ApplicationRecord
   end
 
   def create_story
-    ImportService.build(integration).create_story_from_payload(self)
+    integration.create_story_from_payload(self)
   end
 
   private

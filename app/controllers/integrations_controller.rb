@@ -1,7 +1,6 @@
 class IntegrationsController < ApplicationController
   before_action :set_project
-  before_action :set_integration,    only: [:show, :edit, :update, :destroy, :new_import, :start_import]
-  before_action :set_import_service,  only: [:new_import, :start_import]
+  before_action :set_integration, only: [:show, :edit, :update, :destroy, :new_import, :start_import]
 
   load_and_authorize_resource :project
   load_and_authorize_resource :integration, :through => :project
@@ -51,11 +50,12 @@ class IntegrationsController < ApplicationController
 
   # For now keeping these import related methods here, we'll consider making a new controller
   def new_import
-    @projects = @import_service.project_list
+    @projects = @integration.project_list
   end
 
   def start_import
-    @import_service.import!(params[:external_project_id])
+    @integration.performer = current_user
+    @integration.import!(params[:external_project_id])
     redirect_to project_stories_path(@project), notice: 'Success'
   end
 
@@ -78,7 +78,7 @@ class IntegrationsController < ApplicationController
     params.require(:integration).permit(:url, :title).merge(project: @project)
   end
 
-  def set_import_service
-    @import_service = ImportService.build(@integration)
-  end
+  # def set_import_client
+  #   @import_integration = ImportIntegration.build(@integration)
+  # end
 end

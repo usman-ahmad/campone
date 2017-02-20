@@ -30,10 +30,12 @@ class Integration < ApplicationRecord
   validates :url, presence: true
   validates :project_id, presence: true
 
+  attr_accessor :performer
+
   # TODO DELETE NAME ATTRIBUTE
   # validates :name, presence: true
 
-  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock]
+  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana]
   NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
   SOURCE_CODE_INTEGRATION = %w[bitbucket github]
   IMPORT_STORY_INTEGRATION = %w[asana trello jira]
@@ -59,21 +61,16 @@ class Integration < ApplicationRecord
     object.update_attributes(token: auth.credentials.token, secret: auth.credentials.secret, name: auth.provider)
   end
 
-  def self.create_with_omniauth(auth)
-    send(auth.provider.to_sym, auth)
+  def self.create_with_omniauth(project, auth)
+    # send(auth.provider.to_sym, auth)
+    # Forward this to corresponding child class
+    (auth[:provider].titleize+'Integration').constantize.create_with_omniauth(project, auth)
   end
 
   def self.twitter(auth)
     find_or_create_by(name: auth.provider, url: auth.info.urls.Twitter) do |integration|
       integration.token = auth.credentials.token
       integration.secret = auth.credentials.secret
-    end
-  end
-
-  def self.asana(auth)
-    # puts auth.pretty_inspect
-    find_or_create_by(name: auth.provider, url: 'https://app.asana.com/'+ auth.info.name) do |integration|
-      integration.token = auth.credentials.refresh_token
     end
   end
 
