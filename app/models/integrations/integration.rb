@@ -35,7 +35,7 @@ class Integration < ApplicationRecord
   # TODO DELETE NAME ATTRIBUTE
   # validates :name, presence: true
 
-  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana]
+  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana trello]
   NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
   SOURCE_CODE_INTEGRATION = %w[bitbucket github]
   IMPORT_STORY_INTEGRATION = %w[asana trello jira]
@@ -81,10 +81,4 @@ class Integration < ApplicationRecord
     integration
   end
 
-  def self.trello(auth)
-    find_or_create_by(name: auth.provider, url: auth.info.urls.profile) do |integration|
-      integration.token = auth.credentials.token
-      integration.secret = auth.credentials.secret
-    end
-  end
 end
