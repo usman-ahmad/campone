@@ -1,9 +1,13 @@
 class IntegrationsController < ApplicationController
-  before_action :set_project
-  before_action :set_integration, only: [:show, :edit, :update, :destroy, :new_import, :start_import]
+  skip_before_action :verify_authenticity_token, only: [:accept_payload]
+  skip_before_action :authenticate_user!, only: [:accept_payload]
+
+  before_action :set_project, except: [:accept_payload]
+  before_action :set_integration,    only: [:show, :edit, :update, :destroy, :new_import, :start_import]
+  before_action :set_payload_integration,    only: [:accept_payload]
 
   load_and_authorize_resource :project
-  load_and_authorize_resource :integration, :through => :project
+  load_and_authorize_resource :integration, :through => :project, :except => [:accept_payload]
 
 
   def index
@@ -25,6 +29,21 @@ class IntegrationsController < ApplicationController
       redirect_to integrations_project_path(@project), notice: 'Integration added.'
     else
       redirect_back fallback_location: integrations_project_path(@project), notice: @integration.errors.full_messages
+    end
+  end
+
+  def accept_payload
+    # HEAD request is used trello for handshaking in confirmation of webhook
+    if request.head?
+      head(:ok)
+    elsif request.headers['X-Hook-Secret'].present? # Asana hanshake
+      options = {}
+      # asana wants OK (200) response along with secret in head
+      options['X-Hook-Secret'] = request.headers['X-Hook-Secret'] if @integration.name == 'asana'
+      head(:ok, options)
+    else # save this payload
+      @integration.payloads.create(info: params, event: get_event_from_headers)
+      head(:ok)
     end
   end
 
@@ -70,6 +89,10 @@ class IntegrationsController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
+  def set_payload_integration
+    @integration = Integration.find(params[:integration_id])
+  end
+
   def set_integration
     @integration = @project.integrations.find(params[:id])
   end
@@ -81,4 +104,19 @@ class IntegrationsController < ApplicationController
   # def set_import_client
   #   @import_integration = ImportIntegration.build(@integration)
   # end
+
+  def get_event_from_headers
+    case @integration.name
+      when 'github'
+        request.headers['X-GitHub-Event']
+      when 'bitbucket'
+        request.headers['HTTP_X_EVENT_KEY'].split(':')[1]
+      when 'trello'
+        request.params['webhook']['action']['type']
+      when 'jira'
+        request.params['webhookEvent']
+      else
+        nil # Will not save this webhook
+    end
+  end
 end
