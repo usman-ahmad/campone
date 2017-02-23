@@ -1,0 +1,299 @@
+################################################################################
+# SIMPLIFIED PAYLOAD PARAMS
+################################################################################
+---
+parameters:
+  ref: refs/heads/master
+  before: 545d22f62fe5856315ce93898a3be1316202b86d
+  after: f38ca7168056b5979befdf971bcce665cc2d8ae6
+  created: false
+  deleted: false
+  forced: false
+  base_ref:
+  compare: https://github.com/hafizabi/train-one/compare/545d22f62fe5...f38ca7168056
+  commits:
+
+    id: f38ca7168056b5979befdf971bcce665cc2d8ae6
+    tree_id: 71059265b496a66f45673f298b877ca0b477e6bd
+    distinct: true
+    message: 'fix #OC-45'
+    timestamp: '2017-02-09T15:19:28+05:00'
+    url: https://github.com/hafizabi/train-one/commit/f38ca7168056b5979befdf971bcce665cc2d8ae6
+    author:
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    committer:
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    added: []
+    removed: []
+    modified:
+    - demo.rb
+  head_commit:
+    id: f38ca7168056b5979befdf971bcce665cc2d8ae6
+    tree_id: 71059265b496a66f45673f298b877ca0b477e6bd
+    distinct: true
+    message: 'fix #OC-45'
+    timestamp: '2017-02-09T15:19:28+05:00'
+    url: https://github.com/hafizabi/train-one/commit/f38ca7168056b5979befdf971bcce665cc2d8ae6
+    author:
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    committer:
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    added: []
+    removed: []
+    modified:
+    - demo.rb
+  repository:
+    id: 80611581
+    name: train-one
+    full_name: hafizabi/train-one
+    owner:
+      name: hafizabi
+      email: hafizabi89@gmail.com
+    private: false
+    html_url: https://github.com/hafizabi/train-one
+    description: Learning something new!
+    fork: false
+    url: https://github.com/hafizabi/train-one
+    forks_url: https://api.github.com/repos/hafizabi/train-one/forks
+    keys_url: https://api.github.com/repos/hafizabi/train-one/keys{/key_id}
+    collaborators_url: https://api.github.com/repos/hafizabi/train-one/collaborators{/collaborator}
+    teams_url: https://api.github.com/repos/hafizabi/train-one/teams
+    hooks_url: https://api.github.com/repos/hafizabi/train-one/hooks
+    issue_events_url: https://api.github.com/repos/hafizabi/train-one/issues/events{/number}
+    events_url: https://api.github.com/repos/hafizabi/train-one/events
+    assignees_url: https://api.github.com/repos/hafizabi/train-one/assignees{/user}
+    branches_url: https://api.github.com/repos/hafizabi/train-one/branches{/branch}
+    tags_url: https://api.github.com/repos/hafizabi/train-one/tags
+    blobs_url: https://api.github.com/repos/hafizabi/train-one/git/blobs{/sha}
+    git_tags_url: https://api.github.com/repos/hafizabi/train-one/git/tags{/sha}
+    git_refs_url: https://api.github.com/repos/hafizabi/train-one/git/refs{/sha}
+    trees_url: https://api.github.com/repos/hafizabi/train-one/git/trees{/sha}
+    statuses_url: https://api.github.com/repos/hafizabi/train-one/statuses/{sha}
+    languages_url: https://api.github.com/repos/hafizabi/train-one/languages
+    stargazers_url: https://api.github.com/repos/hafizabi/train-one/stargazers
+    contributors_url: https://api.github.com/repos/hafizabi/train-one/contributors
+    subscribers_url: https://api.github.com/repos/hafizabi/train-one/subscribers
+    subscription_url: https://api.github.com/repos/hafizabi/train-one/subscription
+    commits_url: https://api.github.com/repos/hafizabi/train-one/commits{/sha}
+    git_commits_url: https://api.github.com/repos/hafizabi/train-one/git/commits{/sha}
+    comments_url: https://api.github.com/repos/hafizabi/train-one/comments{/number}
+    issue_comment_url: https://api.github.com/repos/hafizabi/train-one/issues/comments{/number}
+    contents_url: https://api.github.com/repos/hafizabi/train-one/contents/{+path}
+    compare_url: https://api.github.com/repos/hafizabi/train-one/compare/{base}...{head}
+    merges_url: https://api.github.com/repos/hafizabi/train-one/merges
+    archive_url: https://api.github.com/repos/hafizabi/train-one/{archive_format}{/ref}
+    downloads_url: https://api.github.com/repos/hafizabi/train-one/downloads
+    issues_url: https://api.github.com/repos/hafizabi/train-one/issues{/number}
+    pulls_url: https://api.github.com/repos/hafizabi/train-one/pulls{/number}
+    milestones_url: https://api.github.com/repos/hafizabi/train-one/milestones{/number}
+    notifications_url: https://api.github.com/repos/hafizabi/train-one/notifications{?since,all,participating}
+    labels_url: https://api.github.com/repos/hafizabi/train-one/labels{/name}
+    releases_url: https://api.github.com/repos/hafizabi/train-one/releases{/id}
+    deployments_url: https://api.github.com/repos/hafizabi/train-one/deployments
+    created_at: 1485946461
+    updated_at: '2017-02-01T11:51:03Z'
+    pushed_at: 1486635575
+    git_url: git://github.com/hafizabi/train-one.git
+    ssh_url: git@github.com:hafizabi/train-one.git
+    clone_url: https://github.com/hafizabi/train-one.git
+    svn_url: https://github.com/hafizabi/train-one
+    homepage:
+    size: 11
+    stargazers_count: 0
+    watchers_count: 0
+    language: Ruby
+    has_issues: true
+    has_downloads: true
+    has_wiki: true
+    has_pages: false
+    forks_count: 0
+    mirror_url:
+    open_issues_count: 0
+    forks: 0
+    open_issues: 0
+    watchers: 0
+    default_branch: github
+    stargazers: 0
+    master_branch: github
+  pusher:
+    name: hafizabi
+    email: hafizabi89@gmail.com
+  sender:
+    login: hafizabi
+    id: 25478999
+    avatar_url: https://avatars.githubusercontent.com/u/25478999?v=3
+    gravatar_id: ''
+    url: https://api.github.com/users/hafizabi
+    html_url: https://github.com/hafizabi
+    followers_url: https://api.github.com/users/hafizabi/followers
+    following_url: https://api.github.com/users/hafizabi/following{/other_user}
+    gists_url: https://api.github.com/users/hafizabi/gists{/gist_id}
+    starred_url: https://api.github.com/users/hafizabi/starred{/owner}{/repo}
+    subscriptions_url: https://api.github.com/users/hafizabi/subscriptions
+    organizations_url: https://api.github.com/users/hafizabi/orgs
+    repos_url: https://api.github.com/users/hafizabi/repos
+    events_url: https://api.github.com/users/hafizabi/events{/privacy}
+    received_events_url: https://api.github.com/users/hafizabi/received_events
+    type: User
+    site_admin: false
+  defaults:
+    formats: :json
+  controller: integrations
+  action: accept_payload
+  integration_id: '35'
+  integration: !ruby/hash:ActiveSupport::HashWithIndifferentAccess {}
+permitted: false
+
+################################################################################
+# ACTUAL PAYLOAD PARAMS STORED IN DB
+################################################################################
+--- !ruby/object:ActionController::Parameters
+parameters: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  ref: refs/heads/master
+  before: 545d22f62fe5856315ce93898a3be1316202b86d
+  after: f38ca7168056b5979befdf971bcce665cc2d8ae6
+  created: false
+  deleted: false
+  forced: false
+  base_ref:
+  compare: https://github.com/hafizabi/train-one/compare/545d22f62fe5...f38ca7168056
+  commits:
+  - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: f38ca7168056b5979befdf971bcce665cc2d8ae6
+    tree_id: 71059265b496a66f45673f298b877ca0b477e6bd
+    distinct: true
+    message: 'fix #OC-45'
+    timestamp: '2017-02-09T15:19:28+05:00'
+    url: https://github.com/hafizabi/train-one/commit/f38ca7168056b5979befdf971bcce665cc2d8ae6
+    author: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    committer: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    added: []
+    removed: []
+    modified:
+    - demo.rb
+  head_commit: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: f38ca7168056b5979befdf971bcce665cc2d8ae6
+    tree_id: 71059265b496a66f45673f298b877ca0b477e6bd
+    distinct: true
+    message: 'fix #OC-45'
+    timestamp: '2017-02-09T15:19:28+05:00'
+    url: https://github.com/hafizabi/train-one/commit/f38ca7168056b5979befdf971bcce665cc2d8ae6
+    author: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    committer: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      name: Abdur Rehman
+      email: abi@teknuk.com
+    added: []
+    removed: []
+    modified:
+    - demo.rb
+  repository: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    id: 80611581
+    name: train-one
+    full_name: hafizabi/train-one
+    owner: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      name: hafizabi
+      email: hafizabi89@gmail.com
+    private: false
+    html_url: https://github.com/hafizabi/train-one
+    description: Learning something new!
+    fork: false
+    url: https://github.com/hafizabi/train-one
+    forks_url: https://api.github.com/repos/hafizabi/train-one/forks
+    keys_url: https://api.github.com/repos/hafizabi/train-one/keys{/key_id}
+    collaborators_url: https://api.github.com/repos/hafizabi/train-one/collaborators{/collaborator}
+    teams_url: https://api.github.com/repos/hafizabi/train-one/teams
+    hooks_url: https://api.github.com/repos/hafizabi/train-one/hooks
+    issue_events_url: https://api.github.com/repos/hafizabi/train-one/issues/events{/number}
+    events_url: https://api.github.com/repos/hafizabi/train-one/events
+    assignees_url: https://api.github.com/repos/hafizabi/train-one/assignees{/user}
+    branches_url: https://api.github.com/repos/hafizabi/train-one/branches{/branch}
+    tags_url: https://api.github.com/repos/hafizabi/train-one/tags
+    blobs_url: https://api.github.com/repos/hafizabi/train-one/git/blobs{/sha}
+    git_tags_url: https://api.github.com/repos/hafizabi/train-one/git/tags{/sha}
+    git_refs_url: https://api.github.com/repos/hafizabi/train-one/git/refs{/sha}
+    trees_url: https://api.github.com/repos/hafizabi/train-one/git/trees{/sha}
+    statuses_url: https://api.github.com/repos/hafizabi/train-one/statuses/{sha}
+    languages_url: https://api.github.com/repos/hafizabi/train-one/languages
+    stargazers_url: https://api.github.com/repos/hafizabi/train-one/stargazers
+    contributors_url: https://api.github.com/repos/hafizabi/train-one/contributors
+    subscribers_url: https://api.github.com/repos/hafizabi/train-one/subscribers
+    subscription_url: https://api.github.com/repos/hafizabi/train-one/subscription
+    commits_url: https://api.github.com/repos/hafizabi/train-one/commits{/sha}
+    git_commits_url: https://api.github.com/repos/hafizabi/train-one/git/commits{/sha}
+    comments_url: https://api.github.com/repos/hafizabi/train-one/comments{/number}
+    issue_comment_url: https://api.github.com/repos/hafizabi/train-one/issues/comments{/number}
+    contents_url: https://api.github.com/repos/hafizabi/train-one/contents/{+path}
+    compare_url: https://api.github.com/repos/hafizabi/train-one/compare/{base}...{head}
+    merges_url: https://api.github.com/repos/hafizabi/train-one/merges
+    archive_url: https://api.github.com/repos/hafizabi/train-one/{archive_format}{/ref}
+    downloads_url: https://api.github.com/repos/hafizabi/train-one/downloads
+    issues_url: https://api.github.com/repos/hafizabi/train-one/issues{/number}
+    pulls_url: https://api.github.com/repos/hafizabi/train-one/pulls{/number}
+    milestones_url: https://api.github.com/repos/hafizabi/train-one/milestones{/number}
+    notifications_url: https://api.github.com/repos/hafizabi/train-one/notifications{?since,all,participating}
+    labels_url: https://api.github.com/repos/hafizabi/train-one/labels{/name}
+    releases_url: https://api.github.com/repos/hafizabi/train-one/releases{/id}
+    deployments_url: https://api.github.com/repos/hafizabi/train-one/deployments
+    created_at: 1485946461
+    updated_at: '2017-02-01T11:51:03Z'
+    pushed_at: 1486635575
+    git_url: git://github.com/hafizabi/train-one.git
+    ssh_url: git@github.com:hafizabi/train-one.git
+    clone_url: https://github.com/hafizabi/train-one.git
+    svn_url: https://github.com/hafizabi/train-one
+    homepage:
+    size: 11
+    stargazers_count: 0
+    watchers_count: 0
+    language: Ruby
+    has_issues: true
+    has_downloads: true
+    has_wiki: true
+    has_pages: false
+    forks_count: 0
+    mirror_url:
+    open_issues_count: 0
+    forks: 0
+    open_issues: 0
+    watchers: 0
+    default_branch: github
+    stargazers: 0
+    master_branch: github
+  pusher: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    name: hafizabi
+    email: hafizabi89@gmail.com
+  sender: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    login: hafizabi
+    id: 25478999
+    avatar_url: https://avatars.githubusercontent.com/u/25478999?v=3
+    gravatar_id: ''
+    url: https://api.github.com/users/hafizabi
+    html_url: https://github.com/hafizabi
+    followers_url: https://api.github.com/users/hafizabi/followers
+    following_url: https://api.github.com/users/hafizabi/following{/other_user}
+    gists_url: https://api.github.com/users/hafizabi/gists{/gist_id}
+    starred_url: https://api.github.com/users/hafizabi/starred{/owner}{/repo}
+    subscriptions_url: https://api.github.com/users/hafizabi/subscriptions
+    organizations_url: https://api.github.com/users/hafizabi/orgs
+    repos_url: https://api.github.com/users/hafizabi/repos
+    events_url: https://api.github.com/users/hafizabi/events{/privacy}
+    received_events_url: https://api.github.com/users/hafizabi/received_events
+    type: User
+    site_admin: false
+  defaults: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    formats: :json
+  controller: integrations
+  action: accept_payload
+  integration_id: '35'
+  integration: !ruby/hash:ActiveSupport::HashWithIndifferentAccess {}
+permitted: false

@@ -1,0 +1,501 @@
+################################################################################
+# SIMPLIFIED PAYLOAD PARAMS
+################################################################################
+---
+parameters:
+  actor: &1
+    uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+    display_name: Abdur Rehman
+    username: hafizabi
+    links:
+      avatar:
+        href: https://bitbucket.org/account/hafizabi/avatar/32/
+      self:
+        href: https://api.bitbucket.org/2.0/users/hafizabi
+      html:
+        href: https://bitbucket.org/hafizabi/
+    type: user
+  push: &2
+    changes:
+    -
+      closed: false
+      created: false
+      old:
+        target:
+          hash: 51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+          message: 'fix #OC-10
+
+'
+          date: '2017-02-01T10:10:40+00:00'
+          links:
+            self:
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+            html:
+              href: https://bitbucket.org/hafizabi/train-one/commits/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+          parents:
+          -
+            type: commit
+            links:
+              self:
+                href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/05475497ea8b16b0ed0266408ec676b141af1aaf
+              html:
+                href: https://bitbucket.org/hafizabi/train-one/commits/05475497ea8b16b0ed0266408ec676b141af1aaf
+            hash: 05475497ea8b16b0ed0266408ec676b141af1aaf
+          type: commit
+          author:
+            raw: Abdur Rehman <abi@teknuk.com>
+            user:
+              uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+              display_name: Abdur Rehman
+              username: hafizabi
+              links:
+                avatar:
+                  href: https://bitbucket.org/account/hafizabi/avatar/32/
+                self:
+                  href: https://api.bitbucket.org/2.0/users/hafizabi
+                html:
+                  href: https://bitbucket.org/hafizabi/
+              type: user
+        type: branch
+        name: master
+        links:
+          commits:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commits/master
+          self:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/refs/branches/master
+          html:
+            href: https://bitbucket.org/hafizabi/train-one/branch/master
+      commits:
+      -
+        hash: c566a6abd4b61732bc00d917cbd39f08dec25c38
+        message: 'finishes #OC-45 - documentation - updated readme with added sub-sections
+
+'
+        date: '2017-02-08T06:38:01+00:00'
+        links:
+          statuses:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38/statuses
+          diff:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/diff/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          self:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          comments:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38/comments
+          approve:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38/approve
+          patch:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/patch/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          html:
+            href: https://bitbucket.org/hafizabi/train-one/commits/c566a6abd4b61732bc00d917cbd39f08dec25c38
+        parents:
+        -
+          type: commit
+          links:
+            self:
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+            html:
+              href: https://bitbucket.org/hafizabi/train-one/commits/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          hash: 4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+        type: commit
+        author:
+          raw: Abdur Rehman <abi@teknuk.com>
+          user:
+            uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+            display_name: Abdur Rehman
+            username: hafizabi
+            links:
+              avatar:
+                href: https://bitbucket.org/account/hafizabi/avatar/32/
+              self:
+                href: https://api.bitbucket.org/2.0/users/hafizabi
+              html:
+                href: https://bitbucket.org/hafizabi/
+            type: user
+      -
+        hash: 4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+        message: 'starts #OC-44 - documentation - updated readme with some stories
+          mentions
+
+'
+        date: '2017-02-08T06:36:03+00:00'
+        links:
+          statuses:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0/statuses
+          diff:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/diff/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          self:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          comments:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0/comments
+          approve:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0/approve
+          patch:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/patch/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          html:
+            href: https://bitbucket.org/hafizabi/train-one/commits/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+        parents:
+        -
+          type: commit
+          links:
+            self:
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+            html:
+              href: https://bitbucket.org/hafizabi/train-one/commits/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+          hash: 51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+        type: commit
+        author:
+          raw: Abdur Rehman <abi@teknuk.com>
+          user:
+            uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+            display_name: Abdur Rehman
+            username: hafizabi
+            links:
+              avatar:
+                href: https://bitbucket.org/account/hafizabi/avatar/32/
+              self:
+                href: https://api.bitbucket.org/2.0/users/hafizabi
+              html:
+                href: https://bitbucket.org/hafizabi/
+            type: user
+      links:
+        commits:
+          href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commits?include=c566a6abd4b61732bc00d917cbd39f08dec25c38&exclude=51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+        diff:
+          href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/diff/c566a6abd4b61732bc00d917cbd39f08dec25c38..51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+        html:
+          href: https://bitbucket.org/hafizabi/train-one/branches/compare/c566a6abd4b61732bc00d917cbd39f08dec25c38..51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+      forced: false
+      new:
+        target:
+          hash: c566a6abd4b61732bc00d917cbd39f08dec25c38
+          message: 'finishes #OC-45 - documentation - updated readme with added sub-sections
+
+'
+          date: '2017-02-08T06:38:01+00:00'
+          links:
+            self:
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38
+            html:
+              href: https://bitbucket.org/hafizabi/train-one/commits/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          parents:
+          -
+            type: commit
+            links:
+              self:
+                href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+              html:
+                href: https://bitbucket.org/hafizabi/train-one/commits/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+            hash: 4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          type: commit
+          author:
+            raw: Abdur Rehman <abi@teknuk.com>
+            user:
+              uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+              display_name: Abdur Rehman
+              username: hafizabi
+              links:
+                avatar:
+                  href: https://bitbucket.org/account/hafizabi/avatar/32/
+                self:
+                  href: https://api.bitbucket.org/2.0/users/hafizabi
+                html:
+                  href: https://bitbucket.org/hafizabi/
+              type: user
+        type: branch
+        name: master
+        links:
+          commits:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commits/master
+          self:
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/refs/branches/master
+          html:
+            href: https://bitbucket.org/hafizabi/train-one/branch/master
+      truncated: false
+  repository: &3
+    type: repository
+    name: train-one
+    scm: git
+    links:
+      avatar:
+        href: https://bitbucket.org/hafizabi/train-one/avatar/32/
+      self:
+        href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one
+      html:
+        href: https://bitbucket.org/hafizabi/train-one
+    uuid: "{680e5cf8-ee20-40d5-b65b-80c296317978}"
+    owner:
+      uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+      display_name: Abdur Rehman
+      username: hafizabi
+      links:
+        avatar:
+          href: https://bitbucket.org/account/hafizabi/avatar/32/
+        self:
+          href: https://api.bitbucket.org/2.0/users/hafizabi
+        html:
+          href: https://bitbucket.org/hafizabi/
+      type: user
+    is_private: true
+    full_name: hafizabi/train-one
+    website: ''
+  defaults:
+    formats: :json
+  controller: webhooks
+  action: create
+  integration_id: '33'
+  webhook:
+    actor: *1
+    push: *2
+    repository: *3
+permitted: false
+
+################################################################################
+# ACTUAL PAYLOAD PARAMS STORED IN DB
+################################################################################
+--- !ruby/object:ActionController::Parameters
+parameters: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+  actor: &1 !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+    display_name: Abdur Rehman
+    username: hafizabi
+    links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        href: https://bitbucket.org/account/hafizabi/avatar/32/
+      self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        href: https://api.bitbucket.org/2.0/users/hafizabi
+      html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        href: https://bitbucket.org/hafizabi/
+    type: user
+  push: &2 !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    changes:
+    - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      closed: false
+      created: false
+      old: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        target: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          hash: 51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+          message: 'fix #OC-10
+
+'
+          date: '2017-02-01T10:10:40+00:00'
+          links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+            html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://bitbucket.org/hafizabi/train-one/commits/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+          parents:
+          - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            type: commit
+            links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/05475497ea8b16b0ed0266408ec676b141af1aaf
+              html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://bitbucket.org/hafizabi/train-one/commits/05475497ea8b16b0ed0266408ec676b141af1aaf
+            hash: 05475497ea8b16b0ed0266408ec676b141af1aaf
+          type: commit
+          author: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            raw: Abdur Rehman <abi@teknuk.com>
+            user: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+              display_name: Abdur Rehman
+              username: hafizabi
+              links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                  href: https://bitbucket.org/account/hafizabi/avatar/32/
+                self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                  href: https://api.bitbucket.org/2.0/users/hafizabi
+                html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                  href: https://bitbucket.org/hafizabi/
+              type: user
+        type: branch
+        name: master
+        links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          commits: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commits/master
+          self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/refs/branches/master
+          html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://bitbucket.org/hafizabi/train-one/branch/master
+      commits:
+      - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        hash: c566a6abd4b61732bc00d917cbd39f08dec25c38
+        message: 'finishes #OC-45 - documentation - updated readme with added sub-sections
+
+'
+        date: '2017-02-08T06:38:01+00:00'
+        links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          statuses: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38/statuses
+          diff: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/diff/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          comments: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38/comments
+          approve: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38/approve
+          patch: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/patch/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://bitbucket.org/hafizabi/train-one/commits/c566a6abd4b61732bc00d917cbd39f08dec25c38
+        parents:
+        - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          type: commit
+          links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+            html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://bitbucket.org/hafizabi/train-one/commits/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          hash: 4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+        type: commit
+        author: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          raw: Abdur Rehman <abi@teknuk.com>
+          user: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+            display_name: Abdur Rehman
+            username: hafizabi
+            links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://bitbucket.org/account/hafizabi/avatar/32/
+              self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://api.bitbucket.org/2.0/users/hafizabi
+              html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://bitbucket.org/hafizabi/
+            type: user
+      - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        hash: 4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+        message: 'starts #OC-44 - documentation - updated readme with some stories
+          mentions
+
+'
+        date: '2017-02-08T06:36:03+00:00'
+        links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          statuses: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0/statuses
+          diff: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/diff/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          comments: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0/comments
+          approve: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0/approve
+          patch: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/patch/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://bitbucket.org/hafizabi/train-one/commits/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+        parents:
+        - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          type: commit
+          links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+            html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://bitbucket.org/hafizabi/train-one/commits/51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+          hash: 51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+        type: commit
+        author: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          raw: Abdur Rehman <abi@teknuk.com>
+          user: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+            display_name: Abdur Rehman
+            username: hafizabi
+            links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://bitbucket.org/account/hafizabi/avatar/32/
+              self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://api.bitbucket.org/2.0/users/hafizabi
+              html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://bitbucket.org/hafizabi/
+            type: user
+      links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        commits: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commits?include=c566a6abd4b61732bc00d917cbd39f08dec25c38&exclude=51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+        diff: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/diff/c566a6abd4b61732bc00d917cbd39f08dec25c38..51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+        html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          href: https://bitbucket.org/hafizabi/train-one/branches/compare/c566a6abd4b61732bc00d917cbd39f08dec25c38..51f48ce50cc7c4bde8ab31d22a8ed24d136b1b09
+      forced: false
+      new: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        target: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          hash: c566a6abd4b61732bc00d917cbd39f08dec25c38
+          message: 'finishes #OC-45 - documentation - updated readme with added sub-sections
+
+'
+          date: '2017-02-08T06:38:01+00:00'
+          links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/c566a6abd4b61732bc00d917cbd39f08dec25c38
+            html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              href: https://bitbucket.org/hafizabi/train-one/commits/c566a6abd4b61732bc00d917cbd39f08dec25c38
+          parents:
+          - !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            type: commit
+            links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commit/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+              html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                href: https://bitbucket.org/hafizabi/train-one/commits/4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+            hash: 4f53ca6efcfa8d3db9127121ee36eff85d64b8d0
+          type: commit
+          author: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            raw: Abdur Rehman <abi@teknuk.com>
+            user: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+              uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+              display_name: Abdur Rehman
+              username: hafizabi
+              links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                  href: https://bitbucket.org/account/hafizabi/avatar/32/
+                self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                  href: https://api.bitbucket.org/2.0/users/hafizabi
+                html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+                  href: https://bitbucket.org/hafizabi/
+              type: user
+        type: branch
+        name: master
+        links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          commits: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/commits/master
+          self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one/refs/branches/master
+          html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+            href: https://bitbucket.org/hafizabi/train-one/branch/master
+      truncated: false
+  repository: &3 !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    type: repository
+    name: train-one
+    scm: git
+    links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        href: https://bitbucket.org/hafizabi/train-one/avatar/32/
+      self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        href: https://api.bitbucket.org/2.0/repositories/hafizabi/train-one
+      html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        href: https://bitbucket.org/hafizabi/train-one
+    uuid: "{680e5cf8-ee20-40d5-b65b-80c296317978}"
+    owner: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+      uuid: "{7a3e7e1c-b8b2-4d3b-b734-0e49a2dc37e9}"
+      display_name: Abdur Rehman
+      username: hafizabi
+      links: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+        avatar: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          href: https://bitbucket.org/account/hafizabi/avatar/32/
+        self: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          href: https://api.bitbucket.org/2.0/users/hafizabi
+        html: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+          href: https://bitbucket.org/hafizabi/
+      type: user
+    is_private: true
+    full_name: hafizabi/train-one
+    website: ''
+  defaults: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    formats: :json
+  controller: webhooks
+  action: create
+  integration_id: '33'
+  webhook: !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+    actor: *1
+    push: *2
+    repository: *3
+permitted: false

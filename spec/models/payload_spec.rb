@@ -8,6 +8,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  event          :string
+#  type           :string
 #
 
 require 'rails_helper'

@@ -16,5 +16,5 @@
 #
 
 class BitbucketIntegration < SourceCodeIntegrations
-  has_many :payloads, foreign_key: :integration_id
+  has_many :payloads, class_name: BitbucketPayload, foreign_key: :integration_id
 end
