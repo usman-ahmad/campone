@@ -25,6 +25,7 @@ class IntegrationsController < ApplicationController
     @integration = (params[:name] + 'Integration').titleize.constantize.new(integration_params)
 
     if @integration.save
+      # TODO: Redirect to details page for further instructions and editing.
       # Wo have routes only for integrations
       redirect_to integrations_project_path(@project), notice: 'Integration added.'
     else
