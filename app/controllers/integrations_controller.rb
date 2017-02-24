@@ -91,7 +91,7 @@ class IntegrationsController < ApplicationController
   end
 
   def set_payload_integration
-    @integration = Integration.find(params[:integration_id])
+    @integration = Integration.find_by_secure_id(params[:secure_id])
   end
 
   def set_integration

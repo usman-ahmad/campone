@@ -13,6 +13,7 @@
 #  type       :string
 #  title      :string
 #  active     :boolean
+#  secure_id  :string
 #
 
 require 'trello'

@@ -13,6 +13,7 @@
 #  type       :string
 #  title      :string
 #  active     :boolean
+#  secure_id  :string
 #
 
 # TODO: There should be one import against one project, Do't make redundant stories

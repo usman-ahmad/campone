@@ -13,6 +13,7 @@
 #  type       :string
 #  title      :string
 #  active     :boolean
+#  secure_id  :string
 #
 
 class Integration < ApplicationRecord
@@ -31,6 +32,8 @@ class Integration < ApplicationRecord
   validates :project_id, presence: true
 
   attr_accessor :performer
+
+  before_save :set_secure_id
 
   # TODO DELETE NAME ATTRIBUTE
   # validates :name, presence: true
@@ -81,4 +84,14 @@ class Integration < ApplicationRecord
     integration
   end
 
+  private
+
+  def set_secure_id
+    return if self.secure_id?
+
+    self.secure_id = loop do
+      random_token = SecureRandom.hex(3) # 3 bytes => six characters
+      break random_token unless Integration.exists?(secure_id: random_token)
+    end
+  end
 end

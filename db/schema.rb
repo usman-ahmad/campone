@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208151554) do
+ActiveRecord::Schema.define(version: 20170209120147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,7 +117,9 @@ ActiveRecord::Schema.define(version: 20170208151554) do
     t.string   "type"
     t.string   "title"
     t.boolean  "active"
+    t.string   "secure_id"
     t.index ["project_id"], name: "index_integrations_on_project_id", using: :btree
+    t.index ["secure_id"], name: "index_integrations_on_secure_id", using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -173,14 +175,14 @@ ActiveRecord::Schema.define(version: 20170208151554) do
     t.integer  "project_id"
     t.string   "priority"
     t.date     "due_at"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "state",        default: "unscheduled"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "state",               default: "unscheduled"
     t.integer  "owner_id"
     t.integer  "requester_id"
     t.integer  "position"
     t.string   "ticket_id"
-    t.string   "story_type",   default: "feature"
+    t.string   "story_type",          default: "feature"
     t.string   "requester_name"
     t.datetime "closed_at"
     t.integer  "closed_by_id"

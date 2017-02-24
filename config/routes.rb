@@ -142,7 +142,7 @@
 #                                        DELETE    /notifications/:id(.:format)                                                 notifications#destroy
 #                                   root GET       /                                                                            welcome#index
 #                                        GET       /notifications(.:format)                                                     notifications#index
-#                                        POST|HEAD /webhooks/:integration_id(.:format)                                          integrations#accept_payload {:defaults=>{:formats=>:json}}
+#                                        POST|HEAD /webhooks/:secure_id(.:format)                                               integrations#accept_payload {:defaults=>{:formats=>:json}}
 #
 
 Rails.application.routes.draw do
@@ -236,7 +236,7 @@ Rails.application.routes.draw do
 
   #resource to receive VCS messages as a post request.
   # trello sending HEAD request
-  match 'webhooks/:integration_id' => 'integrations#accept_payload', defaults: {formats: :json}, via: [:post, :head]
+  match 'webhooks/:secure_id' => 'integrations#accept_payload', defaults: {formats: :json}, via: [:post, :head]
 
 
   # Example of regular route:
