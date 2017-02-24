@@ -7,7 +7,7 @@ class AddInheritanceToIntegrations < ActiveRecord::Migration[5.0]
 
     # For now we have created classes only for these integrations,
     # it would fail if we change type for all integrations if we have other integrations i-e bitbucket
-    integrations = Integration.where(name: ['slack', 'hipchat', 'flowdock', 'twitter'])
+    integrations = Integration.where(name: Integration::AVAILABLE_INTEGRATIONS)
     integrations.each do |integration|
       integration.update_column(:type, integration.name.capitalize + "Integration")
     end

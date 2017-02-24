@@ -2,13 +2,13 @@
   <% if integrations.present? %>
     <div class="col-md-12">
       <div class="panel panel-default integration-panel nopadding">
-        <div class="panel-heading">Add <%= type %></div>
+        <div class="panel-heading">Add <%= type.downcase %></div>
         <div class="panel-body">
           <ul class="list-inline">
             <% integrations.each do |integration| %>
               <li>
-                <a class="btn btn-block btn-social btn-<%= integration %>" href="<%= instructions_project_integrations_path(@project, integration) %>">
-                  <%= image_tag ("#{integration}.png") %> <%= integration %>
+                <a class="btn btn-block btn-social btn-<%= integration %>" href="<%= list_project_integrations_path(@project, integration) %>">
+                  <%= image_tag ("#{integration}.png") %> <%= integration.capitalize %>
                 </a>
               </li>
             <% end %>

@@ -81,10 +81,9 @@
 #                                        DELETE    /projects/:project_id/events/:id(.:format)                                   events#destroy
 #         new_import_project_integration GET       /projects/:project_id/integrations/:id/new_import(.:format)                  integrations#new_import
 #       start_import_project_integration POST      /projects/:project_id/integrations/:id/start_import(.:format)                integrations#start_import
-#      instructions_project_integrations GET       /projects/:project_id/integrations/:name/instructions(.:format)              integrations#instructions
+#              list_project_integrations GET       /projects/:project_id/integrations/:name(.:format)                           integrations#new {:name=>/slack|hipchat|flowdock|asana|trello|bitbucket|github/}
 #                   project_integrations GET       /projects/:project_id/integrations(.:format)                                 integrations#index
 #                                        POST      /projects/:project_id/integrations(.:format)                                 integrations#create
-#                new_project_integration GET       /projects/:project_id/integrations/new(.:format)                             integrations#new
 #               edit_project_integration GET       /projects/:project_id/integrations/:id/edit(.:format)                        integrations#edit
 #                    project_integration GET       /projects/:project_id/integrations/:id(.:format)                             integrations#show
 #                                        PATCH     /projects/:project_id/integrations/:id(.:format)                             integrations#update
@@ -198,14 +197,15 @@ Rails.application.routes.draw do
       get :get_events, on: :collection
     end
 
-    resources :integrations do
+    resources :integrations, except: [:new] do
       member do
         get :new_import
         post :start_import
       end
 
-      get '/:name/instructions' => 'integrations#instructions', on: :collection, as: :instructions,
-          constraints: ->(request) { Integration::AVAILABLE_INTEGRATIONS.include?(request.params[:name]) }
+      constraints name: /slack|hipchat|flowdock|asana|trello|bitbucket|github/ do
+        get '/:name' => 'integrations#new', on: :collection, as: :list
+      end
     end
   end
 
@@ -234,7 +234,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'notifications' => 'notifications#index'
 
-  #resource to receive VCS messages as a post request.
+  # resource to receive VCS messages as a post request.
   # trello sending HEAD request
   match 'webhooks/:secure_id' => 'integrations#accept_payload', defaults: {formats: :json}, via: [:post, :head]
 

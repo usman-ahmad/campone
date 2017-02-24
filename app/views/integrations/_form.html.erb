@@ -1,5 +1,7 @@
+<!--TODO: Delete this partial -->
+
 <div class="col-md-12 mg-b10">
-  <%= form_for([@project, @integration], html: {role: "form", class: "form-horizontal"}) do |f| %>
+  <%= form_for([@project, @integration.becomes(Integration)], html: {role: "form", class: "form-horizontal"}) do |f| %>
       <div class="form-group">
         <%= f.label :title, class: "col-md-2" %>
         <div class="col-md-10">
@@ -19,6 +21,7 @@
           <label><input type="checkbox" value=""></label>
         </div>
       </div>
+      <%= f.hidden_field :name, :value => params[:name] %>
       <%= f.submit class: "btn btn-success pull-right" %>
   <% end %>
 </div>

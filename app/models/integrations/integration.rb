@@ -17,28 +17,28 @@
 #
 
 class Integration < ApplicationRecord
-=begin
-  we should consider Inheritance for different type of Integrations
-  i-e Inbound/Outbound Notification, Import Integration etc
-=end
 
   belongs_to :project
   has_many :payloads
 
+  # TODO: Use friendly_id
   # TODO: Fix validations. Should we validate uniqueness of title
+
   # URL is not required for all integrations. We should consider inheritance
-  # There should be way where can define required attributes for an integrations
-  validates :url, presence: true
+  # There should be way to define required attributes for an integrations
+  # validates :url, presence: true
+
   validates :project_id, presence: true
 
   attr_accessor :performer
 
-  before_save :set_secure_id
+  before_create :set_secure_id
+  before_create :set_default_title
 
   # TODO DELETE NAME ATTRIBUTE
   # validates :name, presence: true
 
-  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana trello]
+  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana trello bitbucket github]
   NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
   SOURCE_CODE_INTEGRATION = %w[bitbucket github]
   IMPORT_STORY_INTEGRATION = %w[asana trello jira]
@@ -65,9 +65,8 @@ class Integration < ApplicationRecord
   end
 
   def self.create_with_omniauth(project, auth)
-    # send(auth.provider.to_sym, auth)
     # Forward this to corresponding child class
-    (auth[:provider].titleize+'Integration').constantize.create_with_omniauth(project, auth)
+    Integration.get_class(auth[:provider]).create_with_omniauth(project, auth)
   end
 
   def self.twitter(auth)
@@ -84,6 +83,10 @@ class Integration < ApplicationRecord
     integration
   end
 
+  def self.get_class(name)
+    (name.titleize+'Integration').constantize
+  end
+
   private
 
   def set_secure_id
@@ -93,5 +96,10 @@ class Integration < ApplicationRecord
       random_token = SecureRandom.hex(3) # 3 bytes => six characters
       break random_token unless Integration.exists?(secure_id: random_token)
     end
+  end
+
+  def set_default_title
+    existing_count = self.class.where(project: self.project).count
+    self.title = "#{name} #{existing_count + 1}"
   end
 end

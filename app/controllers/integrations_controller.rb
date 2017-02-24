@@ -3,11 +3,11 @@ class IntegrationsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:accept_payload]
 
   before_action :set_project, except: [:accept_payload]
-  before_action :set_integration,    only: [:show, :edit, :update, :destroy, :new_import, :start_import]
-  before_action :set_payload_integration,    only: [:accept_payload]
+  before_action :set_integration, only: [:show, :edit, :update, :destroy, :new_import, :start_import]
+  before_action :set_payload_integration, only: [:accept_payload]
 
-  load_and_authorize_resource :project
-  load_and_authorize_resource :integration, :through => :project, :except => [:accept_payload]
+  authorize_resource :project, except: [:accept_payload]
+  authorize_resource :integration, :through => :project, :except => [:accept_payload]
 
 
   def index
@@ -15,21 +15,21 @@ class IntegrationsController < ApplicationController
   end
 
   def new
+    # TODO: Add information for each integration
     @integration = Integration.new
+    @integrations = integration_class.where(project: @project)
   end
 
   def create
     # STI and form_for
     # http://stackoverflow.com/questions/4507149/best-practices-to-handle-routes-for-sti-subclasses-in-rails
     # https://devblast.com/b/single-table-inheritance-with-rails-4-part-3
-    @integration = (params[:name] + 'Integration').titleize.constantize.new(integration_params)
+    @integration = integration_class.new(project: @project)
 
     if @integration.save
-      # TODO: Redirect to details page for further instructions and editing.
-      # Wo have routes only for integrations
-      redirect_to integrations_project_path(@project), notice: 'Integration added.'
+      redirect_to edit_project_integration_path(@project, @integration)
     else
-      redirect_back fallback_location: integrations_project_path(@project), notice: @integration.errors.full_messages
+      redirect_back fallback_location: project_integrations_path(@project), notice: @integration.errors.full_messages
     end
   end
 
@@ -49,16 +49,19 @@ class IntegrationsController < ApplicationController
   end
 
   def edit
+    render @integration.name
   end
 
   def update
+
     if @integration.update(integration_params)
-      redirect_to [@project, Integration], notice: 'Updated'
+      redirect_to list_project_integrations_path(@project, name: @integration.name), notice: 'Updated'
     else
       render :edit
     end
   end
 
+  # TODO delete after moving all logic to specific integration page
   def show
     session['jira_integration_id'] = @integration.id if @integration.name == 'jira'
   end
@@ -79,11 +82,6 @@ class IntegrationsController < ApplicationController
     redirect_to project_stories_path(@project), notice: 'Success'
   end
 
-  def instructions
-    @integration = Integration.new
-    render params[:name]
-  end
-
   private
 
   def set_project
@@ -98,8 +96,12 @@ class IntegrationsController < ApplicationController
     @integration = @project.integrations.find(params[:id])
   end
 
+  def integration_class
+    Integration.get_class(params[:name])
+  end
+
   def integration_params
-    params.require(:integration).permit(:url, :title).merge(project: @project)
+    params.require(:integration).permit(:url, :title, :active).merge(project: @project)
   end
 
   # def set_import_client
