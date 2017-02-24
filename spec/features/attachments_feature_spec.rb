@@ -32,7 +32,7 @@ describe 'Attachments feature for Projects, Stories and Discussions', type: :fea
 
     it 'updates the newly created attachment' do
 
-      create(:project_attachment, title: 'consectetur adipiscing elit', document: File.new('spec/files/awesome_project_attachment.jpg'), uploader_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'consectetur adipiscing elit', document: File.new('spec/files/awesome_project_attachment.jpg'), uploader: owner, attachable: project)
 
       visit project_attachments_path(project)
 
@@ -51,7 +51,7 @@ describe 'Attachments feature for Projects, Stories and Discussions', type: :fea
     end
 
     it 'downloads attachment attached to a project' do
-      create(:project_attachment, title: 'the awesome project attachment', document: File.new('spec/files/awesome_project_attachment.jpg'), uploader_id: owner.id, attachable: project)
+      create(:project_attachment, title: 'the awesome project attachment', document: File.new('spec/files/awesome_project_attachment.jpg'), uploader: owner, attachable: project)
       visit project_attachments_path(project)
 
       find('tr', text: 'the awesome project attachment').click_link('Download')
@@ -65,8 +65,8 @@ describe 'Attachments feature for Projects, Stories and Discussions', type: :fea
     it 'enlists project attachment only' do
       # UA[2016/12/01] - TODO - CHECK IF STUBS COULD BE USED
       story = create(:story, project: project, requester: owner)
-      create(:project_attachment, title: 'awesome_project_attachment.jpg', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project)
-      create(:attachment, document_file_name: 'non_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: story)
+      create(:project_attachment, title: 'awesome_project_attachment.jpg', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project, uploader: owner)
+      create(:attachment, document_file_name: 'non_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: story, uploader: owner)
 
       visit project_attachments_path(project)
 
@@ -75,7 +75,7 @@ describe 'Attachments feature for Projects, Stories and Discussions', type: :fea
     end
 
     it 'comments on an attachment', js: true do
-      create(:project_attachment, title: 'commented attachment here!', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project)
+      create(:project_attachment, title: 'commented attachment here!', document_file_name: 'awesome_project_attachment.jpg', document_content_type: 'image/jpeg', attachable: project, uploader: owner)
       visit project_attachments_path(project)
       click_link 'commented attachment here!'
 

@@ -6,7 +6,7 @@ describe 'projects management', type: :feature do
 
   before do
     login_as(owner, :scope => :user, :run_callbacks => false)
-    # login(owner.email, 'secret_password')
+    visit root_path
   end
 
   describe 'creating a new project' do

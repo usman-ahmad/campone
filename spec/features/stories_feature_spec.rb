@@ -32,10 +32,11 @@ describe 'stories management', type: :feature do
       expect(page.current_path).to eq project_story_path(project, story)
     end
 
-    it 'allow to delete from todo list', js: true, driver: :selenium do
-      find('li', text: 'bring bread with eggs').find('.fa-trash-o').click
-      page.driver.browser.switch_to.alert.accept
-      expect(page).to have_css('.ui-sortable li', :count => 0)
+    it 'allow to delete from todo list', js: true do
+      accept_confirm do
+        find('li', text: 'bring bread with eggs').find('.fa-trash-o').click
+      end
+      expect(page).to_not have_content('bring bread with eggs')
     end
   end
 

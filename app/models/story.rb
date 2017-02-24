@@ -167,7 +167,7 @@ class Story < ApplicationRecord
     # TODO: Make it atomic
     CSV.foreach(file.path, headers: true) do |row|
       attributes = row.to_hash
-      attributes['requester_id'] = current_user
+      attributes['performer'] = current_user
 
       project.stories.create!(attributes)
     end

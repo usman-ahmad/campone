@@ -184,7 +184,7 @@ RSpec.describe Story, type: :model do
 
       context 'when with_comments is set to true' do
         let(:story_commenter) { create(:user) }
-        let(:story_from_commenter) { create(:story, :with_comments, comments_count: 3, commenter: story_commenter, project: base_project) }
+        let(:story_from_commenter) { create(:story, :with_comments, comments_count: 3, commenter: story_commenter, project: base_project, performer: story_commenter) }
         let(:story_copy) { story_from_commenter.copy_to(target_project, owner_of_projects, with_comments: true) }
 
         context 'commenter of story is not present in the target project' do

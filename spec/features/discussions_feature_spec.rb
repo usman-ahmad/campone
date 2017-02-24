@@ -86,10 +86,10 @@ describe 'discussions management', type: :feature do
     #   expect(page.current_path).to eq new_project_discussion_path(project)
     # end
 
-    it 'should delete', :js => true, driver: :selenium do
-      find('a', text: 'Delete').click
-      page.driver.browser.switch_to.alert.accept
-      sleep(2)
+    it 'should delete', :js => true do
+      accept_confirm do
+        find('a', text: 'Delete').click
+      end
       expect(page.current_path).to eq project_discussions_path(project)
     end
   end

@@ -54,7 +54,7 @@ RSpec.describe Comment, type: :model do
     let(:owner) { create(:user, name: 'Owner name') }
     let(:other_user) { create(:user) }
     let(:project) { create(:project, owner: owner, title: 'T E S Ting', member_users: [other_user]) }
-    let!(:story) { create(:story, project: project, id: 1001) }
+    let!(:story) { create(:story, project: project, id: 1001, performer: owner) }
 
     it { is_expected.to be_a Notifiable }
 
