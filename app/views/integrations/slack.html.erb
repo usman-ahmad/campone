@@ -1,4 +1,13 @@
 <%= render layout: 'common_form', locals: { project: @project, integration: @integration } do |f| %>
+  <ul>
+    <li>visit <a href="https://teknuk.slack.com/apps/A0F7XDUAZ-incoming-webhooks">Slack Incoming webhooks page</a></li>
+    <li>Click 'Add Configuration' button</li>
+    <li>Choose a channel where your this webhook will post messages to.</li>
+    <li>Click 'Add Incoming webhook Integration' button</li>
+    <li>Copy Webhook URL from Setup Instructions section</li>
+    <li>Add URL from slack to below given Field and click 'Save Changes'</li>
+  </ul>
+  <br>
   <div class="form-group">
     <%= f.label :url, 'URL', class: "col-md-2" %>
     <div class="col-md-10">

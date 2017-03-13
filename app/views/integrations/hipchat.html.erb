@@ -1,4 +1,15 @@
 <%= render layout: 'common_form', locals: { project: @project, integration: @integration } do |f| %>
+
+  <ul>
+    <li>Visit <a href="https://teknuk.hipchat.com/addons/">HipChat Integrations page</a></li>
+    <li>Select a room from dropdown</li>
+    <li>Click on 'Build your own integration'</li>
+    <li>Enter name of your integration and click on 'Save'</li>
+    <li>Copy the URL written in font of 'Send messages to this room by posting to this URL'</li>
+    <li>Paste URL to below given field and click 'Save Changes'</li>
+  </ul>
+
+  <br>
   <div class="form-group">
     <%= f.label :url, 'URL', class: "col-md-2" %>
     <div class="col-md-10">

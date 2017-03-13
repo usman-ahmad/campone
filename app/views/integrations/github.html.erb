@@ -1,8 +1,13 @@
 <%= render layout: 'common_form', locals: { project: @project, integration: @integration } do |f| %>
-  <div class="form-group">
-    <%= f.label :url, 'URL', class: "col-md-2" %>
-    <div class="col-md-10">
-      <%= f.url_field :url, class: "form-control" %>
-    </div>
-  </div>
+  To set up a repository webhook on GitHub follow the steps below
+  <ol>
+    <li>Head over to the Settings page of your repository</li>
+    <li>Click on Webhooks</li>
+    <li>After that, click on Add webhook</li>
+    <li>Enter <%= webhook_url(@integration) %> in Payload URL field</li>
+    <li>Select application/json form Content type</li>
+    <li>Make sure Active checbox is checked</li>
+    <li>Finally click Add Webhook</li>
+  </ol>
+
 <% end %>
