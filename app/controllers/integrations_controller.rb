@@ -11,7 +11,7 @@ class IntegrationsController < ApplicationController
 
 
   def index
-    @integrations = @project.integrations.all
+    @integrations = @project.integrations
   end
 
   def new

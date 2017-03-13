@@ -27,11 +27,6 @@ class ProjectsController < ApplicationController
     @contributions = @project.contributions
   end
 
-  def integrations
-    @integration = Integration.new
-    @integrations = @project.integrations
-  end
-
   # GET /projects/new
   def new
     @project = Project.new

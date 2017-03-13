@@ -7,7 +7,7 @@
       Contributors Settings
     </a>
     <% if can? :create, Integration.new(project: project) %>
-        <a href='<%= integrations_project_path(project) %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'integrations' %>'>
+        <a href='<%= project_integrations_path(project) %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'integrations' %>'>
           Integrations Settings
         </a>
     <% end %>

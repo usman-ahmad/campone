@@ -4,7 +4,6 @@
 #                          sort_projects POST      /projects/sort(.:format)                                                     projects#sort
 #                       settings_project GET       /projects/:id/settings(.:format)                                             projects#settings
 #                   contributors_project GET       /projects/:id/contributors(.:format)                                         projects#contributors
-#                   integrations_project GET       /projects/:id/integrations(.:format)                                         projects#integrations
 #                   sort_project_stories POST      /projects/:project_id/stories/sort(.:format)                                 stories#sort
 #             new_import_project_stories GET       /projects/:project_id/stories/new_import(.:format)                           stories#new_import
 #                 import_project_stories POST      /projects/:project_id/stories/import(.:format)                               stories#import
@@ -155,7 +154,6 @@ Rails.application.routes.draw do
     member do
       get :settings
       get :contributors
-      get :integrations
     end
 
     resources :stories do
