@@ -38,9 +38,9 @@ class Integration < ApplicationRecord
   # TODO DELETE NAME ATTRIBUTE
   # validates :name, presence: true
 
-  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana trello bitbucket github]
+  AVAILABLE_INTEGRATIONS = %w[slack hipchat flowdock asana trello bitbucket github gitlab]
   NOTIFIABLE_INTEGRATIONS = %w[slack hipchat flowdock twitter]
-  SOURCE_CODE_INTEGRATION = %w[bitbucket github]
+  SOURCE_CODE_INTEGRATION = %w[bitbucket github gitlab]
   IMPORT_STORY_INTEGRATION = %w[asana trello jira]
 
   scope :slack_urls, -> { where(name: 'slack').map(&:url) }

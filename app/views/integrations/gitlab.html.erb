@@ -1,0 +1,10 @@
+<%= render layout: 'common_form', locals: { project: @project, integration: @integration } do |f| %>
+
+  To set up a repository webhook on GitHub follow the steps below
+  <ol>
+    <li>Navigate to the webhooks page by going to the Integrations page from your project's settings which can be found under the wheel icon in the upper right corner</li>
+    <li>Enter <%= webhook_url(@integration) %> in URL field</li>
+    <li>Click Add Webhook button</li>
+  </ol>
+
+<% end %>

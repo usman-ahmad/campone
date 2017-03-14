@@ -114,6 +114,8 @@ class IntegrationsController < ApplicationController
         request.headers['X-GitHub-Event']
       when 'bitbucket'
         request.headers['HTTP_X_EVENT_KEY'].split(':')[1]
+      when 'gitlab'
+        request.params['object_kind']
       when 'trello'
         request.params['webhook']['action']['type']
       when 'jira'

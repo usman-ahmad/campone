@@ -80,7 +80,7 @@
 #                                        DELETE    /projects/:project_id/events/:id(.:format)                                   events#destroy
 #         new_import_project_integration GET       /projects/:project_id/integrations/:id/new_import(.:format)                  integrations#new_import
 #       start_import_project_integration POST      /projects/:project_id/integrations/:id/start_import(.:format)                integrations#start_import
-#              list_project_integrations GET       /projects/:project_id/integrations/:name(.:format)                           integrations#new {:name=>/slack|hipchat|flowdock|asana|trello|bitbucket|github/}
+#              list_project_integrations GET       /projects/:project_id/integrations/:name(.:format)                           integrations#new {:name=>/slack|hipchat|flowdock|asana|trello|bitbucket|github|gitlab/}
 #                   project_integrations GET       /projects/:project_id/integrations(.:format)                                 integrations#index
 #                                        POST      /projects/:project_id/integrations(.:format)                                 integrations#create
 #               edit_project_integration GET       /projects/:project_id/integrations/:id/edit(.:format)                        integrations#edit
@@ -201,7 +201,7 @@ Rails.application.routes.draw do
         post :start_import
       end
 
-      constraints name: /slack|hipchat|flowdock|asana|trello|bitbucket|github/ do
+      constraints name: /#{Integration::AVAILABLE_INTEGRATIONS.join('|')}/ do
         get '/:name' => 'integrations#new', on: :collection, as: :list
       end
     end

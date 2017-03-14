@@ -128,6 +128,18 @@
   background-color: #cc6800;
 }
 
+
+.btn-gitlab {
+  color: #fff;
+  background-color: #fca326;
+}
+
+.btn-gitlab:hover, .btn-gitlab:focus, .btn-gitlab:active, .btn-gitlab.active {
+  color: #fff;
+  background-color: #ff6a08;
+}
+
+
 //TODO: improve css: use SASS framework extend/inheritance for social icons buttons and label
 
 .integration-list-table > tbody > tr > td {

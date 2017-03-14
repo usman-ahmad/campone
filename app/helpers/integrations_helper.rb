@@ -1,7 +1,7 @@
 module IntegrationsHelper
   def webhook_url(integration)
     content_tag :code do
-      "http://campone.com/webhooks/#{integration.secure_id}"
+      "#{ENV['HOST']}/webhooks/#{integration.secure_id}"
     end
   end
 
