@@ -19,16 +19,60 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="page-header text-center">
-  <%= image_tag('logo.png') %>
-</div>
-<div class="container">
-  <div class="row">
-    <div id="content" class='<%= "col-md-6 col-md-offset-3" if devise_controller? -%>'>
-      <%= render 'shared/flash' %>
-      <%= yield %>
+<nav class="navbar navbar-landing navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header page-scroll">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="navbar-brand">
+        <i class="fa fa-play-circle"></i> <span class="light">CAMPONE</span>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+      <ul class="nav navbar-nav">
+        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+        <li class="hidden"><a></a></li>
+        <li><a>Feature</a></li>
+        <li><a>Link</a></li>
+        <li><a>Link</a></li>
+        <li><a>Link</a></li>
+        <li><a href="#"><i class="fa fa-sign-in"></i> Login</a></li>
+      </ul>
     </div>
   </div>
-</div>
+</nav>
+
+<section class="intro">
+  <div class="intro-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="brand-heading">CAMPONE</h1>
+
+          <p class="intro-text mg-b30">allows you to camp all your management tasks under one camp along with third party apps
+            integration.</p>
+          <button class="btn register-btn">REGISTER</button>
+          <div class="page-scroll">
+            <a href="#about" class="btn btn-circle">
+              <i class="fa fa-angle-double-down animated"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--<div class="page-header text-center">-->
+<!--<%= image_tag('logo.png') %>-->
+<!--</div>-->
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div id="content" class='<%= "col-md-6 col-md-offset-3" if devise_controller? -%>'>-->
+<!--<%= render 'shared/flash' %>-->
+<!--<%= yield %>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 </body>
 </html>

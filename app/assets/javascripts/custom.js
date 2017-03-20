@@ -125,4 +125,13 @@ $(document).on('turbolinks:load', function () {
     //    $("div.custom-tab>div.custom-tab-content").removeClass("active");
     //    $("div.custom-tab>div.custom-tab-content").eq(index).addClass("active");
     //});
+
+    //jQuery to collapse the navbar on scroll
+    $(window).scroll(function () {
+        if ($(".navbar").offset().top > 10) {
+            $(".navbar-fixed-top").addClass("top-nav-collapse");
+        } else {
+            $(".navbar-fixed-top").removeClass("top-nav-collapse");
+        }
+    });
 });
