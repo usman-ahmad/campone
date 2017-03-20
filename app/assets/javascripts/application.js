@@ -21,6 +21,7 @@
 //= require turbolinks
 //= require moment
 //= require fullcalendar
+//= require jquery.easing.min
 //= require custom
 //= require discussions
 //= require attachments
