@@ -226,3 +226,99 @@
     height: 400px;
   }
 }
+footer {
+  background: image-url('footer-bg.png') repeat scroll 0 0 ;
+  padding: 50px 0 30px;
+}
+
+.footer-heading {
+  font-weight: 700;
+  color: #fff;
+}
+
+.footerleft {
+  padding: 0 36px;
+  p {
+    color: #fff;
+    font-size: 12px !important;
+    margin-bottom: 15px;
+    i {
+      margin-right: 5px;
+    }
+  }
+}
+
+.logofooter {
+  margin-bottom: 10px;
+  font-size: 25px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.footer-ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 2px;
+  li {
+    line-height: 29px;
+    font-size: 12px;
+    a {
+      color: #fff;
+      transition: color 0.2s linear 0s, background 0.2s linear 0s;
+      &:hover {
+        transition: color 0.2s linear 0s, background 0.2s linear 0s;
+        color: #39a1e7;
+      }
+    }
+  }
+  i {
+    margin-right: 10px;
+  }
+}
+
+footer .post {
+  color: #fff;
+  blockquote {
+    font-size: 13px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    border-left-width: 3px;
+    footer {
+      padding: 0;
+      color: #ccc;
+    }
+  }
+}
+
+.social [class*="fa fa-"] {
+  background-color: #333;
+  border-radius: 30px;
+  color: #fff;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin: auto 3px;
+  width: 30px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.fa-twitter:hover {
+  background-color: #46c0fb;
+}
+
+.fa-facebook:hover {
+  background-color: #3c5998;
+}
+
+.fa-google:hover {
+  background-color: #d62d20;
+}
+
+.fa-linkedin:hover {
+  background-color: #0177b5;
+}
+
+.fa-dribbble:hover {
+  background-color: #888888;
+}
