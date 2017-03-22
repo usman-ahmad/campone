@@ -28,3 +28,4 @@
 //= require notification
 //= require notify.min
 //= require trumbowyg/trumbowyg
+//= require public
