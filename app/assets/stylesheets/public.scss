@@ -1,7 +1,6 @@
 .navbar-landing {
   margin-bottom: 0;
   border-bottom: 1px solid rgba(255, 255, 255, .3);
-  text-transform: uppercase;
   background-color: #39a1e7;
   .navbar-brand {
     font-weight: 700;
@@ -22,6 +21,7 @@
   }
   .nav li {
     a {
+      text-transform: uppercase;
       transition: background .3s ease-in-out;
       &:hover {
         outline: 0;
@@ -40,6 +40,10 @@
   &.navbar-toggle:focus {
     outline: 0;
   }
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 @media(min-width: 767px) {
@@ -304,23 +308,23 @@ footer .post {
 }
 
 .fa-twitter:hover {
-  background-color: #46c0fb;
+  background-color: #46c0fb !important;
 }
 
 .fa-facebook:hover {
-  background-color: #3c5998;
+  background-color: #3c5998 !important;
 }
 
 .fa-google:hover {
-  background-color: #d62d20;
+  background-color: #d62d20 !important;
 }
 
 .fa-linkedin:hover {
-  background-color: #0177b5;
+  background-color: #0177b5 !important;
 }
 
 .fa-dribbble:hover {
-  background-color: #888888;
+  background-color: #888888 !important;
 }
 
 section {
@@ -379,5 +383,51 @@ section {
     text-transform: uppercase;
     font-weight: 700;
     color: #eee;
+  }
+}
+
+.login-dropdown {
+  min-width: 250px;
+  padding: 14px 14px 0;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, .8);
+}
+
+.login-dropdown .help-block {
+  font-size: 12px
+}
+
+.login-dropdown .bottom {
+  background-color: rgba(255, 255, 255, .8);
+  border-top: 1px solid #ddd;
+  clear: both;
+  padding: 14px;
+}
+
+.login-dropdown .social-buttons {
+  margin: 12px 0
+}
+
+.login-dropdown .social-buttons a {
+  width: 49%;
+}
+
+.login-dropdown .bottom a,
+.login-dropdown .help-block a {
+  color: #337ab7;
+}
+
+.login-dropdown .form-group {
+  margin-bottom: 10px;
+}
+
+@media(max-width: 768px) {
+  .login-dropdown {
+    background-color: inherit;
+    color: #fff;
+  }
+  .login-dropdown .bottom {
+    background-color: inherit;
+    border-top: 0 none;
   }
 }
