@@ -1,74 +1,209 @@
-<div class="col-md-12 col-centerd clearfix">
-  <div class="col-xs-12 col-sm-12 col-md-5">
-    <div class="mg-b40">
-      <h4 class="text-info">Sign in to your Account</h4>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <%# TODO: Add relevant subtitle %>
+  <title>Camp One</title>
 
-      <p class="text-primary">Please sign in using your registered email address and password</p>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js", "https://oss.maxcdn.com/respond/1.4.2/respond.min.js" %>
+  <![endif]-->
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<nav class="navbar navbar-landing navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header page-scroll">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="navbar-brand" href="<%= root_path %>">
+        <i class="fa fa-play-circle"></i> <span class="light">CAMPONE</span>
+      </a>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= form_for(:user, :url => session_path(:user)) do |f| %>
-            <div class="form-group">
-              <label class="text-muted" for="exampleInputEmail1">Username or Email address</label>
-              <%= f.text_field :email, class: "form-control", id: "login_user_email" %>
+    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+      <ul class="nav navbar-nav">
+        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+        <li class="hidden"><a></a></li>
+        <li><a>Feature</a></li>
+        <li><a>Link</a></li>
+        <li><a>Link</a></li>
+        <li><a>Link</a></li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-sign-in"></i> Login</a>
+
+          <div class="dropdown-menu login-dropdown">
+            <div class="row">
+              <div class="col-md-12">
+                <span>Login via</span>
+
+                <div class="social mg-t10 mg-b10">
+                  <a class="fa fa-facebook" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-twitter" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-google" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-linkedin" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-dribbble" title="" target="_blank" href="#"></a>
+                </div>
+                <div class="text-center mg-b10">or</div>
+                <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                  <div class="form-group">
+                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="sr-only" for="exampleInputPassword2">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+
+                    <div class="help-block text-right"><a href="">Forgot the password ?</a></div>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Login in</button>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"> keep me logged-in
+                    </label>
+                  </div>
+                </form>
+              </div>
+              <div class="bottom text-center">
+                New here ? <a href="<%= new_user_registration_path %>"><b>Join Us</b></a>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="text-muted" for="exampleInputPassword1">Password</label>
-              <%= f.password_field :password, class: "form-control", id: "login_user_password"%>
-            </div>
-            <div class="form-group">
-              <%= f.submit 'Submit', class: "btn btn-success" %>
-            </div>
-            <%= link_to "Forgot your password?", new_password_path(:user) %>
-        <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="intro">
+  <div class="intro-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="brand-heading">CAMPONE</h1>
+
+          <p class="intro-text mg-b30">allows you to camp all your management tasks under one camp along with third
+            party apps
+            integration.</p>
+          <a class="btn register-btn" href="<%= new_user_registration_path %>">REGISTER</a>
+
+          <div class="page-scroll">
+            <a href="#about" class="btn btn-circle">
+              <i class="fa fa-angle-double-down animated"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <%#= link_to "Sign-In with Google", user_omniauth_authorize_path(:google_oauth2) %>
-    <%#= link_to "Sign-In with Google", user_google_oauth2_omniauth_authorize_path %>
+  </div>
+</section>
+<section class="features">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 col-md-push-5">
+        <%= image_tag(('feature-todo.png'), :class => "img-responsive") %>
+      </div>
+      <div class="col-md-5 col-md-pull-7">
+        <article>
+          <h2>TO-DO's</h2>
 
-  </div>
-  <div class="col-md-2 wrapper hidden-sm hidden-xs">
-    <div class="line-temp"></div>
-    <div class="wordwrapper">
-      <div class="word">or</div>
+          <p>TO-DO are the basic unit of action in Campone.
+            You can create new tasks, edit an existing task or delete a task. </p>
+          <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Suspendisse rutrum eleifend</li>
+            <li>Nulla nec lacinia velit</li>
+          </ul>
+        </article>
+      </div>
     </div>
-  </div>
-  <div class="or_div mg-b20 mg-t20 visible-sm visible-xs">
-    <div class="text"><span>OR</span></div>
-    <div class="line">&nbsp;</div>
-  </div>
-  <div class="col-xs-12 col-sm-12 col-md-5">
-    <div class="mg-b20">
-      <h4 class="text-info">Create Account</h4>
+    <div class="row">
+      <div class="col-md-7">
+        <%= image_tag(('feature-discussion.png'), :class => "img-responsive") %>
+      </div>
+      <div class="col-md-5">
+        <article>
+          <h2>Discussions</h2>
 
-      <p class="text-primary">Not registered? Please complete the following steps to set up your account:</p>
+          <p>Use discussions to make an announcement, brainstorm, celebrate accomplishments, or talk about any other
+            topic.</p>
+          <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Suspendisse rutrum eleifend</li>
+            <li>Nulla nec lacinia velit</li>
+          </ul>
+        </article>
+      </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <%= form_for(:user, :url => registration_path(:user)) do |f| %>
-            <div class="form-group">
-              <label class="text-muted" for="exampleInputEmail1">First & Last Name</label>
-              <%= f.text_field :name, placeholder: "First & Last Name", class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <label class="text-muted" for="userName1">Username</label>
-              <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
-            </div>
-            <div class="form-group">
-              <label class="text-muted" for="exampleInputEmail1">Email address</label>
-              <%= f.email_field :email, placeholder: "Email Address", class: "form-control", id: "signup_user_email"  %>
-            </div>
-            <div class="form-group">
-              <label class="text-muted" for="exampleInputPassword1">Password</label>
-              <%= f.password_field :password, placeholder: "Password", class: "form-control", id: "signup_user_password"  %>
-            </div>
-            <div class="form-group">
-              <label class="text-muted" for="exampleInputEmail1">Password Confirmation</label>
-              <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control" %>
-            </div>
-            <%= f.submit t('.sign_up', :default => "Create Account"), class: "btn btn-primary pull-right" %>
-        <% end %>
+    <div class="row">
+      <div class="col-md-7 col-md-push-5">
+        <%= image_tag(('feature-files.png'), :class => "img-responsive") %>
+      </div>
+      <div class="col-md-5 col-md-pull-7">
+        <article>
+          <h2>Attachments</h2>
+
+          <p>An attachment object represents any file attached to a task in Campone,
+            whether it’s an uploaded file or one associated with a Task.</p>
+          <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Suspendisse rutrum eleifend</li>
+            <li>Nulla nec lacinia velit</li>
+          </ul>
+        </article>
       </div>
     </div>
   </div>
-</div>
+</section>
+<div id="map"></div>
+<section id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center mg-b30">
+        <h2 class="section-heading">Contact Us</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <form name="sentMessage" id="contactForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Name *" id="name" required="">
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" placeholder="Your Email *" id="email" required="">
+              </div>
+              <div class="form-group">
+                <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" required="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <textarea class="form-control" placeholder="Your Message *" id="message" required=""></textarea>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-lg-12 text-center">
+              <button type="submit" class="btn btn-xl mg-t20">Send Message</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<%= render 'shared/public_footer' %>
+</body>
+</html>
