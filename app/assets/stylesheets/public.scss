@@ -227,7 +227,7 @@
   }
 }
 footer {
-  background: image-url('footer-bg.png') repeat scroll 0 0 ;
+  background-color: #222;
   padding: 50px 0 30px;
 }
 
@@ -321,4 +321,63 @@ footer .post {
 
 .fa-dribbble:hover {
   background-color: #888888;
+}
+
+section {
+  &#contact {
+    background-color: #222;
+    background-image: image-url('map-image.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 50px 0;
+    .section-heading {
+      color: #fff;
+    }
+    .form-group {
+      margin-bottom: 25px;
+      input {
+        padding: 20px;
+        &.form-control {
+          height: auto;
+        }
+      }
+      textarea {
+        padding: 20px;
+        &.form-control {
+          height: 236px;
+        }
+      }
+    }
+    &:-moz-placeholder {
+      font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #eee;
+    }
+    &:-ms-input-placeholder {
+      font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #eee;
+    }
+    .text-danger {
+      color: #e74c3c;
+    }
+    .form-control:focus {
+      border-color: #39a1e7;
+      box-shadow: none;
+    }
+  }
+  &#contact::-webkit-input-placeholder {
+    font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #eee;
+  }
+  &#contact::-moz-placeholder {
+    font-family: Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #eee;
+  }
 }
