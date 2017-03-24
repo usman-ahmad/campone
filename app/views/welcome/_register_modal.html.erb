@@ -1,0 +1,31 @@
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content custom-content">
+      <div class="modal-header custom-header">
+        <h4 class="modal-title" id="myModalLabel">Register</h4>
+      </div>
+      <div class="modal-body clearfix">
+        <%= form_for(:user, :url => registration_path(:user)) do |f| %>
+            <div class="form-group">
+              <label class="text-muted" for="exampleInputEmail1">First & Last Name</label>
+              <%= f.text_field :name, placeholder: "First & Last Name", class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <label class="text-muted" for="exampleInputEmail1">Email address</label>
+              <%= f.email_field :email, placeholder: "Email Address", class: "form-control", id: "signup_user_email" %>
+            </div>
+            <div class="form-group">
+              <label class="text-muted" for="exampleInputPassword1">Password</label>
+              <%= f.password_field :password, placeholder: "Password", class: "form-control", id: "signup_user_password" %>
+            </div>
+            <div class="form-group">
+              <label class="text-muted" for="exampleInputEmail1">Password Confirmation</label>
+              <%= f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control" %>
+            </div>
+            <%= f.submit t('.sign_up', :default => "Create Account"), class: "btn btn-primary pull-right" %>
+        <% end %>
+        Already have an account? <a href="<%= new_user_session_path %>">Login</a>
+      </div>
+    </div>
+  </div>
+</div>

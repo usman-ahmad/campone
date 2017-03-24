@@ -44,36 +44,39 @@
           <div class="dropdown-menu login-dropdown">
             <div class="row">
               <div class="col-md-12">
-                <span>Login via</span>
-
-                <div class="social mg-t10 mg-b10">
+                <span>Login</span>
+                <!--TODO: temporary hide social icon-->
+                <div class="social mg-t10 mg-b10 hidden">
                   <a class="fa fa-facebook" title="" target="_blank" href="#"></a>
                   <a class="fa fa-twitter" title="" target="_blank" href="#"></a>
                   <a class="fa fa-google" title="" target="_blank" href="#"></a>
                   <a class="fa fa-linkedin" title="" target="_blank" href="#"></a>
                   <a class="fa fa-dribbble" title="" target="_blank" href="#"></a>
                 </div>
-                <div class="text-center mg-b10">or</div>
-                <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
-                  <div class="form-group">
-                    <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="sr-only" for="exampleInputPassword2">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                <div class="text-center mg-b10 hidden">or</div>
+                <%= form_for(:user, :url => session_path(:user), html: {class: 'mg-t10'}) do |f| %>
+                    <div class="form-group">
+                      <%= f.text_field :login, class: 'form-control', placeholder: 'Username or Email', id: 'login_user_email' %>
+                    </div>
+                    <div class="form-group">
+                      <div class="form-group">
+                        <%= f.password_field :password, class: 'form-control', placeholder: 'Password', id: 'login_user_password' %>
+                      </div>
 
-                    <div class="help-block text-right"><a href="">Forgot the password ?</a></div>
-                  </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Login in</button>
-                  </div>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox"> keep me logged-in
-                    </label>
-                  </div>
-                </form>
+                      <div class="help-block text-right">
+                        <%= link_to 'Forgot your password?', new_password_path(:user) %>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <%= f.submit 'Login', class: 'btn btn-primary btn-block' %>
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        <%= f.check_box :remember_me %>
+                        <%= f.label :remember_me, 'keep me logged-in', style: 'padding-left: 5px;' %>
+                      </label>
+                    </div>
+                <% end %>
               </div>
               <div class="bottom text-center">
                 New here ? <a href="<%= new_user_registration_path %>"><b>Join Us</b></a>
@@ -96,7 +99,7 @@
           <p class="intro-text mg-b30">allows you to camp all your management tasks under one camp along with third
             party apps
             integration.</p>
-          <a class="btn register-btn" href="<%= new_user_registration_path %>">REGISTER</a>
+          <a class="btn register-btn" data-toggle="modal" data-target="#register-modal">REGISTER</a>
 
           <div class="page-scroll">
             <a href="#about" class="btn btn-circle">
@@ -362,6 +365,7 @@
     </div>
   </div>
 </section>
+<%= render 'register_modal' %>
 <%= render 'shared/public_footer' %>
 </body>
 </html>
