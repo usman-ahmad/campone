@@ -125,4 +125,12 @@ $(document).on('turbolinks:load', function () {
     //    $("div.custom-tab>div.custom-tab-content").removeClass("active");
     //    $("div.custom-tab>div.custom-tab-content").eq(index).addClass("active");
     //});
+
+    $('.page-scroll a').bind('click', function(event) {
+        var $anchor = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $($anchor.attr('href')).offset().top
+        }, 1500, 'easeInOutExpo');
+        event.preventDefault();
+    });
 });

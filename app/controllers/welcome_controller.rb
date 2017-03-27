@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
   layout 'public'
 
   def index
-    redirect_to projects_path if current_user.present?
+    redirect_to projects_path and return if current_user.present?
     render :layout => false
   end
 end
