@@ -1,0 +1,81 @@
+<nav class="navbar navbar-landing navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header page-scroll">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+        <i class="fa fa-bars"></i>
+      </button>
+      <a class="navbar-brand" href="<%= root_path %>">
+        <i class="fa fa-play-circle"></i> <span class="light">CAMPONE</span>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+      <ul class="nav navbar-nav">
+        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+        <li class="hidden"><a></a></li>
+
+        <% if @available_sections[:features] %>
+          <li class="page-scroll"><a href="#features">Features</a></li>
+        <% end %>
+
+        <% if @available_sections[:pricing] %>
+          <li class="page-scroll"><a href="#pricing">Pricing</a></li>
+        <% end %>
+
+        <% if @available_sections[:reviews] %>
+          <li class="page-scroll"><a href="#reviews">Reviews</a></li>
+        <% end %>
+
+        <% if @available_sections[:contact_us] %>
+          <li class="page-scroll"><a href="#contact">Contact Us</a></li>
+        <% end %>
+
+        <li class="dropdown">
+          <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-sign-in"></i> Login</a>
+
+          <div class="dropdown-menu login-dropdown">
+            <div class="row">
+              <div class="col-md-12">
+                <span>Login</span>
+                <!--TODO: temporary hide social icon-->
+                <div class="social mg-t10 mg-b10 hidden">
+                  <a class="fa fa-facebook" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-twitter" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-google" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-linkedin" title="" target="_blank" href="#"></a>
+                  <a class="fa fa-dribbble" title="" target="_blank" href="#"></a>
+                </div>
+                <div class="text-center mg-b10 hidden">or</div>
+                <%= form_for(:user, :url => session_path(:user), html: {class: 'mg-t10'}) do |f| %>
+                  <div class="form-group">
+                    <%= f.text_field :login, class: 'form-control', placeholder: 'Username or Email', id: 'login_user_email' %>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-group">
+                      <%= f.password_field :password, class: 'form-control', placeholder: 'Password', id: 'login_user_password' %>
+                    </div>
+
+                    <div class="help-block text-right">
+                      <%= link_to 'Forgot your password?', new_password_path(:user) %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.submit 'Login', class: 'btn btn-primary btn-block' %>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me, 'keep me logged-in', style: 'padding-left: 5px;' %>
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+              <div class="bottom text-center">
+                New here ? <a href="<%= new_user_registration_path %>"><b>Join Us</b></a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

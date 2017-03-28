@@ -5,6 +5,16 @@ class WelcomeController < ApplicationController
 
   def index
     redirect_to projects_path and return if current_user.present?
+
+    @available_sections = {
+        features: true,
+        pricing: false,
+        reviews: false,
+        contact_us: false,
+        brand: false,
+        map: false
+    }
+
     render :layout => false
   end
 end
