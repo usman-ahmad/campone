@@ -9,23 +9,23 @@
       </button>
       <ul class="nav navbar-nav">
         <li><a class="navbar-brand" href="<%= projects_path %>" style="font-size: 14px;">Camp One</a></li>
-        <% if @project && @project.persisted? %>
-            <li>
-              <a href="<%= project_stories_path(@project) %>" class=" navbar-brand caret-before">
-                <%= @project.title %>
-              </a>
-            </li>
-            <li class="dropdown">
-              <a class="dropdown-toggle caret-after" data-toggle="dropdown" style="padding-top: 12px; padding-bottom: 12px;">
-                <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-right">
-                <% current_user.projects.select { |p| p.id != @project.id }.each do |project| %>
-                    <li><a href="<%= project_stories_path(project) %>"><%= project.title %></a></li>
-                <% end %>
-              </ul>
-            </li>
-        <% end %>
+        <li>
+          <% if @project && @project.persisted? %>
+              <%= link_to @project.title, project_stories_path(@project), class: 'navbar-brand caret-before' %>
+          <% else %>
+              <span class="navbar-brand caret-before">CampOne</span>
+          <% end %>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle caret-after" data-toggle="dropdown" style="padding-top: 12px; padding-bottom: 12px;">
+            <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <% current_user.projects.each do |project| %>
+                <li><a href="<%= project_stories_path(project) %>"><%= project.title %></a></li>
+            <% end %>
+          </ul>
+        </li>
       </ul>
     </div>
 
