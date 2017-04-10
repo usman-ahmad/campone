@@ -78,16 +78,17 @@
 #                                        PATCH     /projects/:project_id/events/:id(.:format)                                   events#update
 #                                        PUT       /projects/:project_id/events/:id(.:format)                                   events#update
 #                                        DELETE    /projects/:project_id/events/:id(.:format)                                   events#destroy
-#         new_import_project_integration GET       /projects/:project_id/integrations/:id/new_import(.:format)                  integrations#new_import
-#       start_import_project_integration POST      /projects/:project_id/integrations/:id/start_import(.:format)                integrations#start_import
+#         new_import_project_integration GET       /projects/:project_id/integrations/:secure_id/new_import(.:format)           integrations#new_import
+#       start_import_project_integration POST      /projects/:project_id/integrations/:secure_id/start_import(.:format)         integrations#start_import
+#     accept_payload_project_integration POST|HEAD /projects/:project_id/integrations/:secure_id/accept_payload(.:format)       integrations#accept_payload {:defaults=>{:formats=>:json}}
 #              list_project_integrations GET       /projects/:project_id/integrations/:name(.:format)                           integrations#new {:name=>/slack|hipchat|flowdock|asana|trello|bitbucket|github|gitlab/}
 #                   project_integrations GET       /projects/:project_id/integrations(.:format)                                 integrations#index
 #                                        POST      /projects/:project_id/integrations(.:format)                                 integrations#create
-#               edit_project_integration GET       /projects/:project_id/integrations/:id/edit(.:format)                        integrations#edit
-#                    project_integration GET       /projects/:project_id/integrations/:id(.:format)                             integrations#show
-#                                        PATCH     /projects/:project_id/integrations/:id(.:format)                             integrations#update
-#                                        PUT       /projects/:project_id/integrations/:id(.:format)                             integrations#update
-#                                        DELETE    /projects/:project_id/integrations/:id(.:format)                             integrations#destroy
+#               edit_project_integration GET       /projects/:project_id/integrations/:secure_id/edit(.:format)                 integrations#edit
+#                    project_integration GET       /projects/:project_id/integrations/:secure_id(.:format)                      integrations#show
+#                                        PATCH     /projects/:project_id/integrations/:secure_id(.:format)                      integrations#update
+#                                        PUT       /projects/:project_id/integrations/:secure_id(.:format)                      integrations#update
+#                                        DELETE    /projects/:project_id/integrations/:secure_id(.:format)                      integrations#destroy
 #                               projects GET       /projects(.:format)                                                          projects#index
 #                                        POST      /projects(.:format)                                                          projects#create
 #                            new_project GET       /projects/new(.:format)                                                      projects#new
@@ -140,7 +141,6 @@
 #                                        DELETE    /notifications/:id(.:format)                                                 notifications#destroy
 #                                   root GET       /                                                                            welcome#index
 #                                        GET       /notifications(.:format)                                                     notifications#index
-#                                        POST|HEAD /webhooks/:secure_id(.:format)                                               integrations#accept_payload {:defaults=>{:formats=>:json}}
 #
 
 Rails.application.routes.draw do
@@ -195,10 +195,11 @@ Rails.application.routes.draw do
       get :get_events, on: :collection
     end
 
-    resources :integrations, except: [:new] do
+    resources :integrations, except: [:new], param: :secure_id do
       member do
         get :new_import
         post :start_import
+        match :accept_payload, defaults: {formats: :json}, via: [:post, :head] # Trello sending HEAD request
       end
 
       constraints name: /#{Integration::AVAILABLE_INTEGRATIONS.join('|')}/ do
@@ -231,10 +232,6 @@ Rails.application.routes.draw do
   end
   root 'welcome#index'
   get 'notifications' => 'notifications#index'
-
-  # resource to receive VCS messages as a post request.
-  # trello sending HEAD request
-  match 'webhooks/:secure_id' => 'integrations#accept_payload', defaults: {formats: :json}, via: [:post, :head]
 
 
   # Example of regular route:

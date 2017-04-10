@@ -87,6 +87,10 @@ class Integration < ApplicationRecord
     (name.titleize+'Integration').constantize
   end
 
+  def to_param
+    secure_id
+  end
+
   private
 
   def set_secure_id

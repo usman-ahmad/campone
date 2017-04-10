@@ -2,9 +2,8 @@ class IntegrationsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:accept_payload]
   skip_before_action :authenticate_user!, only: [:accept_payload]
 
-  before_action :set_project, except: [:accept_payload]
-  before_action :set_integration, only: [:show, :edit, :update, :destroy, :new_import, :start_import]
-  before_action :set_payload_integration, only: [:accept_payload]
+  before_action :set_project
+  before_action :set_integration, only: [:show, :edit, :update, :destroy, :new_import, :start_import, :accept_payload]
 
   authorize_resource :project, except: [:accept_payload]
   authorize_resource :integration, :through => :project, :except => [:accept_payload]
@@ -88,12 +87,8 @@ class IntegrationsController < ApplicationController
     @project = Project.find(params[:project_id])
   end
 
-  def set_payload_integration
-    @integration = Integration.find_by_secure_id(params[:secure_id])
-  end
-
   def set_integration
-    @integration = @project.integrations.find(params[:id])
+    @integration = @project.integrations.find_by_secure_id(params[:secure_id])
   end
 
   def integration_class

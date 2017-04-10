@@ -78,6 +78,7 @@ class AsanaIntegration < ImportIntegration
     projects
   end
 
+  # TODO: FIX, Target URL is not valid
   def create_webhook(id)
     # Make sure you have SSL in order to work wiht asana webhooks
     client.webhooks.create(resource: id, target: "#{ENV['HOST']}/webhooks/#{@integration.id}")

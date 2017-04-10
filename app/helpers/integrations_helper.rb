@@ -1,7 +1,7 @@
 module IntegrationsHelper
   def webhook_url(integration)
     content_tag :code do
-      "#{ENV['HOST']}/webhooks/#{integration.secure_id}"
+      accept_payload_project_integration_url(integration.project, integration)
     end
   end
 
