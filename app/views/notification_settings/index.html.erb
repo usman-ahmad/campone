@@ -1,0 +1,20 @@
+<!--TODO: Render setting tabs-->
+<div class='custom-tab-container'>
+  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
+    <div class='custom-tab-content active'>
+      <div class='tab-content-header'>
+        <h3 class='heading-3'>Notifications Settings</h3>
+      </div>
+      <hr>
+      <div class='col-md-12'>
+
+        <h3>In App Notifications</h3>
+        <%= render  partial: 'form', :locals => {notification_settings: @in_app_notification_setting}  %>
+
+        <h3>Email Notifications</h3>
+        <%= render  partial: 'form', :locals => {notification_settings: @email_notification_setting}  %>
+
+      </div>
+    </div>
+  </div>
+</div>

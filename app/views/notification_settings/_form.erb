@@ -1,0 +1,40 @@
+<%= form_for(notification_settings.becomes(NotificationSetting)) do |f| %>
+
+  <%= render 'shared/error_messages', object: notification_settings %>
+
+  <p id="errorMessages" class="alert-danger"></p>
+
+  <div class="form-group">
+    <%= f.label :enable, class: "custom-label" %>
+    <%= f.check_box :enable %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :new_story, class: "custom-label" %>
+    <%= f.check_box :new_story %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :ownership_change, class: "custom-label" %>
+    <%= f.check_box :ownership_change %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :story_state, class: "custom-label" %>
+    <%= f.select :story_state, select_options_for_story_state %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :comments, class: "custom-label" %>
+    <%= f.select :comments, select_options_for_comments %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :commits, class: "custom-label" %>
+    <%= f.select :commits, select_options_for_commits %>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <%= f.submit 'Update', class: "btn btn-success" %>
+<% end %>

@@ -97,6 +97,9 @@
 #                                        PATCH     /projects/:id(.:format)                                                      projects#update
 #                                        PUT       /projects/:id(.:format)                                                      projects#update
 #                                        DELETE    /projects/:id(.:format)                                                      projects#destroy
+#                  notification_settings GET       /notification_settings(.:format)                                             notification_settings#index
+#                   notification_setting PATCH     /notification_settings/:id(.:format)                                         notification_settings#update
+#                                        PUT       /notification_settings/:id(.:format)                                         notification_settings#update
 #                      join_contribution GET       /contributions/:id/join(.:format)                                            contributions#join
 #                       new_user_session GET       /users/sign_in(.:format)                                                     devise/sessions#new
 #                           user_session POST      /users/sign_in(.:format)                                                     devise/sessions#create
@@ -207,6 +210,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :notification_settings, only: [:index, :update]
 
   resources :contributions, only: :join do
     get :join, on: :member

@@ -75,6 +75,9 @@ class User < ApplicationRecord
   has_many :notifications, foreign_key: :receiver_id # received notification
   has_many :identities, dependent: :destroy
 
+  has_one :in_app_notification_setting, dependent: :destroy
+  has_one :email_notification_setting, dependent: :destroy
+
   attr_accessor :existing_email, :existing_password
 
   # Include default devise modules. Others available are:
@@ -83,6 +86,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # after_create :create_demo_project
+  after_create :create_notification_settings
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
@@ -209,6 +213,11 @@ class User < ApplicationRecord
   end
 
   private
+
+  def create_notification_settings
+    create_in_app_notification_setting
+    create_email_notification_setting
+  end
 
   def generate_authentication_token
     loop do

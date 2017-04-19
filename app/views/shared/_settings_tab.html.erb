@@ -6,6 +6,9 @@
     <a href='<%= contributors_project_path(project) %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'contributors' %>'>
       Contributors Settings
     </a>
+    <a href='<%= notification_settings_path %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'notification' %>'>
+      Notification Settings
+    </a>
     <% if can? :create, Integration.new(project: project) %>
         <a href='<%= project_integrations_path(project) %>' class='list-group-item pd-l30 <%= "#{class_name}" if active == 'integrations' %>'>
           Integrations Settings

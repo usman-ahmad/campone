@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170209120147) do
+ActiveRecord::Schema.define(version: 20170418150321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,20 @@ ActiveRecord::Schema.define(version: 20170209120147) do
     t.string   "secure_id"
     t.index ["project_id"], name: "index_integrations_on_project_id", using: :btree
     t.index ["secure_id"], name: "index_integrations_on_secure_id", using: :btree
+  end
+
+  create_table "notification_settings", force: :cascade do |t|
+    t.boolean  "new_story"
+    t.boolean  "ownership_change"
+    t.string   "story_state"
+    t.string   "comments"
+    t.string   "commits"
+    t.boolean  "enable"
+    t.string   "type"
+    t.integer  "user_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["user_id"], name: "index_notification_settings_on_user_id", using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|

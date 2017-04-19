@@ -68,14 +68,17 @@ module Notifiable
         performer_name: performer.try(:name),
         performer_id: performer.try(:id),
         action: action,
-        text: notification_text
+        text: notification_text,
+        notification_type: notification_type(action)
     }
   end
 
   def create_user_notifications
     # TODO: Decrease number of queries and write specs for notifications
     receivers.each do |receiver|
-      Notification.create(receiver: receiver, performer: performer, notifiable: self, content: notification_content)
+      if user_wants_notification?(receiver.in_app_notification_setting)
+        Notification.create(receiver: receiver, performer: performer, notifiable: self, content: notification_content)
+      end
     end
   end
 
@@ -89,6 +92,54 @@ module Notifiable
   end
 
   private
+
+
+  def notification_type(action)
+    resource_type = self.class.name
+
+    case resource_type
+      when 'Story'
+        if action == 'Created'
+          'new_story'
+        elsif previous_changes['owner_id'].present?
+          'ownership_change'
+        elsif previous_changes['state'].present?
+          'story_state'
+        end
+      when 'Comment'
+        'comments'
+      else
+
+    end
+  end
+
+  def user_wants_notification?(notification_settings)
+    notification_type = notification_content[:notification_type]
+
+    case notification_type
+      when 'new_story'
+        notification_settings.new_story?
+      when 'ownership_change'
+        notification_settings.ownership_change?
+      when 'story_state'
+        case notification_settings.story_state
+          when 'no'
+            false
+          when 'all'
+            true
+          when 'relevant'
+            true # TODO
+          when 'on_followed'
+            true # TODO
+          else
+
+        end
+      when 'comments'
+        true # TODO notification_settings.comments?
+      else
+
+    end
+  end
 
   def notifiable_link
     resource =
