@@ -42,24 +42,7 @@ module Notifiable
   end
 
   def notification_content
-    if transaction_include_any_action?([:create])
-      action = 'Created'
-    elsif transaction_include_any_action?([:destroy])
-      action = 'Deleted'
-    elsif transaction_include_any_action?([:update])
-      action = 'Updated'
-
-      # customize update method
-      attrs = previous_changes.keys - ['id', 'updated_at']
-      if attrs.count == 1
-        #  make notification like updated title from this to that.
-      else
-        # too much updates, just say updated
-      end
-    end
-
-    # TODO: store this hash into a variable to improve performance
-    {
+    @notification_content ||= {
         resource_id: self.id,
         resource_type: self.class.name,
         resource_fid: self.try(:friendly_id), # friendly_id not implemented for discussion, we can show project_fid
@@ -76,8 +59,12 @@ module Notifiable
   def create_user_notifications
     # TODO: Decrease number of queries and write specs for notifications
     receivers.each do |receiver|
-      if user_wants_notification?(receiver.in_app_notification_setting)
+      if user_wants_notification?(receiver, :in_app)
         Notification.create(receiver: receiver, performer: performer, notifiable: self, content: notification_content)
+      end
+
+      if user_wants_notification?(receiver, :email)
+        send_email(receiver)
       end
     end
   end
@@ -93,6 +80,15 @@ module Notifiable
 
   private
 
+  def action
+    if transaction_include_any_action?([:create])
+      'Created'
+    elsif transaction_include_any_action?([:destroy])
+      'Deleted'
+    elsif transaction_include_any_action?([:update])
+      'Updated'
+    end
+  end
 
   def notification_type(action)
     resource_type = self.class.name
@@ -113,8 +109,12 @@ module Notifiable
     end
   end
 
-  def user_wants_notification?(notification_settings)
+  # context => :in_app OR :email
+  def user_wants_notification?(user, context)
+    notification_settings = context == :in_app ? user.in_app_notification_setting : user.email_notification_setting
     notification_type = notification_content[:notification_type]
+
+    return false unless notification_settings.enable?
 
     case notification_type
       when 'new_story'
@@ -122,20 +122,58 @@ module Notifiable
       when 'ownership_change'
         notification_settings.ownership_change?
       when 'story_state'
-        case notification_settings.story_state
-          when 'no'
-            false
-          when 'all'
-            true
-          when 'relevant'
-            true # TODO
-          when 'on_followed'
-            true # TODO
-          else
-
-        end
+        notify_on_state_change?(user, notification_settings.story_state)
       when 'comments'
-        true # TODO notification_settings.comments?
+        notify_on_comments?(notification_settings.comments)
+      else
+
+    end
+  end
+
+  def notify_on_state_change?(user, story_state_setting)
+    case story_state_setting
+      when 'no'
+        false
+      when 'all'
+        true
+      when 'relevant'
+        self.owner == user || self.requester == user
+      when 'on_followed'
+        true # TODO
+      else
+    end
+  end
+
+  def notify_on_comments?(comment_setting)
+    case comment_setting
+      when 'no'
+        false
+      when 'all'
+        true
+      when 'mentions'
+        true # TODO
+      when 'on_followed'
+        true # TODO
+      else
+    end
+  end
+
+  def send_email(user)
+    notification_type = notification_content[:notification_type]
+    # in email use full resource path
+    notification_content[:resource_link] = ENV['HOST'] + notification_content[:resource_link]
+    notification_content[:performer] = performer
+    notification_content[:notifiable] = self
+
+    case notification_type
+      when 'new_story'
+        UserNotificationMailer.new_story_notification(user, notification_content).deliver
+      when 'ownership_change'
+        UserNotificationMailer.ownership_changed(user, notification_content).deliver
+      when 'story_state'
+        UserNotificationMailer.story_state_changed(user, notification_content).deliver
+      when 'comments'
+        UserNotificationMailer.comment_created(user, notification_content).deliver
       else
 
     end
