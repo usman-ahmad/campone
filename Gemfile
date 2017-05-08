@@ -145,3 +145,6 @@ gem 'tracker_api'
 
 # Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for Ruby/Rack applications.
 gem 'puma'
+
+# Required for ActionCable
+gem 'redis'

@@ -37,6 +37,10 @@ Install Nodejs
 
         nvm use 4.0.0
 
+Install redis for ActionCable
+
+    sudo apt-get install redis-server
+
 Nokogiri prereuisities:
 
     sudo apt-get install libxslt-dev libxml2-dev

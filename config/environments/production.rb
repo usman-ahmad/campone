@@ -95,4 +95,8 @@ Rails.application.configure do
       authentication:       'plain',
       enable_starttls_auto: true
   }
+
+  config.action_cable.allowed_request_origins =[
+      ENV['HOST']
+  ]
 end

@@ -29,3 +29,4 @@
 //= require notify.min
 //= require trumbowyg/trumbowyg
 //= require public
+//= require cable

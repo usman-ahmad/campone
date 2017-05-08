@@ -66,6 +66,8 @@ module Notifiable
       if user_wants_notification?(receiver, :email)
         send_email(receiver)
       end
+
+      NotificationPusherJob.perform_later(receiver, notification_content)
     end
   end
 
