@@ -110,7 +110,7 @@ class TrelloIntegration < ImportIntegration
   # # TODO: Delete webhook, Gem does't provide a way to fetch all webhooks, Either store webhook id on local DB or patch gem
   # def create_webhook(model_id)
   #   client.create(:webhook,
-  #                  'description' => 'Story sync for Camp One',
+  #                  'description' => 'Story sync for Nimble In',
   #                  'idModel' => model_id,
   #                  'callbackURL' => "#{ENV['HOST']}/webhooks/#{@integration.id}")
   # end

@@ -36,8 +36,8 @@ class TwitterIntegration < NotifiableIntegration
   end
 
   def message_to_payload(activity)
-    # TODO: Apply limit
-    "From : CampOne
+    # TODO: Apply Character limit, Twitter supports only 140 characters
+    "From : #{ENV['APP_NAME']}
      Project : #{activity[:project_title]}
     #{activity[:text]}
     #{activity[:description]}"

@@ -82,6 +82,6 @@ test:
 #
 production:
   <<: *default
-  database: <%= ENV['CAMPONE_DATABASE_NAME'] %>
-  username: <%= ENV['CAMPONE_DATABASE_USER_NAME'] %>
-  password: <%= ENV['CAMPONE_DATABASE_PASSWORD'] %>
+  database: <%= ENV['APP_DATABASE_NAME'] %>
+  username: <%= ENV['APP_DATABASE_USER_NAME'] %>
+  password: <%= ENV['APP_DATABASE_PASSWORD'] %>

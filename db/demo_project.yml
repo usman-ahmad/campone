@@ -3,7 +3,7 @@ project:
   name: 'Test Project'
   description: 'This is a demo project to play with. You can delete it later. We have also created some demo stories for you'
 stories:
-  - title: 'Sign up for Camp One'
+  - title: 'Sign up for Nimble In'
     progress: 'Completed'
     priority: 'High'
     description: 'You have successfully finished this story.'

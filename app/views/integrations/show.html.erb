@@ -11,10 +11,10 @@
       <li>Write <code>http://www.teknuk.com/ </code>in text field and press Create new link, check use this url when
         prompted and press continue
       </li>
-      <li>Write application name: 'Camp One' and press Continue.</li>
+      <li>Write application name: <%= ENV['APP_NAME'] %> and press Continue.</li>
       <li>Now edit this app link, select Incomming Authentication from left side.</li>
       <li>Write Consumer Key: <%= ENV['JIRA_CONSUMER_KEY'] %></li>
-      <li>Write Consumer name: Camp One</li>
+      <li>Write Consumer name: <%= ENV['APP_NAME'] %></li>
       <li>Write Private Key:
         <div><code><%= IO.read('jira_public_key.key') %></code></div>
       </li>

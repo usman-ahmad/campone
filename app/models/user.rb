@@ -157,7 +157,7 @@ class User < ApplicationRecord
   def hard_delete
     # TODO: Hard delete contributions and everything else,
     # required when a users authenticates via oauth (i-e google)
-    # but he wants to associate that account with existing Camp One account.
+    # but he wants to associate that account with existing Nimble In account.
     # We'll delete the user created via oauth and link that google account with existing account.
     projects.destroy_all
   end

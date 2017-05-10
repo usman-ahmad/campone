@@ -19,7 +19,7 @@
 class SlackIntegration < NotifiableIntegration
   def message_to_payload(activity)
     {
-        username: 'Camp One',
+        username: ENV['APP_NAME'],
         attachments: [
             {
                 pretext: "Project: #{activity[:project_title]}",

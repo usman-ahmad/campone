@@ -20,7 +20,7 @@ class HipchatIntegration < NotifiableIntegration
   # TODO: Test and fix this, This is old code copied from FlowdockService
   def message_to_payload(activity)
     {
-        from: "Camp One",
+        from: ENV['APP_NAME'],
         message: "Project: #{activity[:project_title]} -
                     #{activity[:text]} -
                     #{activity[:absolute_url]} -

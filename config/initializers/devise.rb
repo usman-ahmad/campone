@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'campone@teknuk.com'
+  config.mailer_sender = ENV['ACTION_MAILER_DEFAULT_FROM']
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -324,7 +324,7 @@ Devise.setup do |config|
                     env['omniauth.strategy'].options[:client_options][:site] = integration.url
                   }
   config.omniauth :trello, ENV['TRELLO_KEY'], ENV['TRELLO_SECRET'],
-                  app_name: "Camp One", scope: 'read,write,account', expiration: 'never'
+                  app_name: ENV['APP_NAME'], scope: 'read,write,account', expiration: 'never'
 end
 
 Rails.application.config.to_prepare do
