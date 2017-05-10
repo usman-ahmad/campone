@@ -71,6 +71,7 @@ class SourceCodeIntegrations < Integration
   end
 
   def update_story!(story, action)
+    # TODO: Set performer, maybe a bot user
     story.performer = User.first
 
     case action.downcase

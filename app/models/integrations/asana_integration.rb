@@ -43,7 +43,7 @@ class AsanaIntegration < ImportIntegration
       import_story(story.id)
     end
 
-    # TODO: We are not going to create webhooks now. Remove this method also
+    # TODO: We are not creating webhooks to synch for now. Remove this method also
     # create_webhook(external_project_id)
   end
 
@@ -78,18 +78,17 @@ class AsanaIntegration < ImportIntegration
     projects
   end
 
+  # We are NOT creating webhook to synch changes for now.
   # TODO: FIX, Target URL is not valid
-  def create_webhook(id)
-    # Make sure you have SSL in order to work wiht asana webhooks
-    client.webhooks.create(resource: id, target: "#{ENV['HOST']}/webhooks/#{@integration.id}")
-  end
+  #   def create_webhook(id)
+  #     # Make sure you have SSL in order to work wiht asana webhooks
+  #     client.webhooks.create(resource: id, target: "#{ENV['HOST']}/webhooks/#{@integration.id}")
+  #   end
 
   def create_story_from_payload(payload)
-=begin
-    Todo: Use Background job, And delay this job for some time i-e 5-10 minutes
+    # Todo: Use Background job, And delay this job for some time i-e 5-10 minutes
     # when we receive story created hook, It is empty at this point as
     # Asana creates empty story on pressing enter than updates it gradually as user enters description.
-=end
     if payload.info['events']
       events = payload.info['events'].select { |e| e['type'] == 'story' && e['action'] == 'added' }
 
