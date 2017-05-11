@@ -72,10 +72,6 @@ Nokogiri prereuisities:
         rake db:seed
 
 ### Step 8: (To run the local development server):
-1. To start notifications Properly we need to start thin server so run following command to properly start server for faye
-
-        rackup private_pub.ru -s thin -E production
-
 2. Starting Rails Server
 
         rails s

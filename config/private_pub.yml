@@ -1,10 +1,11 @@
-development:
-  server: "http://localhost:9292/faye"
-  secret_token: "secret"
-test:
-  server: "http://localhost:9292/faye"
-  secret_token: "secret"
-production:
-  server: "http://campone.teknuk.com/faye"
-  secret_token: "f86dcce5e5afb3716a6da564e4381e62460fd2b3049c8d3533a2b5ba0248190c"
-  signature_expiration: 3600 # one hour
+# TODO: Delete this now. we are using ActionCable
+#development:
+#  server: "http://localhost:9292/faye"
+#  secret_token: "secret"
+#test:
+#  server: "http://localhost:9292/faye"
+#  secret_token: "secret"
+#production:
+#  server: "http://campone.teknuk.com/faye"
+#  secret_token: "f86dcce5e5afb3716a6da564e4381e62460fd2b3049c8d3533a2b5ba0248190c"
+#  signature_expiration: 3600 # one hour

@@ -2,7 +2,7 @@
     <h4> Please add following url to your VCS Repositry </h4>
     <%= webhook_url(@integration) %>
 <% end %>
-
+<!-- GS[2017/05/11] - We are not using JIRA for now-->
 <% if @integration.name == 'jira' %>
     <h1>Jira<%= session[:jira_integration_id] %></h1>
     <h3>Fellow below given Steps to Configure application link with your Jira (You must be an admin)</h3>
@@ -26,5 +26,4 @@
         </h2>
       </li>
     </ol>
-
 <% end %>

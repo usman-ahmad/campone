@@ -58,13 +58,6 @@ gem 'trumbowyg_rails', github: 'TikiTDO/trumbowyg_rails'
 # facing an issue with custom slug_column see https://github.com/norman/friendly_id/issues/765
 gem 'friendly_id', github: 'norman/friendly_id'
 
-#gems for notifications
-# Faye is a subscription/publishing server which makes it easy to do push notifications within a Rails app.
-gem 'faye'
-# thin app server so that faye can work properly for notifications
-gem 'thin'
-# It allows you to easily provide real-time updates through an open socket without tying up a Rails process.
-gem 'private_pub'
 # gem for bootstrap social icons
 gem 'bootstrap-social-rails'
 gem 'jquery-ui-sass-rails'

@@ -1,13 +1,13 @@
 $(document).on('turbolinks:load', function(){
-  var is_set = false;
-  read_notice = function(id){
-    if ($('#'+id).hasClass("info") || $('#'+id+ 'notice').hasClass("info")){
-      update_notice(id);
-      $('#'+id).removeClass("info");
-      $('#'+id+ 'notice').removeClass("info");
-      $('#'+id+ 'notice' + " > i").css('color', "#008000");
-    }
-  };
+  // Not being used after removing faye
+  //read_notice = function(id){
+  //  if ($('#'+id).hasClass("info") || $('#'+id+ 'notice').hasClass("info")){
+  //    update_notice(id);
+  //    $('#'+id).removeClass("info");
+  //    $('#'+id+ 'notice').removeClass("info");
+  //    $('#'+id+ 'notice' + " > i").css('color', "#008000");
+  //  }
+  //};
 
   update_notice = function (id){
 
@@ -102,22 +102,24 @@ $(document).on('turbolinks:load', function(){
 
 
 
-$(function() {
-  var user_id = $('#user_id').text().replace(/\s+/, "");
-  user_id = user_id.replace('.com','');
-  PrivatePub.subscribe('/messages/private/'+user_id, function(data) {
-    var message = data.message;
-    var message_parts = message.split('|');
-    var notice_id = message_parts[0];
-    var time_ago_in_words = message_parts[1];
-    var  notification = message_parts[2];
-    $('#badge').text(parseInt($('#badge').text().replace(/\s+/, "")) +1);
-    $('#badge').show();
-    $('#notification_table tr:first').before('<tr id='+notice_id+' class=info onclick = read_notice('+notice_id+')><td>'+notification+'</td><td>'+time_ago_in_words+' </td></tr>');
-    $.notify(notification, "success");
-  });
-
-});
+// We are not using PrivatePub now.
+// Update notifications
+//$(function() {
+//  var user_id = $('#user_id').text().replace(/\s+/, "");
+//  user_id = user_id.replace('.com','');
+//  PrivatePub.subscribe('/messages/private/'+user_id, function(data) {
+//    var message = data.message;
+//    var message_parts = message.split('|');
+//    var notice_id = message_parts[0];
+//    var time_ago_in_words = message_parts[1];
+//    var  notification = message_parts[2];
+//    $('#badge').text(parseInt($('#badge').text().replace(/\s+/, "")) +1);
+//    $('#badge').show();
+//    $('#notification_table tr:first').before('<tr id='+notice_id+' class=info onclick = read_notice('+notice_id+')><td>'+notification+'</td><td>'+time_ago_in_words+' </td></tr>');
+//    $.notify(notification, "success");
+//  });
+//
+//});
 
 // Start Notification Slider Functions
 function toggle_panel_visibility($lateral_panel, $background_layer, $body) {
