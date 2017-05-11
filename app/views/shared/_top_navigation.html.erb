@@ -13,7 +13,7 @@
           <% if @project && @project.persisted? %>
               <%= link_to @project.title, project_stories_path(@project), class: 'navbar-brand caret-before' %>
           <% else %>
-              <span class="navbar-brand caret-before"><%= ENV['APP_NAME'] %></span>
+              <span class="navbar-brand caret-before">Select Project</span>
           <% end %>
         </li>
         <li class="dropdown">
@@ -21,7 +21,7 @@
             <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-right">
-            <% current_user.projects.each do |project| %>
+            <% current_user && current_user.projects.each do |project| %>
                 <li><a href="<%= project_stories_path(project) %>"><%= project.title %></a></li>
             <% end %>
           </ul>
