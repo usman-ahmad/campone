@@ -105,3 +105,4 @@ Following command will generate erd diagram in application root path through erd
 
 
 ## Deployment
+We are using Capistrano as deployment tool

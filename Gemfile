@@ -88,6 +88,16 @@ group :development do
   gem 'rails_best_practices'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  # Use Capistrano for automated deployments, capistranorb.com is Remote multi-server automation tool
+  gem 'capistrano', require: false
+  # RVM support for Capistrano 3.x
+  gem 'capistrano-rvm', require: false
+  # Official Ruby on Rails specific tasks for Capistrano
+  gem 'capistrano-rails', require: false
+  # Bundler support for Capistrano 3.x
+  gem 'capistrano-bundler', require: false
+  # Puma integration for Capistrano
+  gem 'capistrano3-puma', require: false
 end
 
 group :test do
