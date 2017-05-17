@@ -1,41 +1,38 @@
-# Setup Development Enviroment
+# NimbleIn
+The next generation complete agile Project Management software.
 
-### Step 1: (Some Basic Steps):
-- #### Install RVM
-Install RVM (development version):
+These instructions will get you a copy of the project up and running on your 
+local machine for development and testing purposes. See deployment for notes 
+on how to deploy the project on a live system.
 
-        gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-        \curl -sSL https://get.rvm.io | bash
 
-- #### Install GIT
+## Prerequisites (Ubuntu flavoured)
 
-        sudo apt-get install git
+NimbleIn is built on Ruby 2, Rails 5, and uses PostgreSQL 9.2. We are using 
+"faye" for notifications which depends on node.js.
 
-- #### Install PostgreSQL
+##### Install GIT
 
-        sudo apt-get update
-        sudo apt-get install postgresql postgresql-client postgresql-contrib libpq-dev phppgadmin
+    sudo apt-get install git
 
-### Step 2: (Install Ruby):
-- Install ruby 2.2.2
+##### Install PostgreSQL
 
-        rvm install 2.2.2
+    sudo apt-get update
+    sudo apt-get install postgresql postgresql-client postgresql-contrib libpq-dev
 
-### Step 3: (System Dependencies):
-we are using "faye" for notifications which depends on node.js.
-Install Nodejs
+##### Install RVM
 
-- To install nodejs first we need to instal nvm (Node.js version manager).
+    gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+    \curl -sSL https://get.rvm.io | bash
 
-        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash
+##### Install Nodejs with NVM 
 
-- Install Node v4.0.0
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
+    nvm install node
 
-        nvm install 4.0.0
+##### Install libxml for Nokogiri
 
-- Usually, nvm will switch to use the most recently installed version. You can explicitly tell nvm to use the version we just downloaded by typing:
-
-        nvm use 4.0.0
+    sudo apt-get install libxslt-dev libxml2-dev
 
 Install redis for ActionCable
 
@@ -43,53 +40,68 @@ Install redis for ActionCable
 
 Nokogiri prereuisities:
 
-    sudo apt-get install libxslt-dev libxml2-dev
+## Setup / Installing
 
-### Step 4: (Clone Porject):
+##### Clone Project
 
     git clone git@bitbucket.org:teknuk/camp_one.git
-    cd camp_one
+    or
+    git clone git@gitlab.com:teknuk/camp_one.git
 
-### Step 5: (Install gem using bundler):
+##### Install Ruby and Bundler
+
+Once you change directory to camp_one you will be prompted with 
+> ruby-2.X.Y is not installed.
+> To install do: 'rvm install ruby-2.X.Y'
+
+So kindly install that ruby by using proper `X` and `Y` for 
+`rvm install ruby-2.X.Y`. Now do `cd .` so that RVM creates the gemset for you 
+and starts using that gemset. Now install bundler for this new gemset
 
     gem install bundler
-    bundle install
 
-### Step 6: (Configuration):
+##### Install Gems using Bundler
+
+    bin/bundle install
+
+##### Configure Database and DotEnv for Development Environment 
 
     cp config/database.yml.sample config/database.yml
     cp .env.sample .env
-    Now fill newely created database.yml and .env with you credentials.
 
-### Step 7: (Database creation):
+and edit newly created `database.yml` and `.env` with you credentials.
 
-    rake db:create
-    rake db:migrate
+##### Create and Migrate Database
 
-### Step 7: (Database Initialization):
-- To install the seeds into your local DB:
+    bin/rails db:create
+    bin/rails db:migrate
 
-        rake db:seed
+to OPTIONALLY initialize database with seed data run `bin/rails db:seed`
 
-### Step 8: (To run the local development server):
-2. Starting Rails Server
+##### Start Thin web-server for Notifications (private_pub for Faye) 
+To start notifications properly we need to start thin server with production 
+environment, so run following command to properly start thin server for faye
 
-        rails s
+    rackup private_pub.ru -s thin -E production
 
-###  How to run the test suite
-- Prepare test database:
+##### Start Rails Server  
 
-        rake db:test:prepare
-- Run specs:
+    bin/rails server
 
-        bundle exec rspec spec
+##### (Optional) Generate ERD diagram
+Following command will generate erd diagram in application root path through erd-rails gem
 
-### Genrate ERD diagram
-1. Following command will generate erd diagram in application root path through erd-rails gem
-        bundle exec erd
+    bin/bundle exec erd
 
-###  Deployment instructions
-We are using mina as deployment tool
+## Testing
 
-        gem install mina
-        mina deploy
+##### Prepare test database
+
+    bin/rails db:test:prepare
+
+##### Run specs
+
+    bin/bundle exec rspec
+
+
+## Deployment
