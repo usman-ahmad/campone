@@ -106,3 +106,8 @@ Following command will generate erd diagram in application root path through erd
 
 ## Deployment
 We are using Capistrano as deployment tool
+
+##### Setup Initial Deployment
+Check and create directory structure
+
+    bundle exec cap production deploy:check

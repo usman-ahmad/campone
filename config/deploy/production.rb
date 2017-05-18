@@ -6,7 +6,8 @@
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
-
+# server '45.33.2.211', user: 'teknuk', roles: %w{app db web}
+server 'nimblein.com', user: 'teknuk', roles: %w{app db web}
 
 
 # role-based syntax
@@ -21,6 +22,9 @@
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 
+role :app, %w{teknuk@nimblein.com}
+role :db,  %w{teknuk@nimblein.com}
+role :web, %w{teknuk@nimblein.com}
 
 
 # Configuration
@@ -31,6 +35,10 @@
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
+set :user, 'teknuk'
+set :deploy_to, '/home/teknuk/camp_one_production'
+set :branch, 'live'
+set :rails_env, :production
 
 
 # Custom SSH Options
