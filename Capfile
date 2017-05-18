@@ -34,11 +34,15 @@ install_plugin Capistrano::SCM::Git
 # require 'capistrano/rails/migrations'
 # require 'capistrano/passenger'
 
+# Include capistrano-rails with rvm and bundler
 require 'capistrano/rails'
 require 'capistrano/rvm'
 require 'capistrano/bundler'
 require 'capistrano/rails/migrations'
 require 'capistrano/rails/assets'
+
+# Include capistrano-upload-config to upload configs
+require 'capistrano/upload-config'
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
