@@ -44,5 +44,10 @@ require 'capistrano/rails/assets'
 # Include capistrano-upload-config to upload configs
 require 'capistrano/upload-config'
 
+# Include capistrano-puma with nginx
+require 'capistrano/puma'
+install_plugin Capistrano::Puma  # Default puma tasks
+install_plugin Capistrano::Puma::Nginx  # if you want to upload an nginx site template
+
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

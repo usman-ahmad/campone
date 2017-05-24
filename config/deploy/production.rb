@@ -39,6 +39,7 @@ set :user, 'teknuk'
 set :deploy_to, '/home/teknuk/camp_one_production'
 set :branch, 'live'
 set :rails_env, :production
+set :nginx_server_name, "nimblein.com www.nimblein.com"
 
 
 # Custom SSH Options

@@ -99,7 +99,7 @@ group :development do
   # Bundler support for Capistrano 3.x
   gem 'capistrano-bundler', require: false
   # Puma integration for Capistrano
-  gem 'capistrano3-puma', require: false
+  gem 'capistrano3-puma', github: 'seuros/capistrano-puma'
 end
 
 group :test do

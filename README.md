@@ -110,11 +110,25 @@ We are using Capistrano as deployment tool
 ##### Setup Initial Deployment
 Check and create directory structure with `deploy:check`
 
-    bundle exec cap production deploy:check
+    bin/bundle exec cap production deploy:check
 
 Make a copy of linked_files for new server with `config:init`, edit these with 
 server configuration and push them with `config:push`
 
-    bundle exec cap production config:init
-    bundle exec cap production config:push
+    bin/bundle exec cap production config:init
+    bin/bundle exec cap production config:push
 
+##### Setup Puma and Nginx configuration
+Generate Puma and Nginx configuration templates
+
+    bin/rails g capistrano:nginx_puma:config
+
+Upload Puma and Nginx configurations
+
+    bin/bundle exec cap production puma:config
+    bin/bundle exec cap production puma:nginx_config
+
+
+##### Deploy the new release via Capistrano
+
+    bin/bundle exec cap production deploy

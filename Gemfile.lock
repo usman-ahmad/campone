@@ -15,6 +15,15 @@ GIT
       activerecord (>= 4.0.0)
 
 GIT
+  remote: git://github.com/seuros/capistrano-puma.git
+  revision: 1d7cca2e431c23943ebcde19588169ed12025833
+  specs:
+    capistrano3-puma (3.1.0)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (~> 3.4)
+
+GIT
   remote: git://github.com/spodlecki/ruby-trello.git
   revision: b0cd76290d21f8a01ad535d1a110dacbf8f77237
   branch: features/oauth-gem-loosen-restriction
@@ -134,10 +143,6 @@ GEM
       sshkit (~> 1.2)
     capistrano-upload-config (0.7.0)
       capistrano (>= 3.0)
-    capistrano3-puma (3.1.0)
-      capistrano (~> 3.7)
-      capistrano-bundler
-      puma (~> 3.4)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -526,7 +531,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   capistrano-upload-config
-  capistrano3-puma
+  capistrano3-puma!
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
