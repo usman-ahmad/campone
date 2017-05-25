@@ -44,7 +44,7 @@ $(document).on('turbolinks:load', function () {
     $('.description-textarea').trumbowyg({
         resetCss: true,
         removeformatPasted: true,
-        btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['horizontalRule']]
+        btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['preformatted'], ['horizontalRule']]
     });
 
     $('.description-textarea').on('tbwchange', function () {
