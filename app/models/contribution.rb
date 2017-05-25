@@ -25,6 +25,8 @@ class Contribution < ApplicationRecord
   before_create :generate_token
   before_create :set_position
 
+  scope :joined, -> { where(status: 'joined') }
+
   ROLES = {
       manager: 'Manager',
       member: 'Member',

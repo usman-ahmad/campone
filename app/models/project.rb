@@ -43,6 +43,10 @@ class Project < ApplicationRecord
   delegate :url_helpers, to: 'Rails.application.routes'
   alias :h :url_helpers
 
+  def joined_members
+    members.merge(Contribution.joined)
+  end
+
   # TODO: Refactor and simplify
   # UA[2016/12/06] - SHOULDN'T WE USE TRANSACTIONS ???
   def create_attachments(attachments, uploaded_by)

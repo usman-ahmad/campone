@@ -6,7 +6,7 @@ class StoriesController < ApplicationController
   before_action :set_story, only: [:show, :edit, :update, :destroy, :close]
 
   # UA[2017/01/10] - WHAT ABOUT SORT AND IMPORT
-  before_action :set_performer, only: [:create, :update, :destroy, :set_state, :assigned_to_me, :close]
+  before_action :set_performer, only: [:create, :update, :destroy, :set_state, :assign, :close]
 
   def index
     cookies[:stories_visibility] = params[:visibility] || cookies[:stories_visibility]
@@ -84,13 +84,12 @@ class StoriesController < ApplicationController
     redirect_to project_stories_url, notice: 'Story was successfully destroyed.'
   end
 
-  def assigned_to_me
-    if @story.update_attributes(owner_id: current_user.id)
-      'Story is assigned to You'
+  def assign
+    if @story.update_attributes(owner_id: params[:owner_id])
+      render json: {owner: @story.owner.name}, status: :ok
     else
-      'Story could not be assigned to You'
+      render json: @story.errors, status: :unprocessable_entity
     end
-    redirect_to [@project, @story]
   end
 
   def set_state

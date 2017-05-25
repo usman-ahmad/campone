@@ -9,7 +9,7 @@
 #             new_import_project_stories GET       /projects/:project_id/stories/new_import(.:format)                           stories#new_import
 #                 import_project_stories POST      /projects/:project_id/stories/import(.:format)                               stories#import
 #                    close_project_story POST      /projects/:project_id/stories/:id/close(.:format)                            stories#close
-#           assigned_to_me_project_story PATCH     /projects/:project_id/stories/:id/assigned_to_me(.:format)                   stories#assigned_to_me
+#                   assign_project_story PATCH     /projects/:project_id/stories/:id/assign(.:format)                           stories#assign
 #                set_state_project_story PATCH     /projects/:project_id/stories/:id/set_state(.:format)                        stories#set_state
 #                 project_story_comments GET       /projects/:project_id/stories/:story_id/comments(.:format)                   comments#index
 #                                        POST      /projects/:project_id/stories/:story_id/comments(.:format)                   comments#create
@@ -174,7 +174,7 @@ Rails.application.routes.draw do
         post :close
       end
 
-      patch :assigned_to_me, :set_state, on: :member
+      patch :assign, :set_state, on: :member
       resources :comments
       resources :attachments, only: :attach do
         post :attach, on: :collection

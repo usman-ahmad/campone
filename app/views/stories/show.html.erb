@@ -63,7 +63,11 @@
     </ul>
     <div class="col-md-12 todo-item">
       <div class="pull-left">
-        <%= button_to 'Assign to Me', assigned_to_me_project_story_path(@project, @story), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
+        <div class="col-md-8">
+          <%= select_tag "assign_story_to", options_from_collection_for_select(@project.joined_members, 'id', 'name', @story.owner_id),
+                         class: 'form-control', data: {url: assign_project_story_path(@project, @story)} %>
+        </div>
+        <%#= button_to 'Assign to Me', assigned_to_me_project_story_path(@project, @story), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
         <span id="state_buttons">
             <% @story.next_states.each do |event, progress| %>
                 <%= button_to event, set_state_project_story_path(@project, @story, state: progress), method: :patch, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>

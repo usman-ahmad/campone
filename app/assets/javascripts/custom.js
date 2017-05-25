@@ -133,4 +133,16 @@ $(document).on('turbolinks:load', function () {
         }, 1500, 'easeInOutExpo');
         event.preventDefault();
     });
+
+
+    $('#assign_story_to').change(function () {
+        $.ajax({
+          url: $('#assign_story_to').data('url'),
+          type: "PATCH",
+          data: {owner_id: $('#assign_story_to option:selected').val()},
+          success: function(result){
+            $('span#owner').fadeOut(100).text(result.owner).fadeIn(500);
+          }
+        });
+    });
 });
