@@ -1,0 +1,61 @@
+<div class="panel panel-default story-detail-panel mg-b10">
+  <div class="panel-heading clearfix" style="padding: 5px;">
+    <ul class="nav nav-tabs pull-left" role="tablist">
+      <li role="presentation" class="active">
+        <a href="#detail_<%= story.id %>" aria-controls="detail" role="tab" data-toggle="tab">Story Details</a></li>
+      <li role="presentation">
+        <a href="#comment_<%= story.id %>" aria-controls="comment" role="tab" data-toggle="tab">Story Comment</a></li>
+    </ul>
+    <span class="pull-right todo-detail-icon mg-r10 mg-t5">
+      <a class="href mg-r10"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+      <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
+    </span>
+  </div>
+  <div class="panel-body">
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane pd-t10 active" id="detail_<%= story.id %>">
+        <ul class="form-group">
+          <li class="col-md-12">
+            <strong>Description: </strong>
+
+            <div>This is a normal paragraph (p element). To add some length to it, let us mention that this page was
+              primarily written for testing the effect of user style sheets. You can use it for various other purposes
+              as
+              well, like just checking how your browser displays various HTML elements by default. It can also be useful
+              when testing conversions from HTML format to other formats, since some elements can go wrong then.
+            </div>
+          </li>
+        </ul>
+        <table class="table table-borderless table-story-detail">
+          <tbody>
+          <tr class="col-xs-12 col-sm-4 col-md-6">
+            <td><strong>Project:</strong></td>
+            <td class=""><span>Singular app</span></td>
+          </tr>
+          <tr class="col-xs-12 col-sm-4 col-md-6">
+            <td><strong>Progress:</strong></td>
+            <td class=""><%= content_tag(:span, 'finished', class: "label label-info progress-status progress-finished") %></td>
+          </tr>
+          <tr class="col-xs-12 col-sm-4 col-md-6">
+            <td><strong>Created:</strong></td>
+            <td class="">25 Feb, 2015</td>
+          </tr>
+          <tr class="col-xs-12 col-sm-4 col-md-6">
+            <td><strong>Priority:</strong></td>
+            <td class="">
+              High
+            </td>
+          </tr>
+          <tr class="col-xs-12 col-sm-4 col-md-12">
+            <td><strong>Assigned To:</strong></td>
+            <td class="">Jazib Bashir</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="comment_<%= story.id %>">
+        <%= render 'story_comments' %>
+      </div>
+    </div>
+  </div>
+</div>

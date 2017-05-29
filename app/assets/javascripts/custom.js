@@ -36,6 +36,20 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
+    $('#commentTextbox').on('input', function () {
+        var hideComment = $('#hide-comment');
+        var commentBoxValLength = $(this).val().length;
+        if (commentBoxValLength >= 1) {
+            $(this).trumbowyg({
+                resetCss: true,
+                removeformatPasted: true,
+                btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['horizontalRule']]
+            });
+            $(this).parent().find('.trumbowyg-editor').focus();
+            hideComment.removeClass('hidden');
+        }
+    });
+
     $('#close-todo').click(function () {
         $('.add-todo-container').find("input[type=text], textarea").val("");
         $('#hide-todo').addClass('customHideEvent');
@@ -145,4 +159,10 @@ $(document).on('turbolinks:load', function () {
           }
         });
     });
+
+    if ($(window).width() < 841) {
+        $('.collapse-span').each(function () {
+            $(this).attr('data-toggle', 'collapse');
+        })
+    }
 });

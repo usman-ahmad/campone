@@ -1,0 +1,67 @@
+<div class="panel panel-default story-detail-panel">
+  <div class="panel-heading">
+    <i class="fa fa-files-o" aria-hidden="true"></i> <b>TP-OWV-10</b>
+        <span class="pull-right todo-detail-icon">
+          <a class="href mg-r10"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+          <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </span>
+  </div>
+  <div class="panel-body">
+    <ul class="form-group">
+      <li class="col-md-12 pd-t20 pd-b10">
+        <strong>Story Title: </strong>
+
+        <div>Admin should be able to upload multiple product photos and mark one as the primary</div>
+      </li>
+      <li class="col-md-12">
+        <strong>Description: </strong>
+
+        <div>This is a normal paragraph (p element). To add some length to it, let us mention that this page was
+          primarily written for testing the effect of user style sheets. You can use it for various other purposes as
+          well, like just checking how your browser displays various HTML elements by default. It can also be useful
+          when testing conversions from HTML format to other formats, since some elements can go wrong then.
+        </div>
+      </li>
+    </ul>
+    <table class="table table-borderless">
+      <tbody>
+      <tr class="col-md-6">
+        <td><strong>Project:</strong></td>
+        <td class=""><span>Singular app</span></td>
+      </tr>
+      <tr class="col-md-6">
+        <td><strong>Progress:</strong></td>
+        <td class=""><%= content_tag(:span, 'finished', class: "label label-info progress-status progress-finished") %></td>
+      </tr>
+      <tr class="col-md-6">
+        <td><strong>Created:</strong></td>
+        <td class="">25 Feb, 2015</td>
+      </tr>
+      <tr class="col-md-6">
+        <td><strong>Priority:</strong></td>
+        <td class="">
+          High
+        </td>
+      </tr>
+      <tr class="col-md-12">
+        <td><strong>Assigned To:</strong></td>
+        <td class="">Jazib Bashir</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="col-md-12">
+      <div class="form-group">
+        <button class="btn btn-default">Assign to Me</button>
+        <button class="btn btn-default">Start Progress</button>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 15px">
+    <div class="panel panel-default">
+      <div class="panel-heading">Comments</div>
+      <div class="panel-body">
+        <%= render 'story_comments' %>
+      </div>
+    </div>
+  </div>
+</div>

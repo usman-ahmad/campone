@@ -1,0 +1,181 @@
+#sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0 3px 3px;
+    padding: 6px 9px 9px 20px;
+    height: 33px;
+    cursor: pointer;
+  }
+}
+
+@media screen and(max-width: 768px) {
+  #sortable li {
+    height: 50px;
+    padding: 0;
+  }
+}
+
+.custom-ui-drag {
+  position: absolute;
+  margin-left: -1.3em;
+  cursor: move;
+}
+
+.custom-ui-state {
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #e4e4e4;
+  padding: 8px 0;
+  &:hover {
+    border-bottom-color: #ccc;
+  }
+  &:focus {
+    border-bottom-color: #ccc;
+  }
+}
+
+.todo-content {
+  color: #646363;
+  font-size: 14px;
+  margin-bottom: 0;
+  overflow: hidden;
+  .fa-story-feature {
+    margin-right: 7px;
+  }
+  .fa-bug {
+    color: #FF3333;
+  }
+  .fa-star-o {
+    color: #FFCC00;;
+  }
+}
+
+.customTodo-icon {
+  font-size: 18px;
+  color: #d0d0d0;
+  padding: 0 4px;
+  &:hover {
+    color: #6b7b95;
+  }
+  &:focus {
+    color: #6b7b95;
+  }
+}
+
+.tag-holder {
+  cursor: default;
+  margin-left: 2px;
+  i.fa, .tag {
+    margin-left: 3px;
+  }
+}
+
+.tag {
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 3px;
+  color: #8b8b8b;
+  font-size: 10px;
+  padding: 2px 4px;
+  a {
+    color: #2178c3;
+  }
+}
+
+.progress-status {
+  cursor: default;
+  margin-right: 10px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.progress-unscheduled {
+  background-color: #777;
+}
+
+.progress-unstarted {
+  background-color: #c8cbd0;
+}
+
+.progress-started {
+  background-color: #5bc0de;
+}
+
+.progress-paused {
+  background-color: #f7c018;
+}
+
+.progress-finished {
+  background-color: #203e64;
+}
+
+.progress-delivered {
+  background-color: #f39300;
+}
+
+.progress-rejected {
+  background-color: #950828;
+}
+
+.progress-accepted {
+  background-color: #629200;
+}
+
+.unscheduled-color {
+  color: #777;
+}
+
+.accepted-color {
+  color: #629200;
+}
+
+.todo-title {
+  width: 80%;
+  float: left;
+}
+
+.story-detail-panel {
+  .panel-heading {
+    background-color: transparent;
+  }
+  .panel-body {
+    padding: 0;
+  }
+  .table-borderless > tbody > tr > td:first-child {
+    padding-left: 0;
+  }
+}
+
+.story-detail-icon {
+  margin-right: 5px;
+}
+
+.todo-after + p {
+  margin-bottom: 7px;
+}
+
+.table-borderless > tbody > tr {
+  > td {
+    border: 0;
+  }
+  > th {
+    border: 0;
+  }
+}
+
+.todo-detail-icon a {
+  color: #000;
+}
+
+.story-detail-panel .panel-heading .nav-tabs > li > a {
+  padding: 5px;
+}
+
+.story-detail-panel .panel-heading .nav-tabs {
+  border-bottom: none;
+}
+
+.story-detail-panel .panel-body .table-story-detail {
+  margin-bottom: 3px;
+}

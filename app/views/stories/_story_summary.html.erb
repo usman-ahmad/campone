@@ -2,33 +2,33 @@
   <span class="ui-icon ui-icon-grip-dotted-vertical custom-ui-drag"></span>
 
   <p class="todo-content">
-    <%= content_tag(:span, story.state, class: "label label-info progress-status progress-#{story.state}") %>
-    <%= content_tag(:i, '', class: "mg-r10 fa  #{story.story_type == 'bug' ? 'fa-bug' : 'fa-star-o'}", title: "Story Type: #{story.story_type}") %>
+    <span class="pull-left">
+      <%= content_tag(:span, story.state_initials, class: "mg-r5 label label-info progress-status progress-#{story.state}") %>
+      <%= content_tag(:i, '', class: "fa fa-story-feature #{story.story_type == 'bug' ? 'fa-bug' : 'fa-star-o'}", title: "story Type: #{story.story_type}") %>
+    </span>
 
-    <%= link_to project_story_path(story.project, story) do %>
-        <%= content_tag(:strong, story.ticket_id.upcase) %>
+    <span class="todo-title">
+      <span class="collapse-span" data-target="#<%= story.id %>">
+        <%= content_tag(:strong, story.ticket_id.upcase, class: 'mg-r5') %>
         <%= story.title %>
-    <% end %>
-
-    <%= content_tag :span, class: 'tag-holder' do %>
+      </span>
+      <%= content_tag :span, class: 'tag-holder' do %>
         <% story.get_tags.each do |tag| %>
             <%= link_to("##{tag.upcase}", project_stories_path(@project, tags: tag), class: 'tag', title: "Tag: #{tag}") %>
         <% end %>
-        <%= content_tag(:span, story.priority, class: 'tag', title: "Priority: #{story.priority}") if story.priority.present? %>
-        <%= content_tag(:span, story.due_at, class: 'tag', title: "Due on: #{story.due_at}") if story.due_at.present? %>
-        <%= link_to("@#{story_assigned_to story}", project_stories_path(@project, owner: story.owner), class: 'tag', title: "Owner: #{story_assigned_to story}") if story.owner_id.present? %>
-        <%= content_tag(:i, '', class: 'fa fa-list-alt', title: 'This story has description') if story.description.present? %>
-        <%= content_tag(:i, '', class: 'fa fa-paperclip', title: 'This story has attachments') if story.attachments.present? %>
-        <%= content_tag(:i, story.comments.count, class: 'fa fa-commenting-o', title: "This story has #{pluralize(story.comments.count, 'comment')}") if story.comments.present? %>
-    <% end %>
-
-  <div class="pull-right todo-after">
-    <a href="<%= edit_project_story_path(story.project, story) %>" title="Edit To-Do"><i class="fa fa-pencil customTodo-icon"></i></a>
-    <% if can? :destroy, story %>
-        <%= link_to project_story_path(story.project, story), method: :delete, data: {confirm: 'Are you sure?'} do %>
-            <i class="fa fa-trash-o customTodo-icon"></i>
-        <% end %>
-    <% end %>
-  </div>
+          <%= content_tag(:span, story.priority, class: 'tag', title: "Priority: #{story.priority}") if story.priority.present? %>
+          <%= content_tag(:span, story.due_at, class: 'tag', title: "Due on: #{story.due_at}") if story.due_at.present? %>
+          <%= link_to("@#{story_assigned_to story}", project_stories_path(@project, owner: story.owner), class: 'tag', title: "Owner: #{story_assigned_to story}") if story.owner_id.present? %>
+          <%= content_tag(:i, '', class: 'fa fa-list-alt', title: 'This story has description') if story.description.present? %>
+          <%= content_tag(:i, '', class: 'fa fa-paperclip', title: 'This story has attachments') if story.attachments.present? %>
+          <%= content_tag(:i, story.comments.count, class: 'fa fa-commenting-o', title: "This story has #{pluralize(story.comments.count, 'comment')}") if story.comments.present? %>
+      <% end %>
+    </span>
   </p>
+
+  <div class="collapse hidden-md hidden-lg mg-t20" id="<%= story.id %>">
+    <div class="col-md-6 nopadding">
+      <%= render 'sm_story_detail', :story => story %>
+    </div>
+  </div>
 </li>

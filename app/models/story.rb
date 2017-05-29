@@ -105,6 +105,10 @@ class Story < ApplicationRecord
     state.inquiry
   end
 
+  def state_initials
+    unscheduled? ? 'Ü' : state[0].capitalize
+  end
+
   def next_states
     case state
       when 'unscheduled'

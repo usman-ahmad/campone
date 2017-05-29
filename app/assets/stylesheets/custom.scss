@@ -265,92 +265,6 @@
 }
 
 /*
-  5.00 Story List css
-  ------------------
-*/
-
-#sortable {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-#sortable li {
-  margin: 0 3px 3px 3px;
-  padding: 6px 9px 9px 20px;
-  height: 33px;
-  cursor: pointer
-}
-
-@media screen and (max-width: 768px) {
-  #sortable li {
-    height: 50px;
-    padding: 0;
-  }
-}
-
-.custom-ui-drag {
-  position: absolute;
-  margin-left: -1.3em;
-  cursor: move
-}
-
-.custom-ui-state {
-  border: none;
-  background: transparent;
-  border-bottom: 1px solid #e4e4e4;
-  padding-top: 5px;
-}
-
-.custom-ui-state:hover, .custom-ui-state:focus {
-  border-bottom-color: #ccc;
-}
-
-.todo-content {
-  display: inline;
-  color: #646363;
-  font-size: 14px;
-  .fa-bug {
-    color: #FF3333;
-  }
-   .fa-star-o {
-    color: #FFCC00;;
-  }
-}
-
-.customTodo-icon {
-  font-size: 18px;
-  color: #D0D0D0;
-  padding: 0 4px;
-}
-
-.customTodo-icon:hover, .customTodo-icon:focus {
-  color: #6B7B95;
-}
-
-.tag-holder {
-  cursor: default;
-  margin-left: 2px;
-
-  i.fa, .tag {
-    margin-left: 3px;
-  }
-}
-
-.tag {
-  display: inline-block;
-  background-color: #eee;
-  border-radius: 3px;
-  color: #8b8b8b;
-  font-size: 10px;
-  padding: 2px 4px;
-}
-
-.tag a {
-  color: #2178c3;
-}
-
-/*
   6.00 Dashboard Home CSS
   -----------------------
 */
@@ -861,64 +775,6 @@
   }
 }
 
-.progress-status {
-  cursor: default;
-  margin-right: 10px;
-  font-family: 'Roboto Mono', monospace;
-}
-
-.progress-unscheduled {
-  background-color: #777;
-  padding: 0.3em 0.6em 0.4em;
-}
-
-.progress-unstarted {
-  background-color: #c8cbd0;
-  padding: 0.3em 1.2em .4em;
-}
-
-.progress-started {
-  background-color: #5bc0de;;
-  padding: .3em 1.8em .4em;
-}
-
-.progress-paused {
-  background-color: #f7c018;
-  padding: .3em 2.1em .4em;
-}
-
-.progress-finished {
-  background-color: #203e64;
-  padding: .3em 1.5em .4em;
-}
-
-.progress-delivered {
-  background-color: #f39300;
-  padding: .3em 1.2em .4em;
-}
-
-.progress-rejected {
-  background-color: #950828;
-  padding: .3em 1.5em .4em;
-}
-
-.progress-accepted {
-  background-color: #629200;
-  padding: .3em 1.5em .4em
-}
-
-.todo-after + p {
-  margin-bottom: 7px;
-}
-
-.unscheduled-color {
-  color: #777;
-}
-
-.accepted-color {
-  color: #629200;
-}
-
 .nav-tabs li .dropdown-toggle {
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
@@ -991,6 +847,7 @@
 .file-icon:hover, .file-icon:focus {
   color: #000;
 }
+
 .thumbnail-container {
   position: relative;
   width: 100%;

@@ -31,12 +31,15 @@
 
 
 <div class="col-md-12">
-  <div class="col-md-9">
+  <div class="col-md-6">
     <ul class="sortable" id="stories" data-update-url="<%= sort_project_stories_url %>">
       <%= render partial: 'story_summary', collection: @stories, as: :story %>
     </ul>
     <div class="newStoryForm">
       <%= render 'form' %>
     </div>
+  </div>
+  <div class="col-md-6 hidden-sm hidden-xs">
+    <%= render 'md_story_detail' %>
   </div>
 </div>
