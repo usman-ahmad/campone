@@ -18,43 +18,54 @@
           <li class="col-md-12">
             <strong>Description: </strong>
 
-            <div>This is a normal paragraph (p element). To add some length to it, let us mention that this page was
-              primarily written for testing the effect of user style sheets. You can use it for various other purposes
-              as
-              well, like just checking how your browser displays various HTML elements by default. It can also be useful
-              when testing conversions from HTML format to other formats, since some elements can go wrong then.
-            </div>
+            <div><%= story.description.try(:html_safe) %></div>
           </li>
         </ul>
         <table class="table table-borderless table-story-detail">
           <tbody>
-          <tr class="col-xs-12 col-sm-4 col-md-6">
-            <td><strong>Project:</strong></td>
-            <td class=""><span>Singular app</span></td>
+          <tr class="col-xs-12 col-sm-4">
+            <td><strong>Owner:</strong></td>
+            <td class=""><%= story_assigned_to @story %></td>
           </tr>
-          <tr class="col-xs-12 col-sm-4 col-md-6">
-            <td><strong>Progress:</strong></td>
-            <td class=""><%= content_tag(:span, 'finished', class: "label label-info progress-status progress-finished") %></td>
+          <tr class="col-xs-12 col-sm-4">
+            <td><strong>Status:</strong></td>
+            <td class=""><%= content_tag(:span, story.state, class: "label label-info progress-status progress-#{story.state}") %></td>
           </tr>
-          <tr class="col-xs-12 col-sm-4 col-md-6">
-            <td><strong>Created:</strong></td>
-            <td class="">25 Feb, 2015</td>
+          <% if story.due_at.present? %>
+              <tr class="col-xs-12 col-sm-4">
+                <td><strong>Due By:</strong></td>
+                <td><%= story.due_at %></td>
+              </tr>
+          <% end %>
+          <% if story.priority.present? %>
+              <tr class="col-xs-12 col-sm-4">
+                <td><strong>Priority:</strong></td>
+                <td><%= story.priority %></td>
+              </tr>
+          <% end %>
+          <% if story.requester.present? %>
+              <tr class="col-xs-12 col-sm-4">
+                <td><strong>Requester:</strong></td>
+                <td> <%= story.requester.name %> </td>
+              </tr>
+          <% end %>
+          <tr class="col-xs-12 col-sm-4">
+            <td><strong>Story Type:</strong></td>
+            <td><%= story.story_type.upcase %></td>
           </tr>
-          <tr class="col-xs-12 col-sm-4 col-md-6">
-            <td><strong>Priority:</strong></td>
-            <td class="">
-              High
-            </td>
-          </tr>
-          <tr class="col-xs-12 col-sm-4 col-md-12">
-            <td><strong>Assigned To:</strong></td>
-            <td class="">Jazib Bashir</td>
-          </tr>
+          <% if story.tag_list.present? %>
+              <tr class="col-sm-12">
+                <td><strong>Tags:</strong></td>
+                <% story.get_tags.each do |tag| %>
+                    <td>#<%= tag.upcase %></td>
+                <% end %>
+              </tr>
+          <% end %>
           </tbody>
         </table>
       </div>
       <div role="tabpanel" class="tab-pane" id="comment_<%= story.id %>">
-        <%= render 'story_comments' %>
+        <%= render 'story_comments', :comments => story.comments %>
       </div>
     </div>
   </div>

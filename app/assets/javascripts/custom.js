@@ -36,8 +36,8 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
-    $('#commentTextbox').on('input', function () {
-        var hideComment = $('#hide-comment');
+    $('.commentTextbox').on('input', function () {
+        var hideComment = $('.hide-comment');
         var commentBoxValLength = $(this).val().length;
         if (commentBoxValLength >= 1) {
             $(this).trumbowyg({
@@ -59,9 +59,7 @@ $(document).on('turbolinks:load', function () {
         resetCss: true,
         removeformatPasted: true,
         btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['preformatted'], ['horizontalRule']]
-    });
-
-    $('.description-textarea').on('tbwchange', function () {
+    }).on('tbwchange', function () {
         $('.comment-action').removeClass('hidden');
     });
 

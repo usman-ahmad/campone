@@ -18,6 +18,8 @@ class StoriesController < ApplicationController
     @stories = @stories.tagged_with(params[:tags]) if params[:tags].present?
     @stories = @stories.having_ownership(params[:owner]) if params[:owner].present?
     @stories = @stories.open
+    # Fetching Proper Story
+    @demo_story = @stories.first
 
     respond_to do |format|
       format.html

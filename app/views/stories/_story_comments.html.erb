@@ -1,215 +1,52 @@
 <ul class="comments-list">
-  <li class="comment">
-    <a class="pull-left" href="#">
-      <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
-    </a>
-      <span class="pull-right todo-detail-comment-icon">
-        <a class="href mg-r10"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-        <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
-      </span>
-
-    <div class="comment-body">
-      <div class="comment-heading">
-        <h4 class="user">Jazib Bashir</h4>
-        <h5 class="time">5 minutes ago</h5>
-      </div>
-      <p>Sure, oooooooooooooooohhhhhhhhhhhhhhhh</p>
-    </div>
-  </li>
-  <hr>
-  <li class="comment">
-    <a class="pull-left" href="#">
-      <span class="user-img-15 pull-left mg-r20">GS</span>
-    </a>
-      <span class="pull-right todo-detail-comment-icon">
-        <a class="href mg-r10"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-        <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
-      </span>
-
-    <div class="comment-body">
-      <div class="comment-heading">
-        <h4 class="user">GS Shahid</h4>
-        <h5 class="time">3 minutes ago</h5>
-      </div>
-      <p>Ok, cool.</p>
-    </div>
-  </li>
-  <hr>
-  <li class="comment">
-    <a class="pull-left" href="#">
-      <span class="user-img-15 pull-left mg-r20">GS</span>
-    </a>
-      <span class="pull-right todo-detail-comment-icon">
-        <a class="href mg-r10"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-        <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
-      </span>
-
-    <div class="comment-body">
-      <div class="comment-heading">
-        <h4 class="user">GS Shahid</h4>
-        <h5 class="time">3 minutes ago</h5>
-      </div>
-      <p></p>
-
-      <p></p>
-
-      <p><strong>Main Heading:</strong></p>
-      <ol>
-        <br>
-        <li>List 1</li>
-        <br>
-        <li>List 2</li>
-        <br>
-      </ol>
-        <span>
-          <ul>
-            <br>
-            <li>List 3<br><br></li>
-            <br>
-            <li>List 4</li>
-            <br>
-          </ul>
+  <% comments.each do |comment| %>
+      <li class="comment clearfix">
+        <a class="pull-left" href="#">
+          <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
+        </a>
+        <span class="pull-right todo-detail-comment-icon">
+            <a class="href mg-r10"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
         </span>
 
-      <p>This is a normal paragraph (p element). To add some length to it, let us mention that this page was
-        primarily written for testing the effect of user style sheets. You can use it for various other
-        purposes as well, like just checking how your browser displays various HTML elements by default. It
-        can also be useful when testing conversions from HTML format to other formats, since some elements can
-        go wrong then.</p>
-
-      <p></p>
-      <hr>
-      <p><em>This is another paragraph. I think it needs to be added that the set of elements tested is not
-        exhaustive in any sense. I have selected those elements for which it can make sense to write user
-        style sheet rules, in my opionion.</em><span><em>This is a div element. Authors may use such elements
-        instead of paragraph markup for various reasons. (End of div.)</em><br><br><strong>Some Usefull
-        Links:</strong></span></p>
-
-      <p>
-          <span><a href="http://getbootstrap.com/components" title="Bootstrap 3 Component" target="_blank">Bootstrap3Component</a><br>
-          </span>
-          <span><a href="http://fontawesome.io/icons/" title="fontawesome icons" target="_blank">fontawesome
-            icons</a><br>
-          </span>
-      </p>
-
-      <p>
-        <span>This is a block quotation containing a single paragraph. Well, not quite, since this is not really quoted text, but I hope you understand the point. After all, this page does not use HTML markup very normally anyway.</span><span>The following contains address information about the author, in an address element.</span>
-      </p>
-
-      <p></p>
-      <hr>
-      <span><strong><br></strong></span>
-
-      <p></p>
-      <h4>Attachments</h4>
-
-      <div class="comment-attachment">
-        <img title="todo-details-comment.png" src="/system/attachments/documents/000/000/068/thumb/todo-details-comment.png?1481698660" alt="Todo details comment">
-
-        <div class="mask">
-              <span class="mask-icon">
-                <i class="fa fa-search" aria-hidden="true" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="image/png" data-url="/system/attachments/documents/000/000/068/original/todo-details-comment.png?1481698660" data-title="todo-details-comment.png"></i>
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
-        </div>
-      </div>
-      <div class="comment-attachment">
-        <img title="todo-list-progress-letter.png" src="/system/attachments/documents/000/000/069/thumb/todo-list-progress-letter.png?1481698663" alt="Todo list progress letter">
-
-        <div class="mask">
-              <span class="mask-icon">
-                <i class="fa fa-search" aria-hidden="true" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="image/png" data-url="/system/attachments/documents/000/000/069/original/todo-list-progress-letter.png?1481698663" data-title="todo-list-progress-letter.png"></i>
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
-        </div>
-      </div>
-      <div class="comment-attachment">
-        <img title="todo-list-mv-progress-in-tag-span.png" src="/system/attachments/documents/000/000/070/thumb/todo-list-mv-progress-in-tag-span.png?1481698663" alt="Todo list mv progress in tag span">
-
-        <div class="mask">
-              <span class="mask-icon">
-                <i class="fa fa-search" aria-hidden="true" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="image/png" data-url="/system/attachments/documents/000/000/070/original/todo-list-mv-progress-in-tag-span.png?1481698663" data-title="todo-list-mv-progress-in-tag-span.png"></i>
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
-        </div>
-      </div>
-      <div class="comment-attachment">
-        <img title="todo-list-tag-align-right.png" src="/system/attachments/documents/000/000/071/thumb/todo-list-tag-align-right.png?1481698663" alt="Todo list tag align right">
-
-        <div class="mask">
-              <span class="mask-icon">
-                <i class="fa fa-search" aria-hidden="true" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="image/png" data-url="/system/attachments/documents/000/000/071/original/todo-list-tag-align-right.png?1481698663" data-title="todo-list-tag-align-right.png"></i>
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
-        </div>
-      </div>
-      <div class="comment-attachment">
-        <img title="todo-list-7*5.png" src="/system/attachments/documents/000/000/072/thumb/todo-list-7*5.png?1481698663" alt="Todo list 7*5">
-
-        <div class="mask">
-              <span class="mask-icon">
-                <i class="fa fa-search" aria-hidden="true" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="image/png" data-url="/system/attachments/documents/000/000/072/original/todo-list-7*5.png?1481698663" data-title="todo-list-7*5.png"></i>
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
-        </div>
-      </div>
-      <div class="comment-attachment">
-        <img title="todo-list-6*6.png" src="/system/attachments/documents/000/000/073/thumb/todo-list-6*6.png?1481698663" alt="Todo list 6*6">
-
-        <div class="mask">
-              <span class="mask-icon">
-                <i class="fa fa-search" aria-hidden="true" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="image/png" data-url="/system/attachments/documents/000/000/073/original/todo-list-6*6.png?1481698663" data-title="todo-list-6*6.png"></i>
-                <i class="fa fa-download" aria-hidden="true"></i>
-                <i class="fa fa-trash" aria-hidden="true"></i>
-              </span>
-        </div>
-      </div>
-
-      <div class="modal fade" id="attachmentPreviewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title" id="attachmentTitle"></h4>
-              <a id="downloadAttachmentBtn" class="" title="" data-toggle="tooltip" href="" data-original-title="Download">Download
-                <i class="fa fa-download"></i></a>
-            </div>
-            <div class="modal-body">
-
-              <div id="videoPreview">
-                <video id="attachmentVideo" width="100%" height="100%" controls="controls" src=""></video>
-              </div>
-
-              <div id="imagePreview">
-                <img id="attachmentImage" width="100%" height="100%" src="">
-              </div>
-
-              <div id="attachmentNoPreview">
-                <h3>Sorry. No Preview Available for this type of file</h3>
-              </div>
-
-            </div>
+        <div class="comment-body">
+          <div class="comment-heading">
+            <h4 class="user"><%= comment.user.name %></h4>
+            <h5 class="time"><%= distance_of_time_in_words(Time.current, comment.created_at) %> ago</h5>
           </div>
+          <p><%= simple_format comment.content %></p>
+          <% if comment.attachments.present? %>
+              <h4>Attachments</h4>
+              <% comment.attachments.each do |attachment| %>
+                  <div class="comment-attachment">
+                    <%= image_tag attachment.document.exists?(:thumb) ? attachment.document.url(:thumb) : 'missing_file_type.png',
+                                  title: attachment.document_file_name %>
+                    <div class="mask">
+                        <span class="mask-icon">
+                            <%= content_tag(:i, '', class: 'fa fa-search', data: {toggle: "modal", target: "#attachmentPreviewModel",
+                                                                                  type: attachment.document_content_type,
+                                                                                  url: attachment.document.url,
+                                                                                  title: attachment.document_file_name}) %>
+                          <i class="fa fa-download" aria-hidden="true"></i>
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                  </div>
+              <% end %>
+          <% end %>
         </div>
-      </div>
-    </div>
-  </li>
+      </li>
+      <hr>
+  <% end %>
 </ul>
 <div class="clearfix"></div>
-<div class="newStoryForm">
+<div class="newTaskForm">
   <form class="add-todo-container mg-t20">
-    <textarea id="commentTextbox" class="form-control mg-b10" placeholder="ADD Comment"></textarea>
+    <textarea class="form-control mg-b10 commentTextbox" placeholder="ADD Comment"></textarea>
 
-    <div id="hide-comment" class="hidden">
+    <div class="hide-comment hidden">
       <div class="form-group">
-        <div id="file">Browse File</div>
+        <div id="file" class="hidden">Browse File</div>
         <input type="file" name="file"/>
       </div>
       <div class="pull-right">
