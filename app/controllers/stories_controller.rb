@@ -33,6 +33,11 @@ class StoriesController < ApplicationController
     @comments = @commentable.comments
     @comment = Comment.new
     @attachment = Attachment.new
+
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   def close

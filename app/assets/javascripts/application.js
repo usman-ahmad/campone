@@ -30,3 +30,5 @@
 //= require public
 //= require cable
 //= require trumbowyg/vendor/plugins/preformatted/trumbowyg.preformatted
+//= require handlebars.runtime
+//= require_tree ./templates

@@ -1,0 +1,23 @@
+<form class="new_comment" id="new_comment" enctype="multipart/form-data" action="{{story.comments_path}}" accept-charset="UTF-8" method="post">
+  <input name="utf8" type="hidden" value="✓">
+  <div class="form-group comment-textarea">
+    <textarea rows="3" placeholder="Add Comment" class="form-control description-textarea" name="comment[content]" id="comment_content"></textarea>
+  </div>
+  <div class="comment-action mg-b40">
+    <input type="submit" name="commit" value="Create Comment" class="btn btn-success pull-right" data-disable-with="Create Comment">
+    <div class="form-group">
+      <input type="file" name="attachments_array[]" id="attachments_array_" class="attachment-array" multiple="multiple">
+      <span class="attachment-array-value"></span>
+
+      <div class="clearfix"></div>
+      <input type="checkbox" name="add_files_to_project" id="add_files_to_project" value="1" style="display: none;" data-myid="1">
+      <label data-myid="1" class="custom-label" style="display: none;" disabled="disabled">also add to Project Files</label>
+    </div>
+  </div>
+</form>
+
+<script>
+  //  To Add CSRF token
+  token = $('meta[name="csrf-token"]').attr('content');
+  $('#new_comment').prepend("<input type='hidden' name='authenticity_token' value='" + token + "'>");
+</script>

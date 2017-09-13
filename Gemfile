@@ -75,6 +75,8 @@ gem 'unicorn'
 # for generating JSON response
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'handlebars_assets'
+
 group :development do
   # Annotate Rails classes with schema and routes info.
   gem 'annotate'
