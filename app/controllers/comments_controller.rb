@@ -29,11 +29,10 @@ class CommentsController < ApplicationController
       @project.create_attachments(params[:attachments_array], current_user)
     end
 
-    if @comment.save
-      # @comment.create_activity :create, owner: current_user
-      redirect_back fallback_location: [@project, @commentable], notice: 'Comment created.'
-    else
-      redirect_back fallback_location: [@project, @commentable], notice: 'Please write comment'
+    respond_to do |format|
+      flash[:notice] = @comment.save ? 'Comment created.' : "Unable to create comment. #{@comment.errors.join(', ')}"
+      format.html{ redirect_back fallback_location: [@project, @commentable]}
+      format.json
     end
   end
 

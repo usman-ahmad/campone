@@ -1,4 +1,4 @@
-<form class="new_comment" id="new_comment" enctype="multipart/form-data" action="{{story.comments_path}}" accept-charset="UTF-8" method="post">
+<form class="new_comment" id="new_comment" action="{{story.comments_path}}" data-remote='true' data-type='json' accept-charset="UTF-8" method="post">
   <input name="utf8" type="hidden" value="✓">
   <div class="form-group comment-textarea">
     <textarea rows="3" placeholder="Add Comment" class="form-control description-textarea" name="comment[content]" id="comment_content"></textarea>

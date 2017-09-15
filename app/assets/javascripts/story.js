@@ -14,6 +14,11 @@ $(document).on('turbolinks:load', function () {
     $("#stories").on("click", "li[id^=story_]", function(event){
         getStory(this)
     });
+
+    $(document).on('ajax:success', 'form#new_comment', function(evt, data, status, xhr){
+        $('.comments-list').append(Handlebars.partials['comments/_show'](data));
+        $('form#new_comment #comment_content').val('');
+    });
 });
 
 
