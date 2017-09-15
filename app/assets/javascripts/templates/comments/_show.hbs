@@ -1,0 +1,29 @@
+<li class="comment clearfix">
+  <a class="pull-left" href="#">
+    <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
+  </a>
+  <span class="pull-right todo-detail-comment-icon">
+            <a rel="nofollow" data-method="delete" href="{{url}}">
+              <i class="fa fa-trash-o"></i>
+            </a>
+            <a href="{{url}}/edit">
+              <i class="fa fa-pencil"></i>
+            </a>
+          </span>
+
+  <div class="comment-body">
+    <div class="comment-heading">
+      <h4 class="user">{{user}}</h4>
+      <h5 class="time">{{time}} ago</h5>
+    </div>
+    <p>{{content}}</p>
+    <p>{{comment.content}}</p>
+
+    {{#if attachments}}
+      <h4>Attachments</h4>
+      {{#each attachments}}
+        {{> attachments/_show }}
+      {{/each}}
+    {{/if}}
+  </div>
+</li>

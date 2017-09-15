@@ -7,7 +7,9 @@ $(document).on('turbolinks:load', function () {
 
     // Show detail for first story
     firsStory = $('li[id^=story]')[0];
-    getStory(firsStory);
+    if (firsStory !== undefined) {
+        getStory(firsStory);
+    }
 
     $("#stories").on("click", "li[id^=story_]", function(event){
         getStory(this)

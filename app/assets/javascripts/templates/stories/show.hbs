@@ -43,11 +43,10 @@
     </div>
     <div class="clearfix" style="margin: 0"></div>
 
-    <div class="col-md-12">
-      <div class="form-group">
-        <button class="btn btn-default">Assign to Me</button>
-        <button class="btn btn-default">Start Progress</button>
-      </div>
+    <div>
+      {{#each story.attachments}}
+        {{> attachments/_show }}
+      {{/each}}
     </div>
     <div class="clearfix" style="margin: 0"></div>
 
@@ -56,47 +55,7 @@
       <div class="panel-body">
         <ul class="comments-list">
           {{#each story.comments}}
-            <li class="comment clearfix">
-              <a class="pull-left" href="#">
-                <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
-              </a>
-              <span class="pull-right todo-detail-comment-icon">
-                <a rel="nofollow" data-method="delete" href="{{url}}">
-                  <i class="fa fa-trash-o"></i>
-                </a>
-                <a href="{{url}}/edit">
-                  <i class="fa fa-pencil"></i>
-                </a>
-              </span>
-
-              <div class="comment-body">
-                <div class="comment-heading">
-                  <h4 class="user">{{user}}</h4>
-                  <h5 class="time">{{time}} ago</h5>
-                </div>
-                <p>{{content}}</p>
-
-                {{#if attachments}}
-                  <h4>Attachments</h4>
-                  {{#each attachments}}
-                    <div class="comment-attachment">
-                      <img title="{{title}}" src="{{thumb}}" alt="{{title}}" />
-                      <div class="mask">
-                        <span class="mask-icon">
-                          <i class="fa fa-search" data-toggle="modal" data-target="#attachmentPreviewModel" data-type="{{type}}" data-url="{{url}}" data-title="{{title}}"></i>
-                          <a rel="nofollow" data-method="post" href="{{download_attachment_path}}">
-                            <i class="fa fa-download" aria-hidden="true"></i>
-                          </a>
-                          <a data-confirm="Are you sure?" class="" rel="nofollow" data-method="delete" href="{{attachment_path}}">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                          </a>x
-                        </span>
-                        </div>
-                    </div>
-                  {{/each}}
-                {{/if}}
-              </div>
-            </li>
+            {{> comments/_show }}
           {{/each}}
         </ul>
         <div class="new-comment-form">

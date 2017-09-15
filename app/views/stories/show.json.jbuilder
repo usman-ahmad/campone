@@ -2,10 +2,14 @@ json.(@story, :id, :title, :description, :priority, :due_at, :state, :ticket_id,
 json.requester_name  @story.requester.try(:name)
 json.owner  story_assigned_to(@story)
 
+# TODO Remove duplication
 json.attachments @story.attachments do |attachment|
   json.title attachment.document_file_name
   json.url attachment.document.url
   json.type attachment.document_content_type
+  json.thumb attachment.document.url(:thumb)
+  json.attachment_path project_attachment_path(@story.project, attachment)
+  json.download_attachment_path download_project_attachment_path(@story.project, attachment)
 end
 
 json.comments_path project_story_comments_path(@story.project, @story)
