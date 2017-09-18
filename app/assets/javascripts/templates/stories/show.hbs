@@ -2,8 +2,8 @@
   <div class="panel-heading">
     <i class="fa fa-files-o" aria-hidden="true"></i> <b class="text-uppercase">{{story.ticket_id}}</b>
     <span class="pull-right todo-detail-icon">
-      <a class="href mg-r10" href=""><i class="fa fa-pencil" aria-hidden="true"></i></a>
-      <a class="href"><i class="fa fa-trash" aria-hidden="true"></i></a>
+      <a class="href mg-r10" href="{{story.url}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+      <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="{{story.url}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
     </span>
   </div>
   <div class="panel-body">

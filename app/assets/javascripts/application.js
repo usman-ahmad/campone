@@ -32,3 +32,15 @@
 //= require trumbowyg/vendor/plugins/preformatted/trumbowyg.preformatted
 //= require handlebars.runtime
 //= require_tree ./templates
+
+
+// debug helper
+Handlebars.registerHelper("debug", function(optionalValue) {
+    console.log("== Start Debug ==");
+    if(optionalValue){
+        console.log(optionalValue);
+    } else {
+        console.log(this);
+    }
+    console.log("== End Debug ==");
+});

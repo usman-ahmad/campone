@@ -38,6 +38,8 @@ class Comment < ApplicationRecord
   before_create :set_user
   attr_accessor :performer
 
+  scope :order_asc, -> { order(created_at: :asc) }
+
   def notification_performer
     user
   end

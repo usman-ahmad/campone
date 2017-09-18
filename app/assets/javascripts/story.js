@@ -15,10 +15,6 @@ $(document).on('turbolinks:load', function () {
         getStory(this)
     });
 
-    $(document).on('ajax:success', 'form#new_comment', function(evt, data, status, xhr){
-        $('.comments-list').append(Handlebars.partials['comments/_show'](data));
-        $('form#new_comment #comment_content').val('');
-    });
 });
 
 
@@ -36,3 +32,9 @@ function getStory(element){
     $('.story-selected').removeClass('story-selected');
     $(element).addClass( "story-selected" );
 }
+
+$(document).on('ajax:success', 'div#story-detail form#new_comment', function(evt, data, status, xhr){
+    console.log('new comment');
+    $('.comments-list').append(Handlebars.partials['comments/_show'](data));
+    $('form#new_comment #comment_content').val('');
+});
