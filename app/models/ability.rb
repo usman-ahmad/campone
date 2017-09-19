@@ -37,8 +37,11 @@ class Ability
     end
     # owner role is automatically created, we cannot edit it later
     cannot :manage, Contribution, role: OWNER
+    # TODO: Only allow change to initials
+    can :manage, Contribution, role: OWNER, user_id: user.id
+
     # cannot edit or delete himself
-    cannot :manage, Contribution, user: user
+    # cannot :manage, Contribution, user: user
 
     can :join, Contribution, user: user
 

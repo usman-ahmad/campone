@@ -37,7 +37,7 @@ class ContributionsController < ApplicationController
 
     # if cannot create contribution with above given values
     if cannot? :update, @contribution
-      flash[:alert] = 'You can not assign these these values.'
+      flash[:alert] = 'You can not assign these values.'
     elsif @contribution.save
       flash[:alert] = 'Updated successfully.'
     else
@@ -83,6 +83,6 @@ class ContributionsController < ApplicationController
   end
 
   def contribution_params
-    params.require(:contribution).permit(:email, :role)
+    params.require(:contribution).permit(:email, :role, :name, :initials)
   end
 end

@@ -4,10 +4,18 @@
           <%= f.label :email %>
           <%= f.text_field :email, class: "form-control" %>
         </div>
+        <div class="form-group mg-r10">
+          <%= f.label :name  %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
     <% else %>
         <div class="form-group mg-r10">
           <label>Email: </label>
           <%= @contribution.user.email %>
+        </div>
+        <div class="form-group mg-r10">
+          <label>Initials: </label>
+          <%= @contribution.initials %>
         </div>
     <% end %>
     <div class="form-group mg-r10">

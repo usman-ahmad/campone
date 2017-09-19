@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418150321) do
+ActiveRecord::Schema.define(version: 20170913131420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20170418150321) do
     t.string   "status",     default: "pending"
     t.integer  "inviter_id"
     t.integer  "position"
+    t.string   "initials"
     t.index ["inviter_id"], name: "index_contributions_on_inviter_id", using: :btree
     t.index ["project_id"], name: "index_contributions_on_project_id", using: :btree
     t.index ["user_id"], name: "index_contributions_on_user_id", using: :btree

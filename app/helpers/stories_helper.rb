@@ -16,4 +16,9 @@ module StoriesHelper
   def story_created_time(time)
     distance_of_time_in_words(Time.current, time)
   end
+
+  def initials(project, obj)
+    user = obj.respond_to?(:requester) ? obj.requester : obj.user
+    project.contributions.find_by_user_id(user).try(:initials) || user.name.split(' ').collect{|x| x[0]}.join()
+  end
 end

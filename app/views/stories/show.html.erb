@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-md-6">
     <div class="todo-head-container">
-      <div class="user-img-15 pull-left">JB</div>
+      <div class="user-img-15 pull-left"><%= initials(@project, @story) %></div>
       <div class="todo_name">
         <div class="todo-list"> <%= @story.ticket_id.upcase %> </div>
         <div class="todo-name"> <%= @story.title %> </div>

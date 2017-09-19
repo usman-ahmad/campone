@@ -4,7 +4,7 @@
       <% @comments.each do |comment| %>
           <li class="comment clearfix">
             <a class="pull-left" href="#">
-              <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46">JB</span>
+              <span class="user-img-15 pull-left mg-r20" style="background-color: #E8BB46"><%= initials(@project,comment) %></span>
             </a>
             <span class="pull-right todo-detail-comment-icon">
               <% polymorphic_url_array = [@project, @commentable, comment] %>

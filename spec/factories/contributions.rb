@@ -12,12 +12,14 @@
 #  status     :string           default("pending")
 #  inviter_id :integer
 #  position   :integer
+#  initials   :string
 #
 
 FactoryGirl.define do
   factory :contribution do
     project
     user
+    role 'Member'
 
     trait :manager do
       role 'Manager'

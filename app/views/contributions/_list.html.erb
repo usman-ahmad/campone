@@ -1,15 +1,19 @@
 <% if @contributions.present? %>
     <table class="table table-striped table-bordered table-hover">
       <tr>
+        <th class="col-md-3">Name</th>
         <th class="col-md-3">Email</th>
         <th class="col-md-1">Role</th>
+        <th class="col-md-1">Initial</th>
         <th class="col-md-1">Status</th>
         <th class="col-md-3">Actions</th>
       </tr>
       <% @contributions.each do |contribution| %>
           <tr>
+            <td><%= contribution.user.name %></td>
             <td><%= contribution.user.email %></td>
             <td><%= "#{contribution.role}" if contribution.role %></td>
+            <td><%= contribution.initials %></td>
             <td><%= contribution.status if can?(:resend_invitation, contribution) %></td>
             <td>
               <%= button_to_if_can(:destroy, contribution, 'Delete', project_contribution_path(@project, contribution),

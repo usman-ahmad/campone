@@ -18,7 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_accept_path_for(resource)
-    resource.contributions.update_all(status: 'joined')
+    resource.contributions.each do |c|
+      c.status = 'joined'
+      c.save # also set initials
+    end
     session['user_return_to'] || projects_path
   end
 

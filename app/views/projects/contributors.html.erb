@@ -8,17 +8,31 @@
   <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
     <div class='custom-tab-content active'>
       <div class='tab-content-header'>
-        <h3 class='heading-3'>Contributors Settings</h3>
+        <h3 class='heading-3'>Contributors</h3>
       </div>
       <hr>
       <div class='col-md-12'>
         <%= render 'contributions/list' %>
       </div>
       <% if can? :create, Contribution.new(project: @project) %>
+          <h3 class='heading-3'>Invite someone</h3>
           <div class='col-md-12 col-sm-12 col-xs-12 mg-b20'>
             <%= render 'contributions/form' %>
           </div>
       <% end %>
+
+      <h3 class='heading-3'>My contribution:</h3>
+      <p><%= current_user.email %> (<%= @my_contribution.role %>)</p>
+
+      <%= form_for [@project, @my_contribution], html: {role: "form", class: 'form-inline'} do |f| %>
+          <div class="form-group mg-r10">
+            <%= f.label :initials, 'Initials' %>
+            <%= f.text_field :initials, class: "form-control" %>
+          </div>
+          <%= f.submit 'Update', class: "btn btn-success" %>
+      <% end %>
+
+      <br />
     </div>
   </div>
 </div>
