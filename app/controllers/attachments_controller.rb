@@ -40,10 +40,14 @@ class AttachmentsController < ApplicationController
     @attachable.attachments_array = params[:attachments_array]
     @attachable.project.create_attachments(params[:attachments_array], current_user) if params[:add_files_to_project]
 
-    if @attachable.save
-      redirect_to [@project, @attachable], notice: 'Attachment was successfully created.'
-    else
-      redirect_to [@project, @attachable], error: @attachable.errors.full_messages.join(',')
+    respond_to do |format|
+      if @attachable.save
+        format.html{ redirect_to [@project, @attachable], notice: 'Attachment was successfully created.'}
+        format.json
+      else
+        format.html{ redirect_to [@project, @attachable], error: @attachable.errors.full_messages.join(',')}
+        format.json
+      end
     end
   end
 

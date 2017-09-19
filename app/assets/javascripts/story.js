@@ -15,6 +15,9 @@ $(document).on('turbolinks:load', function () {
         getStory(this)
     });
 
+    $(document).on('change', '#story-detail-attachment #story_detail_attachments',function () {
+        $(".attachment-div").removeClass('hidden');
+    });
 });
 
 
@@ -37,4 +40,9 @@ $(document).on('ajax:success', 'div#story-detail form#new_comment', function(evt
     console.log('new comment');
     $('.comments-list').append(Handlebars.partials['comments/_show'](data));
     $('form#new_comment #comment_content').val('');
+});
+
+$(document).on('ajax:success', 'div#story-detail form#new_attachment', function(evt, data, status, xhr){
+    $('.attachment-list').html(Handlebars.partials['attachments/_list']({attachments: data}));
+    $(".attachment-div").addClass('hidden');
 });

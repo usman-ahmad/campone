@@ -44,9 +44,10 @@
     <div class="clearfix" style="margin: 0"></div>
 
     <div>
-      {{#each story.attachments}}
-        {{> attachments/_show }}
-      {{/each}}
+      <div class="attachment-list">
+        {{> attachments/_list attachments=story.attachments}}
+      </div>
+      {{> attachments/_form new_story_attachment_path=story.new_story_attachment_path}}
     </div>
     <div class="clearfix" style="margin: 0"></div>
 

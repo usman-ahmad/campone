@@ -1,0 +1,32 @@
+<label for="story_detail_attachments" class="story-attachment-file">
+  <span>
+    <i class="fa fa-upload fa-2x" aria-hidden="true"> </i> Upload File
+  </span>
+</label>
+
+<div class="attachment-div hidden">
+  <form class="new_attachment" id="new_attachment" enctype="multipart/form-data"
+        action="{{new_story_attachment_path}}" accept-charset="UTF-8"
+        method="post" data-type="json" data-remote="true">
+    <input name="utf8" type="hidden" value="✓">
+    <div class="col-sm-6 col-md-6" id="story-detail-attachment">
+
+      <div class="form-group">
+        <input type="file" name="attachments_array[]" id="story_detail_attachments" class="attachment-array" multiple="multiple">
+        <span class="attachment-array-value"></span>
+
+        <div class="clearfix"></div>
+        <input type="checkbox" name="add_files_to_project" id="add_files_to_project" value="1" style="" data-myid="1">
+        <label data-myid="1" class="custom-label" style="" disabled="disabled">also add to Project Files</label>
+      </div>
+
+    </div>
+    <input type="submit" name="commit" value="Add Attachment" class="btn btn-success" data-disable-with="Add Attachment">
+  </form>
+</div>
+
+<script>
+//  To Add CSRF token
+token = $('meta[name="csrf-token"]').attr('content');
+$('#new_attachment').prepend("<input type='hidden' name='authenticity_token' value='" + token + "'>");
+</script>

@@ -64,8 +64,8 @@ $(document).on('turbolinks:load', function () {
     });
 
     // UA[2016/12/06] - for "attachments/browse_attachments" affects [stories, discussions, comments]
-    $('.attachment-array').on('input:file').change(function () {
-        //console.log('activated....');
+    // $('.attachment-array').on('input:file').change(function () {
+    $(document).on('change', 'input:file.attachment-array', function () {
         if ($(this).val().length >= 1) {
             $(this).next(".attachment-array-value").text($(this).val());
             $(this).parents('.form-group:first')
