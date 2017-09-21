@@ -48,7 +48,8 @@ function getStory(storyIdOrElement){
 $(document).on('ajax:success', 'div#story-detail form#new_comment', function(evt, data, status, xhr){
     console.log('new comment');
     $('.comments-list').append(Handlebars.partials['comments/_show'](data));
-    $('form#new_comment #comment_content').val('');
+    $('textarea#comment_content').trumbowyg('empty');
+    $('.comment-action').addClass('hidden');
 });
 
 $(document).on('ajax:success', 'div#story-detail form#new_attachment', function(evt, data, status, xhr){

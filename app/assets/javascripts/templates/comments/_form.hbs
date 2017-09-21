@@ -3,7 +3,7 @@
   <div class="form-group comment-textarea">
     <textarea rows="3" placeholder="Add Comment" class="form-control description-textarea" name="comment[content]" id="comment_content"></textarea>
   </div>
-  <div class="comment-action mg-b40">
+  <div class="comment-action mg-b40 hidden">
     <input type="submit" name="commit" value="Create Comment" class="btn btn-success pull-right" data-disable-with="Create Comment">
     <div class="form-group">
       <input type="file" name="attachments_array[]" id="attachments_array_" class="attachment-array" multiple="multiple">
@@ -20,4 +20,12 @@
   //  To Add CSRF token
   token = $('meta[name="csrf-token"]').attr('content');
   $('#new_comment').prepend("<input type='hidden' name='authenticity_token' value='" + token + "'>");
+
+  $('.description-textarea').trumbowyg({
+      resetCss: true,
+      removeformatPasted: true,
+      btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['preformatted'], ['horizontalRule']]
+  }).on('tbwchange', function () {
+      $('.comment-action').removeClass('hidden');
+  });
 </script>
