@@ -80,7 +80,9 @@ class StoriesController < ApplicationController
   def update
     if @story.update(story_params)
       # @story.create_activity :update, owner: current_user
-      redirect_to [@project, @story], notice: 'Story was successfully updated.'
+      # redirect_to [@project, @story], notice: 'Story was successfully updated.'
+      # TODO: redirect to show page if edit is initiated from show page
+      redirect_to [@project, :stories, anchor: @story.id], notice: 'Story was successfully updated.'
     else
       render :edit
     end
