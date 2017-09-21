@@ -53,7 +53,11 @@ $(document).on('ajax:success', 'div#story-detail form#new_comment', function(evt
 });
 
 $(document).on('ajax:success', 'div#story-detail form#new_attachment', function(evt, data, status, xhr){
-    $('.attachment-list').html(Handlebars.partials['attachments/_list']({attachments: data}));
+    $('.attachment-list').html(Handlebars.partials['attachments/_list']({
+        attachments: data,
+        resource_id: $('.story-selected')[0].id
+    }));
+
     $(".attachment-div").addClass('hidden');
 });
 

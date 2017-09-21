@@ -7,3 +7,4 @@ json.comments_path project_story_comments_path(@project, @story)
 
 json.attachments @story.attachments, partial: 'attachments/attachment', as: :attachment, locals: {project: @project}
 json.comments @story.comments.order_asc, partial: 'comments/comment', as: :comment, locals: {story: @story, project: @project}
+json.resource_id resource_div_id(@story)

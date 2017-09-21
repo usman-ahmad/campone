@@ -106,22 +106,6 @@ $(document).on('turbolinks:load', function () {
 
     $('.carousel').carousel({interval: false});
 
-    $('.modal_div').on('show.bs.modal', function (event) {
-        var url_init, url_slid;
-
-        url_init = $(this).find(".item.active").data("url");
-        $(".modal-title")
-            .html($(this).find(".item.active").data("title"));
-        $(".modal-url").attr('href', url_init);
-
-        $('.carousel_div').bind('slid.bs.carousel', function (e) {
-            url_slid = $(this).find(".item.active").data("url");
-            $(".modal-title")
-                .html($(this).find(".item.active").data("title"));
-            $(".modal-url").attr('href', url_slid);
-        });
-    });
-
     $(".modal-wide").on("show.bs.modal", function() {
         var height = $(window).height() - 200;
         $(this).find(".modal-body").css("max-height", height);
@@ -163,4 +147,21 @@ $(document).on('turbolinks:load', function () {
             $(this).attr('data-toggle', 'collapse');
         })
     }
+});
+
+// $('.modal_div').on('show.bs.modal', function (event) {
+$(document).on('show.bs.modal', '.modal_div', function(event, data, status, xhr){
+    var url_init, url_slid;
+
+    url_init = $(this).find(".item.active").data("url");
+    $(".modal-title")
+        .html($(this).find(".item.active").data("title"));
+    $(".modal-url").attr('href', url_init);
+
+    $('.carousel_div').bind('slid.bs.carousel', function (e) {
+        url_slid = $(this).find(".item.active").data("url");
+        $(".modal-title")
+            .html($(this).find(".item.active").data("title"));
+        $(".modal-url").attr('href', url_slid);
+    });
 });

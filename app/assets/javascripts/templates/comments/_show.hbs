@@ -20,9 +20,7 @@
 
     {{#if attachments}}
       <h4>Attachments</h4>
-      {{#each attachments}}
-        {{> attachments/_show }}
-      {{/each}}
+      {{> attachments/_list attachments=attachments resource_id=resource_id}}
     {{/if}}
   </div>
 </li>

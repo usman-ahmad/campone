@@ -45,7 +45,7 @@
 
     <div>
       <div class="attachment-list">
-        {{> attachments/_list attachments=story.attachments}}
+        {{> attachments/_list attachments=story.attachments resource_id=story.resource_id}}
       </div>
       {{> attachments/_form new_story_attachment_path=story.new_story_attachment_path}}
     </div>
