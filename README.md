@@ -8,8 +8,7 @@ on how to deploy the project on a live system.
 
 ## Prerequisites (Ubuntu flavoured)
 
-NimbleIn is built on Ruby 2, Rails 5, and uses PostgreSQL 9.2. We are using 
-"faye" for notifications which depends on node.js.
+NimbleIn is built on Ruby 2, Rails 5, and uses PostgreSQL 9.2
 
 ##### Install GIT
 
@@ -34,19 +33,17 @@ NimbleIn is built on Ruby 2, Rails 5, and uses PostgreSQL 9.2. We are using
 
     sudo apt-get install libxslt-dev libxml2-dev
 
-Install redis for ActionCable
+##### Install redis for ActionCable
 
     sudo apt-get install redis-server
-
-Nokogiri prereuisities:
 
 ## Setup / Installing
 
 ##### Clone Project
 
-    git clone git@bitbucket.org:teknuk/camp_one.git
-    or
     git clone git@gitlab.com:teknuk/camp_one.git
+    or
+    git clone git@bitbucket.org:teknuk/camp_one.git
 
 ##### Install Ruby and Bundler
 
@@ -78,12 +75,6 @@ and edit newly created `database.yml` and `.env` with you credentials.
 
 to OPTIONALLY initialize database with seed data run `bin/rails db:seed`
 
-##### Start Thin web-server for Notifications (private_pub for Faye) 
-To start notifications properly we need to start thin server with production 
-environment, so run following command to properly start thin server for faye
-
-    rackup private_pub.ru -s thin -E production
-
 ##### Start Rails Server  
 
     bin/rails server
@@ -112,10 +103,16 @@ Check and create directory structure with `deploy:check`
 
     bin/bundle exec cap production deploy:check
 
-Make a copy of linked_files for new server with `config:init`, edit these with 
-server configuration and push them with `config:push`
+Make a copy of linked_files for new server with `config:init`
 
     bin/bundle exec cap production config:init
+
+Fetch existing config with `config:fetch`
+
+    bin/bundle exec cap production config:fetch
+
+Push server configuration with `config:push`
+
     bin/bundle exec cap production config:push
 
 ##### Setup Puma and Nginx configuration
