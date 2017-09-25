@@ -76,7 +76,7 @@
       </div>
       <div class="pull-right">
         <% if @story.closed_at.blank? %>
-            <%= link_to 'Close', close_project_story_path(@project, @story), method: 'post', class: 'btn btn-default' %>
+            <%= link_to 'Close', close_project_story_path(@project, @story), method: 'post', class: 'btn btn-default', data: {confirm: 'Are you sure?'} %>
         <% end %>
         <%= link_to 'Edit', edit_project_story_path(@project, @story), class: 'btn btn-default' %>
         <% if can?(:destroy, @story) %>
