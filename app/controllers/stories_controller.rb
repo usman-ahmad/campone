@@ -17,7 +17,7 @@ class StoriesController < ApplicationController
     @stories = @project.stories.with_state(@visibility).search(params[:search_text]).order!('position')
     @stories = @stories.tagged_with(params[:tags]) if params[:tags].present?
     @stories = @stories.having_ownership(params[:owner]) if params[:owner].present?
-    @stories = @stories.open
+    @stories = @stories.paginate(:page => params[:page], :per_page => 20)
     # Fetching Proper Story
     @demo_story = @stories.first
 

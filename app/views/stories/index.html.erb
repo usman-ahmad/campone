@@ -35,6 +35,7 @@
     <ul class="sortable" id="stories" data-update-url="<%= sort_project_stories_url %>">
       <%= render partial: 'story_summary', collection: @stories, as: :story %>
     </ul>
+    <%= will_paginate @stories %>
     <div class="newStoryForm">
       <%= render 'form' %>
     </div>
