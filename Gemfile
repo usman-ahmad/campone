@@ -143,9 +143,8 @@ gem 'twitter'
 # Used to interact with asana API
 gem 'asana'
 # gem 'jira-ruby', github: 'sumoheavy/jira-ruby', :branch => 'master'
-# gem 'ruby-trello'
+gem 'ruby-trello'
 gem 'jira-ruby', github: 'zuf/jira-ruby', branch: 'master'
-gem 'ruby-trello', github: 'spodlecki/ruby-trello', branch: 'features/oauth-gem-loosen-restriction'
 
 # To interact with Pivotal Tracker API
 gem 'tracker_api'
