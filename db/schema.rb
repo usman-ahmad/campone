@@ -16,14 +16,14 @@ ActiveRecord::Schema.define(version: 20170913131420) do
   enable_extension "plpgsql"
 
   create_table "activities_backup", force: :cascade do |t|
-    t.integer  "trackable_id"
     t.string   "trackable_type"
-    t.integer  "owner_id"
+    t.integer  "trackable_id"
     t.string   "owner_type"
+    t.integer  "owner_id"
     t.string   "key"
     t.text     "parameters"
-    t.integer  "recipient_id"
     t.string   "recipient_type"
+    t.integer  "recipient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["owner_id", "owner_type"], name: "index_activities_backup_on_owner_id_and_owner_type", using: :btree
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20170913131420) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content"
-    t.integer  "commentable_id"
     t.string   "commentable_type"
+    t.integer  "commentable_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
@@ -261,8 +261,8 @@ ActiveRecord::Schema.define(version: 20170913131420) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
     t.string   "name"
     t.string   "avatar_file_name"
@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(version: 20170913131420) do
   add_foreign_key "events", "projects"
   add_foreign_key "identities", "users"
   add_foreign_key "integrations", "projects"
+  add_foreign_key "notification_settings", "users"
   add_foreign_key "notifications", "users", column: "performer_id"
   add_foreign_key "notifications", "users", column: "receiver_id"
   add_foreign_key "notifications_backup", "activities_backup", column: "activity_id"

@@ -4,8 +4,8 @@
 #
 #  id               :integer          not null, primary key
 #  content          :text
-#  commentable_id   :integer
 #  commentable_type :string
+#  commentable_id   :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  user_id          :integer
