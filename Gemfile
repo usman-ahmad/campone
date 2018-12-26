@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '~> 2.6.0'
 
 # Loads environment variables from `.env`, should be on top of application's Gemfile
 gem 'dotenv-rails'
