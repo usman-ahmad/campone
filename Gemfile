@@ -95,8 +95,8 @@ group :development do
   gem 'capistrano', require: false
   # Upload, initialize and maintain configuration files for Capistrano 3.x outside(or inside) of SCM
   gem 'capistrano-upload-config', require: false
-  # RVM support for Capistrano 3.x
-  gem 'capistrano-rvm', require: false
+  # rbenv support for Capistrano 3.x
+  gem 'capistrano-rbenv', require: false
   # Official Ruby on Rails specific tasks for Capistrano
   gem 'capistrano-rails', require: false
   # Bundler support for Capistrano 3.x
