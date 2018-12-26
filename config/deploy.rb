@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.8.0'
+lock '3.8.1'
 
 set :application, 'nimble_in'
 set :repo_url, 'git@bitbucket.org:teknuk/camp_one.git'

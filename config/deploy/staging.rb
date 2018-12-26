@@ -34,10 +34,10 @@ role :web, %w{teknuk@nimblein.com}
 # Feel free to add new variables to customise your setup.
 
 set :user, 'teknuk'
-set :deploy_to, '/home/teknuk/camp_one_dev'
+set :deploy_to, '/apps/nimble_in_staging'
 set :branch, 'dev'
 set :rails_env, :staging
-set :nginx_server_name, "dev.nimblein.com"
+set :nginx_server_name, 'dev.nimblein.com'
 
 # RBENV Specific Configurations
 set :rbenv_type, :user # or :system, depends on your rbenv setup
