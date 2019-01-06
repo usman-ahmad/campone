@@ -24,7 +24,6 @@ role :app, %w{teknuk@nimblein.com}
 role :db,  %w{teknuk@nimblein.com}
 role :web, %w{teknuk@nimblein.com}
 
-
 # Configuration
 # =============
 # You can set any configuration variable like in config/deploy.rb
@@ -36,17 +35,11 @@ role :web, %w{teknuk@nimblein.com}
 set :user, 'teknuk'
 set :deploy_to, '/apps/nimble_in_production'
 set :branch, 'live'
+set :rbenv_ruby, '2.6.0'
 set :rails_env, :production
 set :nginx_server_name, 'nimblein.com www.nimblein.com'
-
-# RBENV Specific Configurations
-set :rbenv_type, :user # or :system, depends on your rbenv setup
-set :rbenv_ruby, '2.6.0'
-# in case you want to set ruby version from the file:
-# set :rbenv_ruby, File.read('.ruby-version').strip
-# set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
-# set :rbenv_map_bins, %w{rake gem bundle ruby rails puma pumactl}
-# set :rbenv_roles, :all # default value
+set :nginx_config_name, 'nimblein.com'
+set :puma_workers, 3
 
 # Custom SSH Options
 # ==================

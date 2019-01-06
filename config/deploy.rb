@@ -37,6 +37,20 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bund
 # Default value for config_example_suffix is '-example'
 set :config_example_suffix, '.sample'
 
+##################
+# RBENV Defaults #
+##################
+
+# set :rbenv_type, :user # or :system, depends on your rbenv setup # default :user
+# set :rbenv_ruby, '2.6.0'
+
+# in case you want to set ruby version from the file:
+# set :rbenv_ruby, File.read('.ruby-version').strip
+
+set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+# set :rbenv_map_bins, %w{rake gem bundle ruby rails}
+# set :rbenv_roles, :all # default value
+
 #########################################
 # PUMA and NGINX related configurations #
 #########################################
