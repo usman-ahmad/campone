@@ -33,6 +33,10 @@ NimbleIn is built on Ruby 2, Rails 5, and uses PostgreSQL 9.2
 
     sudo apt-get install libxslt-dev libxml2-dev
 
+##### Install Image-Magick and FFMPEG for paperclip attachments
+
+    sudo apt install imagemagick ffmpeg
+
 ##### Install redis for ActionCable
 
     sudo apt-get install redis-server
