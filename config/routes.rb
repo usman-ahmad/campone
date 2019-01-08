@@ -81,7 +81,7 @@
 #                                        DELETE    /projects/:project_id/events/:id(.:format)                                   events#destroy
 #         new_import_project_integration GET       /projects/:project_id/integrations/:secure_id/new_import(.:format)           integrations#new_import
 #       start_import_project_integration POST      /projects/:project_id/integrations/:secure_id/start_import(.:format)         integrations#start_import
-#     accept_payload_project_integration POST|HEAD /projects/:project_id/integrations/:secure_id/accept_payload(.:format)       integrations#accept_payload {:defaults=>{:formats=>:json}}
+#     accept_payload_project_integration POST|HEAD /projects/:project_id/integrations/:secure_id/accept_payload(.:format)       integrations#accept_payload {:formats=>:json}
 #              list_project_integrations GET       /projects/:project_id/integrations/:name(.:format)                           integrations#new {:name=>/slack|hipchat|flowdock|asana|trello|bitbucket|github|gitlab/}
 #                   project_integrations GET       /projects/:project_id/integrations(.:format)                                 integrations#index
 #                                        POST      /projects/:project_id/integrations(.:format)                                 integrations#create
@@ -113,24 +113,24 @@
 #            user_jira_omniauth_callback GET|POST  /users/auth/jira/callback(.:format)                                          users/omniauth_callbacks#jira
 #         user_trello_omniauth_authorize GET|POST  /users/auth/trello(.:format)                                                 users/omniauth_callbacks#passthru
 #          user_trello_omniauth_callback GET|POST  /users/auth/trello/callback(.:format)                                        users/omniauth_callbacks#trello
-#                          user_password POST      /users/password(.:format)                                                    devise/passwords#create
 #                      new_user_password GET       /users/password/new(.:format)                                                devise/passwords#new
 #                     edit_user_password GET       /users/password/edit(.:format)                                               devise/passwords#edit
-#                                        PATCH     /users/password(.:format)                                                    devise/passwords#update
+#                          user_password PATCH     /users/password(.:format)                                                    devise/passwords#update
 #                                        PUT       /users/password(.:format)                                                    devise/passwords#update
+#                                        POST      /users/password(.:format)                                                    devise/passwords#create
 #               cancel_user_registration GET       /users/cancel(.:format)                                                      users/registrations#cancel
-#                      user_registration POST      /users(.:format)                                                             users/registrations#create
 #                  new_user_registration GET       /users/sign_up(.:format)                                                     users/registrations#new
 #                 edit_user_registration GET       /users/edit(.:format)                                                        users/registrations#edit
-#                                        PATCH     /users(.:format)                                                             users/registrations#update
+#                      user_registration PATCH     /users(.:format)                                                             users/registrations#update
 #                                        PUT       /users(.:format)                                                             users/registrations#update
 #                                        DELETE    /users(.:format)                                                             users/registrations#destroy
+#                                        POST      /users(.:format)                                                             users/registrations#create
 #                 accept_user_invitation GET       /users/invitation/accept(.:format)                                           devise/invitations#edit
 #                 remove_user_invitation GET       /users/invitation/remove(.:format)                                           devise/invitations#destroy
-#                        user_invitation POST      /users/invitation(.:format)                                                  devise/invitations#create
 #                    new_user_invitation GET       /users/invitation/new(.:format)                                              devise/invitations#new
-#                                        PATCH     /users/invitation(.:format)                                                  devise/invitations#update
+#                        user_invitation PATCH     /users/invitation(.:format)                                                  devise/invitations#update
 #                                        PUT       /users/invitation(.:format)                                                  devise/invitations#update
+#                                        POST      /users/invitation(.:format)                                                  devise/invitations#create
 #                          finish_signup GET|PATCH /users/:id/finish_signup(.:format)                                           omniauth_callbacks#finish_signup
 #                      associate_account PATCH     /users/:id/associate_account(.:format)                                       omniauth_callbacks#associate_account
 #            mark_all_read_notifications PATCH     /notifications/mark_all_read(.:format)                                       notifications#mark_all_read
