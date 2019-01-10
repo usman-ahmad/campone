@@ -27,7 +27,6 @@
 //= require notification
 //= require notify.min
 //= require trumbowyg/trumbowyg
-//= require public
 //= require cable
 //= require trumbowyg/vendor/plugins/preformatted/trumbowyg.preformatted
 //= require handlebars.runtime
