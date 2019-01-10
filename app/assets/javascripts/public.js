@@ -36,7 +36,7 @@ $(document).on('turbolinks:load', function () {
 
     $('.carousel').carousel({interval: false});
 
-    function initialize() {
+    function initialize_maps() {
         var myLatlng = new google.maps.LatLng(31.482288, 74.395823);
         var map = document.getElementById('map');
         var mapOptions = {
@@ -53,5 +53,7 @@ $(document).on('turbolinks:load', function () {
         marker.setMap(map);
     }
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+    if (document.getElementById('map')) {
+        google.maps.event.addDomListener(window, 'load', initialize_maps);
+    }
 });
