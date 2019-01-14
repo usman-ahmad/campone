@@ -33,6 +33,7 @@ function getStory(storyIdOrElement){
     console.log('storiesPath ', storiesPath );
 
     $.get(storiesPath + '/'+ storyId +'.json', function (data) {
+        data.description = new Handlebars.SafeString(data.description);
         var StoryHTML = HandlebarsTemplates['stories/show']({
             story: data
         });
