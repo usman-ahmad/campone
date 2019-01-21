@@ -103,12 +103,12 @@ class StoriesController < ApplicationController
   end
 
   def set_state
-    if @story.update_attributes(state: params[:state])
-      'State of story is updated successfully'
-    else
-      'State of story could not be updated'
-    end
-    redirect_to [@project, @story]
+    updated = if @story.update_attributes(state: params[:state])
+                'State of story is updated successfully'
+              else
+                'State of story could not be updated'
+              end
+    redirect_to [@project, :stories, anchor: @story.id], notice: updated
   end
 
   def sort
