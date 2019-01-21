@@ -26,7 +26,7 @@ class NotifiableIntegration < Integration
       request.body = message_to_payload(message).to_json
       http.request(request)
     rescue => e
-      Rails.logger.error("#{self.class.name}Error \nMESSAGE: #{e.message} \nURI: #{self.url} \nTRACE... \n#{e.backtrace.join("\n")}")
+      Rails.logger.error("NotifiableIntegration#publish [#{e.class.name}] for #{self.class.name} \nMESSAGE: #{e.message} \nURI: #{self.url} \nTRACE... \n#{e.backtrace.try(:join, "\n")}")
     end
   end
 end
