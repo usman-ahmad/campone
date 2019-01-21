@@ -1,4 +1,10 @@
 json.(@story, :id, :title, :description, :priority, :due_at, :state, :ticket_id, :project_id, :story_type)
+
+json.next_states @story.next_states do |action, state|
+  json.action action
+  json.state state
+end
+
 json.requester_name  @story.requester.try(:name)
 json.owner  story_assigned_to(@story)
 json.url project_story_path(@project, @story)

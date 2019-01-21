@@ -2,6 +2,9 @@
   <div class="panel-heading">
     <i class="fa fa-files-o" aria-hidden="true"></i> <b class="text-uppercase">{{story.ticket_id}}</b>
     <span class="pull-right todo-detail-icon">
+      {{#each story.next_states}}
+        <a href="{{../story.url}}/set_state?state={{state}}" data-method="patch" class="label progress-status progress-{{state}}" rel="nofollow">{{action}}</a>
+      {{/each}}
       <a class="btn" rel="nofollow" data-method="post" href="{{story.url}}/close" data-confirm="Are you sure?">Close</a>
       <a class="href mg-r10" href="{{story.url}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
       <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="{{story.url}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
