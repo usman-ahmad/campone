@@ -2,8 +2,9 @@ class StoriesController < ApplicationController
   load_and_authorize_resource :project
   load_and_authorize_resource :story, :through => :project
 
-  before_action :set_project
-  before_action :set_story, only: [:show, :edit, :update, :destroy, :close]
+  # UA[2019/01/21] - SHOULD ALREADY BE SET VIA "load_and_authorize_resource"
+  # before_action :set_project
+  # before_action :set_story, only: [:show, :edit, :update, :destroy, :close]
 
   # UA[2017/01/10] - WHAT ABOUT SORT AND IMPORT
   before_action :set_performer, only: [:create, :update, :destroy, :set_state, :assign, :close]
@@ -129,13 +130,13 @@ class StoriesController < ApplicationController
 
   private
 
-  def set_story
-    @story = @project.stories.find(params[:id])
-  end
-
-  def set_project
-    @project = Project.find(params[:project_id])
-  end
+  # def set_story
+  #   @story = @project.stories.find(params[:id])
+  # end
+  #
+  # def set_project
+  #   @project = Project.find(params[:project_id])
+  # end
 
   def story_params
     params.require(:story).permit(:title, :description, :state, :project_id, :priority, :due_at, :owner_id, :tag_list, :story_type)
