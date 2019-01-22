@@ -5,34 +5,30 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
-    var storyId = document.location.hash.substring(1);
-    getStory(storyId || $('li[id^=story]')[0]);
+    getStory(document.location.hash.substring(1));
 
-    $("#stories").on("click", "li[id^=story_]", function(event){
-        getStory(this)
+    $("#stories").on("click", "li[id^=story_]", function () {
+        // getStory($(this).attr('id').replace('story_', ''));
+        document.location.hash = $(this).attr('id').replace('story_', '');
     });
 
-    $(document).on('change', '#story-detail-attachment #story_detail_attachments',function () {
+    $(document).on('change', '#story-detail-attachment #story_detail_attachments', function () {
         $(".attachment-div").removeClass('hidden');
     });
 });
 
+$(window).bind('hashchange', function () {
+    getStory(document.location.hash.substring(1));
+});
 
-function getStory(storyIdOrElement){
-    if(storyIdOrElement === undefined){
-        return false;
-    }
+function getStory(storyId) {
+    var storiesPath = $('a.navbar-brand.caret-before').attr('href');
+    var element = $('li#story_' + storyId)[0] || $('li[id^=story_]')[0];
+    if (!element) return;
+    if ($('.story-selected').attr('id') == $(element).attr('id')) return;
+    storyId = $(element).attr('id').replace('story_', '');
 
-    var element = storyIdOrElement;
-    if(typeof storyIdOrElement === 'string'){
-        element = $('#story_'+storyIdOrElement)[0];
-    }
-
-    var storyId = element.id.split('_').slice(-1)[0];
-    var storiesPath = $('.caret-before').attr('href');
-    console.log('storiesPath ', storiesPath );
-
-    $.get(storiesPath + '/'+ storyId +'.json', function (data) {
+    $.get(storiesPath + '/' + storyId + '.json', function (data) {
         data.description = new Handlebars.SafeString(data.description);
         var StoryHTML = HandlebarsTemplates['stories/show']({
             story: data
@@ -42,18 +38,18 @@ function getStory(storyIdOrElement){
     });
 
     $('.story-selected').removeClass('story-selected');
-    $(element).addClass( "story-selected" );
+    $(element).addClass("story-selected");
     document.location.hash = storyId;
 }
 
-$(document).on('ajax:success', 'div#story-detail form#new_comment', function(evt, data, status, xhr){
+$(document).on('ajax:success', 'div#story-detail form#new_comment', function (evt, data, status, xhr) {
     console.log('new comment');
     $('.comments-list').append(Handlebars.partials['comments/_show'](data));
     $('textarea#comment_content').trumbowyg('empty');
     $('.comment-action').addClass('hidden');
 });
 
-$(document).on('ajax:success', 'div#story-detail form#new_attachment', function(evt, data, status, xhr){
+$(document).on('ajax:success', 'div#story-detail form#new_attachment', function (evt, data, status, xhr) {
     $('.attachment-list').html(Handlebars.partials['attachments/_list']({
         attachments: data,
         resource_id: $('.story-selected')[0].id
@@ -61,9 +57,3 @@ $(document).on('ajax:success', 'div#story-detail form#new_attachment', function(
 
     $(".attachment-div").addClass('hidden');
 });
-
-$(window).bind('hashchange', function (e) {
-    var storyId = document.location.hash.substring(1);
-    getStory(storyId);
-});
-
