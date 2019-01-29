@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/TikiTDO/trumbowyg_rails.git
-  revision: 0b3a9386d804b378cba39e9d4043c9b8fe113507
+  remote: https://github.com/TikiTDO/trumbowyg_rails.git
+  revision: 4c89caea86f8471a919367071c344879b7fc7c72
   specs:
     trumbowyg_rails (2.1.0.3)
       rails (>= 3.1)
@@ -8,23 +8,23 @@ GIT
       sass (>= 3.2)
 
 GIT
-  remote: git://github.com/norman/friendly_id.git
-  revision: aff0564584e84ffa505e6e278b65ca3c4ee5d698
+  remote: https://github.com/norman/friendly_id.git
+  revision: a3657cc1eff23f7cb0c02b511617436eecaea397
   specs:
-    friendly_id (5.2.0.beta.1)
+    friendly_id (5.2.5)
       activerecord (>= 4.0.0)
 
 GIT
-  remote: git://github.com/seuros/capistrano-puma.git
-  revision: 1d7cca2e431c23943ebcde19588169ed12025833
+  remote: https://github.com/seuros/capistrano-puma.git
+  revision: 09b11cafb2cf30386d460955d0b9013d36373309
   specs:
-    capistrano3-puma (3.1.0)
+    capistrano3-puma (3.1.1)
       capistrano (~> 3.7)
       capistrano-bundler
       puma (~> 3.4)
 
 GIT
-  remote: git://github.com/zuf/jira-ruby.git
+  remote: https://github.com/zuf/jira-ruby.git
   revision: 73f802760f34ba032de6713b613216fb62b45397
   branch: master
   specs:
