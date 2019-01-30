@@ -32,7 +32,7 @@
 
 <div class="col-md-12">
   <div class="col-md-6">
-    <ul class="sortable" id="stories" data-update-url="<%= sort_project_stories_url %>">
+    <ul class="sortable" id="stories" data-update-url="<%= sort_project_stories_path %>">
       <%= render partial: 'story_summary', collection: @stories, as: :story %>
     </ul>
     <%= will_paginate @stories %>
