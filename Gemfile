@@ -53,9 +53,8 @@ gem 'acts-as-taggable-on', '~> 4.0'
 # front-end WYSIWYG editor
 gem 'trumbowyg_rails', github: 'TikiTDO/trumbowyg_rails' #, '~> 2.1.0.3'
 
-# To create slugs
-# facing an issue with custom slug_column see https://github.com/norman/friendly_id/issues/765
-gem 'friendly_id', github: 'norman/friendly_id' #, '~> 5.2.0.beta.1'
+# FriendlyId is slugging and permalink solution for ActiveRecord
+gem 'friendly_id', '~> 5.2'
 
 # Pagination library
 gem 'will_paginate', '~> 3.1.0'
@@ -175,8 +174,7 @@ gem 'asana' #, '~> 0.5.0'
 gem 'ruby-trello' #, '~> 2.1.0'
 
 # A Ruby gem for the JIRA REST API
-# gem 'jira-ruby', github: 'sumoheavy/jira-ruby', :branch => 'master'
-gem 'jira-ruby', github: 'zuf/jira-ruby', branch: 'master' #, '~> 1.0.0'
+gem 'jira-ruby', :require => 'jira-ruby' #, '~> 1.6'
 
 # To interact with Pivotal Tracker API
 gem 'tracker_api' #, '~> 1.4.1'
@@ -202,17 +200,17 @@ group :development do
   ##################
 
   # Use Capistrano for automated deployments, capistranorb.com is Remote multi-server automation tool
-  gem 'capistrano', require: false #, '~> 3.8.1'
+  gem 'capistrano', '~> 3.8'
   # Upload, initialize and maintain configuration files for Capistrano 3.x outside(or inside) of SCM
-  gem 'capistrano-upload-config', require: false #, '~> 0.7.0'
+  gem 'capistrano-upload-config', '~> 0.7'
   # rbenv support for Capistrano 3.x
-  gem 'capistrano-rbenv', require: false #, '~> 2.1.4'
+  gem 'capistrano-rbenv', '~> 2.1'
   # Official Ruby on Rails specific tasks for Capistrano
-  gem 'capistrano-rails', require: false #, '~> 1.2.3'
+  gem 'capistrano-rails', '~> 1.2'
   # Bundler support for Capistrano 3.x
-  gem 'capistrano-bundler', require: false #, '~> 1.2.0'
+  gem 'capistrano-bundler', '~> 1.2'
   # Puma integration for Capistrano
-  gem 'capistrano3-puma', github: 'seuros/capistrano-puma' #, '~> 3.1.0'
+  gem 'capistrano3-puma', '~> 3.1'
 end
 
 group :development, :test do

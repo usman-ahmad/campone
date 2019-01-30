@@ -7,31 +7,6 @@ GIT
       railties (>= 3.1)
       sass (>= 3.2)
 
-GIT
-  remote: https://github.com/norman/friendly_id.git
-  revision: a3657cc1eff23f7cb0c02b511617436eecaea397
-  specs:
-    friendly_id (5.2.5)
-      activerecord (>= 4.0.0)
-
-GIT
-  remote: https://github.com/seuros/capistrano-puma.git
-  revision: 09b11cafb2cf30386d460955d0b9013d36373309
-  specs:
-    capistrano3-puma (3.1.1)
-      capistrano (~> 3.7)
-      capistrano-bundler
-      puma (~> 3.4)
-
-GIT
-  remote: https://github.com/zuf/jira-ruby.git
-  revision: 73f802760f34ba032de6713b613216fb62b45397
-  branch: master
-  specs:
-    jira-ruby (1.0.0)
-      activesupport (>= 4.2, < 5.1)
-      oauth (~> 0.5, >= 0.5.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -131,6 +106,10 @@ GEM
       sshkit (~> 1.3)
     capistrano-upload-config (0.7.0)
       capistrano (>= 3.0)
+    capistrano3-puma (3.1.1)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (~> 3.4)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -205,6 +184,8 @@ GEM
     ffi (1.9.14)
     font-awesome-sass (4.6.2)
       sass (>= 3.2)
+    friendly_id (5.2.5)
+      activerecord (>= 4.0.0)
     fullcalendar-rails (2.4.0.1)
       jquery-rails (>= 4.0.5, < 5.0.0)
       momentjs-rails (>= 2.9.0)
@@ -240,6 +221,10 @@ GEM
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
+    jira-ruby (1.6.0)
+      activesupport
+      multipart-post
+      oauth (~> 0.5, >= 0.5.0)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -530,12 +515,12 @@ DEPENDENCIES
   bootstrap-social-rails
   byebug
   cancancan (~> 1.10)
-  capistrano
-  capistrano-bundler
-  capistrano-rails
-  capistrano-rbenv
-  capistrano-upload-config
-  capistrano3-puma!
+  capistrano (~> 3.8)
+  capistrano-bundler (~> 1.2)
+  capistrano-rails (~> 1.2)
+  capistrano-rbenv (~> 2.1)
+  capistrano-upload-config (~> 0.7)
+  capistrano3-puma (~> 3.1)
   capybara
   coffee-rails (~> 4.1.0)
   database_cleaner
@@ -545,12 +530,12 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   font-awesome-sass
-  friendly_id!
+  friendly_id (~> 5.2)
   fullcalendar-rails
   grape
   handlebars_assets
   jbuilder (~> 2.0)
-  jira-ruby!
+  jira-ruby
   jquery-rails
   jquery-ui-sass-rails
   letter_opener
