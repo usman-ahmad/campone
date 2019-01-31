@@ -29,7 +29,6 @@
     <%= render 'shared/tab_nav', project: @project, active: 'todos' %>
 <% end %>
 
-
 <div class="col-md-12">
   <div class="col-md-6">
     <ul class="sortable" id="stories" data-update-url="<%= sort_project_stories_path %>">
@@ -40,7 +39,8 @@
       <%= render 'form' %>
     </div>
   </div>
-  <div class="col-md-6 hidden-sm hidden-xs" id="story-detail">
+  <div class="col-md-6 hidden-sm hidden-xs" id="story-detail" data-project="<%= project_json(@project) %>">
   </div>
 </div>
+
 <%= render 'attachments/preview_attachement' %>

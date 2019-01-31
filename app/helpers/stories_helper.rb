@@ -21,4 +21,13 @@ module StoriesHelper
     user = obj.respond_to?(:requester) ? obj.requester : obj.user
     project.contributions.find_by_user_id(user).try(:initials) || user.name.split(' ').collect{|x| x[0]}.join()
   end
+
+  def project_json(project)
+    {
+        members: project.members.map {|m| {id: m.id, name: m.name}},
+        priorities: Story::PRIORITIES,
+        story_types: Story::STORY_TYPES,
+        states: Story::STATES
+    }.to_json
+  end
 end
