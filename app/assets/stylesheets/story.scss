@@ -139,11 +139,19 @@
   .panel-heading {
     background-color: transparent;
   }
-  .panel-body {
-    padding: 0;
-  }
-  .table-borderless > tbody > tr > td:first-child {
-    padding-left: 0;
+
+  .story-props {
+    > div, > form > div {
+      margin-bottom: 10px;
+
+      &.col-md-4 {
+        padding-left: 0;
+      }
+
+      &.trumbowyg-box {
+        margin-top: 0;
+      }
+    }
   }
 }
 
@@ -155,14 +163,14 @@
   margin-bottom: 7px;
 }
 
-.table-borderless > tbody > tr {
-  > td {
-    border: 0;
-  }
-  > th {
-    border: 0;
-  }
-}
+//.table-borderless > tbody > tr {
+//  > td {
+//    border: 0;
+//  }
+//  > th {
+//    border: 0;
+//  }
+//}
 
 .todo-detail-icon a {
   color: #000;

@@ -875,20 +875,20 @@
 
 .story-attachment-file span {
   text-align: center;
-  width: 123px;
-  height: 127px;
-  outline: 2px dashed #92b0b3;
-  outline-offset: -10px;
+  width: 103px;
+  height: 107px;
+  border: 2px dashed #92b0b3;
   display: block;
-  position: relative;
-  padding: 38px 22px;
-  margin: 0 auto 10px;
+  //position: relative;
+  padding: 20px 11px;
+  margin: 10px;
 }
 
 .story-attachment-file:focus span,
 .story-attachment-file.has-focus span,
 .story-attachment-file:hover span {
   cursor: pointer;
+  border-color: #6495ED;
 }
 
 .story-attachment-file span {
