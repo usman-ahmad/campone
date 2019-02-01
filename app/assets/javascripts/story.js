@@ -5,6 +5,9 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
+    $("#story-detail").data('project').members.unshift({"id": "", "name": "Nobody"});
+    // $("#story-detail").data('project').priorities.unshift("Please Select");
+
     getStory(document.location.hash.substring(1));
 
     $("#stories").on("click", "li[id^=story_]", function () {
@@ -31,7 +34,8 @@ function getStory(storyId) {
     $.get(storiesPath + '/' + storyId + '.json', function (data) {
         data.description = new Handlebars.SafeString(data.description);
         var StoryHTML = HandlebarsTemplates['stories/show']({
-            story: data
+            story: data,
+            project: $("#story-detail").data('project')
         });
         var container = '#story-detail';
         $(container).html(StoryHTML);
