@@ -1,0 +1,40 @@
+<strong>Story Title: </strong>
+<div>{{story.title}}</div>
+
+<strong>Description: </strong>
+<div>{{story.description}}</div>
+
+<div class="col-md-4">
+  <strong>Owner:</strong>
+    {{story.owner}}
+</div>
+
+<div class="col-md-4">
+  <strong>Status:</strong>
+  <span class="label label-info progress-status progress-{{story.state}}">{{story.state}}</span>
+</div>
+
+<div class="col-md-4">
+  <strong>Requester:</strong>
+    {{story.requester_name}}
+</div>
+
+<div class="col-md-4">
+  <strong>Type:</strong>
+  <span class="text-uppercase">{{story.story_type}}</span>
+</div>
+
+<!--<div class="col-md-4">-->
+  <!--<strong>Priority:</strong>-->
+    <!--{{story.priority}}-->
+<!--</div>-->
+
+<div class="col-md-4">
+  <strong>Due on:</strong>
+    {{story.due_at}}
+</div>
+
+<div class="col-md-4">
+  <strong>Tags:</strong>
+  ADD TAGS HERE
+</div>
