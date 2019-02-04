@@ -18,6 +18,31 @@ $(document).on('turbolinks:load', function () {
     $(document).on('change', '#story-detail-attachment #story_detail_attachments', function () {
         $(".attachment-div").removeClass('hidden');
     });
+
+    $(document).on('click', '#story-detail .panel-heading a[data-action=edit]', function (e) {
+        var container = $('#story-detail');
+        var partial;
+        if ($(this).attr('title') == 'Edit') {
+            partial = 'stories/_form';
+            $(this).attr('title', 'Update');
+            $(this).find('i.fa-pencil').hide().next().show();
+        } else {
+            partial = 'stories/_details';
+            $(this).attr('title', 'Edit');
+            $(this).find('i.fa-pencil').show().next().hide();
+        }
+        var storyDetail = Handlebars.partials[partial]({
+            story: container.data('storyData'),
+            project: container.data('project')
+        });
+        container.find('.story-props').html(storyDetail);
+        container.find('.story-props .description-textarea').trumbowyg({
+            resetCss: true,
+            removeformatPasted: true,
+            btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['preformatted'], ['horizontalRule']]
+        });
+        e.preventDefault();
+    });
 });
 
 $(window).bind('hashchange', function () {
@@ -34,11 +59,10 @@ function getStory(storyId) {
     $.get(storiesPath + '/' + storyId + '.json', function (data) {
         data.description = new Handlebars.SafeString(data.description);
         var StoryHTML = HandlebarsTemplates['stories/show']({
-            story: data,
-            project: $("#story-detail").data('project')
+            story: data
         });
         var container = '#story-detail';
-        $(container).html(StoryHTML);
+        $(container).html(StoryHTML).data('storyData', data);
     });
 
     $('.story-selected').removeClass('story-selected');

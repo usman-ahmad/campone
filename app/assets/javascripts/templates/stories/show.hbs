@@ -6,13 +6,16 @@
         <a href="{{../story.url}}/set_state?state={{state}}" data-method="patch" class="label progress-status progress-{{state}}" rel="nofollow">{{action}}</a>
       {{/each}}
       <a class="btn" rel="nofollow" data-method="post" href="{{story.url}}/close" data-confirm="Are you sure?">Close</a>
-      <a class="href mg-r10" href="{{story.url}}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+      <a class="href mg-r10" href="{{story.url}}/edit" title="Edit">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+        <i class="fa fa-floppy-o" aria-hidden="true" style="display: none;"></i>
+      </a>
       <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="{{story.url}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
     </span>
   </div>
   <div class="panel-body">
     <div class="story-props">
-      {{> stories/_form }}
+      {{> stories/_details }}
     </div>
     <div class="clearfix" style="margin: 0"></div>
 
