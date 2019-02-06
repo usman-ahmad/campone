@@ -1,12 +1,17 @@
-<form>
-  <strong>Story Title: </strong>
-  <input type="text" class="form-control mg-b10" id="myTextbox" placeholder="ADD To-Do" value="{{ story.title }}">
+<form action="{{story.url}}" method="post">
+  <input type="hidden" name="_method" value="patch" />
+  <input type="hidden" name="authenticity_token" value="{{project.authenticity_token}}">
+
+  <div class="alert alert-danger" role="alert" style="display: none;"><ul></ul></div>
+
+  <strong>Title: </strong>
+  <input type="text" class="form-control mg-b10" id="myTextbox" placeholder="ADD To-Do" value="{{ story.title }}" name="story[title]">
   <strong>Description: </strong>
-  <textarea class="form-control description-textarea" placeholder="To-Do Description" cols="3" rows="8">{{ story.description }}</textarea>
+  <textarea class="form-control description-textarea" placeholder="To-Do Description" cols="3" rows="8" name="story[description]">{{ story.description }}</textarea>
 
   <div class="col-md-4">
     <label for="owner">Owner:</label>
-    <select class="form-control">
+    <select name="story[owner_id]" class="form-control">
       {{#each project.members}}
           <option value="{{id}}" {{#ifCond name '==' ../story.owner}}selected{{/ifCond}}>{{ name }}</option>
       {{/each}}
@@ -15,7 +20,7 @@
 
   <div class="col-md-4">
     <label for="state">Status:</label>
-    <select class="form-control">
+    <select name="story[state]" class="form-control">
         {{#each project.states}}
           <option value="{{this}}" {{#ifCond this '==' ../story.state}}selected{{/ifCond}}>{{ this }}</option>
         {{/each}}
@@ -29,7 +34,7 @@
 
   <div class="col-md-4">
     <label for="storyType">Type:</label>
-    <select class="form-control">
+    <select name="story[story_type]" class="form-control">
         {{#each project.story_types}}
           <option value="{{this}}" {{#ifCond this '==' ../story.story_type}}selected{{/ifCond}}>{{ this }}</option>
         {{/each}}
@@ -38,7 +43,7 @@
 
   <!--<div class="col-md-4">-->
     <!--<label for="priotiy">Priority</label>-->
-    <!--<select class="form-control">-->
+    <!--<select name="story[priotiy]" class="form-control">-->
       <!--{{#each project.priorities}}-->
         <!--<option value="{{this}}" {{#ifCond this '==' ../story.priority}}selected{{/ifCond}}>{{ this }}</option>-->
       <!--{{/each}}-->
@@ -49,8 +54,7 @@
     <label for="due">Due on:</label>
     <div class="input-group">
       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-      <input type="text" class="form-control date_picker" id="requesterName" value="{{ story.due_at}}">
+      <input type="text" class="form-control date_picker" id="requesterName" value="{{ story.due_at}}" name="story[due_at]">
     </div>
   </div>
-
 </form>

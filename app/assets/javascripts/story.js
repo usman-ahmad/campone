@@ -5,8 +5,12 @@ $(document).on('turbolinks:load', function () {
         }
     });
 
-    $("#story-detail").data('project').members.unshift({"id": "", "name": "Nobody"});
-    // $("#story-detail").data('project').priorities.unshift("Please Select");
+    // UA[2019/01/06] project level variables are valid as long as we reload page on project change
+    if ($("#story-detail").data('project')) {
+        $("#story-detail").data('project').authenticity_token = $('meta[name="csrf-token"]').attr('content');
+        $("#story-detail").data('project').members.unshift({"id": "", "name": "Nobody"});
+        // $("#story-detail").data('project').priorities.unshift("Please Select");
+    }
 
     getStory(document.location.hash.substring(1));
 
@@ -19,27 +23,37 @@ $(document).on('turbolinks:load', function () {
         $(".attachment-div").removeClass('hidden');
     });
 
-    $(document).on('click', '#story-detail .panel-heading a[data-action=edit]', function (e) {
-        var container = $('#story-detail');
-        var partial;
-        if ($(this).attr('title') == 'Edit') {
-            partial = 'stories/_form';
-            $(this).attr('title', 'Update');
-            $(this).find('i.fa-pencil').hide().next().show();
-        } else {
-            partial = 'stories/_details';
-            $(this).attr('title', 'Edit');
-            $(this).find('i.fa-pencil').show().next().hide();
-        }
-        var storyDetail = Handlebars.partials[partial]({
-            story: container.data('storyData'),
-            project: container.data('project')
-        });
-        container.find('.story-props').html(storyDetail);
-        container.find('.story-props .description-textarea').trumbowyg({
+    // UA[2019/01/06] TODO: check project flow, shall user only be allowed to update in edit mode?
+    // i.e. Focused Edit mode, not allowed to close, state_action, delete, attachments, comment etc.
+    $(document).on('click', '#story-detail .panel-heading i.fa-pencil', function (e) {
+        $('.story-props', '#story-detail').html(Handlebars.partials['stories/_form']({
+            story: $('#story-detail').data('storyData'),
+            project: $('#story-detail').data('project')
+        })).find('.description-textarea').trumbowyg({
             resetCss: true,
             removeformatPasted: true,
             btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['preformatted'], ['horizontalRule']]
+        });
+        $(this).hide().next().show().parent().attr('title', 'Update');
+        e.preventDefault();
+    });
+
+    $(document).on('click', '#story-detail .panel-heading i.fa-floppy-o', function (e) {
+        var form = $('.story-props form', '#story-detail');
+        var oldThis = $(this);
+        $('.story-props > form > .alert-danger > ul', '#story-detail').text('');
+        $.post(form.attr('action') + '.json', form.serialize(), function (data) {
+            $('#story-detail').data('storyData', data);
+            data.description = new Handlebars.SafeString(data.description);
+            $('.story-props', '#story-detail').html(Handlebars.partials['stories/_details']({
+                story: data
+            }));
+            oldThis.hide().prev().show().parent().attr('title', 'Edit');
+        }, 'json').fail(function (jqXHR) {
+            $.each(jqXHR.responseJSON, function (i, error) {
+                $('.story-props > form > .alert-danger > ul', '#story-detail').append($('<li>').text(error));
+            });
+            $('.story-props > form > .alert-danger').show();
         });
         e.preventDefault();
     });

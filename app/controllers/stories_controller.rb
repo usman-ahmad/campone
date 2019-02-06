@@ -83,9 +83,15 @@ class StoriesController < ApplicationController
       # @story.create_activity :update, owner: current_user
       # redirect_to [@project, @story], notice: 'Story was successfully updated.'
       # TODO: redirect to show page if edit is initiated from show page
-      redirect_to [@project, :stories, anchor: @story.id], notice: 'Story was successfully updated.'
+      respond_to do |format|
+        format.html {redirect_to [@project, :stories, anchor: @story.id], notice: 'Story was successfully updated.'}
+        format.json {render :show}
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html {render :edit}
+        format.json {render json: @story.errors.full_messages, status: :unprocessable_entity}
+      end
     end
   end
 
