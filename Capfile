@@ -44,6 +44,9 @@ require 'capistrano/rails/assets'
 # Include capistrano-upload-config to upload configs
 require 'capistrano/upload-config'
 
+# Include capistrano-rails-console to run rails console and db on server
+require 'capistrano/rails/console'
+
 # Include capistrano-puma with nginx
 require 'capistrano/puma'
 install_plugin Capistrano::Puma  # Default puma tasks

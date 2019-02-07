@@ -37,6 +37,34 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bund
 # Default value for config_example_suffix is '-example'
 set :config_example_suffix, '.sample'
 
+################
+# CUSTOM_TASKS #
+################
+
+namespace :rails do
+  # https://github.com/capistrano/sshkit/blob/master/EXAMPLES.md
+  desc 'Interact with a remote bash shell using sshkit-interactive'
+  task :bash do
+    run_interactively primary(fetch(:console_role)), shell: fetch(:console_shell) do
+      within current_path do
+        as user: fetch(:console_user) do
+          execute(:bash)
+        end
+      end
+    end
+  end
+
+  # # https://stackoverflow.com/questions/9569070/how-to-enter-rails-console-on-production-via-capistrano
+  # desc 'Open ssh `cap [staging] ssh [server_index default: 0]`'
+  # task :ssh do
+  #   server = roles(:app)[ARGV[2].to_i]
+  #   puts "Opening a console on: #{server.hostname}…."
+  #   cmd = "ssh #{server.user}@#{server.hostname}"
+  #   puts cmd
+  #   exec cmd
+  # end
+end
+
 ##################
 # RBENV Defaults #
 ##################
@@ -108,3 +136,4 @@ set :puma_daemonize, true
 # set :nginx_ssl_certificate, "/etc/ssl/certs/{fetch(:nginx_config_name)}.crt"
 # set :nginx_ssl_certificate_key, "/etc/ssl/private/{fetch(:nginx_config_name)}.key"
 # set :nginx_use_ssl, false
+

@@ -211,6 +211,8 @@ group :development do
   gem 'capistrano-bundler', '~> 1.2'
   # Puma integration for Capistrano
   gem 'capistrano3-puma', '~> 3.1'
+  # Remote rails console and dbconsole for capistrano.
+  gem 'capistrano-rails-console'
 end
 
 group :development, :test do
