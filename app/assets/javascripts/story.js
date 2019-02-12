@@ -19,14 +19,13 @@ $(document).on('turbolinks:load', function () {
         document.location.hash = $(this).attr('id').replace('story_', '');
     });
 
+    // UA[2019/02/13] TODO : change selector for .on( and check #story-detail-attachment #story_detail_attachments
     $(document).on('change', '#story-detail-attachment #story_detail_attachments', function () {
         $(".attachment-div").removeClass('hidden');
     });
 
-    // UA[2019/01/06] TODO: check project flow, shall user only be allowed to update in edit mode?
-    // i.e. Focused Edit mode, not allowed to close, state_action, delete, attachments, comment etc.
-    $(document).on('click', '#story-detail .panel-heading i.fa-pencil', function (e) {
-        $('.story-props', '#story-detail').html(Handlebars.partials['stories/_form']({
+    $('#story-detail').on('click', '.panel-heading i.fa-pencil', function (e) {
+        $('#story-detail').html(HandlebarsTemplates['stories/edit']({
             story: $('#story-detail').data('storyData'),
             project: $('#story-detail').data('project')
         })).find('.description-textarea').trumbowyg({
@@ -34,27 +33,25 @@ $(document).on('turbolinks:load', function () {
             removeformatPasted: true,
             btns: [['bold', 'italic'], ['link'], ['unorderedList', 'orderedList'], ['preformatted'], ['horizontalRule']]
         });
-        $(this).hide().next().show().parent().attr('title', 'Update');
         e.preventDefault();
     });
 
-    $(document).on('click', '#story-detail .panel-heading i.fa-floppy-o', function (e) {
-        var form = $('.story-props form', '#story-detail');
-        var oldThis = $(this);
-        $('.story-props > form > .alert-danger > ul', '#story-detail').text('');
+    $('#story-detail').on('submit', '> form', function (e) {
+        var form = $(this);
+        form.find('.alert-danger > ul').text('');
         $.post(form.attr('action') + '.json', form.serialize(), function (data) {
-            $('#story-detail').data('storyData', data);
-            data.description = new Handlebars.SafeString(data.description);
-            $('.story-props', '#story-detail').html(Handlebars.partials['stories/_details']({
-                story: data
-            }));
-            oldThis.hide().prev().show().parent().attr('title', 'Edit');
+            showStory(data);
         }, 'json').fail(function (jqXHR) {
             $.each(jqXHR.responseJSON, function (i, error) {
-                $('.story-props > form > .alert-danger > ul', '#story-detail').append($('<li>').text(error));
+                form.find('.alert-danger > ul').append($('<li>').text(error));
             });
-            $('.story-props > form > .alert-danger').show();
+            form.find('.alert-danger').show();
         });
+        e.preventDefault();
+    });
+
+    $('#story-detail').on('click', '.panel-heading i.fa-times, .panel-footer button.btn-default', function (e) {
+        showStory($('#story-detail').data('storyData'));
         e.preventDefault();
     });
 });
@@ -71,17 +68,18 @@ function getStory(storyId) {
     storyId = $(element).attr('id').replace('story_', '');
 
     $.get(storiesPath + '/' + storyId + '.json', function (data) {
-        data.description = new Handlebars.SafeString(data.description);
-        var StoryHTML = HandlebarsTemplates['stories/show']({
-            story: data
-        });
-        var container = '#story-detail';
-        $(container).html(StoryHTML).data('storyData', data);
+        showStory(data);
     });
-
     $('.story-selected').removeClass('story-selected');
     $(element).addClass("story-selected");
     document.location.hash = storyId;
+}
+
+function showStory(storyData) {
+    storyData.description = new Handlebars.SafeString(storyData.description);
+    $('#story-detail').html(HandlebarsTemplates['stories/show']({
+        story: storyData
+    })).data('storyData', storyData);
 }
 
 $(document).on('ajax:success', 'div#story-detail form#new_comment', function (evt, data, status, xhr) {
