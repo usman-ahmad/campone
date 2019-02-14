@@ -34,9 +34,9 @@ class Contribution < ApplicationRecord
   scope :joined, -> { where(status: 'joined') }
 
   ROLES = {
-      manager: 'Manager',
-      member: 'Member',
       guest: 'Guest',
+      member: 'Member',
+      manager: 'Manager',
       owner: 'Owner',
   }
 

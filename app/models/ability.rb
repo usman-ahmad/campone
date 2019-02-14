@@ -33,12 +33,12 @@ class Ability
     can :manage, Attachment
 
     can [:crud, :resend_invitation], Contribution do |contribution|
-      contribution.project.contributions.where(role: [MANAGER, OWNER] , user_id: user.id).present?
+      contribution.project.contributions.where(role: [MANAGER, OWNER], user_id: user.id).present?
     end
     # owner role is automatically created, we cannot edit it later
     cannot :manage, Contribution, role: OWNER
     # TODO: Only allow change to initials
-    can :manage, Contribution, role: OWNER, user_id: user.id
+    can :update, Contribution, role: OWNER, user_id: user.id
 
     # cannot edit or delete himself
     # cannot :manage, Contribution, user: user
