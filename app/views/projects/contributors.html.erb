@@ -24,15 +24,13 @@
       <h3 class='heading-3'>My contribution:</h3>
       <p><%= current_user.email %> (<%= @my_contribution.role %>)</p>
 
-      <%= form_for [@project, @my_contribution], html: {role: "form", class: 'form-inline'} do |f| %>
+      <%= form_for [:update_initials, @project, @my_contribution], html: {role: 'form', class: 'form-inline mg-b20'} do |f| %>
           <div class="form-group mg-r10">
             <%= f.label :initials, 'Initials' %>
-            <%= f.text_field :initials, class: "form-control" %>
+            <%= f.text_field :initials, class: 'form-control' %>
           </div>
-          <%= f.submit 'Update', class: "btn btn-success" %>
+          <%= f.submit 'Update', class: 'btn btn-success' %>
       <% end %>
-
-      <br />
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 # == Route Map
 #
 #                                 Prefix Verb      URI Pattern                                                                  Controller#Action
-#                                                  /cable                                                                       #<ActionCable::Server::Base:0x000055bc1f9ec8d0 @mutex=#<Monitor:0x000055bc1f9ec8a8 @mon_mutex=#<Thread::Mutex:0x000055bc1f9ec7e0>, @mon_mutex_owner_object_id=47133236356180, @mon_owner=nil, @mon_count=0>, @pubsub=nil, @worker_pool=nil, @event_loop=nil, @remote_connections=nil>
+#                                                  /cable                                                                       #<ActionCable::Server::Base:0x000055f2e8bda610 @mutex=#<Monitor:0x000055f2e8bda5e8 @mon_mutex=#<Thread::Mutex:0x000055f2e8bda570>, @mon_mutex_owner_object_id=47250887594740, @mon_owner=nil, @mon_count=0>, @pubsub=nil, @worker_pool=nil, @event_loop=nil, @remote_connections=nil>
 #                          sort_projects POST      /projects/sort(.:format)                                                     projects#sort
 #                       settings_project GET       /projects/:id/settings(.:format)                                             projects#settings
 #                   contributors_project GET       /projects/:id/contributors(.:format)                                         projects#contributors
@@ -45,6 +45,7 @@
 #                                        PUT       /projects/:project_id/discussions/:id(.:format)                              discussions#update
 #                                        DELETE    /projects/:project_id/discussions/:id(.:format)                              discussions#destroy
 # resend_invitation_project_contribution POST      /projects/:project_id/contributions/:id/resend_invitation(.:format)          contributions#resend_invitation
+#   update_initials_project_contribution PATCH     /projects/:project_id/contributions/:id/update_initials(.:format)            contributions#update_initials
 #                  project_contributions GET       /projects/:project_id/contributions(.:format)                                contributions#index
 #                                        POST      /projects/:project_id/contributions(.:format)                                contributions#create
 #               new_project_contribution GET       /projects/:project_id/contributions/new(.:format)                            contributions#new
@@ -188,6 +189,7 @@ Rails.application.routes.draw do
     resources :contributions do
       member do
         post 'resend_invitation'
+        patch 'update_initials'
       end
     end
 

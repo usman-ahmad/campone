@@ -40,6 +40,8 @@ class Ability
     # TODO: Only allow change to initials
     can :update, Contribution, role: OWNER, user_id: user.id
 
+    can :update_initials, Contribution, user_id: user.id
+
     # cannot edit or delete himself
     # cannot :manage, Contribution, user: user
 

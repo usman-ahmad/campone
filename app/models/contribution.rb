@@ -22,16 +22,15 @@ class Contribution < ApplicationRecord
 
   attr_accessor :email, :name
 
-  before_validation :invite_and_set_user
-  before_validation :set_initials
+  before_validation :invite_and_set_user_and_set_initials
   before_create :generate_token
   before_create :set_position
 
   validates :initials,
-            uniqueness: {scope: [:project_id], case_sensitive: false, :allow_blank => true},
-            length: { maximum: 3 }
+            uniqueness: {scope: [:project_id], case_sensitive: false},
+            length: 2..4
 
-  scope :joined, -> { where(status: 'joined') }
+  scope :joined, -> {where(status: 'joined')}
 
   ROLES = {
       guest: 'Guest',
@@ -61,7 +60,7 @@ class Contribution < ApplicationRecord
 
   private
 
-  def invite_and_set_user
+  def invite_and_set_user_and_set_initials
     user = User.where(email: @email).first
 
     # TODO: Refactor, Do not send invite if contribution is not valid
@@ -70,6 +69,7 @@ class Contribution < ApplicationRecord
     end
 
     self.user = user if user.persisted?
+    set_initials
   end
 
   def invite_user!
@@ -78,26 +78,22 @@ class Contribution < ApplicationRecord
     User.invite!(opts, inviter)
   end
 
+  def set_initials
+    return if self.initials.present?
+    source = self.user.name || self.user.email
+    name_initials = source.split(' ').map {|x| x[0]}.join()[0..1].upcase
+    postfix = name_initials.length.equal?(1) ? 1 : ''
+    while self.project.contributions.exists?(initials: "#{name_initials}#{postfix}") do
+      postfix = (postfix || 0) + 1
+    end
+    self.initials = "#{name_initials}#{postfix}".upcase
+  end
+
   def generate_token
     self.token = "#{project.friendly_id}-#{SecureRandom.hex(15).encode('UTF-8')}"
   end
 
   def set_position
     self.position = self.user.projects.maximum(:position) ? self.user.projects.maximum(:position) + 1 : 1
-  end
-
-  def set_initials
-    if self.user.try(:name) && !self.initials
-      self.initials = user.name.split(' ').collect{|x| x[0]}.join()[0..1].upcase
-      count = 1
-      current_initials = self.initials
-      while self.project.contributions.where(initials: current_initials).present? do
-        current_initials="#{self.initials}#{count}"
-        count += 1
-      end
-      self.initials = current_initials
-    end
-
-    self.initials = self.initials.upcase if self.initials
   end
 end

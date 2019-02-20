@@ -3,10 +3,7 @@ class ContributionsController < ApplicationController
   before_action :set_contribution_by_token, only: [:join]
 
   load_and_authorize_resource :project
-  load_and_authorize_resource :contribution, :through => :project
-
-  before_action :set_project, except: [:join]
-  before_action :set_contribution, except: [:new, :create, :index, :join]
+  load_and_authorize_resource :contribution, through: :project
 
   def index
   end
@@ -30,6 +27,20 @@ class ContributionsController < ApplicationController
   end
 
   def edit
+  end
+
+  def update_initials
+    if @contribution.update(initials: params[:contribution][:initials])
+      respond_to do |format|
+        format.html {redirect_back fallback_location: contributors_project_path(@project), notice: 'Initials successfully updated.'}
+        format.json {render @contribution.as_json}
+      end
+    else
+      respond_to do |format|
+        format.html {redirect_back fallback_location: contributors_project_path(@project), alert: 'Initials could not be updated.'}
+        format.json {render json: @contribution.errors.full_messages, status: :unprocessable_entity}
+      end
+    end
   end
 
   def update
@@ -70,13 +81,9 @@ class ContributionsController < ApplicationController
 
   private
 
-  def set_project
-    @project = Project.find(params[:project_id])
-  end
-
-  def set_contribution
-    @contribution = @project.contributions.find(params[:id])
-  end
+  # def set_contribution
+  #   @contribution = @project.contributions.where(user: current_user).first
+  # end
 
   def set_contribution_by_token
     @contribution = Contribution.where(token: params[:id]).first
