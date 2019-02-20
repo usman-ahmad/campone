@@ -43,6 +43,20 @@ class ContributionsController < ApplicationController
     end
   end
 
+  def update_role
+    if @contribution.update(role: params[:contribution][:role])
+      respond_to do |format|
+        format.html {redirect_back fallback_location: contributors_project_path(@project), notice: 'Role successfully updated.'}
+        format.json {render @contribution.as_json}
+      end
+    else
+      respond_to do |format|
+        format.html {redirect_back fallback_location: contributors_project_path(@project), alert: @contribution.errors.full_messages.join(' ')}
+        format.json {render json: @contribution.errors.full_messages, status: :unprocessable_entity}
+      end
+    end
+  end
+
   def update
     @contribution.assign_attributes(contribution_params)
 

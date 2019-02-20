@@ -133,7 +133,7 @@ gem 'devise-bootstrap-views' #, '~> 0.0.8'
 gem 'devise_invitable' #, '~> 1.6.0'
 
 # Use CanCan, authorization library for Ruby on Rails
-gem 'cancancan', '~> 1.10'
+gem 'cancancan', '~> 2.3'
 
 ###########################
 ### OMNIAUTH_STRATEGIES ###

@@ -12,7 +12,17 @@
           <tr>
             <td><%= contribution.user.name %></td>
             <td><%= contribution.user.email %></td>
-            <td><%= "#{contribution.role}" if contribution.role %></td>
+            <td>
+              <% if can?(:update_role, contribution) %>
+                  <%= form_for [:update_role, contribution.project, contribution] do |f| %>
+                      <%= f.select :role, options_for_select(Contribution::ROLES.values - ['Owner'], selected: contribution.role),
+                                   {}, class: 'form-control', style: 'margin-bottom: 5px;' %>
+                      <%= f.submit 'Update', class: 'btn btn-success' %>
+                  <% end %>
+              <% else %>
+                  <%= contribution.role %>
+              <% end %>
+            </td>
             <td><%= contribution.initials %></td>
             <td><%= contribution.status if can?(:resend_invitation, contribution) %></td>
             <td>

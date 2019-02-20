@@ -41,6 +41,9 @@ class Ability
     can :update, Contribution, role: OWNER, user_id: user.id
 
     can :update_initials, Contribution, user_id: user.id
+    can :update_role, Contribution do |contribution|
+      contribution.user != user && contribution.role != OWNER && contribution.project.contributions.where(role: [MANAGER, OWNER], user_id: user.id).present?
+    end
 
     # cannot edit or delete himself
     # cannot :manage, Contribution, user: user

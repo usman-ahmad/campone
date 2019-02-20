@@ -89,7 +89,7 @@ GEM
     buftok (0.2.0)
     builder (3.2.3)
     byebug (9.0.5)
-    cancancan (1.15.0)
+    cancancan (2.3.0)
     capistrano (3.8.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -519,7 +519,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   bootstrap-social-rails
   byebug
-  cancancan (~> 1.10)
+  cancancan (~> 2.3)
   capistrano (~> 3.8)
   capistrano-bundler (~> 1.2)
   capistrano-rails (~> 1.2)
