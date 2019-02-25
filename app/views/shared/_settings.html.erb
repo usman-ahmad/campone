@@ -1,0 +1,31 @@
+<% content_for(:tab_nav) do %>
+    <%= render 'shared/tab_nav', project: project, active: 'settings' %>
+<% end %>
+
+<div class='settings'>
+  <div class='col-lg-2 col-md-2 col-sm-2 col-xs-3 menu'>
+    <div class='list-group'>
+      <a href='<%= notification_settings_path %>' class='list-group-item <%= 'active' if active == 'notification' %>'>
+        Notification Settings
+      </a>
+      <a href='<%= settings_project_path(project) %>' class='list-group-item <%= 'active' if active == 'settings' %>'>
+        Project Settings
+      </a>
+      <a href='<%= contributors_project_path(project) %>' class='list-group-item pd-l30 <%= 'active' if active == 'contributors' %>'>
+        Contributors Settings
+      </a>
+      <% if can? :create, Integration.new(project: project) %>
+          <a href='<%= project_integrations_path(project) %>' class='list-group-item pd-l30 <%= 'active' if active == 'integrations' %>'>
+            Integrations Settings
+          </a>
+      <% end %>
+    </div>
+  </div>
+  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 body'>
+    <h2>
+      <%= title %>
+    </h2>
+    <hr>
+    <%= yield :settings_body %>
+  </div>
+</div>

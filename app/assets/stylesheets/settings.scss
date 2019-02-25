@@ -1,0 +1,54 @@
+.settings {
+  opacity: 0.97;
+
+  .menu {
+    margin-top: 50px;
+    padding: 0;
+    div.list-group {
+      margin-bottom: 0;
+      > a {
+        margin-bottom: 0;
+        &:first-child {
+          border-top-right-radius: 0;
+        }
+        &:last-child {
+          border-bottom-right-radius: 0;
+        }
+        &.active {
+          background-color: #39a1e7;
+          color: #ffffff;
+          .glyphicon {
+            background-color: #39a1e7;
+            color: #ffffff;
+          }
+          .fa {
+            background-color: #39a1e7;
+            color: #ffffff;
+          }
+          &:after {
+            content: '';
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            margin-top: -13px;
+            border-left: 0;
+            border-bottom: 13px solid transparent;
+            border-top: 13px solid transparent;
+            border-left: 10px solid #39a1e7;
+          }
+        }
+      }
+    }
+  }
+
+  .body {
+    border: 1px solid #ddd;
+    margin: 50px 0 100px 50px;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 400;
+    color: #232323;
+  }
+}
