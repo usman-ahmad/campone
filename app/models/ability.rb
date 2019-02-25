@@ -32,23 +32,11 @@ class Ability
     can :manage, Discussion
     can :manage, Attachment
 
-    can [:crud, :resend_invitation], Contribution do |contribution|
-      contribution.project.contributions.where(role: [MANAGER, OWNER], user_id: user.id).present?
+    can [:join, :update_initials], Contribution, user_id: user.id
+    can [:create, :resend_invitation, :update_role, :destroy], Contribution do |contribution|
+      contribution.user != user && contribution.role != OWNER &&
+          contribution.project.contributions.where(role: [MANAGER, OWNER], user_id: user.id).present?
     end
-    # owner role is automatically created, we cannot edit it later
-    cannot :manage, Contribution, role: OWNER
-    # TODO: Only allow change to initials
-    can :update, Contribution, role: OWNER, user_id: user.id
-
-    can :update_initials, Contribution, user_id: user.id
-    can :update_role, Contribution do |contribution|
-      contribution.user != user && contribution.role != OWNER && contribution.project.contributions.where(role: [MANAGER, OWNER], user_id: user.id).present?
-    end
-
-    # cannot edit or delete himself
-    # cannot :manage, Contribution, user: user
-
-    can :join, Contribution, user: user
 
     # User can only manage his comments
     can :manage, Comment, user: user

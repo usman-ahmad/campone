@@ -1,7 +1,7 @@
 # == Route Map
 #
 #                                 Prefix Verb      URI Pattern                                                                  Controller#Action
-#                                                  /cable                                                                       #<ActionCable::Server::Base:0x000055987755e280 @mutex=#<Monitor:0x000055987755e258 @mon_mutex=#<Thread::Mutex:0x000055987755e208>, @mon_mutex_owner_object_id=47056662753580, @mon_owner=nil, @mon_count=0>, @pubsub=nil, @worker_pool=nil, @event_loop=nil, @remote_connections=nil>
+#                                                  /cable                                                                       #<ActionCable::Server::Base:0x000055b54c036928 @mutex=#<Monitor:0x000055b54c0368d8 @mon_mutex=#<Thread::Mutex:0x000055b54c036888>, @mon_mutex_owner_object_id=47118576366700, @mon_owner=nil, @mon_count=0>, @pubsub=nil, @worker_pool=nil, @event_loop=nil, @remote_connections=nil>
 #                          sort_projects POST      /projects/sort(.:format)                                                     projects#sort
 #                       settings_project GET       /projects/:id/settings(.:format)                                             projects#settings
 #                   contributors_project GET       /projects/:id/contributors(.:format)                                         projects#contributors
@@ -47,14 +47,8 @@
 # resend_invitation_project_contribution POST      /projects/:project_id/contributions/:id/resend_invitation(.:format)          contributions#resend_invitation
 #   update_initials_project_contribution PATCH     /projects/:project_id/contributions/:id/update_initials(.:format)            contributions#update_initials
 #       update_role_project_contribution PATCH     /projects/:project_id/contributions/:id/update_role(.:format)                contributions#update_role
-#                  project_contributions GET       /projects/:project_id/contributions(.:format)                                contributions#index
-#                                        POST      /projects/:project_id/contributions(.:format)                                contributions#create
-#               new_project_contribution GET       /projects/:project_id/contributions/new(.:format)                            contributions#new
-#              edit_project_contribution GET       /projects/:project_id/contributions/:id/edit(.:format)                       contributions#edit
-#                   project_contribution GET       /projects/:project_id/contributions/:id(.:format)                            contributions#show
-#                                        PATCH     /projects/:project_id/contributions/:id(.:format)                            contributions#update
-#                                        PUT       /projects/:project_id/contributions/:id(.:format)                            contributions#update
-#                                        DELETE    /projects/:project_id/contributions/:id(.:format)                            contributions#destroy
+#                  project_contributions POST      /projects/:project_id/contributions(.:format)                                contributions#create
+#                   project_contribution DELETE    /projects/:project_id/contributions/:id(.:format)                            contributions#destroy
 #            download_project_attachment POST      /projects/:project_id/attachments/:id/download(.:format)                     attachments#download
 #            project_attachment_comments GET       /projects/:project_id/attachments/:attachment_id/comments(.:format)          comments#index
 #                                        POST      /projects/:project_id/attachments/:attachment_id/comments(.:format)          comments#create
@@ -187,7 +181,7 @@ Rails.application.routes.draw do
       resources :comments
     end
 
-    resources :contributions do
+    resources :contributions, only: [:create, :destroy] do
       member do
         post 'resend_invitation'
         patch 'update_initials'
