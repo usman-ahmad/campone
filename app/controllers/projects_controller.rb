@@ -23,10 +23,7 @@ class ProjectsController < ApplicationController
   end
 
   def contributors
-    @contribution = Contribution.new
-    @contributions = @project.contributions.includes(:user)
-    @my_contribution = @contributions.find{|c| c.user.email == current_user.email}
-    # @contributions = @contributions - [@my_contribution]
+    @contribution = Contribution.new(project: @project)
   end
 
   # GET /projects/new

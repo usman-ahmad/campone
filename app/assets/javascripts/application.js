@@ -31,4 +31,5 @@
 //= require trumbowyg/vendor/plugins/preformatted/trumbowyg.preformatted
 //= require handlebars.runtime
 //= require handlebar_custom_helpers
+//= require settings
 //= require_tree ./templates

@@ -1,21 +1,27 @@
 <% content_for(:settings_body) do %>
-    <%= form_for [:update_initials, @project, @my_contribution], html: {role: 'form', class: 'form-inline mg-b20'} do |f| %>
-        <div class="form-group mg-r10">
-          <%= f.label :initials, 'My Initials' %>
-          <%= f.text_field :initials, class: 'form-control' %>
-        </div>
-        <%= f.submit 'Update', class: 'btn btn-success' %>
-    <% end %>
-
-    <% if can? :create, Contribution.new(project: @project) %>
+    <% if can? :create, @contribution %>
         <p>
           Invite a new member to
           <strong>
             <%= @project.title %>
           </strong>
         </p>
-        <div class='mg-b20'>
-          <%= render 'contributions/form' %>
+        <div class='mg-b30'>
+          <%= form_for [@project, @contribution], html: {class: 'form-inline'} do |f| %>
+              <div class="form-group mg-r10">
+                <%= f.label :email %>
+                <%= f.text_field :email, class: 'form-control' %>
+              </div>
+              <div class="form-group mg-r10">
+                <%= f.label :name %>
+                <%= f.text_field :name, class: 'form-control' %>
+              </div>
+              <div class="form-group mg-r10">
+                <%= f.label :role %>
+                <%= f.select :role, options_for_select(Contribution::ROLES.values - ['Owner'], selected: @contribution.role), {}, class: 'form-control' %>
+              </div>
+              <%= f.submit 'Invite', class: 'btn btn-success' %>
+          <% end %>
         </div>
     <% end %>
 
@@ -25,7 +31,11 @@
         <%= @project.title %>
       </strong>
     </p>
-    <%= render 'contributions/list' %>
+    <% if @project.contributions.present? %>
+        <%= render 'contributions/list', contributions: @project.contributions %>
+    <% else %>
+        <p class="text-center">No Contributions Found.</p>
+    <% end %>
 <% end %>
 
 <%= render 'shared/settings', project: @project, active: 'contributors', title: 'Project Members' %>
