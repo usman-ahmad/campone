@@ -47,10 +47,10 @@ class Contribution < ApplicationRecord
   validates :status, inclusion: {in: STATUSES}
 
   def resend_invitation
-    if user.accepted_or_not_invited?
+    if user.invitation_accepted? # UA[2019/02/26] user.accepted_or_not_invited? does not make sense for resend_invitation
       UserMailer.contribution_mail(self).deliver
     else
-      invite(user.email)
+      user.invite!(inviter, invite_by_devise_options(user.name, user.email))
     end
   end
 
@@ -61,21 +61,22 @@ class Contribution < ApplicationRecord
   private
 
   def invite_and_set_user_and_set_initials
-    user = User.where(email: @email).first
-
-    # TODO: Refactor, Do not send invite if contribution is not valid
-    unless user
-      user = invite_user!
-    end
-
+    user = User.find_by(email: email)
+    # TODO: Refactor, Do not send invite if contribution is not valid ... https://stackoverflow.com/questions/1242617/rails-partial-table-validations
+    user ||= User.invite!({email: email, name: name}, inviter, invite_by_devise_options(name, email))
     self.user = user if user.persisted?
     set_initials
   end
 
-  def invite_user!
-    opts = {email: @email}
-    opts.merge!(name: @name) if name.present?
-    User.invite!(opts, inviter)
+  def invite_by_devise_options(name, email)
+    # TODO: RECHECK and Make the use of I18n and locale files proper
+    {
+        name_or_email: name || email,
+        project_title: project.title,
+        inviter_name: inviter.name,
+        subject: I18n.t('devise.mailer.invitation_instructions.subject',
+                        inviter_name: inviter.name, project_title: project.title)
+    }
   end
 
   def set_initials
