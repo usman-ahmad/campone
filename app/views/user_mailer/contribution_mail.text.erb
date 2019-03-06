@@ -1,6 +1,6 @@
-<%= t('devise.mailer.invitation_instructions.hello', email: @contribution.user.email) %>
+<%= t('devise.mailer.invitation_instructions.hello', name_or_email: (@contribution.user.name || @contribution.user.email)) %>
 
-<%= "#{@contribution.inviter.name} has invited you to #{@contribution.project.title}," %>
-you can accept it through the link below.
+<%= t('devise.mailer.invitation_instructions.someone_added_you', inviter_name: @inviter_name, project_title: @project_title) %>
 
-<%= project_stories_url(@contribution.project, :invitation_token => @contribution.token) %>
+<%#= link_to t('devise.mailer.invitation_instructions.accept'), join_contribution_url(@contribution.token) %>
+<%= link_to url_for(@contribution.project), @contribution.project %>

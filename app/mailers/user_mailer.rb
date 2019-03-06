@@ -4,7 +4,10 @@ class UserMailer < ApplicationMailer
   # http://localhost:3000/rails/mailers/user_mailer/contribution_mail
   def contribution_mail(contribution)
     @contribution = contribution
-    subject = "You have been invited on #{@contribution.project.title} by #{@contribution.inviter.name}"
-    mail(to: contribution.user.email, subject: subject)
+    @inviter_name = contribution.inviter.name
+    @project_title = contribution.project.title
+    mail(to: contribution.user.email, subject:
+        I18n.t('devise.mailer.invitation_instructions.subject_added',
+               inviter_name: @inviter_name, project_title: @project_title))
   end
 end

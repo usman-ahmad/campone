@@ -38,7 +38,7 @@
         <td>
           <%= link_to_if_can(:update_initials, contribution, 'Edit Initials', '#', class: 'btn btn-default initials') %>
 
-          <% if contribution.status != 'joined' && can?(:resend_invitation, contribution) %>
+          <% if !contribution.user.invitation_accepted? && can?(:resend_invitation, contribution) %>
               <%= button_to 'Resend Invitation', resend_invitation_project_contribution_path(contribution.project, contribution),
                             method: :post, class: 'btn btn-default', form: {style: 'display: inline-block;'} %>
           <% end %>

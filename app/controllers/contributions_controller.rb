@@ -6,10 +6,10 @@ class ContributionsController < ApplicationController
   load_and_authorize_resource :contribution, through: :project
 
   def create
-    contribution = @project.contributions.create(contribution_params.merge(inviter: current_user))
-    if contribution.persisted?
+    contribution = @project.contributions.build(contribution_params.merge(inviter: current_user))
+    if contribution.save
       # send invitation email if user exist in system (prevent duplicate email if already sent by devise invitable)
-      UserMailer.contribution_mail(contribution).deliver if contribution.user.accepted_or_not_invited?
+      contribution.send_invitation_email unless contribution.user_just_created
       flash[:alert] = 'Invitations sent.'
     else
       flash[:alert] = contribution.errors.full_messages.join
@@ -19,7 +19,7 @@ class ContributionsController < ApplicationController
   end
 
   def resend_invitation
-    @contribution.resend_invitation
+    @contribution.send_invitation_email
     flash[:alert] = 'Invitation email sent successfully.'
     redirect_back(fallback_location: project_path(@project))
   end

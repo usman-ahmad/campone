@@ -20,7 +20,7 @@ class Contribution < ApplicationRecord
   belongs_to :user
   belongs_to :inviter, class_name: 'User'
 
-  attr_accessor :email, :name
+  attr_accessor :email, :name, :user_just_created
 
   before_validation :invite_and_set_user_and_set_initials
   before_create :generate_token
@@ -46,22 +46,24 @@ class Contribution < ApplicationRecord
   validates :role, inclusion: {in: ROLES.values}
   validates :status, inclusion: {in: STATUSES}
 
-  def resend_invitation
-    if user.invitation_accepted? # UA[2019/02/26] user.accepted_or_not_invited? does not make sense for resend_invitation
+  def send_invitation_email
+    if user.invitation_accepted? # UA[2019/02/26] user must exist for send_invitation_email
       UserMailer.contribution_mail(self).deliver
     else
       user.invite!(inviter, invite_by_devise_options(user.name, user.email))
     end
   end
 
-  def email
-    user.try(:email)
-  end
+  # UA[2019/03/05] source of issues for #create, we assign email as an attr_accessor but get nil as result
+  # def email
+  #   user.try(:email)
+  # end
 
   private
 
   def invite_and_set_user_and_set_initials
     user = User.find_by(email: email)
+    self.user_just_created = true unless user
     # TODO: Refactor, Do not send invite if contribution is not valid ... https://stackoverflow.com/questions/1242617/rails-partial-table-validations
     user ||= User.invite!({email: email, name: name}, inviter, invite_by_devise_options(name, email))
     self.user = user if user.persisted?
