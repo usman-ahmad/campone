@@ -1,18 +1,24 @@
-<% content_for(:tab_nav) do %>
-  <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
+<% content_for(:settings_body) do %>
+    <% all_available_integrations.each do |type, integrations| %>
+        <% if integrations.present? %>
+            <div class="col-md-12">
+              <div class="panel panel-default integration-panel nopadding">
+                <div class="panel-heading">Add <%= type.downcase %></div>
+                <div class="panel-body">
+                  <ul class="list-inline">
+                    <% integrations.each do |integration| %>
+                        <li>
+                          <a class="btn btn-block btn-social btn-<%= integration %>" href="<%= list_project_integrations_path(@project, integration) %>">
+                            <%= image_tag ("#{integration}.png") %> <%= integration.capitalize %>
+                          </a>
+                        </li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+        <% end %>
+    <% end %>
 <% end %>
-<div class='custom-tab-container'>
-  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'integrations' %>
 
-  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
-    <div class='custom-tab-content active'>
-      <div class='tab-content-header'>
-        <h3 class='heading-3'>Integrations</h3>
-      </div>
-      <hr>
-      <div>
-        <%= render 'integrations/available_integrations' %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'shared/settings', project: @project, active: 'integrations', title: 'Integrations Settings' %>
