@@ -1,15 +1,20 @@
-<% content_for(:tab_nav) do %>
-    <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
-<% end %>
-<div class='custom-tab-container'>
-  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'settings' %>
-
-  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
-    <div class='custom-tab-content active'>
-      <div class='tab-content-header'>
-        <h3 class='heading-3'>Project Settings</h3>
-
-        <div class='pull-right'>
+<% content_for(:settings_body) do %>
+    <table class="table borderless">
+      <tr>
+        <th class="text-right col-md-2">Title:</th>
+        <td class="col-md-10"><%= @project.title %></td>
+      </tr>
+      <tr>
+        <th class="text-right">Owner:</th>
+        <td><%= @project.owner.name %></td>
+      </tr>
+      <tr>
+        <th class="text-right">Description:</th>
+        <td><%= @project.description %></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
           <% if can? :edit, @project %>
               <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
                   <span class='glyphicon glyphicon-pencil'></span>
@@ -23,25 +28,9 @@
               </button>
               <%= render 'projects/delete_project_modal', project: @project %>
           <% end %>
-        </div>
-      </div>
-      <hr>
-      <label class="col-md-2 text-right">Title:</label>
+        </td>
+      </tr>
+    </table>
+<% end %>
 
-      <p class="col-md-10">
-        <%= @project.title %>
-      </p>
-      <label class="col-md-2 text-right">Owner:</label>
-
-      <p class="col-md-10">
-        <%= @project.owner.name %>
-      </p>
-      <label class="col-md-2 text-right">Description:</label>
-
-      <p class="col-md-10">
-        <%= @project.description %>
-      </p>
-    </div>
-  </div>
-
-</div>
+<%= render 'shared/settings', project: @project, active: 'settings', title: 'Project Settings' %>

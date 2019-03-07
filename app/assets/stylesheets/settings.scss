@@ -51,4 +51,10 @@
     font-weight: 400;
     color: #232323;
   }
+
+  .borderless {
+    td, th {
+      border: none;
+    }
+  }
 }

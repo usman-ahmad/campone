@@ -1,26 +1,30 @@
-<% content_for(:tab_nav) do %>
-    <%= render 'shared/tab_nav', project: @project, active: 'settings' %>
+<% content_for(:settings_body) do %>
+    <%= form_for(@project, html: {role: 'form', class: 'form-horizontal'}) do |f| %>
+        <%= render 'shared/error_messages', object: @project %>
+        <table class="table borderless">
+          <tr>
+            <th class="text-right col-md-2"><%= f.label :title, 'Title:', class: 'control-label' %></th>
+            <td class="col-md-10"><%= f.text_field :title, class: 'form-control' %></td>
+          </tr>
+          <tr>
+            <th class="text-right"><%= f.label :description, 'Description:', class: 'control-label' %></th>
+            <td><%= f.text_area :description, class: 'form-control' %></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+              <%= f.button class: 'btn btn-primary' do %>
+                  <span class='glyphicon glyphicon-save'></span>
+                  Update
+              <% end %>
+              <%= link_to settings_project_path(@project), class: 'btn btn-default' do %>
+                  <span class='glyphicon glyphicon-arrow-left'></span>
+                  Back
+              <% end %>
+            </td>
+          </tr>
+        </table>
+    <% end %>
 <% end %>
-<div class='custom-tab-container'>
-  <%= render 'shared/settings_tab', project: @project, class_name: 'active', active: 'settings' %>
 
-  <div class='col-lg-9 col-md-9 col-sm-9 col-xs-9 custom-tab'>
-    <div class='custom-tab-content active'>
-      <div class='tab-content-header'>
-        <h3 class='heading-3'>Project Settings</h3>
-
-        <div class='pull-right'>
-          <%= link_to settings_project_path(@project), class: 'btn btn-primary' do %>
-              <span class='glyphicon glyphicon-arrow-left'></span>
-              Back
-          <% end %>
-        </div>
-      </div>
-
-      <hr>
-      <div class="col-md-12">
-        <%= render 'form' %>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render 'shared/settings', project: @project, active: 'settings', title: 'Project Settings' %>
