@@ -1,3 +1,5 @@
+<% content_for(:settings_body) do %>
+
 <%= bootstrap_devise_error_messages! %>
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -45,6 +47,9 @@
     <p><%= t('.unhappy', :default => 'Unhappy') %>? <%= link_to t('.cancel_my_account', :default => "Cancel my account"), registration_path(resource_name), :data => { :confirm => t('.are_you_sure', :default => "Are you sure?") }, :method => :delete %>.</p>
   </div>
 </div>
+<% end %>
+
+<%= render 'shared/settings', project: nil, active: 'account', title: 'Account Settings' %>
 
 <% content_for(:bg_image) do %>
     <%= asset_url('campone-landing-banner.jpg') %>
