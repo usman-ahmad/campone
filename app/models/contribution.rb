@@ -62,7 +62,7 @@ class Contribution < ApplicationRecord
   private
 
   def invite_and_set_user_and_set_initials
-    user = User.find_by(email: email)
+    user = self.user || User.find_by(email: email)
     self.user_just_created = true unless user
     # TODO: Refactor, Do not send invite if contribution is not valid ... https://stackoverflow.com/questions/1242617/rails-partial-table-validations
     user ||= User.invite!({email: email, name: name}, inviter, invite_by_devise_options(name, email))
