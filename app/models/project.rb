@@ -14,7 +14,7 @@
 
 class Project < ApplicationRecord
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged, :finders]
+  friendly_id :title_initials, use: [:slugged, :finders]
 
   acts_as_tagger
   # Now we can remove owner from project, as we have added owner role in Contribution, see #add_owner_to_contributors
@@ -82,6 +82,14 @@ class Project < ApplicationRecord
     return all_events.to_json
   end
 
+  def normalize_friendly_id(initials)
+    postfix = initials.length.equal?(1) ? 1 : ''
+    while Project.exists?(slug: "#{initials}#{postfix}") do
+      postfix = (postfix || 0) + 1
+    end
+    "#{initials}#{postfix}"
+  end
+
   private
 
   def add_owner_to_contributors
@@ -89,17 +97,7 @@ class Project < ApplicationRecord
     self.contributions.create(user: self.owner, status: 'joined', role: Contribution::ROLES[:owner], position: position)
   end
 
-  # Try to create a slug with initials of project name, if its already taken try next combination of initials and random characters
-  def slug_candidates
-    name_initials = self.title.split.map(&:first).join if self.title
-
-    # TODO: Try SecureRandom
-    # generate a random string of length 3
-    random_chars = (0...3).map { ('a'..'z').to_a[rand(26)] }.join
-
-    [
-        name_initials,
-        [name_initials, random_chars]
-    ]
+  def title_initials
+    (self.title || 'p r o').split.map(&:first).join.downcase
   end
 end
