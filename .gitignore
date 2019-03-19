@@ -54,3 +54,6 @@ delete_me.*
 
 # Because macs
 .DS_Store
+
+# ignore development / testing history
+.byebug_history
